@@ -1,7 +1,9 @@
 {
   "private": true,
   "dependencies": {
+    "@blueprintjs/core": "^3.7.0",
     "auth0-js": "^9.8.0",
+    "node-sass": "^4.9.4",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-router-dom": "^4.3.1",

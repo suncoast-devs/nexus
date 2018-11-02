@@ -7,7 +7,7 @@ export default class Auth {
     clientID: 'LQkg1cfeR4aR2NlRsmY17GuUNxUqJnBP',
     redirectUri: `${window.location.protocol}//${window.location.host}/callback`,
     responseType: 'token id_token',
-    scope: 'openid profile'
+    scope: 'openid profile email'
   })
 
   userProfile
