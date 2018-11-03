@@ -1,10 +1,8 @@
-@import '~@blueprintjs/core/lib/scss/variables';
+@charset "utf-8";
 
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
-  background-color: $pt-dark-app-background-color;
 }
 
-@import '~@blueprintjs/core/lib/css/blueprint';
+@import '~bulma/bulma';

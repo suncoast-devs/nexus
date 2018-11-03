@@ -9,7 +9,7 @@ class Home extends Component {
   render() {
     const { isAuthenticated } = this.props.auth
     return (
-      <div className="container">
+      <>
         {isAuthenticated() && (
           <h4>
             <Profile auth={this.props.auth} />
@@ -22,7 +22,7 @@ class Home extends Component {
             </h4>
           </div>
         )}
-      </div>
+      </>
     )
   }
 }

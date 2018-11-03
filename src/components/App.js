@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Route, Router } from 'react-router-dom'
-import { Alignment, Button, Classes, Navbar, NavbarDivider, NavbarGroup, NavbarHeading } from '@blueprintjs/core'
 import Auth from '../Auth'
 import history from '../history'
 import Callback from './Callback'
 import Home from './Home'
+import NavBar from './NavBar'
 
 const auth = new Auth()
 
@@ -13,17 +13,8 @@ class App extends Component {
     return (
       <Router history={history}>
         <>
-          <Navbar>
-            <NavbarGroup align={Alignment.LEFT}>
-              <NavbarHeading>Nexus</NavbarHeading>
-              <NavbarDivider />
-              <Button className={Classes.MINIMAL} icon="home" text="Home" />
-            </NavbarGroup>
-            <NavbarGroup align={Alignment.RIGHT}>
-              <Button className={Classes.MINIMAL} icon="document" text="Files" />
-            </NavbarGroup>
-          </Navbar>
-          <h1>Hello, World!</h1>
+          <NavBar />
+
           <Route path="/" render={props => <Home auth={auth} {...props} />} />
           <Route
             path="/callback"
