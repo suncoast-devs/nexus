@@ -1,14 +1,21 @@
 import React, { Component } from 'react'
 import { Route, Router } from 'react-router-dom'
-import Auth from '../Auth'
+import axios from 'axios'
+import auth from '../Auth'
 import history from '../history'
 import Callback from './Callback'
 import Home from './Home'
 import NavBar from './NavBar'
 
-const auth = new Auth()
-
 class App extends Component {
+  constructor(props) {
+    super(props)
+
+    axios.defaults.headers.common = {
+      Authorization: auth.token
+    }
+  }
+
   render() {
     return (
       <Router history={history}>
@@ -17,11 +24,21 @@ class App extends Component {
 
           <Route path="/" render={props => <Home auth={auth} {...props} />} />
           <Route
-            path="/callback"
+            path="/signout"
             render={props => {
-              if (/access_token|id_token|error/.test(props.location.hash)) {
-                auth.handleAuthentication()
+              auth.logout()
+              return <Callback {...props} />
+            }}
+          />
+          <Route
+            path="/callback/:jwt"
+            render={props => {
+              auth.handleAuthentication(props.match.params.jwt)
+
+              axios.defaults.headers.common = {
+                Authorization: auth.token
               }
+
               return <Callback {...props} />
             }}
           />
