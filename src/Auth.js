@@ -15,7 +15,7 @@ class Auth {
   handleAuthentication = jwt => {
     localStorage.setItem('jwt', jwt)
 
-    history.replace('/home')
+    window.location = '/home'
   }
 
   logout = () => {
@@ -24,7 +24,7 @@ class Auth {
     history.replace('/home')
   }
 
-  isAuthenticated = () => {
+  get isAuthenticated() {
     const jwt = localStorage.getItem('jwt')
 
     return !!jwt
