@@ -4,8 +4,7 @@ class Auth {
   userProfile
 
   login = () => {
-    window.location =
-      '//localhost:3000/login?callback=http://localhost:3001/callback'
+    window.location = process.env.REACT_APP_LOGIN_URL
   }
 
   get token() {
