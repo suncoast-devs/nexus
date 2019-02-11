@@ -20,7 +20,7 @@ class Auth {
   logout = () => {
     localStorage.removeItem('jwt')
 
-    history.replace('/home')
+    window.location = '/home'
   }
 
   get isAuthenticated() {
