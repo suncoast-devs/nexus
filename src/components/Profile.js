@@ -13,11 +13,13 @@ import {
 
 const ProfileForm = props => {
   const UPDATE_PROFILE = gql`
-    mutation UpdateProfile($fullName: String!) {
-      updateProfile(input: { fullName: $fullName }) {
+    mutation UpdateProfile($profile: ProfileInput!) {
+      updateProfile(profile: $profile) {
         me {
           id
           fullName
+          givenName
+          familyName
         }
       }
     }
@@ -26,17 +28,22 @@ const ProfileForm = props => {
   const submit = (event, updateProfile) => {
     event.preventDefault()
 
-    const variables = {
-      fullName: event.target.fullName.value
+    const profile = {
+      profile: {
+        fullName: event.target.fullName.value,
+        givenName: event.target.givenName.value,
+        familyName: event.target.familyName.value
+      }
     }
 
-    updateProfile({ variables })
+    updateProfile({ variables: profile })
   }
 
   const completed = () => {
-    console.log('complete')
     history.push('/home')
   }
+
+  console.log(props.me)
 
   return (
     <Mutation mutation={UPDATE_PROFILE} onCompleted={completed}>
@@ -60,6 +67,33 @@ const ProfileForm = props => {
                     />
                   </Form.Control>
                 </Form.Field>
+
+                <Form.Field>
+                  <Form.Label>Given Name</Form.Label>
+                  <Form.Control>
+                    <input
+                      className="input"
+                      name="givenName"
+                      defaultValue={props && props.me && props.me.givenName}
+                      type="text"
+                      placeholder="Given Name"
+                    />
+                  </Form.Control>
+                </Form.Field>
+
+                <Form.Field>
+                  <Form.Label>Family Name</Form.Label>
+                  <Form.Control>
+                    <input
+                      className="input"
+                      name="familyName"
+                      defaultValue={props && props.me && props.me.familyName}
+                      type="text"
+                      placeholder="Family Name"
+                    />
+                  </Form.Control>
+                </Form.Field>
+
                 <Form.Field kind="group">
                   <Form.Control>
                     <Button color="link">Submit</Button>
@@ -81,9 +115,10 @@ const Profile = _ => {
   const query = `
     {
       me {
-        isAdmin
+        id
         fullName
-        smallProfileImageUrl
+        givenName
+        familyName
       }
     }
     `

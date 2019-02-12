@@ -12,6 +12,8 @@ class NavBar extends Component {
             id
             isAdmin
             fullName
+            givenName
+            familyName
             smallProfileImageUrl
           }
         }
