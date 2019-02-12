@@ -1,5 +1,3 @@
-import history from './history'
-
 class Auth {
   userProfile
 

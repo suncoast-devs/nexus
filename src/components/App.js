@@ -5,11 +5,10 @@ import auth from '../Auth'
 import history from '../history'
 import Callback from './Callback'
 import Home from './Home'
-import AuthenticatedNavBar from './AuthenticatedNavBar'
 import CohortPage from './CohortPage'
+import Profile from './Profile'
 import Apollo from './Apollo'
-import UnauthenticatedNavBar from './UnauthenticatedNavBar'
-import QueryContainer from '../containers/QueryContainer'
+import NavBar from './NavBar'
 
 class App extends Component {
   get adminRoutes() {
@@ -30,26 +29,17 @@ class App extends Component {
     )
   }
 
-  get navbar() {
-    console.log(`navbar`, auth.isAuthenticated)
-    if (auth.isAuthenticated) {
-      const query = `
-        {
-          me {
-            fullName
-            smallProfileImageUrl
-          }
-        }
-      `
-
-      return (
-        <QueryContainer query={query}>
-          <AuthenticatedNavBar auth={auth} />
-        </QueryContainer>
-      )
-    } else {
-      return <UnauthenticatedNavBar auth={auth} />
-    }
+  get userRoutes() {
+    return (
+      <>
+        <Route
+          path="/profile"
+          render={props => {
+            return <Profile auth={auth} {...props} />
+          }}
+        />
+      </>
+    )
   }
 
   render() {
@@ -57,7 +47,7 @@ class App extends Component {
       <Apollo>
         <Router history={history}>
           <>
-            {this.navbar}
+            <NavBar auth={auth} />
 
             <Route path="/" render={props => <Home auth={auth} {...props} />} />
             <Route
