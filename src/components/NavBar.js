@@ -1,29 +1,11 @@
 import React, { Component } from 'react'
-import QueryContainer from '../containers/QueryContainer'
 import AuthenticatedNavBar from './AuthenticatedNavBar'
 import UnauthenticatedNavBar from './UnauthenticatedNavBar'
 
 class NavBar extends Component {
   render() {
     if (this.props.auth.isAuthenticated) {
-      const query = `
-        {
-          me {
-            id
-            isAdmin
-            fullName
-            givenName
-            familyName
-            smallProfileImageUrl
-          }
-        }
-      `
-
-      return (
-        <QueryContainer query={query}>
-          <AuthenticatedNavBar auth={this.props.auth} />
-        </QueryContainer>
-      )
+      return <AuthenticatedNavBar auth={this.props.auth} />
     } else {
       return <UnauthenticatedNavBar auth={this.props.auth} />
     }

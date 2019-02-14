@@ -1,5 +1,5 @@
 import React from 'react'
 
-const Callback = () => <h2>Loading</h2>
+const Callback = () => <p />
 
 export default Callback

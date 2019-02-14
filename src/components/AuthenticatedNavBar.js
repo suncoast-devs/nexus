@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import { observer } from 'mobx-react'
 import { Link, NavLink } from 'react-router-dom'
 import icon from '../images/icon.svg'
 import cx from 'classnames'
 import history from '../history'
+import profile from '../stores/Profile'
 
 class AuthenticatedNavBar extends Component {
   state = {
@@ -67,9 +69,9 @@ class AuthenticatedNavBar extends Component {
   }
 
   get admin() {
-    const { me } = this.props
+    const { me } = profile
 
-    if (me && !me.isAdmin) {
+    if (me.loading || !me.isAdmin) {
       return <></>
     }
 
@@ -105,7 +107,11 @@ class AuthenticatedNavBar extends Component {
   }
 
   get profile() {
-    const { me } = this.props
+    const { me } = profile
+
+    if (me.loading) {
+      return <></>
+    }
 
     return (
       <>
@@ -181,4 +187,4 @@ class AuthenticatedNavBar extends Component {
   }
 }
 
-export default AuthenticatedNavBar
+export default observer(AuthenticatedNavBar)

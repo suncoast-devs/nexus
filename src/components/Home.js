@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 
 class Home extends Component {
   render() {
+    console.log(this.props.auth.isAuthenticated)
+
     return (
       <>
         {!this.props.auth.isAuthenticated && (

@@ -10,6 +10,7 @@ import {
   Heading,
   Form
 } from 'react-bulma-components/full'
+import profile from '../stores/Profile'
 
 const ProfileForm = props => {
   const UPDATE_PROFILE = gql`
@@ -40,10 +41,9 @@ const ProfileForm = props => {
   }
 
   const completed = () => {
+    profile.fetch()
     history.push('/home')
   }
-
-  console.log(props.me)
 
   return (
     <Mutation mutation={UPDATE_PROFILE} onCompleted={completed}>
