@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Suspense, Component } from 'react'
 import { Route } from 'react-router-dom'
 
 import Callback from './Callback'
@@ -38,10 +38,13 @@ class Layout extends Component {
       </>
     )
   }
+
   render() {
     return (
       <>
-        <NavBar auth={this.props.auth} />
+        <Suspense fallback={null}>
+          <NavBar auth={this.props.auth} />
+        </Suspense>
 
         <Route
           path="/"

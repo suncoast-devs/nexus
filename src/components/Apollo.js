@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { ApolloProvider } from 'react-apollo'
+import { ApolloProvider as ApolloProviderHooks } from "react-apollo-hooks";
 import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
@@ -19,7 +20,11 @@ const client = new ApolloClient({ link, cache })
 class Apollo extends Component {
   render() {
     return (
-      <ApolloProvider client={client}>{this.props.children}</ApolloProvider>
+      <ApolloProvider client={client}>
+        <ApolloProviderHooks client={client}>
+          {this.props.children}
+        </ApolloProviderHooks>
+      </ApolloProvider>
     )
   }
 }

@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import { observer } from 'mobx-react'
 import { Link, NavLink } from 'react-router-dom'
 import icon from '../images/icon.svg'
 import cx from 'classnames'
 import history from '../history'
-import profile from '../stores/Profile'
 
 class AuthenticatedNavBar extends Component {
   state = {
@@ -68,10 +66,8 @@ class AuthenticatedNavBar extends Component {
     )
   }
 
-  get admin() {
-    const { me } = profile
-
-    if (me.loading || !me.isAdmin) {
+  admin = () => {
+    if (this.props.me || !this.props.me.isAdmin) {
       return <></>
     }
 
@@ -106,13 +102,7 @@ class AuthenticatedNavBar extends Component {
     )
   }
 
-  get profile() {
-    const { me } = profile
-
-    if (me.loading) {
-      return <></>
-    }
-
+  profile = () => {
     return (
       <>
         <div className="media">
@@ -120,13 +110,13 @@ class AuthenticatedNavBar extends Component {
             <figure className="image is-32x32">
               <img
                 className="is-rounded"
-                alt="profile"
-                src={me && me.smallProfileImageUrl}
+                alt="0"
+                src={this.props.me.smallProfileImageUrl}
               />
             </figure>
           </div>
           <div className="media-content">
-            <p className="is-6">{me && me.fullName}</p>
+            <p className="is-6">{this.props.me.fullName}</p>
           </div>
         </div>
       </>
@@ -172,12 +162,12 @@ class AuthenticatedNavBar extends Component {
           <div className="navbar-start">
             {this.assignments}
             <div className="navbar-item has-dropdown is-hoverable">
-              {this.admin}
+              {this.admin()}
             </div>
           </div>
           <div className="navbar-end">
             <div className="navbar-item has-dropdown is-hoverable">
-              <div className="navbar-link">{this.profile}</div>
+              <div className="navbar-link">{this.profile()}</div>
               <div className="navbar-dropdown is-right">{this.profileMenu}</div>
             </div>
           </div>
@@ -187,4 +177,4 @@ class AuthenticatedNavBar extends Component {
   }
 }
 
-export default observer(AuthenticatedNavBar)
+export default AuthenticatedNavBar
