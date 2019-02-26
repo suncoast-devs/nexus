@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import useProfile from '../hooks/useProfile'
 import icon from '../images/icon.svg'
 import cx from 'classnames'
 
-const admin = props => (
+const admin = () => (
   <>
     <div className="navbar-link">Admin</div>
     <div className="navbar-dropdown is-boxed">
@@ -33,7 +34,7 @@ const admin = props => (
   </>
 )
 
-const profile = props => (
+const renderProfile = profile => (
   <>
     <div className="media">
       <div className="media-left">
@@ -41,12 +42,12 @@ const profile = props => (
           <img
             className="is-rounded"
             alt="0"
-            src={props.me.smallProfileImageUrl}
+            src={profile.smallProfileImageUrl}
           />
         </figure>
       </div>
       <div className="media-content">
-        <p className="is-6">{props.me.fullName}</p>
+        <p className="is-6">{profile.fullName}</p>
       </div>
     </div>
   </>
@@ -54,6 +55,7 @@ const profile = props => (
 
 const AuthenticatedNavBar = props => {
   const [active, setActive] = useState(false)
+  const profile = useProfile()
 
   const burger = (
     <div
@@ -120,12 +122,12 @@ const AuthenticatedNavBar = props => {
             Assignments
           </NavLink>
           <div className="navbar-item has-dropdown is-hoverable">
-            {props.me.isAdmin && admin(props)}
+            {profile.isAdmin && admin()}
           </div>
         </div>
         <div className="navbar-end">
           <div className="navbar-item has-dropdown is-hoverable">
-            <div className="navbar-link">{profile(props)}</div>
+            <div className="navbar-link">{renderProfile(profile)}</div>
             <div className="navbar-dropdown is-right">{profileMenu}</div>
           </div>
         </div>

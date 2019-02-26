@@ -1,15 +1,24 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import AuthenticatedNavBar from './AuthenticatedNavBar'
 import UnauthenticatedNavBar from './UnauthenticatedNavBar'
-import useProfile from '../hooks/useProfile'
+
+const EmptyNav = (
+  <nav
+    className="navbar has-shadow is-primary"
+    role="navigation"
+    aria-label="main navigation"
+  />
+)
 
 const NavBar = props => {
-  const me = useProfile()
-
   if (props.auth.isAuthenticated) {
-    return <AuthenticatedNavBar me={me} auth={props.auth} />
+    return (
+      <Suspense fallback={EmptyNav}>
+        <AuthenticatedNavBar auth={props.auth} />
+      </Suspense>
+    )
   } else {
-    return <UnauthenticatedNavBar me={me} auth={props.auth} />
+    return <UnauthenticatedNavBar auth={props.auth} />
   }
 }
 

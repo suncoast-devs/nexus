@@ -24,6 +24,12 @@ const useProfile = () => {
         fullName
         givenName
         familyName
+        additionalName
+        honorificPrefix
+        honorificSuffix
+        nickname
+        shirtSize
+        dietaryNote
         smallProfileImageUrl
       }
     }

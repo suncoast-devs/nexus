@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import QueryContainer from '../containers/QueryContainer'
-import Cohorts from './Cohorts'
+import React from 'react'
+import { useQuery } from 'react-apollo-hooks'
+import gql from 'graphql-tag'
 
-class CohortPage extends Component {
-  listAllCohorts = `{
+const listAllCohorts = gql`
+  {
     cohorts {
       id
       name
@@ -15,24 +15,50 @@ class CohortPage extends Component {
         familyName
       }
     }
-  }`
-
-  render() {
-    return (
-      <section className="section">
-        <div className="container">
-          <h1 className="title">Cohorts</h1>
-        </div>
-        <div className="section">
-          <div className="container">
-            <QueryContainer query={this.listAllCohorts}>
-              <Cohorts />
-            </QueryContainer>
-          </div>
-        </div>
-      </section>
-    )
   }
+`
+
+const CohortPage = props => {
+  const {
+    loading,
+    data: { cohorts }
+  } = useQuery(listAllCohorts)
+
+  if (loading) {
+    return <></>
+  }
+
+  return (
+    <section className="section">
+      <div className="container">
+        <h1 className="title">Cohorts</h1>
+      </div>
+      <div className="section">
+        <div className="container">
+          <table className="table is-bordered is-hoverable is-fullwidth">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>People</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cohorts.map(cohort => (
+                <tr key={cohort.id}>
+                  <td>{cohort.name}</td>
+                  <td>
+                    {cohort.people.map((person, index) => (
+                      <p key={index}>{person.fullName}</p>
+                    ))}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  )
 }
 
 export default CohortPage
