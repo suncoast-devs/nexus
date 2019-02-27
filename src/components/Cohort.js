@@ -58,10 +58,16 @@ const Cohort = props => {
 
   const {
     loading,
+    error,
     data: { cohort }
   } = useQuery(FIND_COHORT, { variables: { id: props.match.params.id } })
 
   if (loading) {
+    return <></>
+  }
+
+  if (error) {
+    history.push('/cohorts')
     return <></>
   }
 

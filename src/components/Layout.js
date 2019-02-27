@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import Callback from './Callback'
 import Home from './Home'
@@ -17,7 +17,7 @@ class Layout extends Component {
     }
 
     return (
-      <>
+      <Switch>
         <Route
           exact
           path="/cohorts/new"
@@ -40,7 +40,7 @@ class Layout extends Component {
             return <Cohorts auth={this.props.auth} {...props} />
           }}
         />
-      </>
+      </Switch>
     )
   }
 
