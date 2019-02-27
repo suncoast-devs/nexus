@@ -3,9 +3,9 @@ import { Route, Switch } from 'react-router-dom'
 
 import Callback from './Callback'
 import Home from './Home'
-import NewCohort from './NewCohort'
-import Cohort from './Cohort'
-import Cohorts from './Cohorts'
+import NewCohort from './cohorts/NewCohort'
+import Cohort from './cohorts/Cohort'
+import Cohorts from './cohorts/Cohorts'
 import Profile from './Profile'
 import NavBar from './NavBar'
 

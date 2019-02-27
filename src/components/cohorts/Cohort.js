@@ -3,9 +3,9 @@ import gql from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo-hooks'
 import { Button, Section, Control, Container, Title, Field } from 'reactbulma'
 
-import history from '../history'
-import formToObject from '../utils/formToObject'
-import { InputField } from './Fields'
+import history from '../../history'
+import formToObject from '../../utils/formToObject'
+import { InputField } from '../Fields'
 
 const FIND_COHORT = gql`
   query cohort($id: ID!) {

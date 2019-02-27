@@ -3,10 +3,10 @@ import gql from 'graphql-tag'
 import { useMutation } from 'react-apollo-hooks'
 import { Button, Section, Control, Container, Title, Field } from 'reactbulma'
 
-import { client } from './Apollo'
-import history from '../history'
-import formToObject from '../utils/formToObject'
-import { InputField } from './Fields'
+import { client } from '../Apollo'
+import history from '../../history'
+import formToObject from '../../utils/formToObject'
+import { InputField } from '../Fields'
 
 const CREATE_COHORT = gql`
   mutation createCohort($cohort: CohortInput!) {
