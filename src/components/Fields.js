@@ -1,19 +1,26 @@
 import React from 'react'
-import { Form } from 'react-bulma-components/full'
+import { Field, Control } from 'reactbulma'
 
 const camel2title = camelCase =>
   camelCase
     .replace(/([A-Z])/g, match => ` ${match}`)
     .replace(/^./, match => match.toUpperCase())
 
+const labelFromProps = props => props.label || camel2title(props.name)
+
+const valueFromProps = props =>
+  props.defaultValue ||
+  (props.defaultObject && props.defaultObject[props.name]) ||
+  null
+
 const InputField = props => {
-  const label = props.label || camel2title(props.name)
-  const defaultValue = props.defaultValue || props.defaultObject[props.name]
+  const label = labelFromProps(props)
+  const defaultValue = valueFromProps(props)
 
   return (
-    <Form.Field>
-      <Form.Label>{label}</Form.Label>
-      <Form.Control>
+    <Field>
+      <label>{label}</label>
+      <Control>
         <input
           className="input"
           name={props.name}
@@ -21,19 +28,19 @@ const InputField = props => {
           type="text"
           placeholder={label}
         />
-      </Form.Control>
-    </Form.Field>
+      </Control>
+    </Field>
   )
 }
 
 const TextAreaField = props => {
-  const label = props.label || camel2title(props.name)
-  const defaultValue = props.defaultValue || props.defaultObject[props.name]
+  const label = labelFromProps(props)
+  const defaultValue = valueFromProps(props)
 
   return (
-    <Form.Field>
-      <Form.Label>{label}</Form.Label>
-      <Form.Control>
+    <Field>
+      <label>{label}</label>
+      <Control>
         <textarea
           className="textarea"
           name={props.name}
@@ -41,19 +48,19 @@ const TextAreaField = props => {
           defaultValue={defaultValue}
           placeholder={label}
         />
-      </Form.Control>
-    </Form.Field>
+      </Control>
+    </Field>
   )
 }
 
 const SelectField = props => {
-  const label = props.label || camel2title(props.name)
-  const defaultValue = props.defaultValue || props.defaultObject[props.name]
+  const label = labelFromProps(props)
+  const defaultValue = valueFromProps(props)
 
   return (
-    <Form.Field>
-      <Form.Label>{label}</Form.Label>
-      <Form.Control>
+    <Field>
+      <label>{label}</label>
+      <Control>
         <div className="select">
           <select name={props.name} defaultValue={defaultValue}>
             {props.options.map((option, index) => (
@@ -63,8 +70,8 @@ const SelectField = props => {
             ))}
           </select>
         </div>
-      </Form.Control>
-    </Form.Field>
+      </Control>
+    </Field>
   )
 }
 

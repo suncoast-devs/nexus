@@ -1,8 +1,9 @@
 import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
+import { Link } from 'react-router-dom'
 
-const listAllCohorts = gql`
+const LIST_COHORTS = gql`
   {
     cohorts {
       id
@@ -18,11 +19,11 @@ const listAllCohorts = gql`
   }
 `
 
-const CohortPage = props => {
+const Cohorts = props => {
   const {
     loading,
     data: { cohorts }
-  } = useQuery(listAllCohorts)
+  } = useQuery(LIST_COHORTS)
 
   if (loading) {
     return <></>
@@ -31,7 +32,14 @@ const CohortPage = props => {
   return (
     <section className="section">
       <div className="container">
-        <h1 className="title">Cohorts</h1>
+        <h1 className="title">
+          Cohorts
+          <span className="is-pulled-right">
+            <Link className="button is-primary" to="/cohorts/new">
+              New
+            </Link>
+          </span>
+        </h1>
       </div>
       <div className="section">
         <div className="container">
@@ -45,7 +53,9 @@ const CohortPage = props => {
             <tbody>
               {cohorts.map(cohort => (
                 <tr key={cohort.id}>
-                  <td>{cohort.name}</td>
+                  <td>
+                    <Link to={`/cohorts/${cohort.id}`}>{cohort.name}</Link>
+                  </td>
                   <td>
                     {cohort.people.map((person, index) => (
                       <p key={index}>{person.fullName}</p>
@@ -61,4 +71,4 @@ const CohortPage = props => {
   )
 }
 
-export default CohortPage
+export default Cohorts

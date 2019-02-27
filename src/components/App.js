@@ -3,7 +3,7 @@ import { Router } from 'react-router-dom'
 
 import auth from '../Auth'
 import history from '../history'
-import Apollo from './Apollo'
+import { Apollo } from './Apollo'
 import Layout from './Layout'
 
 class App extends Component {

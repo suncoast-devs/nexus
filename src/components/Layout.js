@@ -3,7 +3,9 @@ import { Route } from 'react-router-dom'
 
 import Callback from './Callback'
 import Home from './Home'
-import CohortPage from './CohortPage'
+import NewCohort from './NewCohort'
+import Cohort from './Cohort'
+import Cohorts from './Cohorts'
 import Profile from './Profile'
 import NavBar from './NavBar'
 
@@ -17,9 +19,25 @@ class Layout extends Component {
     return (
       <>
         <Route
+          exact
+          path="/cohorts/new"
+          render={props => {
+            return <NewCohort auth={this.props.auth} {...props} />
+          }}
+        />
+
+        <Route
+          path="/cohorts/:id"
+          render={props => {
+            return <Cohort auth={this.props.auth} {...props} />
+          }}
+        />
+
+        <Route
+          exact
           path="/cohorts"
           render={props => {
-            return <CohortPage auth={this.props.auth} {...props} />
+            return <Cohorts auth={this.props.auth} {...props} />
           }}
         />
       </>

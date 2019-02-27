@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ApolloProvider } from 'react-apollo'
-import { ApolloProvider as ApolloProviderHooks } from "react-apollo-hooks";
+import { ApolloProvider as ApolloProviderHooks } from 'react-apollo-hooks'
 import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
@@ -29,4 +29,4 @@ class Apollo extends Component {
   }
 }
 
-export default Apollo
+export { Apollo, client }

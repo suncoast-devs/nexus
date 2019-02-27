@@ -1,13 +1,7 @@
 import React, { Suspense } from 'react'
 import gql from 'graphql-tag'
 import { useMutation } from 'react-apollo-hooks'
-import {
-  Button,
-  Section,
-  Container,
-  Heading,
-  Form
-} from 'react-bulma-components/full'
+import { Field, Control, Button, Section, Container, Title } from 'reactbulma'
 
 import history from '../history'
 import useProfile from '../hooks/useProfile'
@@ -54,7 +48,7 @@ const ProfileForm = props => {
     <form onSubmit={event => submit(event, updateProfileMutation)}>
       <Section>
         <Container>
-          <Heading>Profile</Heading>
+          <Title>Profile</Title>
         </Container>
         <Section>
           <Container>
@@ -84,14 +78,14 @@ const ProfileForm = props => {
             <InputField name="honorificPrefix" defaultObject={profile} />
             <InputField name="honorificSuffix" defaultObject={profile} />
 
-            <Form.Field kind="group">
-              <Form.Control>
-                <Button color="link">Submit</Button>
-              </Form.Control>
-              <Form.Control>
+            <Field grouped>
+              <Control>
+                <Button link>Submit</Button>
+              </Control>
+              <Control>
                 <Button>Cancel</Button>
-              </Form.Control>
-            </Form.Field>
+              </Control>
+            </Field>
           </Container>
         </Section>
       </Section>
