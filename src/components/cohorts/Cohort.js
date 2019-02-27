@@ -1,11 +1,10 @@
 import React from 'react'
 import gql from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo-hooks'
-import { Button, Section, Control, Container, Title, Field } from 'reactbulma'
 
 import history from '../../history'
 import formToObject from '../../utils/formToObject'
-import { InputField } from '../Fields'
+import Form from './Form'
 
 const FIND_COHORT = gql`
   query cohort($id: ID!) {
@@ -72,32 +71,14 @@ const Cohort = props => {
   }
 
   return (
-    <form
+    <Form
       onSubmit={event =>
         submit(event, props.match.params.id, updateCohortMutation)
       }
-    >
-      <Section>
-        <Container>
-          <Title>Edit Cohort</Title>
-        </Container>
-        <Section>
-          <Container>
-            <InputField defaultObject={cohort} name="name" />
-            <InputField defaultObject={cohort} name="description" />
-
-            <Field grouped>
-              <Control>
-                <Button link>Submit</Button>
-              </Control>
-              <Control>
-                <Button onClick={cancel}>Cancel</Button>
-              </Control>
-            </Field>
-          </Container>
-        </Section>
-      </Section>
-    </form>
+      cohort={cohort}
+      onCancel={event => cancel(event)}
+      title="Edit Cohort"
+    />
   )
 }
 
