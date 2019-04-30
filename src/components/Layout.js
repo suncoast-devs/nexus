@@ -4,9 +4,9 @@ import { Route, Switch } from 'react-router-dom'
 import Callback from './Callback'
 import Home from './Home'
 import NewCohort from './cohorts/NewCohort'
-import Cohort from './cohorts/Cohort'
+import EditCohort from './cohorts/EditCohort'
 import Cohorts from './cohorts/Cohorts'
-import Profile from './Profile'
+import EditProfile from './EditProfile'
 import NavBar from './NavBar'
 
 class Layout extends Component {
@@ -29,7 +29,7 @@ class Layout extends Component {
         <Route
           path="/cohorts/:id"
           render={props => {
-            return <Cohort auth={this.props.auth} {...props} />
+            return <EditCohort auth={this.props.auth} {...props} />
           }}
         />
 
@@ -50,7 +50,7 @@ class Layout extends Component {
         <Route
           path="/profile"
           render={props => {
-            return <Profile auth={this.props.auth} {...props} />
+            return <EditProfile auth={this.props.auth} {...props} />
           }}
         />
       </>
@@ -62,11 +62,7 @@ class Layout extends Component {
       <>
         <NavBar auth={this.props.auth} />
 
-        <Route
-          path="/"
-          exact
-          render={props => <Home auth={this.props.auth} {...props} />}
-        />
+        <Route path="/" exact render={props => <Home auth={this.props.auth} {...props} />} />
         <Route
           path="/signout"
           render={props => {

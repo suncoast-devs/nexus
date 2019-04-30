@@ -22,7 +22,7 @@ const submit = (event, cohort) => {
   })
 }
 
-const Cohort = props => {
+const EditCohort = props => {
   const [loadingCohort, cohort] = useModelData(() => CohortModel.find(props.match.params.id))
 
   if (loadingCohort) {
@@ -39,4 +39,4 @@ const Cohort = props => {
   )
 }
 
-export default Cohort
+export default EditCohort

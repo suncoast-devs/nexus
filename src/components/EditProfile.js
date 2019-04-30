@@ -1,6 +1,4 @@
-import React, { Suspense } from 'react'
-import gql from 'graphql-tag'
-import { useMutation } from 'react-apollo-hooks'
+import React from 'react'
 import { Field, Control, Button, Section, Container, Title } from 'reactbulma'
 
 import history from '../history'
@@ -8,44 +6,21 @@ import useProfile from '../hooks/useProfile'
 import formToObject from '../utils/formToObject'
 import { InputField, SelectField, TextAreaField } from './Fields'
 
-const submit = (event, updateProfileMutation) => {
+const submit = (event, profile) => {
   event.preventDefault()
 
-  const variables = { profile: formToObject(event.target) }
+  const updatedProfile = formToObject(event.target, profile)
 
-  updateProfileMutation({
-    variables,
-    update: () => {
-      history.push('/home')
-    }
+  updatedProfile.save().then(() => {
+    history.push('/home')
   })
 }
 
-const UPDATE_PROFILE = gql`
-  mutation UpdateProfile($profile: ProfileInput!) {
-    updateProfile(profile: $profile) {
-      me {
-        id
-        fullName
-        givenName
-        familyName
-        additionalName
-        honorificPrefix
-        honorificSuffix
-        nickname
-        shirtSize
-        dietaryNote
-      }
-    }
-  }
-`
-
-const ProfileForm = props => {
+const EditProfile = props => {
   const profile = useProfile()
-  const updateProfileMutation = useMutation(UPDATE_PROFILE)
 
   return (
-    <form onSubmit={event => submit(event, updateProfileMutation)}>
+    <form onSubmit={event => submit(event, profile)}>
       <Section>
         <Container>
           <Title>Profile</Title>
@@ -66,11 +41,7 @@ const ProfileForm = props => {
               ]}
             />
 
-            <TextAreaField
-              defaultObject={profile}
-              name="dietaryNote"
-              rows={4}
-            />
+            <TextAreaField defaultObject={profile} name="dietaryNote" rows={4} />
 
             <InputField name="givenName" defaultObject={profile} />
             <InputField name="familyName" defaultObject={profile} />
@@ -93,12 +64,4 @@ const ProfileForm = props => {
   )
 }
 
-const Profile = () => {
-  return (
-    <Suspense fallback={null}>
-      <ProfileForm />
-    </Suspense>
-  )
-}
-
-export default Profile
+export default EditProfile

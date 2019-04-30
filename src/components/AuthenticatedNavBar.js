@@ -8,26 +8,14 @@ const admin = () => (
   <>
     <div className="navbar-link">Admin</div>
     <div className="navbar-dropdown is-boxed">
-      <NavLink
-        className="navbar-item"
-        activeClassName="is-active"
-        to="/attendance"
-      >
+      <NavLink className="navbar-item" activeClassName="is-active" to="/attendance">
         Attendance
       </NavLink>
       <hr className="navbar-divider" />
-      <NavLink
-        className="navbar-item"
-        activeClassName="is-active"
-        to="/cohorts"
-      >
+      <NavLink className="navbar-item" activeClassName="is-active" to="/cohorts">
         Cohorts
       </NavLink>
-      <NavLink
-        className="navbar-item"
-        activeClassName="is-active"
-        to="/invitations"
-      >
+      <NavLink className="navbar-item" activeClassName="is-active" to="/invitations">
         Invitations
       </NavLink>
     </div>
@@ -39,11 +27,7 @@ const renderProfile = profile => (
     <div className="media">
       <div className="media-left">
         <figure className="image is-32x32">
-          <img
-            className="is-rounded"
-            alt="0"
-            src={profile.smallProfileImageUrl}
-          />
+          <img className="is-rounded" alt="0" src={profile.smallProfileImageUrl} />
         </figure>
       </div>
       <div className="media-content">
@@ -75,55 +59,33 @@ const AuthenticatedNavBar = props => {
 
   const profileMenu = (
     <>
-      <NavLink
-        className="navbar-item"
-        activeClassName="is-active"
-        to="/profile"
-      >
+      <NavLink className="navbar-item" activeClassName="is-active" to="/profile">
         Profile
       </NavLink>
       <Link to="/signout" className="navbar-item">
         Sign Out
       </Link>
       <hr className="navbar-divider" />
-      <a
-        className="navbar-item"
-        href="https://github.com/suncoast-devs/nexus/issues"
-      >
+      <a className="navbar-item" href="https://github.com/suncoast-devs/nexus/issues">
         Report Issue
       </a>
     </>
   )
 
   return (
-    <nav
-      className="navbar has-shadow is-primary"
-      role="navigation"
-      aria-label="main navigation"
-    >
+    <nav className="navbar has-shadow is-primary" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
         <Link to="/" className="navbar-item">
-          <img
-            src={icon}
-            alt="Suncoast Developers Guild"
-            height="28"
-            width="28"
-          />
+          <img src={icon} alt="Suncoast Developers Guild" height="28" width="28" />
         </Link>
         {burger}
       </div>
       <div className={cx('navbar-menu', { 'is-active': active })}>
         <div className="navbar-start">
-          <NavLink
-            className="navbar-item"
-            activeClassName="is-active"
-            to="/assignments"
-          >
+          <NavLink className="navbar-item" activeClassName="is-active" to="/assignments">
             Assignments
           </NavLink>
-          <div className="navbar-item has-dropdown is-hoverable">
-            {profile.isAdmin && admin()}
-          </div>
+          <div className="navbar-item has-dropdown is-hoverable">{profile.isAdmin && admin()}</div>
         </div>
         <div className="navbar-end">
           <div className="navbar-item has-dropdown is-hoverable">

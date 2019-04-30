@@ -6,6 +6,7 @@ const Person = ApplicationRecord.extend({
     jsonapiType: 'people'
   },
   attrs: {
+    isAdmin: attr(),
     givenName: attr(),
     fullName: attr(),
     familyName: attr(),
@@ -14,7 +15,8 @@ const Person = ApplicationRecord.extend({
     honorificSuffix: attr(),
     nickname: attr(),
     shirtSize: attr(),
-    dietaryNote: attr()
+    dietaryNote: attr(),
+    smallProfileImageUrl: attr()
   }
 })
 
