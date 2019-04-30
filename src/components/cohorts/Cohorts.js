@@ -1,31 +1,16 @@
 import React from 'react'
-import { useQuery } from 'react-apollo-hooks'
-import gql from 'graphql-tag'
 import { Link } from 'react-router-dom'
+import Cohort from '../models/Cohort'
+import useModelData from '../../hooks/useModelData'
 
-const LIST_COHORTS = gql`
-  {
-    cohorts {
-      id
-      name
-      description
-      people {
-        id
-        fullName
-        givenName
-        familyName
-      }
-    }
-  }
-`
+const Cohorts = () => {
+  const [loadingCohorts, cohorts] = useModelData(() =>
+    Cohort.includes('people')
+      .order({ name: 'asc' })
+      .all()
+  )
 
-const Cohorts = props => {
-  const {
-    loading,
-    data: { cohorts }
-  } = useQuery(LIST_COHORTS)
-
-  if (loading) {
+  if (loadingCohorts) {
     return <></>
   }
 
@@ -56,11 +41,7 @@ const Cohorts = props => {
                   <td>
                     <Link to={`/cohorts/${cohort.id}`}>{cohort.name}</Link>
                   </td>
-                  <td>
-                    {cohort.people.map((person, index) => (
-                      <p key={index}>{person.fullName}</p>
-                    ))}
-                  </td>
+                  <td>{cohort.people && cohort.people.map((person, index) => <p key={index}>{person.fullName}</p>)}</td>
                 </tr>
               ))}
             </tbody>

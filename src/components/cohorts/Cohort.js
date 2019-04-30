@@ -1,80 +1,37 @@
 import React from 'react'
-import gql from 'graphql-tag'
-import { useMutation, useQuery } from 'react-apollo-hooks'
+import CohortModel from '../models/Cohort'
+import useModelData from '../../hooks/useModelData'
 
 import history from '../../history'
 import formToObject from '../../utils/formToObject'
 import Form from './Form'
 
-const FIND_COHORT = gql`
-  query cohort($id: ID!) {
-    cohort(id: $id) {
-      id
-      name
-      description
-    }
-  }
-`
-
-const UPDATE_COHORT = gql`
-  mutation updateCohort($id: ID!, $cohort: CohortInput!) {
-    updateCohort(id: $id, cohort: $cohort) {
-      cohort {
-        id
-        name
-        description
-        people {
-          id
-          fullName
-          givenName
-          familyName
-        }
-      }
-    }
-  }
-`
 const cancel = event => {
   event.preventDefault()
 
   history.push('/cohorts')
 }
 
-const submit = (event, id, updateCohortMutation) => {
+const submit = (event, cohort) => {
   event.preventDefault()
 
-  const variables = { id, cohort: formToObject(event.target) }
+  const updatedCohort = formToObject(event.target, cohort)
 
-  updateCohortMutation({
-    variables,
-    update: () => {
-      history.push('/cohorts')
-    }
+  updatedCohort.save().then(() => {
+    history.push('/cohorts')
   })
 }
 
 const Cohort = props => {
-  const updateCohortMutation = useMutation(UPDATE_COHORT)
+  const [loadingCohort, cohort] = useModelData(() => CohortModel.find(props.match.params.id))
 
-  const {
-    loading,
-    error,
-    data: { cohort }
-  } = useQuery(FIND_COHORT, { variables: { id: props.match.params.id } })
-
-  if (loading) {
-    return <></>
-  }
-
-  if (error) {
-    history.push('/cohorts')
+  if (loadingCohort) {
     return <></>
   }
 
   return (
     <Form
-      onSubmit={event =>
-        submit(event, props.match.params.id, updateCohortMutation)
-      }
+      onSubmit={event => submit(event, cohort)}
       cohort={cohort}
       onCancel={event => cancel(event)}
       title="Edit Cohort"
