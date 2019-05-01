@@ -10,12 +10,10 @@ import EditProfile from './EditProfile'
 import AuthenticatedNavBar from './AuthenticatedNavBar'
 import UnauthenticatedNavBar from './UnauthenticatedNavBar'
 
-const Layout = props => {
-  const { profile, forceUpdateProfile } = props
-
+const Layout = ({ profile, forceUpdateProfile, auth }) => {
   const adminRoutes = () => {
     // TODO: check if the current user is an admin and render these routes
-    if (!props.auth.isAuthenticated) {
+    if (!auth.isAuthenticated) {
       return <></>
     }
 
@@ -25,14 +23,14 @@ const Layout = props => {
           exact
           path="/cohorts/new"
           render={props => {
-            return <NewCohort auth={props.auth} {...props} />
+            return <NewCohort auth={auth} {...props} />
           }}
         />
 
         <Route
           path="/cohorts/:id"
           render={props => {
-            return <EditCohort auth={props.auth} {...props} />
+            return <EditCohort auth={auth} {...props} />
           }}
         />
 
@@ -40,7 +38,7 @@ const Layout = props => {
           exact
           path="/cohorts"
           render={props => {
-            return <Cohorts auth={props.auth} {...props} />
+            return <Cohorts auth={auth} {...props} />
           }}
         />
       </Switch>
@@ -53,9 +51,7 @@ const Layout = props => {
         <Route
           path="/profile"
           render={props => {
-            return (
-              <EditProfile profile={profile} forceUpdateProfile={forceUpdateProfile} auth={props.auth} {...props} />
-            )
+            return <EditProfile profile={profile} forceUpdateProfile={forceUpdateProfile} auth={auth} {...props} />
           }}
         />
       </>
@@ -63,10 +59,10 @@ const Layout = props => {
   }
 
   const navbar = () => {
-    if (props.auth.isAuthenticated) {
-      return <AuthenticatedNavBar profile={props.profile} auth={props.auth} />
+    if (auth.isAuthenticated) {
+      return <AuthenticatedNavBar profile={profile} auth={auth} />
     } else {
-      return <UnauthenticatedNavBar auth={props.auth} />
+      return <UnauthenticatedNavBar auth={auth} />
     }
   }
 
@@ -74,18 +70,18 @@ const Layout = props => {
     <>
       {navbar()}
 
-      <Route path="/" exact render={props => <Home isAuthenticated={props.auth.isAuthenticated} />} />
+      <Route path="/" exact render={props => <Home isAuthenticated={auth.isAuthenticated} />} />
       <Route
         path="/signout"
         render={props => {
-          props.auth.logout()
+          auth.logout()
           return <Callback {...props} />
         }}
       />
       <Route
         path="/callback/:jwt"
         render={props => {
-          props.auth.handleAuthentication(props.match.params.jwt)
+          auth.handleAuthentication(props.match.params.jwt)
 
           return <Callback {...props} />
         }}
