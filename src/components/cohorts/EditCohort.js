@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Section, Button, Container } from 'reactbulma'
+import { Section, Container } from 'reactbulma'
 
 import { Cohort, Program, Unit, StudentEnrollment } from '../models'
 import useModelData from '../../hooks/useModelData'
@@ -8,34 +8,7 @@ import history from '../../history'
 import formToObject from '../../utils/formToObject'
 import Form from './Form'
 import PersonDropDown from '../PersonDropDown'
-
-const DeleteButton = ({ onClick }) => (
-  <span className="icon">
-    <a
-      className="has-text-danger"
-      onClick={event => {
-        event.preventDefault()
-        onClick()
-      }}
-    >
-      <i className="fas fa-minus-square" />
-    </a>
-  </span>
-)
-
-const AddButton = ({ onClick }) => (
-  <span className="icon">
-    <a
-      className="has-text-success"
-      onClick={event => {
-        event.preventDefault()
-        onClick()
-      }}
-    >
-      <i className="fas fa-plus-square" />
-    </a>
-  </span>
-)
+import { AddButton, DeleteButton } from '../Buttons'
 
 const EditUnits = ({ cohort }) => {
   const [loadingPrograms, programs] = useModelData(() => Program.all())
