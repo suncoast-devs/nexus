@@ -4,10 +4,12 @@ import Select from 'react-select'
 import useModelData from '../hooks/useModelData'
 import Person from './models/Person'
 
-const PersonDropDown = ({ onSelect, isMulti, isSearchable }) => {
+const PersonDropDown = ({ onSelect, isMulti, isSearchable, excludedIDs = [] }) => {
   const [loadingPeople, people] = useModelData(() => Person.all())
 
-  const options = people.map(person => ({ value: person, label: person.fullName }))
+  const options = people
+    .filter(person => !excludedIDs.includes(person.id))
+    .map(person => ({ value: person, label: person.fullName }))
 
   return (
     <Select

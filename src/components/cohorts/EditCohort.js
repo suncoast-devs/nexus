@@ -85,6 +85,7 @@ const EditUnits = ({ cohort }) => {
                   onSelect={people => {
                     setNewPeople(people)
                   }}
+                  excludedIDs={unit.studentEnrollments.map(enrollment => enrollment.person.id)}
                 />
               </div>
             </div>
