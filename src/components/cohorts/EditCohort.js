@@ -95,15 +95,11 @@ const EditUnits = ({ cohort }) => {
     )
   }
 
-  return (
-    <>
-      {programs.map(program => {
-        const unit = units.find(unit => unit.program.id === program.id)
+  return programs.map(program => {
+    const unit = units.find(unit => unit.program.id === program.id)
 
-        return <UnitDetails key={program.id} program={program} unit={unit} />
-      })}
-    </>
-  )
+    return <UnitDetails key={program.id} program={program} unit={unit} />
+  })
 }
 
 const EditCohort = props => {
