@@ -77,9 +77,9 @@ const EditUnits = ({ cohort }) => {
               <Person key={studentEnrollment.id} studentEnrollment={studentEnrollment} />
             ))}
             <div className="panel-block">
-              <AddButton onClick={addPeople} />
               <div style={{ flexGrow: 1 }}>
                 <PersonDropDown
+                  placeholder="Select people to add..."
                   isSearchable={true}
                   isMulti={true}
                   onSelect={people => {
@@ -88,6 +88,7 @@ const EditUnits = ({ cohort }) => {
                   excludedIDs={unit.studentEnrollments.map(enrollment => enrollment.person.id)}
                 />
               </div>
+              <AddButton onClick={addPeople} />
             </div>
           </>
         )}

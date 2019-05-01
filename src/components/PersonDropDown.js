@@ -4,7 +4,7 @@ import Select from 'react-select'
 import useModelData from '../hooks/useModelData'
 import Person from './models/Person'
 
-const PersonDropDown = ({ onSelect, isMulti, isSearchable, excludedIDs = [] }) => {
+const PersonDropDown = ({ onSelect, placeholder, isMulti, isSearchable, excludedIDs = [] }) => {
   // eslint-disable-next-line
   const [loadingPeople, people] = useModelData(() => Person.all())
 
@@ -14,6 +14,7 @@ const PersonDropDown = ({ onSelect, isMulti, isSearchable, excludedIDs = [] }) =
 
   return (
     <Select
+      placeholder={placeholder}
       isSearchable={isSearchable}
       isMulti={isMulti}
       getOptionValue={option => {
