@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
 import Callback from './Callback'
@@ -7,12 +7,15 @@ import NewCohort from './cohorts/NewCohort'
 import EditCohort from './cohorts/EditCohort'
 import Cohorts from './cohorts/Cohorts'
 import EditProfile from './EditProfile'
-import NavBar from './NavBar'
+import AuthenticatedNavBar from './AuthenticatedNavBar'
+import UnauthenticatedNavBar from './UnauthenticatedNavBar'
 
-class Layout extends Component {
-  get adminRoutes() {
+const Layout = props => {
+  const { profile, forceUpdateProfile } = props
+
+  const adminRoutes = () => {
     // TODO: check if the current user is an admin and render these routes
-    if (!this.props.auth.isAuthenticated) {
+    if (!props.auth.isAuthenticated) {
       return <></>
     }
 
@@ -22,14 +25,14 @@ class Layout extends Component {
           exact
           path="/cohorts/new"
           render={props => {
-            return <NewCohort auth={this.props.auth} {...props} />
+            return <NewCohort auth={props.auth} {...props} />
           }}
         />
 
         <Route
           path="/cohorts/:id"
           render={props => {
-            return <EditCohort auth={this.props.auth} {...props} />
+            return <EditCohort auth={props.auth} {...props} />
           }}
         />
 
@@ -37,52 +40,60 @@ class Layout extends Component {
           exact
           path="/cohorts"
           render={props => {
-            return <Cohorts auth={this.props.auth} {...props} />
+            return <Cohorts auth={props.auth} {...props} />
           }}
         />
       </Switch>
     )
   }
 
-  get userRoutes() {
+  const userRoutes = () => {
     return (
       <>
         <Route
           path="/profile"
           render={props => {
-            return <EditProfile auth={this.props.auth} {...props} />
+            return (
+              <EditProfile profile={profile} forceUpdateProfile={forceUpdateProfile} auth={props.auth} {...props} />
+            )
           }}
         />
       </>
     )
   }
 
-  render() {
-    return (
-      <>
-        <NavBar auth={this.props.auth} />
-
-        <Route path="/" exact render={props => <Home auth={this.props.auth} {...props} />} />
-        <Route
-          path="/signout"
-          render={props => {
-            this.props.auth.logout()
-            return <Callback {...props} />
-          }}
-        />
-        <Route
-          path="/callback/:jwt"
-          render={props => {
-            this.props.auth.handleAuthentication(props.match.params.jwt)
-
-            return <Callback {...props} />
-          }}
-        />
-        {this.adminRoutes}
-        {this.userRoutes}
-      </>
-    )
+  const navbar = () => {
+    if (props.auth.isAuthenticated) {
+      return <AuthenticatedNavBar profile={props.profile} auth={props.auth} />
+    } else {
+      return <UnauthenticatedNavBar auth={props.auth} />
+    }
   }
+
+  return (
+    <>
+      {navbar()}
+
+      <Route path="/" exact render={props => <Home auth={props.auth} {...props} />} />
+      <Route
+        path="/signout"
+        render={props => {
+          props.auth.logout()
+          return <Callback {...props} />
+        }}
+      />
+      <Route
+        path="/callback/:jwt"
+        render={props => {
+          props.auth.handleAuthentication(props.match.params.jwt)
+
+          return <Callback {...props} />
+        }}
+      />
+      {adminRoutes()}
+      {userRoutes(forceUpdateProfile)}
+    </>
+  )
 }
 
 export default Layout

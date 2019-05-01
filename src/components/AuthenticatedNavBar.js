@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import useProfile from '../hooks/useProfile'
 import icon from '../images/icon.svg'
 import cx from 'classnames'
 
@@ -39,7 +38,7 @@ const renderProfile = profile => (
 
 const AuthenticatedNavBar = props => {
   const [active, setActive] = useState(false)
-  const profile = useProfile()
+  const { profile } = props
 
   const burger = (
     <div

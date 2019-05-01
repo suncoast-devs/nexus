@@ -6,21 +6,26 @@ import useProfile from '../hooks/useProfile'
 import formToObject from '../utils/formToObject'
 import { InputField, SelectField, TextAreaField } from './Fields'
 
-const submit = (event, profile) => {
-  event.preventDefault()
-
-  const updatedProfile = formToObject(event.target, profile)
-
-  updatedProfile.save().then(() => {
-    history.push('/home')
-  })
-}
-
 const EditProfile = props => {
-  const profile = useProfile()
+  const { profile, forceUpdateProfile } = props
+
+  const submit = event => {
+    event.preventDefault()
+
+    const updatedProfile = formToObject(event.target, profile)
+
+    updatedProfile.save().then(() => {
+      forceUpdateProfile()
+      history.push('/home')
+    })
+  }
 
   return (
-    <form onSubmit={event => submit(event, profile)}>
+    <form
+      onSubmit={event => {
+        submit(event)
+      }}
+    >
       <Section>
         <Container>
           <Title>Profile</Title>
