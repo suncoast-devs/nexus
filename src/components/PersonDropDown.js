@@ -7,10 +7,6 @@ import Person from './models/Person'
 const PersonDropDown = ({ onSelect, isMulti, isSearchable }) => {
   const [loadingPeople, people] = useModelData(() => Person.all())
 
-  if (loadingPeople) {
-    return <></>
-  }
-
   const options = people.map(person => ({ value: person, label: person.fullName }))
 
   return (
