@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Select from 'react-select'
 
 import useModelData from '../hooks/useModelData'
 import Person from './models/Person'
 
 const PersonDropDown = ({ onSelect, isMulti, isSearchable, excludedIDs = [] }) => {
+  // eslint-disable-next-line
   const [loadingPeople, people] = useModelData(() => Person.all())
 
   const options = people

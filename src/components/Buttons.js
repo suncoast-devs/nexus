@@ -1,30 +1,14 @@
 import React from 'react'
 
 const DeleteButton = ({ onClick }) => (
-  <span className="icon">
-    <a
-      className="has-text-danger"
-      onClick={event => {
-        event.preventDefault()
-        onClick()
-      }}
-    >
-      <i className="fas fa-minus-square" />
-    </a>
+  <span className="icon has-text-danger" onClick={onClick}>
+    <i className="fas fa-minus-square" />
   </span>
 )
 
 const AddButton = ({ onClick }) => (
-  <span className="icon">
-    <a
-      className="has-text-success"
-      onClick={event => {
-        event.preventDefault()
-        onClick()
-      }}
-    >
-      <i className="fas fa-plus-square" />
-    </a>
+  <span className="icon has-text-success" onClick={onClick}>
+    <i className="fas fa-plus-square" />
   </span>
 )
 
