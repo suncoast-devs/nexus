@@ -74,7 +74,7 @@ const Layout = props => {
     <>
       {navbar()}
 
-      <Route path="/" exact render={props => <Home auth={props.auth} {...props} />} />
+      <Route path="/" exact render={props => <Home isAuthenticated={props.auth.isAuthenticated} />} />
       <Route
         path="/signout"
         render={props => {
