@@ -1,6 +1,7 @@
 import ApplicationRecord from './ApplicationRecord'
 import { attr, hasMany } from 'spraypaint'
 import Person from './Person' // Important to load the associated model
+import Unit from './Unit' // Important to load the associated model
 
 const Cohort = ApplicationRecord.extend({
   static: {
@@ -10,7 +11,8 @@ const Cohort = ApplicationRecord.extend({
   attrs: {
     name: attr(),
     description: attr(),
-    people: hasMany()
+    people: hasMany(),
+    units: hasMany()
   }
 })
 

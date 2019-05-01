@@ -20,3 +20,7 @@ $link: $sea;
 $text: $asphalt;
 
 @import '~bulma/bulma';
+
+.checkbox input {
+  margin-right: 0.5rem;
+}
