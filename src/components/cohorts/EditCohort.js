@@ -1,37 +1,47 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Section, Button, Container } from 'reactbulma'
 
-import Cohort from '../models/Cohort'
-import Program from '../models/Program'
-import Unit from '../models/Unit'
+import { Cohort, Program, Unit, StudentEnrollment } from '../models'
 import useModelData from '../../hooks/useModelData'
 
 import history from '../../history'
 import formToObject from '../../utils/formToObject'
 import Form from './Form'
+import PersonDropDown from '../PersonDropDown'
 
-const cancel = event => {
-  event.preventDefault()
+const DeleteButton = ({ onClick }) => (
+  <span className="icon">
+    <a
+      className="has-text-danger"
+      onClick={event => {
+        event.preventDefault()
+        onClick()
+      }}
+    >
+      <i className="fas fa-minus-square" />
+    </a>
+  </span>
+)
 
-  history.push('/cohorts')
-}
+const AddButton = ({ onClick }) => (
+  <span className="icon">
+    <a
+      className="has-text-success"
+      onClick={event => {
+        event.preventDefault()
+        onClick()
+      }}
+    >
+      <i className="fas fa-plus-square" />
+    </a>
+  </span>
+)
 
-const submit = (event, cohort) => {
-  event.preventDefault()
-
-  const updatedCohort = formToObject(event.target, cohort)
-
-  updatedCohort.save().then(() => {
-    history.push('/cohorts')
-  })
-}
-
-const EditUnits = props => {
-  const { cohort } = props
-
+const EditUnits = ({ cohort }) => {
   const [loadingPrograms, programs] = useModelData(() => Program.all())
+
   const [loadingUnits, units, forceUpdateUnits] = useModelData(() =>
-    Unit.includes('program')
+    Unit.includes(['program', { student_enrollments: 'person' }])
       .where({ cohort_id: cohort.id })
       .all()
   )
@@ -40,84 +50,126 @@ const EditUnits = props => {
     return <></>
   }
 
-  const button = (unit, program) => {
-    if (unit) {
-      return (
-        <Button
-          danger
-          onClick={() => {
-            unit.destroy().then(response => {
-              forceUpdateUnits()
-            })
-          }}
-        >
-          X
-        </Button>
-      )
-    } else {
-      return (
-        <Button
-          link
-          onClick={() => {
-            // Why do we have to construct a new unit this way?
-            const unit = new Unit()
-            unit.cohort_id = cohort.id
-            unit.program_id = program.id
+  const Person = ({ studentEnrollment }) => (
+    <div key={studentEnrollment.id} className="panel-block">
+      <nav className="level">
+        <div className="level-left">
+          <div className="level-item">
+            <DeleteButton onClick={() => studentEnrollment.destroy().then(forceUpdateUnits)} />
+          </div>
+        </div>
+        <div className="level-right">{studentEnrollment.person.fullName}</div>
+      </nav>
+    </div>
+  )
 
-            unit.save().then(response => {
-              forceUpdateUnits()
-            })
-          }}
-        >
-          +
-        </Button>
-      )
+  const UnitDetails = ({ program, unit }) => {
+    const [newPeople, setNewPeople] = useState([])
+
+    const addPeople = () => {
+      const promises = newPeople.map(person => {
+        const studentEnrollment = new StudentEnrollment()
+        studentEnrollment.unit_id = unit.id
+        studentEnrollment.person_id = person.id
+        return studentEnrollment.save()
+      })
+
+      Promise.all(promises).then(forceUpdateUnits)
     }
+
+    const addUnit = () => {
+      // Why do we have to construct a new unit this way?
+      const unit = new Unit()
+      unit.cohort_id = cohort.id
+      unit.program_id = program.id
+
+      unit.save().then(forceUpdateUnits)
+    }
+
+    const deleteUnit = () => {
+      unit.destroy().then(forceUpdateUnits)
+    }
+
+    return (
+      <nav className="panel">
+        <p className="panel-heading">
+          {program.title}
+          <span className="is-pulled-right">
+            {unit ? <DeleteButton onClick={deleteUnit} /> : <AddButton onClick={addUnit} />}
+          </span>
+        </p>
+        {unit && (
+          <>
+            {unit.studentEnrollments.map(studentEnrollment => (
+              <Person key={studentEnrollment.id} studentEnrollment={studentEnrollment} />
+            ))}
+            <div className="panel-block">
+              <AddButton onClick={addPeople} />
+              <div style={{ flexGrow: 1 }}>
+                <PersonDropDown
+                  isSearchable={true}
+                  isMulti={true}
+                  onSelect={people => {
+                    setNewPeople(people)
+                  }}
+                />
+              </div>
+            </div>
+          </>
+        )}
+      </nav>
+    )
   }
 
   return (
-    <table className="table is-bordered is-hoverable is-fullwidth">
-      <tbody>
-        {programs.map(program => {
-          const unit = units.find(unit => unit.program.id === program.id)
+    <>
+      {programs.map(program => {
+        const unit = units.find(unit => unit.program.id === program.id)
 
-          return (
-            <tr key={program.id}>
-              <td>
-                {program.title}
-                <span className="is-pulled-right">{button(unit, program)}</span>
-              </td>
-            </tr>
-          )
-        })}
-      </tbody>
-    </table>
+        return <UnitDetails key={program.id} program={program} unit={unit} />
+      })}
+    </>
   )
 }
 
 const EditCohort = props => {
-  const [loadingCohort, cohort] = useModelData(() => Cohort.includes('units').find(props.match.params.id))
+  const {
+    match: {
+      params: { id }
+    }
+  } = props
+
+  const [loadingCohort, cohort] = useModelData(() => Cohort.find(id))
+
+  const cancel = event => {
+    event.preventDefault()
+
+    history.push('/cohorts')
+  }
+
+  const submit = (event, cohort) => {
+    event.preventDefault()
+
+    const updatedCohort = formToObject(event.target, cohort)
+
+    updatedCohort.save().then(() => {
+      history.push('/cohorts')
+    })
+  }
 
   if (loadingCohort) {
     return <></>
   }
 
   return (
-    <Section>
-      <Container>
-        <Section>
-          <Form
-            onSubmit={event => submit(event, cohort)}
-            cohort={cohort}
-            onCancel={event => cancel(event)}
-            title="Edit Cohort"
-          />
-        </Section>
-        <Section>
-          <EditUnits cohort={cohort} />
-        </Section>
-      </Container>
-    </Section>
+    <Container>
+      <Section>
+        <Form onSubmit={event => submit(event, cohort)} cohort={cohort} onCancel={event => cancel(event)} title="" />
+      </Section>
+      <Section>
+        <EditUnits cohort={cohort} />{' '}
+      </Section>
+    </Container>
   )
 }
 

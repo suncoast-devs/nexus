@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Cohort from '../models/Cohort'
+import { Cohort } from '../models'
 import useModelData from '../../hooks/useModelData'
 
 const Cohorts = () => {

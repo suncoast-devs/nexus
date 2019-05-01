@@ -1,5 +1,5 @@
 import React from 'react'
-import CohortModel from '../models/Cohort'
+import { Cohort } from '../models'
 
 import history from '../../history'
 import formToObject from '../../utils/formToObject'
@@ -14,7 +14,7 @@ const cancel = event => {
 const submit = event => {
   event.preventDefault()
 
-  const updatedCohort = formToObject(event.target, new CohortModel({}))
+  const updatedCohort = formToObject(event.target, new Cohort({}))
 
   updatedCohort.save().then(() => {
     history.push('/cohorts')

@@ -2,7 +2,6 @@ import React from 'react'
 import { Field, Control, Button, Section, Container, Title } from 'reactbulma'
 
 import history from '../history'
-import useProfile from '../hooks/useProfile'
 import formToObject from '../utils/formToObject'
 import { InputField, SelectField, TextAreaField } from './Fields'
 

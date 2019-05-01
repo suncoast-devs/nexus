@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import useForceUpdate from './useForceUpdate'
 
 const useModelData = queryFunction => {
   const [forceUpdate, setForceUpdate] = useState(true) // boolean state
