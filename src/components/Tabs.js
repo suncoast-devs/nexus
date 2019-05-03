@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
 const Tabs = props => {
-  const headers = props.children.filter(child => child.type.name === 'TabHeader')
-  const tabs = props.children.filter(child => child.type.name === 'Tab')
+  const headers = props.children.filter((child, index) => index % 2 === 0)
+  const tabs = props.children.filter((child, index) => index % 2 === 1)
   const [activeTab, setActiveTab] = useState(0)
 
   return (
