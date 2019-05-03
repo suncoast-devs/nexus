@@ -7,10 +7,6 @@ const admin = () => (
   <>
     <div className="navbar-link">Admin</div>
     <div className="navbar-dropdown is-boxed">
-      <NavLink className="navbar-item" activeClassName="is-active" to="/attendance">
-        Attendance
-      </NavLink>
-      <hr className="navbar-divider" />
       <NavLink className="navbar-item" activeClassName="is-active" to="/cohorts">
         Cohorts
       </NavLink>

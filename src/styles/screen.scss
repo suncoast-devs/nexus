@@ -24,3 +24,21 @@ $text: $asphalt;
 .checkbox input {
   margin-right: 0.5rem;
 }
+
+.attendance-table {
+  overflow-x: scroll;
+  margin-left: 4rem;
+
+  td {
+    cursor: pointer;
+  }
+
+  tr td:first-child,
+  tr th:first-child {
+    background-color: white;
+    position: sticky;
+    left: 0;
+    white-space: nowrap;
+    z-index: 1;
+  }
+}

@@ -9,6 +9,7 @@ import Cohorts from './cohorts/Cohorts'
 import EditProfile from './EditProfile'
 import AuthenticatedNavBar from './AuthenticatedNavBar'
 import UnauthenticatedNavBar from './UnauthenticatedNavBar'
+import Attendance from './attendance/Attendance'
 
 const Layout = ({ profile, forceUpdateProfile, auth }) => {
   const adminRoutes = () => {
@@ -19,6 +20,7 @@ const Layout = ({ profile, forceUpdateProfile, auth }) => {
 
     return (
       <Switch>
+        <Route exact path="/cohorts/:id/attendance" render={props => <Attendance auth={auth} {...props} />} />
         <Route
           exact
           path="/cohorts/new"

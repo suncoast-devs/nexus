@@ -39,7 +39,18 @@ const Cohorts = () => {
               {cohorts.map(cohort => (
                 <tr key={cohort.id}>
                   <td>
-                    <Link to={`/cohorts/${cohort.id}`}>{cohort.name}</Link>
+                    <div className="level">
+                      <div className="level-left">
+                        <div className="level-item">
+                          <Link to={`/cohorts/${cohort.id}`}>{cohort.name}</Link>
+                        </div>
+                      </div>
+                      <div className="level-right">
+                        <div className="level-item">
+                          <Link to={`/cohorts/${cohort.id}/attendance`}>Attendance</Link>
+                        </div>
+                      </div>
+                    </div>
                   </td>
                   <td>{cohort.people && cohort.people.map((person, index) => <p key={index}>{person.fullName}</p>)}</td>
                 </tr>
