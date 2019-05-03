@@ -38,7 +38,7 @@ const Modal = ({ selected, setSelected, reload }) => {
   return (
     <div className="modal is-active">
       <div className="modal-background" />
-      <div className="modal-card" style={{ width: '70vw' }}>
+      <div className="modal-card">
         <header className="modal-card-head">
           <p className="modal-card-title">
             Attendance for <span className="has-text-primary">{selected.person.fullName}</span> on{' '}
@@ -47,53 +47,66 @@ const Modal = ({ selected, setSelected, reload }) => {
           <button className="delete" aria-label="close" onClick={close} />
         </header>
         <section className="modal-card-body">
-          <div className="field">
-            <div className="control">
-              <input
-                className="input"
-                type="text"
-                value={note}
-                onChange={event => setNote(event.target.value)}
-                placeholder="Note.."
-              />
+          <section className="section">
+            <div className="columns">
+              <div className="column">
+                <div className="field">
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="text"
+                      value={note}
+                      onChange={event => setNote(event.target.value)}
+                      placeholder="Note.."
+                    />
+                  </div>
+                </div>
+                {statuses.filter(status => status.key !== ' ').map(status => (
+                  <div
+                    key={status.key}
+                    className={`${statusKey === status.key ? 'has-text-black' : 'has-text-grey-light'}`}
+                    style={{
+                      padding: '0.2rem',
+                      cursor: 'pointer',
+                      border: statusKey === status.key ? '2px dashed #b5b5b5' : '2px solid transparent'
+                    }}
+                    onClick={() => setStatusKey(status.key)}
+                  >
+                    <span
+                      className={`icon is-medium ${
+                        statusKey === status.key ? status.className : 'has-background-grey-light'
+                      } has-text-white has-text-centered`}
+                    >
+                      {status.icon}
+                    </span>
+                    {status.text}
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          </section>
+
           <div className="level">
             <div className="level-left">
-              {statuses.filter(status => status.key !== ' ').map(status => (
-                <div
-                  key={status.key}
-                  className={`level-item ${statusKey === status.key ? 'has-text-black' : 'has-text-grey-light'}`}
-                  style={{
-                    padding: '0.2rem',
-                    cursor: 'pointer',
-                    border: statusKey === status.key ? '2px dashed #b5b5b5' : '2px solid transparent'
-                  }}
-                  onClick={() => setStatusKey(status.key)}
-                >
-                  <span
-                    className={`icon is-medium ${
-                      statusKey === status.key ? status.className : 'has-background-grey-light'
-                    } has-text-white has-text-centered`}
-                  >
-                    {status.icon}
-                  </span>
-                  {status.text}
-                </div>
-              ))}
+              <div className="level-item">
+                <button className="button is-success" onClick={save}>
+                  Save
+                </button>
+              </div>
+              <div className="level-item">
+                <button className="button is-primary" onClick={close}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+            <div className="level-right">
+              <div className="level-item">
+                <button className="button is-danger is-pulled-right" onClick={destroy}>
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
-          <footer className="modal-card-foot">
-            <button className="button is-success" onClick={save}>
-              Save
-            </button>
-            <button className="button is-danger" onClick={destroy}>
-              Delete
-            </button>
-            <button className="button is-primary" onClick={close}>
-              Cancel
-            </button>
-          </footer>
         </section>
       </div>
     </div>
