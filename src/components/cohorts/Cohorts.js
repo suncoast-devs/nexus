@@ -4,13 +4,13 @@ import { Cohort } from '../models'
 import useModelData from '../../hooks/useModelData'
 
 const Cohorts = () => {
-  const [loadingCohorts, cohorts] = useModelData(() =>
+  const { loading, data: cohorts } = useModelData(() =>
     Cohort.includes('people')
       .order({ name: 'asc' })
       .all()
   )
 
-  if (loadingCohorts) {
+  if (loading) {
     return <></>
   }
 

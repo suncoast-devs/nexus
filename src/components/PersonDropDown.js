@@ -6,7 +6,7 @@ import Person from './models/Person'
 
 const PersonDropDown = ({ onSelect, placeholder, isMulti, isSearchable, excludedIDs = [] }) => {
   // eslint-disable-next-line
-  const [loadingPeople, people] = useModelData(() => Person.all())
+  const { data: people } = useModelData(() => Person.all())
 
   const options = people
     .filter(person => !excludedIDs.includes(person.id))

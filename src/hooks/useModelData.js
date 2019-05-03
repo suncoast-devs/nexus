@@ -16,7 +16,7 @@ const useModelData = queryFunction => {
     [forceUpdate]
   )
 
-  return [loading, data, () => setForceUpdate(!forceUpdate)]
+  return { loading, data, reload: () => setForceUpdate(!forceUpdate) }
 }
 
 export default useModelData

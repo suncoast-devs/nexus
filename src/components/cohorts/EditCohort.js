@@ -18,7 +18,7 @@ const EditCohort = props => {
     }
   } = props
 
-  const [loadingCohort, cohort] = useModelData(() => Cohort.find(id))
+  const { loading, data: cohort } = useModelData(() => Cohort.find(id))
 
   const cancel = event => {
     event.preventDefault()
@@ -36,7 +36,7 @@ const EditCohort = props => {
     })
   }
 
-  if (loadingCohort) {
+  if (loading) {
     return <></>
   }
 

@@ -5,9 +5,9 @@ import { AddButton, DeleteButton } from '../Buttons'
 import PersonDropDown from '../PersonDropDown'
 
 const EditUnits = ({ cohort }) => {
-  const [loadingPrograms, programs] = useModelData(() => Program.all())
+  const { loading: loadingPrograms, data: programs } = useModelData(() => Program.all())
 
-  const [loadingUnits, units, forceUpdateUnits] = useModelData(() =>
+  const { loading: loadingUnits, data: units, reload: forceUpdateUnits } = useModelData(() =>
     Unit.includes(['program', { student_enrollments: 'person' }])
       .where({ cohort_id: cohort.id })
       .all()

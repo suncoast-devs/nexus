@@ -6,7 +6,9 @@ import { Cohort, CohortDate } from '../models'
 import useModelData from '../../hooks/useModelData'
 
 const EditCohortCalendar = ({ cohort_id }) => {
-  const [loadingCohort, cohort, reloadCohort] = useModelData(() => Cohort.includes('cohort_dates').find(cohort_id))
+  const { loading, data: cohort, reload: reloadCohort } = useModelData(() =>
+    Cohort.includes('cohort_dates').find(cohort_id)
+  )
 
   const localizer = BigCalendar.momentLocalizer(moment)
   const stringToDate = string => {
@@ -16,7 +18,7 @@ const EditCohortCalendar = ({ cohort_id }) => {
     return new Date(...date)
   }
 
-  const events = loadingCohort
+  const events = loading
     ? []
     : cohort.cohortDates
         .map(cohortDate => ({

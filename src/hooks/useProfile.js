@@ -16,7 +16,7 @@ const useProfile = () => {
     return NULL_PROFILE
   }
 
-  const [loading, profile, forceUpdateProfile] = useModelData(() => Profile.find())
+  const { loading, data: profile, reload: forceUpdateProfile } = useModelData(() => Profile.find())
 
   return loading ? { profile: NULL_PROFILE, forceUpdateProfile: () => {} } : { profile, forceUpdateProfile }
 }
