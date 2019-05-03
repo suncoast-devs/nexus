@@ -11,12 +11,13 @@ const valueFromProps = props => props.defaultValue || (props.defaultObject && pr
 const InputField = props => {
   const label = labelFromProps(props)
   const defaultValue = valueFromProps(props)
+  const type = props.type || 'text'
 
   return (
     <Field>
       <label>{label}</label>
       <Control>
-        <input className="input" name={props.name} defaultValue={defaultValue} type="text" placeholder={label} />
+        <input className="input" name={props.name} defaultValue={defaultValue} type={type} placeholder={label} />
       </Control>
     </Field>
   )

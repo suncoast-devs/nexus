@@ -1,6 +1,7 @@
 import React from 'react'
-import { Cohort } from '../models'
+import { Section, Container } from 'reactbulma'
 
+import { Cohort } from '../models'
 import history from '../../history'
 import formToObject from '../../utils/formToObject'
 import Form from './Form'
@@ -16,13 +17,23 @@ const submit = event => {
 
   const updatedCohort = formToObject(event.target, new Cohort({}))
 
-  updatedCohort.save().then(() => {
+  console.log(updatedCohort)
+
+  updatedCohort.save().then(response => {
+    console.log(response)
     history.push('/cohorts')
   })
 }
 
-const NewCohort = props => {
-  return <Form onSubmit={event => submit(event)} onCancel={event => cancel(event)} title="New Cohort" />
+const NewCohort = () => {
+  return (
+    <Section>
+      <Container>
+        <Form onSubmit={event => submit(event)} onCancel={event => cancel(event)} title="New Cohort" showDates />
+      </Container>
+      >
+    </Section>
+  )
 }
 
 export default NewCohort
