@@ -3,6 +3,7 @@ import { Unit, StudentEnrollment } from '../models'
 import useModelData from '../../hooks/useModelData'
 import { DeleteButton } from '../Buttons'
 import PersonDropDown from '../PersonDropDown'
+import Person from '../Person'
 
 const EditEnrollment = ({ cohort }) => {
   const {
@@ -61,6 +62,7 @@ const EditEnrollment = ({ cohort }) => {
               {unit.title}
             </th>
           ))}
+          <th>Remove</th>
         </tr>
       </thead>
       <tbody>
@@ -70,8 +72,7 @@ const EditEnrollment = ({ cohort }) => {
             return (
               <tr key={studentEnrollment.id}>
                 <td>
-                  <DeleteButton onClick={() => deletePerson(studentEnrollment)} />
-                  {studentEnrollment.person.fullName}
+                  <Person person={studentEnrollment.person} />
                 </td>
                 {units.map(unit => (
                   <td key={unit.id}>
@@ -82,6 +83,9 @@ const EditEnrollment = ({ cohort }) => {
                     />
                   </td>
                 ))}
+                <td>
+                  <DeleteButton onClick={() => deletePerson(studentEnrollment)} />
+                </td>
               </tr>
             )
           })}

@@ -4,6 +4,7 @@ import moment from 'moment'
 import { Cohort, AttendanceRecord } from '../models'
 import useModelData from '../../hooks/useModelData'
 import statuses from './statuses'
+import Person from '../Person'
 
 const Modal = ({ selected, setSelected, reload }) => {
   if (!selected) {
@@ -99,13 +100,15 @@ const Modal = ({ selected, setSelected, reload }) => {
                 </button>
               </div>
             </div>
-            <div className="level-right">
-              <div className="level-item">
-                <button className="button is-danger is-pulled-right" onClick={destroy}>
-                  Delete
-                </button>
+            {selected.attendanceRecord.isPersisted && (
+              <div className="level-right">
+                <div className="level-item">
+                  <button className="button is-danger is-pulled-right" onClick={destroy}>
+                    Delete
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </section>
       </div>
@@ -208,7 +211,9 @@ const Attendance = ({
               {cohort.people.sort((a, b) => a.fullName.localeCompare(b.fullName)).map(person => {
                 return (
                   <tr key={person.id}>
-                    <td>{person.fullName}</td>
+                    <td>
+                      <Person person={person} />
+                    </td>
                     {sortedCohortDates.map(cohortDate => attendanceCell(person, cohortDate))}
                   </tr>
                 )
