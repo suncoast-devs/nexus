@@ -192,8 +192,10 @@ const Attendance = ({
       <div className="container">
         <h1 className="title">{cohort.name} </h1>
         <div>
-          <input onChange={() => setOnlyToday(!onlyToday)} value={onlyToday} checked={onlyToday} type="checkbox" />{' '}
-          Today Only
+          <label>
+            <input onChange={() => setOnlyToday(!onlyToday)} value={onlyToday} checked={onlyToday} type="checkbox" />{' '}
+            Today Only
+          </label>
         </div>
         <div className="attendance-table">
           <table className="table is-fullwidth">
