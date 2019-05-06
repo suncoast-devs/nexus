@@ -7,7 +7,7 @@ import useModelData from '../../hooks/useModelData'
 import history from '../../history'
 import formToObject from '../../utils/formToObject'
 import Form from './Form'
-import EditUnits from './EditUnits'
+import EditEnrollment from './EditEnrollment'
 import EditCohortCalendar from './EditCohortCalendar'
 import { Tabs, TabHeader, Tab } from '../Tabs'
 
@@ -56,9 +56,9 @@ const EditCohort = props => {
             />
           </Tab>
 
-          <TabHeader>Units</TabHeader>
+          <TabHeader>Enrollment</TabHeader>
           <Tab>
-            <EditUnits cohort={cohort} />
+            <EditEnrollment cohort={cohort} />
           </Tab>
 
           <TabHeader>Calendar</TabHeader>

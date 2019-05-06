@@ -20,8 +20,8 @@ const PersonDropDown = ({ onSelect, placeholder, isMulti, isSearchable, excluded
       getOptionValue={option => {
         return option.value.id
       }}
-      onChange={option => {
-        onSelect(isMulti ? option.map(o => o.value) : option.value)
+      onChange={selectedOption => {
+        onSelect(isMulti ? selectedOption.map(option => option.value) : selectedOption.value)
       }}
       options={options}
     />

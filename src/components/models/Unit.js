@@ -7,11 +7,15 @@ const Unit = ApplicationRecord.extend({
   },
   attrs: {
     cohort: belongsTo(),
-    program: belongsTo(),
-    studentEnrollments: hasMany(),
-    people: hasMany(),
     cohort_id: attr(),
-    program_id: attr()
+
+    program: belongsTo(),
+    program_id: attr(),
+
+    title: attr(),
+
+    studentEnrollments: hasMany(),
+    people: hasMany()
   }
 })
 

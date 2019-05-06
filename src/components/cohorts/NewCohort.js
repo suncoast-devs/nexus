@@ -17,10 +17,7 @@ const submit = event => {
 
   const updatedCohort = formToObject(event.target, new Cohort({}))
 
-  console.log(updatedCohort)
-
   updatedCohort.save().then(response => {
-    console.log(response)
     history.push('/cohorts')
   })
 }

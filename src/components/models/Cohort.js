@@ -11,6 +11,7 @@ const Cohort = ApplicationRecord.extend({
     description: attr(),
     startDate: attr(),
     endDate: attr(),
+    program_id: attr(),
     people: hasMany(),
     units: hasMany(),
     cohortDates: hasMany()

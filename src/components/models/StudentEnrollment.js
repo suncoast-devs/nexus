@@ -6,11 +6,31 @@ const StudentEnrollment = ApplicationRecord.extend({
     jsonapiType: 'student_enrollments'
   },
   attrs: {
-    unit_id: attr(),
+    cohort_id: attr(),
+    cohort: belongsTo(),
+
+    units: attr(),
     person_id: attr(),
-    unit: belongsTo(),
     person: belongsTo()
   }
 })
+
+StudentEnrollment.prototype.isInUnit = function(unit) {
+  return this.units.includes(parseInt(unit.id))
+}
+
+StudentEnrollment.prototype.ensureUnit = function(unit) {
+  if (!this.isInUnit(unit)) {
+    this.units = this.units.concat(parseInt(unit.id))
+  }
+}
+
+StudentEnrollment.prototype.toggleUnit = function(unit) {
+  if (this.isInUnit(unit)) {
+    this.units = this.units.filter(unit_id => unit_id !== parseInt(unit.id))
+  } else {
+    this.units = this.units.concat(parseInt(unit.id))
+  }
+}
 
 export default StudentEnrollment

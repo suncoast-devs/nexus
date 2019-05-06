@@ -119,6 +119,7 @@ const Attendance = ({
   }
 }) => {
   const [selected, setSelected] = useState()
+  const [onlyToday, setOnlyToday] = useState(true)
 
   const { loading, data: cohort, reload } = useModelData(() =>
     Cohort.includes(['people', { cohort_dates: { attendance_records: 'person' } }]).find(id)
@@ -149,8 +150,6 @@ const Attendance = ({
     )
   }
 
-  const sortedCohortDates = cohort.cohortDates.sort((a, b) => a.day.localeCompare(b.day))
-
   const clickDay = cohortDate => {
     const answer = window.confirm('This will set all students to present for the day. Continue?')
     if (!answer) {
@@ -175,11 +174,24 @@ const Attendance = ({
     })
   }
 
+  let sortedCohortDates
+
+  if (onlyToday) {
+    const today = moment().format('YYYY-MM-DD')
+    sortedCohortDates = cohort.cohortDates.filter(date => date.day === today)
+  } else {
+    sortedCohortDates = cohort.cohortDates.sort((a, b) => a.day.localeCompare(b.day))
+  }
+
   return (
     <section className="section">
       <Modal selected={selected} setSelected={setSelected} reload={reload} />
       <div className="container">
-        <h1 className="title">{cohort.name}</h1>
+        <h1 className="title">{cohort.name} </h1>
+        <div>
+          <input onClick={() => setOnlyToday(!onlyToday)} value={onlyToday} checked={onlyToday} type="checkbox" /> Today
+          Only
+        </div>
         <div className="attendance-table">
           <table className="table is-fullwidth">
             <thead>
