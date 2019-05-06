@@ -22,7 +22,7 @@ const renderProfile = profile => (
     <div className="media">
       <div className="media-left">
         <figure className="image is-32x32">
-          <img className="is-rounded" alt="0" src={profile.smallProfileImageUrl} />
+          <img className="is-rounded" alt="avatar" src={profile.smallProfileImageUrl || icon} />
         </figure>
       </div>
       <div className="media-content">
