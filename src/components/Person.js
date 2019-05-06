@@ -1,6 +1,8 @@
 import React from 'react'
 import icon from '../images/icon.svg'
 
+const iconStyle = { width: '32px', height: '32px', textAlign: 'center', verticalAlign: 'center', lineHeight: '32px' }
+
 const Person = ({ person }) => {
   return (
     <article className="media">
@@ -8,7 +10,7 @@ const Person = ({ person }) => {
         {person.smallProfileImageUrl ? (
           <img alt={person.fullName} src={person.smallProfileImageUrl || icon} />
         ) : (
-          <i className="fas fa-user" />
+          <i style={iconStyle} className="fas fa-user" />
         )}
       </figure>
       <div className="media-content">
