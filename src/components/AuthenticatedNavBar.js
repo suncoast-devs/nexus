@@ -80,6 +80,9 @@ const AuthenticatedNavBar = props => {
           <NavLink className="navbar-item" activeClassName="is-active" to="/assignments">
             Assignments
           </NavLink>
+          <NavLink className="navbar-item" activeClassName="is-active" to="/attendance">
+            Attendance
+          </NavLink>
           <div className="navbar-item has-dropdown is-hoverable">{profile.isAdmin && admin()}</div>
         </div>
         <div className="navbar-end">

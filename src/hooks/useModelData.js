@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
 const useModelData = (queryFunction, defaultData = []) => {
-  const [forceUpdate, setForceUpdate] = useState(true) // boolean state
+  const [forceUpdate, setForceUpdate] = useState(true)
 
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState(defaultData)
