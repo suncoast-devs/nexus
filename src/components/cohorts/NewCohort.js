@@ -9,7 +9,7 @@ import Form from './Form'
 
 const NewCohort = () => {
   const [errors, setErrors] = useState({})
-  const cohort = new Cohort({ startDate: '2019-05-01', endDate: '2019-05-20' })
+  const cohort = new Cohort({})
 
   const cancel = event => {
     event.preventDefault()
