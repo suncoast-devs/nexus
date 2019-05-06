@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 
-const useModelData = queryFunction => {
+const useModelData = (queryFunction, defaultData = []) => {
   const [forceUpdate, setForceUpdate] = useState(true) // boolean state
 
   const [loading, setLoading] = useState(true)
-  const [data, setData] = useState([])
+  const [data, setData] = useState(defaultData)
 
   useEffect(
     () => {

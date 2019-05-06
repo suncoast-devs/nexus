@@ -1,5 +1,5 @@
 import ApplicationRecord from './ApplicationRecord'
-import { attr, hasMany } from 'spraypaint'
+import { attr, hasMany, belongsTo } from 'spraypaint'
 
 const Cohort = ApplicationRecord.extend({
   static: {
@@ -12,6 +12,7 @@ const Cohort = ApplicationRecord.extend({
     startDate: attr(),
     endDate: attr(),
     program_id: attr(),
+    program: belongsTo(),
     people: hasMany(),
     units: hasMany(),
     cohortDates: hasMany()
