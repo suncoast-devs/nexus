@@ -20,7 +20,7 @@ Assignment.prototype.scoreInfo = function() {
 }
 
 Assignment.scoreInfo = function(score) {
-  return score ? Assignment._scoreInfo[parseInt(score)] : Assignment.noScore
+  return score ? Assignment.scoreInfos[parseInt(score)] : Assignment.noScore
 }
 
 Assignment.noScore = {
@@ -32,7 +32,7 @@ Assignment.noScore = {
   }
 }
 
-Assignment._scoreInfo = [
+Assignment.scoreInfos = [
   {
     title: 'Unacceptable',
     style: {

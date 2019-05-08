@@ -11,11 +11,15 @@ const ShowAttendance = ({ profile }) => {
     return <></>
   }
 
-  const { data } = useModelData(() =>
+  const { loading, data } = useModelData(() =>
     AttendanceRecord.includes('cohort_date')
       .where({ person_id: profile.id })
       .all()
   )
+
+  if (loading) {
+    return <button className="button is-loading">Loading</button>
+  }
 
   const attendanceRecords = data.sort((a, b) => a.cohortDate.day.localeCompare(b.cohortDate.day))
 

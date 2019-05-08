@@ -3,7 +3,7 @@ import { Homework, Cohort } from '../models'
 import formToObject from '../../utils/formToObject'
 import useModelData from '../../hooks/useModelData'
 
-const EditHomework = ({ cohort, reloadHomeworks, homework, setHomework }) => {
+const EditHomework = ({ cohort, reloadCohort, homework, setHomework }) => {
   const submit = event => {
     event.preventDefault()
 
@@ -15,14 +15,14 @@ const EditHomework = ({ cohort, reloadHomeworks, homework, setHomework }) => {
 
     updatedHomework.save().then(() => {
       setHomework()
-      reloadHomeworks()
+      reloadCohort()
     })
   }
 
   const destroy = () => {
     homework.destroy().then(() => {
       setHomework()
-      reloadHomeworks()
+      reloadCohort()
     })
   }
 
@@ -91,25 +91,21 @@ const EditHomework = ({ cohort, reloadHomeworks, homework, setHomework }) => {
 const EditHomeworks = ({ cohort_id }) => {
   const [homework, setHomework] = useState()
 
-  const { data: cohort } = useModelData(() => Cohort.find(cohort_id))
+  const { data: cohort, reload: reloadCohort } = useModelData(() => Cohort.includes('homeworks').find(cohort_id))
 
-  const { data: homeworks, reload: reloadHomeworks } = useModelData(() =>
-    Homework.includes({ assignments: 'person' })
-      .where({ cohort_id: cohort.id })
-      .all()
-  )
+  // Homework in ID order (order that they were inserted)
+  const homeworks = (cohort.homeworks || []).sort((a, b) => a.id - b.id)
 
   return (
     <section className="section">
       <div className="container">
         {homework && (
-          <EditHomework
-            cohort={cohort}
-            reloadHomeworks={reloadHomeworks}
-            homework={homework}
-            setHomework={setHomework}
-          />
+          <EditHomework cohort={cohort} reloadCohort={reloadCohort} homework={homework} setHomework={setHomework} />
         )}
+
+        <button className="button is-primary" onClick={() => setHomework(new Homework())}>
+          New Homework
+        </button>
 
         <table className="table is-fullwidth is-hoverable">
           <thead>
@@ -129,9 +125,6 @@ const EditHomeworks = ({ cohort_id }) => {
             ))}
           </tbody>
         </table>
-        <button className="button is-primary" onClick={() => setHomework(new Homework())}>
-          New Homework
-        </button>
       </div>
     </section>
   )

@@ -2,13 +2,20 @@ import React from 'react'
 
 import { Cohort, Assignment } from '../models'
 import useModelData from '../../hooks/useModelData'
+import LoadingIndicator from '../LoadingIndicator'
 
 const StudentGradebook = ({ profile }) => {
-  const { data: assignments } = useModelData(() => Assignment.includes({ homework: 'cohort' }).all())
+  const { loading: loadingAssignments, data: assignments } = useModelData(() =>
+    Assignment.includes({ homework: 'cohort' }).all()
+  )
 
-  const { data: cohorts } = useModelData(() =>
+  const { loading: loadingCohort, data: cohorts } = useModelData(() =>
     Cohort.where({ id: assignments.map(assignment => assignment.homework.cohort_id) }).all()
   )
+
+  if (loadingCohort || loadingAssignments) {
+    return <LoadingIndicator />
+  }
 
   return (
     <section className="section">
@@ -36,7 +43,7 @@ const StudentGradebook = ({ profile }) => {
                 <tbody>
                   {cohortAssignments.map(assignment => {
                     return (
-                      <tr>
+                      <tr key={assignment.id}>
                         <td>
                           <span className="icon">
                             <i className="fas fa-code-branch" />

@@ -1,14 +1,16 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
+import useModelData from '../hooks/useModelData'
+import { Cohort } from '../components/models'
 import Callback from './Callback'
 import Home from './Home'
 import NewCohort from './cohorts/NewCohort'
 import EditCohort from './cohorts/EditCohort'
 import Cohorts from './cohorts/Cohorts'
-import Gradebook from './cohorts/Gradebook'
-import StudentGradebook from './cohorts/StudentGradebook'
-import EditHomeworks from './cohorts/EditHomeworks'
+import Gradebook from './gradebook/Gradebook'
+import StudentGradebook from './gradebook/StudentGradebook'
+import EditHomeworks from './homeworks/EditHomeworks'
 import EditProfile from './EditProfile'
 import AuthenticatedNavBar from './AuthenticatedNavBar'
 import UnauthenticatedNavBar from './UnauthenticatedNavBar'
@@ -60,15 +62,59 @@ const Layout = ({ profile, forceUpdateProfile, auth }) => {
     )
   }
 
+  const AdminShowAttendances = props => {
+    const { data: cohorts } = useModelData(() => Cohort.active())
+
+    return cohorts.sort(cohort => cohort.name.localeCompare(cohort.name)).map(cohort => (
+      <div className="section" key={cohort.id}>
+        <div className="container">
+          <h1 className="title">{cohort.name}</h1>
+          <EditAttendance key={cohort.id} cohort_id={cohort.id} {...props} />
+        </div>
+      </div>
+    ))
+  }
+
+  const AdminShowGradebooks = props => {
+    const { data: cohorts } = useModelData(() => Cohort.active())
+
+    return cohorts.sort(cohort => cohort.name.localeCompare(cohort.name)).map(cohort => (
+      <div className="section" key={cohort.id}>
+        <div className="container">
+          <h1 className="title">{cohort.name}</h1>
+          <Gradebook cohort_id={cohort.id} {...props} />
+        </div>
+      </div>
+    ))
+  }
+
   const userRoutes = () => {
     return (
       <>
-        <Route exact path="/attendance" render={props => <ShowAttendance profile={profile} auth={auth} {...props} />} />
+        <Route
+          exact
+          path="/attendance"
+          render={props =>
+            profile.isAdmin ? (
+              <AdminShowAttendances profile={profile} {...props} />
+            ) : (
+              <ShowAttendance profile={profile} auth={auth} {...props} />
+            )
+          }
+        />
+
         <Route
           exact
           path="/gradebook"
-          render={props => <StudentGradebook profile={profile} auth={auth} {...props} />}
+          render={props =>
+            profile.isAdmin ? (
+              <AdminShowGradebooks profile={profile} auth={auth} {...props} />
+            ) : (
+              <StudentGradebook profile={profile} auth={auth} {...props} />
+            )
+          }
         />
+
         <Route
           path="/profile"
           render={props => {

@@ -6,6 +6,7 @@ import useModelData from '../../hooks/useModelData'
 import Person from '../Person'
 import AttendanceCell from './AttendanceCell'
 import AttendanceModal from './AttendanceModal'
+import LoadingIndicator from '../LoadingIndicator'
 
 const EditAttendance = ({ cohort_id }) => {
   const [selected, setSelected] = useState()
@@ -16,7 +17,7 @@ const EditAttendance = ({ cohort_id }) => {
   )
 
   if (loading) {
-    return <></>
+    return <LoadingIndicator />
   }
 
   const clickDay = cohortDate => {
@@ -53,55 +54,53 @@ const EditAttendance = ({ cohort_id }) => {
   }
 
   return (
-    <section className="section">
+    <>
       <AttendanceModal selected={selected} setSelected={setSelected} reload={reload} />
-      <div className="container">
-        <h1 className="title">{cohort.name} </h1>
-        <div>
-          <label>
-            <input onChange={() => setOnlyToday(!onlyToday)} value={onlyToday} checked={onlyToday} type="checkbox" />{' '}
-            Today Only
-          </label>
-        </div>
-        <div className="attendance-table">
-          <table className="table is-fullwidth">
-            <thead>
-              <tr>
-                <th>Name</th>
-                {sortedCohortDates.map(cohortDate => (
-                  <th key={cohortDate.day} style={{ cursor: 'pointer' }} onClick={() => clickDay(cohortDate)}>
-                    {moment(cohortDate.day).format('ddd MM/DD')}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {cohort.people.sort((a, b) => a.fullName.localeCompare(b.fullName)).map(person => {
-                return (
-                  <tr key={person.id}>
-                    <td>
-                      <Person person={person} />
-                    </td>
-                    {sortedCohortDates.map(cohortDate => {
-                      const attendanceRecord =
-                        cohortDate.attendanceRecords.find(record => record.person.id === person.id) ||
-                        new AttendanceRecord({ status: ' ' })
-
-                      return (
-                        <AttendanceCell
-                          attendanceRecord={attendanceRecord}
-                          onClick={() => setSelected({ cohortDate, attendanceRecord, person })}
-                        />
-                      )
-                    })}
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        </div>
+      <div>
+        <label>
+          <input onChange={() => setOnlyToday(!onlyToday)} value={onlyToday} checked={onlyToday} type="checkbox" />{' '}
+          Today Only
+        </label>
       </div>
-    </section>
+      <div className="attendance-table">
+        <table className="table is-fullwidth">
+          <thead>
+            <tr>
+              <th>Name</th>
+              {sortedCohortDates.map(cohortDate => (
+                <th key={cohortDate.day} style={{ cursor: 'pointer' }} onClick={() => clickDay(cohortDate)}>
+                  {moment(cohortDate.day).format('ddd MM/DD')}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {cohort.people.sort((a, b) => a.fullName.localeCompare(b.fullName)).map(person => {
+              return (
+                <tr key={person.id}>
+                  <td>
+                    <Person person={person} />
+                  </td>
+                  {sortedCohortDates.map(cohortDate => {
+                    const attendanceRecord =
+                      cohortDate.attendanceRecords.find(record => record.person.id === person.id) ||
+                      new AttendanceRecord({ status: ' ' })
+
+                    return (
+                      <AttendanceCell
+                        key={cohortDate.day}
+                        attendanceRecord={attendanceRecord}
+                        onClick={() => setSelected({ cohortDate, attendanceRecord, person })}
+                      />
+                    )
+                  })}
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
+    </>
   )
 }
 

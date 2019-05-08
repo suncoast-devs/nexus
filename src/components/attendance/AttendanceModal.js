@@ -33,6 +33,27 @@ const AttendanceModal = ({ selected, setSelected, reload }) => {
     })
   }
 
+  const nonEmptyStatuses = statuses.filter(status => status.key !== ' ')
+  const statusesLeft = nonEmptyStatuses.filter((status, index) => index % 2 === 0)
+  const statusesRight = nonEmptyStatuses.filter((status, index) => index % 2 === 1)
+
+  const StatusButton = ({ statusKey, status }) => {
+    return (
+      <button
+        className={cx('button', {
+          [status.className]: statusKey === status.key,
+          'has-text-black': statusKey === status.key,
+          'has-text-grey-light': statusKey !== status.key
+        })}
+        style={{ minWidth: '100%' }}
+        onClick={() => setStatusKey(status.key)}
+      >
+        <span class="icon">{status.icon}</span>
+        <span>{status.text}</span>
+      </button>
+    )
+  }
+
   return (
     <div className="modal is-active">
       <div className="modal-background" />
@@ -59,30 +80,22 @@ const AttendanceModal = ({ selected, setSelected, reload }) => {
                     />
                   </div>
                 </div>
-                {statuses.filter(status => status.key !== ' ').map(status => (
-                  <div
-                    key={status.key}
-                    className={cx({
-                      'has-text-black': statusKey === status.key,
-                      'has-text-grey-light': statusKey !== status.key
-                    })}
-                    style={{
-                      padding: '0.2rem',
-                      cursor: 'pointer',
-                      border: statusKey === status.key ? '2px dashed #b5b5b5' : '2px solid transparent'
-                    }}
-                    onClick={() => setStatusKey(status.key)}
-                  >
-                    <span
-                      className={`icon is-medium ${
-                        statusKey === status.key ? status.className : 'has-background-grey-light'
-                      } has-text-white has-text-centered`}
-                    >
-                      {status.icon}
-                    </span>
-                    {status.text}
+                <div className="columns">
+                  <div className="column is-half">
+                    <div className="buttons">
+                      {statusesLeft.map(status => (
+                        <StatusButton key={status.key} statusKey={statusKey} status={status} />
+                      ))}
+                    </div>
                   </div>
-                ))}
+                  <div className="column is-half">
+                    <div className="buttons">
+                      {statusesRight.map(status => (
+                        <StatusButton key={status.key} statusKey={statusKey} status={status} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </section>

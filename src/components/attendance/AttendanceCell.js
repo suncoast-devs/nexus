@@ -7,9 +7,7 @@ const AttendanceCell = ({ onClick, attendanceRecord }) => {
 
   return (
     <td
-      className={cx('is-medium', 'has-white-text', 'has-text-centered', status.className, {
-        tooltip: attendanceRecord.status === ' '
-      })}
+      className={cx('is-medium', 'has-white-text', 'has-text-centered', status.className, 'tooltip')}
       data-tooltip={`${status.text} ${attendanceRecord.note ? ' - ' : ''} ${attendanceRecord.note || ''}`}
       onClick={onClick}
     >

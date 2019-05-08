@@ -1,20 +1,22 @@
 import React, { useState } from 'react'
 import cx from 'classnames'
 
-import { Homework, Cohort, Person, Assignment } from '../models'
+import { Homework, Cohort, Assignment } from '../models'
 import useModelData from '../../hooks/useModelData'
 import PersonComponent from '../Person'
+import LoadingIndicator from '../LoadingIndicator'
 import LoadingButton from '../LoadingButton'
 
-const Gradebook = ({ cohort_id, profile }) => {
-  const { loadingCohort, data: cohort } = useModelData(() => Cohort.includes('people').find(cohort_id), { people: [] })
+const Gradebook = ({ cohort_id }) => {
+  const { loading: loadingCohort, data: cohort, reload: reloadCohort } = useModelData(
+    () =>
+      Cohort.includes('people')
+        .selectExtra({ people: 'issues' })
+        .find(cohort_id),
+    { people: [] }
+  )
 
   const [selectedAssignment, setSelectedAssignment] = useState(0)
-  const { loading: loadingPeople, data: people, reload: reloadPeople } = useModelData(() =>
-    Person.selectExtra(['issues'])
-      .where({ id: cohort.people.map(person => person.id) })
-      .all()
-  )
 
   const { loading: loadingHomework, data: homeworks, reload: reloadHomeworks } = useModelData(() =>
     Homework.includes('assignments')
@@ -22,11 +24,11 @@ const Gradebook = ({ cohort_id, profile }) => {
       .all()
   )
 
-  if (loadingCohort || loadingPeople || loadingHomework) {
-    return <></>
+  if (loadingCohort || loadingHomework) {
+    return <LoadingIndicator />
   }
 
-  const sortedPeople = people.sort((a, b) => a.fullName.localeCompare(b.fullName))
+  const sortedPeople = cohort.people.sort((a, b) => a.fullName.localeCompare(b.fullName))
   const sortedHomework = homeworks.sort((a, b) => a.id - b.id)
 
   const notAssigned = homework => (
@@ -120,7 +122,7 @@ const Gradebook = ({ cohort_id, profile }) => {
               </tbody>
             </table>
             <div className="buttons">
-              {Assignment.scoreInfo.map((info, index) => {
+              {Assignment.scoreInfos.map((info, index) => {
                 return (
                   <LoadingButton
                     key={index}
@@ -145,10 +147,11 @@ const Gradebook = ({ cohort_id, profile }) => {
     const shouldAssign = window.confirm(`Assign this homework?`)
 
     if (!shouldAssign) {
+      stopLoading()
       return
     }
 
-    const promises = people.map(person => {
+    const promises = cohort.people.map(person => {
       const assignment = new Assignment()
       assignment.person_id = person.id
       assignment.homework_id = homework.id
@@ -158,7 +161,7 @@ const Gradebook = ({ cohort_id, profile }) => {
 
     const finish = () => {
       reloadHomeworks()
-      reloadPeople()
+      reloadCohort()
       stopLoading()
     }
 
