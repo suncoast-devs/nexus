@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import statuses from './statuses'
 import moment from 'moment'
+import cx from 'classnames'
 
 const AttendanceModal = ({ selected, setSelected, reload }) => {
   if (!selected) {
@@ -61,7 +62,10 @@ const AttendanceModal = ({ selected, setSelected, reload }) => {
                 {statuses.filter(status => status.key !== ' ').map(status => (
                   <div
                     key={status.key}
-                    className={`${statusKey === status.key ? 'has-text-black' : 'has-text-grey-light'}`}
+                    className={cx({
+                      'has-text-black': statusKey === status.key,
+                      'has-text-grey-light': statusKey !== status.key
+                    })}
                     style={{
                       padding: '0.2rem',
                       cursor: 'pointer',

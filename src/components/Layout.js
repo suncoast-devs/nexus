@@ -6,6 +6,9 @@ import Home from './Home'
 import NewCohort from './cohorts/NewCohort'
 import EditCohort from './cohorts/EditCohort'
 import Cohorts from './cohorts/Cohorts'
+import Gradebook from './cohorts/Gradebook'
+import StudentGradebook from './cohorts/StudentGradebook'
+import EditHomeworks from './cohorts/EditHomeworks'
 import EditProfile from './EditProfile'
 import AuthenticatedNavBar from './AuthenticatedNavBar'
 import UnauthenticatedNavBar from './UnauthenticatedNavBar'
@@ -14,15 +17,23 @@ import ShowAttendance from './attendance/ShowAttendance'
 
 const Layout = ({ profile, forceUpdateProfile, auth }) => {
   const adminRoutes = () => {
-    // TODO: check if the current user is an admin and render these routes
-    if (!auth.isAuthenticated) {
-      return <></>
-    }
-
     return (
       <Switch>
-        <Route exact path="/attendance" render={props => <ShowAttendance profile={profile} auth={auth} {...props} />} />
-        <Route exact path="/cohorts/:id/attendance" render={props => <EditAttendance auth={auth} {...props} />} />
+        <Route
+          exact
+          path="/cohorts/:id/attendance"
+          render={props => <EditAttendance cohort_id={props.match.params.id} auth={auth} {...props} />}
+        />
+        <Route
+          exact
+          path="/cohorts/:id/gradebook"
+          render={props => <Gradebook cohort_id={props.match.params.id} auth={auth} profile={profile} {...props} />}
+        />
+        <Route
+          exact
+          path="/cohorts/:id/homeworks"
+          render={props => <EditHomeworks cohort_id={props.match.params.id} auth={auth} {...props} />}
+        />
         <Route
           exact
           path="/cohorts/new"
@@ -34,7 +45,7 @@ const Layout = ({ profile, forceUpdateProfile, auth }) => {
         <Route
           path="/cohorts/:id"
           render={props => {
-            return <EditCohort auth={auth} {...props} />
+            return <EditCohort id={props.match.params.id} auth={auth} {...props} />
           }}
         />
 
@@ -52,6 +63,12 @@ const Layout = ({ profile, forceUpdateProfile, auth }) => {
   const userRoutes = () => {
     return (
       <>
+        <Route exact path="/attendance" render={props => <ShowAttendance profile={profile} auth={auth} {...props} />} />
+        <Route
+          exact
+          path="/gradebook"
+          render={props => <StudentGradebook profile={profile} auth={auth} {...props} />}
+        />
         <Route
           path="/profile"
           render={props => {
@@ -90,7 +107,7 @@ const Layout = ({ profile, forceUpdateProfile, auth }) => {
           return <Callback {...props} />
         }}
       />
-      {adminRoutes()}
+      {profile && profile.isAdmin && adminRoutes()}
       {userRoutes(forceUpdateProfile)}
     </>
   )

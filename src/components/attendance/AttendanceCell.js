@@ -1,14 +1,15 @@
 import React from 'react'
 import statuses from './statuses'
+import cx from 'classnames'
 
 const AttendanceCell = ({ onClick, attendanceRecord }) => {
   const status = statuses.find(status => status.key === attendanceRecord.status)
 
   return (
     <td
-      className={`${attendanceRecord.status === ' ' ? '' : 'tooltip'} is-medium ${
-        status.className
-      } has-text-white has-text-centered`}
+      className={cx('is-medium', 'has-white-text', 'has-text-centered', status.className, {
+        tooltip: attendanceRecord.status === ' '
+      })}
       data-tooltip={`${status.text} ${attendanceRecord.note ? ' - ' : ''} ${attendanceRecord.note || ''}`}
       onClick={onClick}
     >

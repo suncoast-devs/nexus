@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import cx from 'classnames'
 
 const Tabs = props => {
   const headers = props.children.filter((child, index) => index % 2 === 0)
@@ -10,7 +11,7 @@ const Tabs = props => {
       <div className="tabs is-large is-boxed is-marginless">
         <ul>
           {headers.map((header, index) => (
-            <li key={index} onClick={() => setActiveTab(index)} className={index === activeTab ? 'is-active' : ''}>
+            <li key={index} onClick={() => setActiveTab(index)} className={cx({ 'is-active': index === activeTab })}>
               {/* eslint-disable-next-line */}
               <a>{header}</a>
             </li>

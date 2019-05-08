@@ -7,16 +7,12 @@ import Person from '../Person'
 import AttendanceCell from './AttendanceCell'
 import AttendanceModal from './AttendanceModal'
 
-const EditAttendance = ({
-  match: {
-    params: { id }
-  }
-}) => {
+const EditAttendance = ({ cohort_id }) => {
   const [selected, setSelected] = useState()
   const [onlyToday, setOnlyToday] = useState(true)
 
   const { loading, data: cohort, reload } = useModelData(() =>
-    Cohort.includes(['people', { cohort_dates: { attendance_records: 'person' } }]).find(id)
+    Cohort.includes(['people', { cohort_dates: { attendance_records: 'person' } }]).find(cohort_id)
   )
 
   if (loading) {

@@ -42,3 +42,15 @@ $text: $asphalt;
     z-index: 1;
   }
 }
+
+.assignment-table {
+  > thead > tr > th,
+  > tbody > tr > td {
+    text-align: center;
+  }
+
+  > thead > tr > th:not(:first-child),
+  > tbody > tr > td:not(:first-child) {
+    cursor: pointer;
+  }
+}

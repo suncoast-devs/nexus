@@ -6,5 +6,7 @@ import Profile from './Profile'
 import StudentEnrollment from './StudentEnrollment'
 import CohortDate from './CohortDate'
 import AttendanceRecord from './AttendanceRecord'
+import Homework from './Homework'
+import Assignment from './Assignment'
 
-export { Cohort, CohortDate, Program, Unit, Person, Profile, StudentEnrollment, AttendanceRecord }
+export { Cohort, CohortDate, Program, Homework, Assignment, Unit, Person, Profile, StudentEnrollment, AttendanceRecord }

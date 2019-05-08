@@ -6,18 +6,12 @@ import useModelData from '../../hooks/useModelData'
 
 import history from '../../history'
 import formToObject from '../../utils/formToObject'
+import { Tabs, TabHeader, Tab } from '../Tabs'
 import Form from './Form'
 import EditEnrollment from './EditEnrollment'
 import EditCohortCalendar from './EditCohortCalendar'
-import { Tabs, TabHeader, Tab } from '../Tabs'
 
-const EditCohort = props => {
-  const {
-    match: {
-      params: { id }
-    }
-  } = props
-
+const EditCohort = ({ id }) => {
   const { loading, data: cohort } = useModelData(() => Cohort.find(id))
 
   const cancel = event => {

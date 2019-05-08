@@ -32,7 +32,8 @@ const EditProfile = props => {
         <Section>
           <Container>
             <InputField defaultObject={profile} name="fullName" />
-            <InputField defaultObject={profile} name="nickname" />
+            <InputField defaultObject={profile} name="github" />
+            <InputField defaultObject={profile} name="assignmentsRepo" />
 
             <SelectField
               defaultObject={profile}

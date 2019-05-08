@@ -1,5 +1,5 @@
 import ApplicationRecord from './ApplicationRecord'
-import { attr } from 'spraypaint'
+import { attr, hasMany } from 'spraypaint'
 
 const Person = ApplicationRecord.extend({
   static: {
@@ -14,9 +14,13 @@ const Person = ApplicationRecord.extend({
     honorificPrefix: attr(),
     honorificSuffix: attr(),
     nickname: attr(),
+    assignmentsRepo: attr(),
+    github: attr(),
     shirtSize: attr(),
     dietaryNote: attr(),
-    smallProfileImageUrl: attr()
+    issues: attr(),
+    smallProfileImageUrl: attr(),
+    attendanceRecords: hasMany()
   }
 })
 
