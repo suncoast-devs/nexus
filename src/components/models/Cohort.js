@@ -9,7 +9,6 @@ const Cohort = ApplicationRecord.extend({
   // ... code ...
   attrs: {
     name: attr(),
-    description: attr(),
     startDate: attr(),
     endDate: attr(),
     program_id: attr(),

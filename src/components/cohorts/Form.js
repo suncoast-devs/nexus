@@ -32,7 +32,6 @@ const Form = ({ onSubmit, onCancel, title, cohort }) => (
   <form onSubmit={onSubmit}>
     <Title>{title}</Title>
     <InputField defaultObject={cohort} name="name" />
-    <InputField defaultObject={cohort} name="description" />
     {cohort.isPersisted || (
       <>
         <ProgramDropDown cohort={cohort} />
