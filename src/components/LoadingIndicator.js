@@ -5,8 +5,6 @@ const LoadingIndicator = ({ delay = 250 }) => {
 
   window.setTimeout(() => setTimerFired(true), delay)
 
-  console.log(timerFired)
-
   return timerFired ? <button className="button is-large is-info is-loading" style={{ minWidth: '100%' }} /> : <></>
 }
 

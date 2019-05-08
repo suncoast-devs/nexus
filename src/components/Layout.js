@@ -81,7 +81,7 @@ const Layout = ({ profile, forceUpdateProfile, auth }) => {
     return cohorts.sort(cohort => cohort.name.localeCompare(cohort.name)).map(cohort => (
       <div className="section" key={cohort.id}>
         <div className="container">
-          <h1 className="title">{cohort.name}</h1>
+          <h1 className="title">{cohort.name}:</h1>
           <Gradebook cohort_id={cohort.id} {...props} />
         </div>
       </div>
