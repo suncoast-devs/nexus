@@ -42,7 +42,11 @@ const ShowAttendance = ({ profile }) => {
                   <Person person={profile} />
                 </td>
                 {attendanceRecords.map(attendanceRecord => (
-                  <AttendanceCell key={attendanceRecord.id} person={profile} attendanceRecord={attendanceRecord} />
+                  <AttendanceCell
+                    key={attendanceRecord.id}
+                    statusKey={attendanceRecord.status}
+                    note={attendanceRecord.note}
+                  />
                 ))}
               </tr>
             </tbody>
