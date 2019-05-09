@@ -1,5 +1,4 @@
 import React from 'react'
-import { Section, Container } from 'reactbulma'
 
 import { Cohort } from '../models'
 import useModelData from '../../hooks/useModelData'
@@ -35,8 +34,8 @@ const EditCohort = ({ id }) => {
   }
 
   return (
-    <Section>
-      <Container>
+    <section className="section">
+      <div className="container">
         <h1 className="title">Edit Cohort: {cohort.name}</h1>
 
         <Tabs>
@@ -60,8 +59,8 @@ const EditCohort = ({ id }) => {
             <EditCohortCalendar cohort_id={cohort.id} />
           </Tab>
         </Tabs>
-      </Container>
-    </Section>
+      </div>
+    </section>
   )
 }
 

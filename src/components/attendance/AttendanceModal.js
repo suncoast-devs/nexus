@@ -4,10 +4,6 @@ import moment from 'moment'
 import cx from 'classnames'
 
 const AttendanceModal = ({ selected, setSelected, reload }) => {
-  if (!selected) {
-    return <></>
-  }
-
   const [statusKey, setStatusKey] = useState(selected.attendanceRecord.status)
   const [note, setNote] = useState(selected.attendanceRecord.note)
 

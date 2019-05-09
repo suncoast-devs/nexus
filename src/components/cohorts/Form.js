@@ -1,5 +1,4 @@
 import React from 'react'
-import { Button, Control, Title, Field } from 'reactbulma'
 import Select from 'react-select'
 
 import { Program } from '../models'
@@ -30,7 +29,7 @@ const ProgramDropDown = ({ cohort }) => {
 
 const Form = ({ onSubmit, onCancel, title, cohort }) => (
   <form onSubmit={onSubmit}>
-    <Title>{title}</Title>
+    <h1 className="title">{title}</h1>
     <InputField defaultObject={cohort} name="name" />
     {cohort.isPersisted || (
       <>
@@ -40,14 +39,16 @@ const Form = ({ onSubmit, onCancel, title, cohort }) => (
       </>
     )}
 
-    <Field grouped>
-      <Control>
-        <Button link>Submit</Button>
-      </Control>
-      <Control>
-        <Button onClick={onCancel}>Cancel</Button>
-      </Control>
-    </Field>
+    <div class="field is-grouped">
+      <div class="control">
+        <button className="button is-link">Submit</button>
+      </div>
+      <div class="control">
+        <button className="button" onClick={onCancel}>
+          Cancel
+        </button>
+      </div>
+    </div>
   </form>
 )
 

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Section, Container } from 'reactbulma'
 
 import { Cohort } from '../models'
 import ErrorNotification from '../ErrorNotification'
@@ -32,12 +31,12 @@ const NewCohort = () => {
   }
 
   return (
-    <Section>
-      <Container>
+    <section className="section">
+      <div className="container">
         <ErrorNotification errors={errors} onClear={() => setErrors({})} />
         <Form cohort={cohort} onSubmit={event => submit(event)} onCancel={event => cancel(event)} title="New Cohort" />
-      </Container>
-    </Section>
+      </div>
+    </section>
   )
 }
 

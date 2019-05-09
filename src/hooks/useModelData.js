@@ -6,15 +6,12 @@ const useModelData = (queryFunction, defaultData = []) => {
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState(defaultData)
 
-  useEffect(
-    () => {
-      queryFunction().then(function(response) {
-        setData(response.data)
-        setLoading(false)
-      })
-    },
-    [forceUpdate]
-  )
+  useEffect(() => {
+    queryFunction().then(function(response) {
+      setData(response.data)
+      setLoading(false)
+    })
+  }, [forceUpdate])
 
   return { loading, data, reload: () => setForceUpdate(!forceUpdate) }
 }

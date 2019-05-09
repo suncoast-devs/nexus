@@ -7,15 +7,15 @@ import AttendanceCell from './AttendanceCell'
 import { AttendanceRecord } from '../models'
 
 const ShowAttendance = ({ profile }) => {
-  if (!profile.id) {
-    return <></>
-  }
-
   const { loading, data } = useModelData(() =>
     AttendanceRecord.includes('cohort_date')
       .where({ person_id: profile.id })
       .all()
   )
+
+  if (!profile.id) {
+    return <></>
+  }
 
   if (loading) {
     return <button className="button is-loading">Loading</button>

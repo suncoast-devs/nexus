@@ -1,5 +1,4 @@
 import React from 'react'
-import { Field, Control } from 'reactbulma'
 
 const camel2title = camelCase =>
   camelCase.replace(/([A-Z])/g, match => ` ${match}`).replace(/^./, match => match.toUpperCase())
@@ -14,12 +13,12 @@ const InputField = props => {
   const type = props.type || 'text'
 
   return (
-    <Field>
+    <div class="field">
       <label>{label}</label>
-      <Control>
+      <div class="control">
         <input className="input" name={props.name} defaultValue={defaultValue} type={type} placeholder={label} />
-      </Control>
-    </Field>
+      </div>
+    </div>
   )
 }
 
@@ -28,9 +27,9 @@ const TextAreaField = props => {
   const defaultValue = valueFromProps(props)
 
   return (
-    <Field>
+    <div class="field">
       <label>{label}</label>
-      <Control>
+      <div class="control">
         <textarea
           type="text"
           className="textarea"
@@ -39,8 +38,8 @@ const TextAreaField = props => {
           defaultValue={defaultValue}
           placeholder={label}
         />
-      </Control>
-    </Field>
+      </div>
+    </div>
   )
 }
 
@@ -49,9 +48,9 @@ const SelectField = props => {
   const defaultValue = valueFromProps(props)
 
   return (
-    <Field>
+    <div class="field">
       <label>{label}</label>
-      <Control>
+      <div class="control">
         <div className="select">
           <select name={props.name} defaultValue={defaultValue}>
             {props.options.map((option, index) => (
@@ -61,8 +60,8 @@ const SelectField = props => {
             ))}
           </select>
         </div>
-      </Control>
-    </Field>
+      </div>
+    </div>
   )
 }
 

@@ -1,5 +1,4 @@
 import React from 'react'
-import { Field, Control, Button, Section, Container, Title } from 'reactbulma'
 
 import history from '../history'
 import formToObject from '../utils/formToObject'
@@ -25,12 +24,12 @@ const EditProfile = props => {
         submit(event)
       }}
     >
-      <Section>
-        <Container>
-          <Title>Profile</Title>
-        </Container>
-        <Section>
-          <Container>
+      <section className="section">
+        <div className="container">
+          <h1 className="title">Profile</h1>
+        </div>
+        <section className="section">
+          <div className="container">
             <InputField defaultObject={profile} name="fullName" />
             <InputField defaultObject={profile} name="github" />
             <InputField defaultObject={profile} name="assignmentsRepo" />
@@ -54,17 +53,17 @@ const EditProfile = props => {
             <InputField name="honorificPrefix" defaultObject={profile} />
             <InputField name="honorificSuffix" defaultObject={profile} />
 
-            <Field grouped>
-              <Control>
-                <Button link>Submit</Button>
-              </Control>
-              <Control>
-                <Button>Cancel</Button>
-              </Control>
-            </Field>
-          </Container>
-        </Section>
-      </Section>
+            <div className="field is-grouped">
+              <div className="control">
+                <button className="button is-link">Submit</button>
+              </div>
+              <div className="control">
+                <button className="button">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
     </form>
   )
 }
