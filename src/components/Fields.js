@@ -13,9 +13,9 @@ const InputField = props => {
   const type = props.type || 'text'
 
   return (
-    <div class="field">
+    <div className="field">
       <label>{label}</label>
-      <div class="control">
+      <div className="control">
         <input className="input" name={props.name} defaultValue={defaultValue} type={type} placeholder={label} />
       </div>
     </div>
@@ -27,9 +27,9 @@ const TextAreaField = props => {
   const defaultValue = valueFromProps(props)
 
   return (
-    <div class="field">
+    <div className="field">
       <label>{label}</label>
-      <div class="control">
+      <div className="control">
         <textarea
           type="text"
           className="textarea"
@@ -48,9 +48,9 @@ const SelectField = props => {
   const defaultValue = valueFromProps(props)
 
   return (
-    <div class="field">
+    <div className="field">
       <label>{label}</label>
-      <div class="control">
+      <div className="control">
         <div className="select">
           <select name={props.name} defaultValue={defaultValue}>
             {props.options.map((option, index) => (

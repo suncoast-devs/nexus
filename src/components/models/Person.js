@@ -20,6 +20,8 @@ const Person = ApplicationRecord.extend({
     dietaryNote: attr(),
     issues: attr(),
     smallProfileImageUrl: attr(),
+    assignmentsRepoExists: attr(),
+    slackUser: attr(),
     attendanceRecords: hasMany()
   }
 })

@@ -1,4 +1,6 @@
 import React from 'react'
+import cx from 'classnames'
+
 import { Unit, StudentEnrollment } from '../models'
 import useModelData from '../../hooks/useModelData'
 import { DeleteButton } from '../Buttons'
@@ -57,6 +59,8 @@ const EditEnrollment = ({ cohort }) => {
       <thead>
         <tr>
           <th>Name</th>
+          <th>Github Repo</th>
+          <th>Slack Integration</th>
           {units.map(unit => (
             <th key={unit.id} style={{ cursor: 'pointer' }} onClick={() => enrollEveryoneInUnit(unit)}>
               {unit.title}
@@ -74,8 +78,32 @@ const EditEnrollment = ({ cohort }) => {
                 <td>
                   <Person person={studentEnrollment.person} />
                 </td>
+                <td style={{ textAlign: 'center' }}>
+                  <span className="icon">
+                    <i
+                      className={cx(
+                        'fas',
+                        studentEnrollment.person.assignmentsRepoExists
+                          ? ['fa-check', 'has-text-success']
+                          : ['fas-ban', 'has-text-danger']
+                      )}
+                    />
+                  </span>
+                </td>
+                <td style={{ textAlign: 'center' }}>
+                  <span className="icon">
+                    <i
+                      className={cx(
+                        'fas',
+                        studentEnrollment.person.slackUser.length > 0
+                          ? ['fa-check', 'has-text-success']
+                          : ['fa-ban', 'has-text-danger']
+                      )}
+                    />
+                  </span>
+                </td>
                 {units.map(unit => (
-                  <td key={unit.id}>
+                  <td key={unit.id} style={{ textAlign: 'center' }}>
                     <input
                       type="checkbox"
                       onChange={() => toggleUnit(studentEnrollment, unit)}
@@ -83,7 +111,7 @@ const EditEnrollment = ({ cohort }) => {
                     />
                   </td>
                 ))}
-                <td>
+                <td style={{ textAlign: 'center' }}>
                   <DeleteButton onClick={() => deletePerson(studentEnrollment)} />
                 </td>
               </tr>

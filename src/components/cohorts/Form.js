@@ -39,11 +39,11 @@ const Form = ({ onSubmit, onCancel, title, cohort }) => (
       </>
     )}
 
-    <div class="field is-grouped">
-      <div class="control">
+    <div className="field is-grouped">
+      <div className="control">
         <button className="button is-link">Submit</button>
       </div>
-      <div class="control">
+      <div className="control">
         <button className="button" onClick={onCancel}>
           Cancel
         </button>

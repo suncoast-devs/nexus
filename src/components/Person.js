@@ -2,7 +2,7 @@ import React from 'react'
 
 const iconStyle = { width: '32px', height: '32px', textAlign: 'center', verticalAlign: 'center', lineHeight: '32px' }
 
-const Person = ({ person }) => {
+const Person = ({ person, extra }) => {
   return (
     <article className="media">
       <figure className="media-left">
