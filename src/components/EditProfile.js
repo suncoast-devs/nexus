@@ -30,10 +30,20 @@ const EditProfile = props => {
         </div>
         <section className="section">
           <div className="container">
+            {profile.slackInviteCode && (
+              <article className="message is-warning is-medium">
+                <div className="message-header">
+                  <p>Slack Invite Code</p>
+                </div>
+                <div className="message-body">
+                  Send the message <code>register {profile.slackInviteCode}</code> to <code>nexus</code> in a direct
+                  message to start to receive notices from Nexus on Slack.
+                </div>
+              </article>
+            )}
             <InputField defaultObject={profile} name="fullName" />
             <InputField defaultObject={profile} name="github" />
             <InputField defaultObject={profile} name="assignmentsRepo" />
-
             <SelectField
               defaultObject={profile}
               name="shirtSize"
@@ -44,15 +54,12 @@ const EditProfile = props => {
                 { value: 'XL', text: 'Xtra Large' }
               ]}
             />
-
             <TextAreaField defaultObject={profile} name="dietaryNote" rows={4} />
-
             <InputField name="givenName" defaultObject={profile} />
             <InputField name="familyName" defaultObject={profile} />
             <InputField name="additionalName" defaultObject={profile} />
             <InputField name="honorificPrefix" defaultObject={profile} />
             <InputField name="honorificSuffix" defaultObject={profile} />
-
             <div className="field is-grouped">
               <div className="control">
                 <button className="button is-link">Submit</button>
