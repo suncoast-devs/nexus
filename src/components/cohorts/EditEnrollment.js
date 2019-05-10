@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import cx from 'classnames'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 import { Unit, StudentEnrollment } from '../models'
 import useModelData from '../../hooks/useModelData'
@@ -54,6 +55,21 @@ const EditEnrollment = ({ cohort }) => {
     Promise.all(promises).then(reloadStudentEnrollments)
   }
 
+  const InvitationCode = ({ invitationCode }) => {
+    const [toolTipText, setToolTipText] = useState('Click to Copy URL')
+
+    return (
+      <CopyToClipboard
+        text={`${window.location.origin}/redeem/${invitationCode}`}
+        onCopy={() => setToolTipText('Copied')}
+      >
+        <span className="tooltip" style={{ cursor: 'pointer' }} data-tooltip={toolTipText}>
+          <code>{invitationCode}</code>
+        </span>
+      </CopyToClipboard>
+    )
+  }
+
   const table = () => (
     <table className="table">
       <thead>
@@ -61,6 +77,7 @@ const EditEnrollment = ({ cohort }) => {
           <th>Name</th>
           <th>Github Repo</th>
           <th>Slack Integration</th>
+          <th>Invitation Code</th>
           {units.map(unit => (
             <th key={unit.id} style={{ cursor: 'pointer' }} onClick={() => enrollEveryoneInUnit(unit)}>
               {unit.title}
@@ -95,12 +112,17 @@ const EditEnrollment = ({ cohort }) => {
                     <i
                       className={cx(
                         'fas',
-                        studentEnrollment.person.slackUser.length > 0
+                        studentEnrollment.person.slackUser && studentEnrollment.person.slackUser.length > 0
                           ? ['fa-check', 'has-text-success']
                           : ['fa-ban', 'has-text-danger']
                       )}
                     />
                   </span>
+                </td>
+                <td>
+                  {studentEnrollment.invitationCode && (
+                    <InvitationCode invitationCode={studentEnrollment.invitationCode} />
+                  )}
                 </td>
                 {units.map(unit => (
                   <td key={unit.id} style={{ textAlign: 'center' }}>

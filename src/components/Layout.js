@@ -134,7 +134,20 @@ const Layout = ({ profile, forceUpdateProfile, auth }) => {
     <>
       {navbar()}
 
-      <Route path="/" exact render={props => <Home isAuthenticated={auth.isAuthenticated} />} />
+      <Route exact path="/" render={props => <Home isAuthenticated={auth.isAuthenticated} {...props} />} />
+
+      <Route
+        exact
+        path="/redeem/:invitation_code"
+        render={props => {
+          window.location = `${process.env.REACT_APP_INVITATION_REDEEM_URL}&invitation_code=${
+            props.match.params.invitation_code
+          }`
+
+          return <Callback {...props} />
+        }}
+      />
+
       <Route
         path="/signout"
         render={props => {

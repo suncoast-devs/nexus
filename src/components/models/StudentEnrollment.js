@@ -10,6 +10,8 @@ const StudentEnrollment = ApplicationRecord.extend({
     cohort: belongsTo(),
 
     units: attr(),
+    invitationCode: attr(),
+
     person_id: attr(),
     person: belongsTo()
   }

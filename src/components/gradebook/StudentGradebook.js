@@ -25,10 +25,6 @@ const StudentGradebook = ({ profile }) => {
             assignment => assignment.homework && assignment.homework.cohort.id === cohort.id
           )
 
-          if (cohortAssignments.length === 0) {
-            return <></>
-          }
-
           return (
             <React.Fragment key={cohort.id}>
               <h1 className="title">{cohort.name}</h1>
