@@ -15,6 +15,7 @@ const EditEnrollment = ({ cohort }) => {
     reload: reloadStudentEnrollments
   } = useModelData(() =>
     StudentEnrollment.includes('person')
+      .selectExtra({ people: 'assignments_repo_exists' })
       .where({ cohort_id: cohort.id })
       .all()
   )
