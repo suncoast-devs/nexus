@@ -54,3 +54,8 @@ $text: $asphalt;
     cursor: pointer;
   }
 }
+
+.navbar-link:not(.is-arrowless):after,
+.select:not(.is-multiple):not(.is-loading):after {
+  top: auto;
+}
