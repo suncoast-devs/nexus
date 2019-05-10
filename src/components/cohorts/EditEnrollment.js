@@ -103,7 +103,7 @@ const EditEnrollment = ({ cohort }) => {
                         'fas',
                         studentEnrollment.person.assignmentsRepoExists
                           ? ['fa-check', 'has-text-success']
-                          : ['fas-ban', 'has-text-danger']
+                          : ['fa-ban', 'has-text-danger']
                       )}
                     />
                   </span>
