@@ -120,7 +120,13 @@ const Layout = ({ profile, forceUpdateProfile, auth }) => {
 
   const PublicRoutes = () => (
     <>
-      <Route exact path="/" render={props => <Home isAuthenticated={auth.isAuthenticated} {...props} />} />
+      <Route
+        exact
+        path="/"
+        render={props =>
+          profile.loading ? <></> : <Home profile={profile} isAuthenticated={auth.isAuthenticated} {...props} />
+        }
+      />
 
       <Route
         exact
@@ -161,7 +167,7 @@ const Layout = ({ profile, forceUpdateProfile, auth }) => {
       )}
       <PublicRoutes />
       {profile && profile.isAdmin && <AdminRoutes />}
-      {profile && <UserRoutes />}
+      {profile && !profile.loading && <UserRoutes />}
     </>
   )
 }

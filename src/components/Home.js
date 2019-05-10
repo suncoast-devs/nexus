@@ -1,7 +1,11 @@
 import React from 'react'
+import SlackInviteMessage from './SlackInviteMessage'
+import GithubSetupMessage from './GithubSetupMessage'
 
-const Home = ({ isAuthenticated }) => (
+const Home = ({ profile, isAuthenticated }) => (
   <>
+    <SlackInviteMessage profile={profile} />
+    <GithubSetupMessage profile={profile} />
     {!isAuthenticated && (
       <div>
         <h4>You are not logged in!</h4>

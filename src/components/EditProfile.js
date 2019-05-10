@@ -3,6 +3,7 @@ import React from 'react'
 import history from '../history'
 import formToObject from '../utils/formToObject'
 import { InputField, SelectField, TextAreaField } from './Fields'
+import SlackInviteMessage from './SlackInviteMessage'
 
 const EditProfile = props => {
   const { profile, forceUpdateProfile } = props
@@ -30,17 +31,7 @@ const EditProfile = props => {
         </div>
         <section className="section">
           <div className="container">
-            {profile.slackInviteCode && (
-              <article className="message is-warning is-medium">
-                <div className="message-header">
-                  <p>Slack Invite Code</p>
-                </div>
-                <div className="message-body">
-                  Send the message <code>register {profile.slackInviteCode}</code> to <code>nexus</code> in a direct
-                  message to start to receive notices from Nexus on Slack.
-                </div>
-              </article>
-            )}
+            <SlackInviteMessage profile={profile} />
             <InputField defaultObject={profile} name="fullName" />
             <InputField defaultObject={profile} name="github" />
             <InputField defaultObject={profile} name="assignmentsRepo" />
