@@ -18,50 +18,6 @@ import EditAttendance from './attendance/EditAttendance'
 import ShowAttendance from './attendance/ShowAttendance'
 
 const Layout = ({ profile, forceUpdateProfile, auth }) => {
-  const adminRoutes = () => {
-    return (
-      <Switch>
-        <Route
-          exact
-          path="/cohorts/:id/attendance"
-          render={props => <EditAttendance cohort_id={props.match.params.id} auth={auth} {...props} />}
-        />
-        <Route
-          exact
-          path="/cohorts/:id/gradebook"
-          render={props => <Gradebook cohort_id={props.match.params.id} auth={auth} profile={profile} {...props} />}
-        />
-        <Route
-          exact
-          path="/cohorts/:id/homeworks"
-          render={props => <EditHomeworks cohort_id={props.match.params.id} auth={auth} {...props} />}
-        />
-        <Route
-          exact
-          path="/cohorts/new"
-          render={props => {
-            return <NewCohort auth={auth} {...props} />
-          }}
-        />
-
-        <Route
-          path="/cohorts/:id"
-          render={props => {
-            return <EditCohort id={props.match.params.id} auth={auth} {...props} />
-          }}
-        />
-
-        <Route
-          exact
-          path="/cohorts"
-          render={props => {
-            return <Cohorts auth={auth} {...props} />
-          }}
-        />
-      </Switch>
-    )
-  }
-
   const AdminShowAttendances = props => {
     const { data: cohorts } = useModelData(() => Cohort.active())
 
@@ -85,55 +41,85 @@ const Layout = ({ profile, forceUpdateProfile, auth }) => {
       ))
   }
 
-  const userRoutes = () => {
-    return (
-      <>
-        <Route
-          exact
-          path="/attendance"
-          render={props =>
-            profile.isAdmin ? (
-              <AdminShowAttendances profile={profile} {...props} />
-            ) : (
-              <ShowAttendance profile={profile} auth={auth} {...props} />
-            )
-          }
-        />
+  const AdminRoutes = () => (
+    <Switch>
+      <Route
+        exact
+        path="/cohorts/:id/attendance"
+        render={props => <EditAttendance cohort_id={props.match.params.id} auth={auth} {...props} />}
+      />
+      <Route
+        exact
+        path="/cohorts/:id/gradebook"
+        render={props => <Gradebook cohort_id={props.match.params.id} auth={auth} profile={profile} {...props} />}
+      />
+      <Route
+        exact
+        path="/cohorts/:id/homeworks"
+        render={props => <EditHomeworks cohort_id={props.match.params.id} auth={auth} {...props} />}
+      />
+      <Route
+        exact
+        path="/cohorts/new"
+        render={props => {
+          return <NewCohort auth={auth} {...props} />
+        }}
+      />
 
-        <Route
-          exact
-          path="/gradebook"
-          render={props =>
-            profile.isAdmin ? (
-              <AdminShowGradebooks profile={profile} auth={auth} {...props} />
-            ) : (
-              <StudentGradebook profile={profile} auth={auth} {...props} />
-            )
-          }
-        />
+      <Route
+        path="/cohorts/:id"
+        render={props => {
+          return <EditCohort id={props.match.params.id} auth={auth} {...props} />
+        }}
+      />
 
-        <Route
-          path="/profile"
-          render={props => {
-            return <EditProfile profile={profile} forceUpdateProfile={forceUpdateProfile} auth={auth} {...props} />
-          }}
-        />
-      </>
-    )
-  }
+      <Route
+        exact
+        path="/cohorts"
+        render={props => {
+          return <Cohorts auth={auth} {...props} />
+        }}
+      />
+    </Switch>
+  )
 
-  const navbar = () => {
-    if (auth.isAuthenticated) {
-      return <AuthenticatedNavBar profile={profile} auth={auth} />
-    } else {
-      return <UnauthenticatedNavBar auth={auth} />
-    }
-  }
-
-  return (
+  const UserRoutes = () => (
     <>
-      {navbar()}
+      <Route
+        exact
+        path="/attendance"
+        render={props =>
+          profile.isAdmin ? (
+            <AdminShowAttendances profile={profile} {...props} />
+          ) : (
+            <ShowAttendance profile={profile} auth={auth} {...props} />
+          )
+        }
+      />
 
+      <Route
+        exact
+        path="/gradebook"
+        render={props =>
+          profile.isAdmin ? (
+            <AdminShowGradebooks profile={profile} auth={auth} {...props} />
+          ) : (
+            <StudentGradebook profile={profile} auth={auth} {...props} />
+          )
+        }
+      />
+
+      <Route
+        path="/profile"
+        render={props => {
+          return <EditProfile profile={profile} forceUpdateProfile={forceUpdateProfile} auth={auth} {...props} />
+        }}
+      />
+    </>
+  )
+
+  const PublicRoutes = () => (
+    <>
       <Route exact path="/" render={props => <Home isAuthenticated={auth.isAuthenticated} {...props} />} />
 
       <Route
@@ -163,8 +149,19 @@ const Layout = ({ profile, forceUpdateProfile, auth }) => {
           return <Callback {...props} />
         }}
       />
-      {profile && profile.isAdmin && adminRoutes()}
-      {userRoutes(forceUpdateProfile)}
+    </>
+  )
+
+  return (
+    <>
+      {auth.isAuthenticated ? (
+        <AuthenticatedNavBar profile={profile} auth={auth} />
+      ) : (
+        <UnauthenticatedNavBar auth={auth} />
+      )}
+      <PublicRoutes />
+      {profile && profile.isAdmin && <AdminRoutes />}
+      {profile && <UserRoutes />}
     </>
   )
 }
