@@ -4,8 +4,8 @@ import cx from 'classnames'
 import { Homework, Cohort, Assignment } from '../models'
 import useModelData from '../../hooks/useModelData'
 import PersonComponent from '../Person'
-import LoadingIndicator from '../LoadingIndicator'
-import LoadingButton from '../LoadingButton'
+import LoadingIndicator from '../utils/LoadingIndicator'
+import LoadingButton from '../utils/LoadingButton'
 
 const Gradebook = ({ cohort_id }) => {
   const { loading: loadingCohort, data: cohort, reload: reloadCohort } = useModelData(

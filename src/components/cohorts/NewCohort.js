@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import { Cohort } from '../models'
-import ErrorNotification from '../ErrorNotification'
+import ErrorNotification from '../utils/ErrorNotification'
 import history from '../../history'
 import formToObject from '../../utils/formToObject'
 import Form from './Form'

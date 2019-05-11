@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Cohort, Assignment } from '../models'
 import useModelData from '../../hooks/useModelData'
-import LoadingIndicator from '../LoadingIndicator'
+import LoadingIndicator from '../utils/LoadingIndicator'
 
 const StudentGradebook = ({ profile }) => {
   const { loading: loadingAssignments, data: assignments } = useModelData(() =>

@@ -3,7 +3,7 @@ import Select from 'react-select'
 
 import { Program } from '../models'
 import useModelData from '../../hooks/useModelData'
-import { InputField } from '../Fields'
+import { InputField } from '../utils/Fields'
 
 const ProgramDropDown = ({ cohort }) => {
   const { data: programs } = useModelData(() => Program.all(), [])

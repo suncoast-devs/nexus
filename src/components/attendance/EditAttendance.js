@@ -6,7 +6,7 @@ import useModelData from '../../hooks/useModelData'
 import PersonComponent from '../Person'
 import AttendanceCell from './AttendanceCell'
 import AttendanceModal from './AttendanceModal'
-import LoadingIndicator from '../LoadingIndicator'
+import LoadingIndicator from '../utils/LoadingIndicator'
 
 const EditAttendance = ({ cohort_id }) => {
   const [showModal, setShowModal] = useState(false)

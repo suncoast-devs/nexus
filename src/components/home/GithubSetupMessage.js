@@ -1,6 +1,6 @@
 import React from 'react'
-import useModelData from '../hooks/useModelData'
-import { Person } from './models'
+import useModelData from '../../hooks/useModelData'
+import { Person } from '../models'
 
 const GithubSetupMessage = ({ profile }) => {
   const { loading, data: person } = useModelData(() => Person.selectExtra(['assignments_repo_exists']).find(profile.id))
@@ -15,7 +15,7 @@ const GithubSetupMessage = ({ profile }) => {
             <p>We could not find your Github repository for assignments</p>
           </div>
           <div className="message-body">
-            Ensure that you have a repository and that it is configured in your profile. Send the message{' '}
+            Ensure that you have a repository and that it is configured in your profile.
           </div>
         </article>
       </div>

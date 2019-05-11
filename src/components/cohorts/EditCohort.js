@@ -5,7 +5,7 @@ import useModelData from '../../hooks/useModelData'
 
 import history from '../../history'
 import formToObject from '../../utils/formToObject'
-import { Tabs, TabHeader, Tab } from '../Tabs'
+import { Tabs, TabHeader, Tab } from '../utils/Tabs'
 import Form from './Form'
 import EditEnrollment from './EditEnrollment'
 import EditCohortCalendar from './EditCohortCalendar'

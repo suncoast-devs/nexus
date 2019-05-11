@@ -4,7 +4,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 import { Unit, StudentEnrollment } from '../models'
 import useModelData from '../../hooks/useModelData'
-import { DeleteButton } from '../Buttons'
+import { DeleteButton } from '../utils/Buttons'
 import PersonDropDown from '../PersonDropDown'
 import Person from '../Person'
 
