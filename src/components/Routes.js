@@ -22,8 +22,8 @@ import StudentAttendance from './attendance/StudentAttendance'
 import StudentGradebook from './gradebook/StudentGradebook'
 import StudentProgressReports from './progress/StudentProgressReports'
 
-const AdminRoutes = ({ profile, auth }) => (
-  <Switch>
+const PeopleRoutes = ({ profile, auth }) => (
+  <>
     <Route exact path="/people" render={props => <People />} />
 
     <Route
@@ -55,7 +55,11 @@ const AdminRoutes = ({ profile, auth }) => (
         </ProfileLoader>
       )}
     />
+  </>
+)
 
+const CohortAdminRoutes = ({ profile, auth }) => (
+  <>
     <Route
       exact
       path="/cohorts/:id/attendance"
@@ -77,20 +81,6 @@ const AdminRoutes = ({ profile, auth }) => (
       exact
       path="/cohorts/:id/progress-reports/new"
       render={props => <NewProgressReport cohort_id={props.match.params.id} auth={auth} {...props} />}
-    />
-
-    <Route
-      exact
-      path="/progress-reports/:progress_report_id"
-      render={props => <ProgressReportIndex id={props.match.params.progress_report_id} index="complete" />}
-    />
-
-    <Route
-      exact
-      path="/progress-reports/:progress_report_id/:index"
-      render={props => (
-        <ProgressReportIndex id={props.match.params.progress_report_id} index={props.match.params.index} />
-      )}
     />
 
     <Route
@@ -120,58 +110,67 @@ const AdminRoutes = ({ profile, auth }) => (
         return <Cohorts auth={auth} {...props} />
       }}
     />
-  </Switch>
+  </>
 )
 
-const UserRoutes = ({ profile, forceUpdateProfile, auth }) => (
+const AdminProgressReportsRoutes = ({ profile, auth }) => (
   <>
     <Route
       exact
-      path="/attendance"
-      render={props =>
-        profile.isAdmin ? (
-          <AdminShowAttendances profile={profile} {...props} />
-        ) : (
-          <StudentAttendance profile={profile} auth={auth} {...props} />
-        )
-      }
+      path="/progress-reports/:progress_report_id"
+      render={props => <ProgressReportIndex id={props.match.params.progress_report_id} index="complete" />}
     />
 
     <Route
       exact
-      path="/gradebook"
-      render={props =>
-        profile.isAdmin ? (
-          <AdminShowGradebooks profile={profile} auth={auth} {...props} />
-        ) : (
-          <StudentGradebook profile={profile} auth={auth} {...props} />
-        )
-      }
-    />
-
-    <Route
-      exact
-      path="/progress-reports"
-      render={props =>
-        profile.isAdmin ? (
-          <AdminShowProgressReports profile={profile} auth={auth} {...props} />
-        ) : (
-          <StudentProgressReports profile={profile} auth={auth} {...props} />
-        )
-      }
-    />
-
-    <Route
-      path="/profile"
-      render={props => {
-        return <EditProfile profile={profile} forceUpdateProfile={forceUpdateProfile} auth={auth} {...props} />
-      }}
+      path="/progress-reports/:progress_report_id/:index"
+      render={props => (
+        <ProgressReportIndex id={props.match.params.progress_report_id} index={props.match.params.index} />
+      )}
     />
   </>
 )
 
-const PublicRoutes = ({ profile, auth }) => (
+const AdminRoutes = ({ profile, auth }) => (
   <>
+    <PeopleRoutes profile={profile} auth={auth} />
+    <CohortAdminRoutes profile={profile} auth={auth} />
+    <AdminProgressReportsRoutes profile={profile} auth={auth} />
+    <Route exact path="/attendance" render={props => <AdminShowAttendances profile={profile} {...props} />} />
+    <Route exact path="/gradebook" render={props => <AdminShowGradebooks profile={profile} auth={auth} {...props} />} />
+    <Route
+      exact
+      path="/progress-reports"
+      render={props => <AdminShowProgressReports profile={profile} auth={auth} {...props} />}
+    />
+  </>
+)
+
+const UserRoutes = ({ profile, auth }) => (
+  <Switch>
+    <Route exact path="/attendance" render={props => <StudentAttendance profile={profile} auth={auth} {...props} />} />
+
+    <Route exact path="/gradebook" render={props => <StudentGradebook profile={profile} auth={auth} {...props} />} />
+
+    <Route
+      exact
+      path="/progress-reports"
+      render={props => <StudentProgressReports profile={profile} auth={auth} {...props} />}
+    />
+  </Switch>
+)
+
+const ProfileRoutes = ({ profile, auth, forceUpdateProfile }) => (
+  <Route
+    path="/profile"
+    render={props => {
+      return <EditProfile profile={profile} forceUpdateProfile={forceUpdateProfile} auth={auth} {...props} />
+    }}
+  />
+)
+
+const PublicRoutes = ({ profile, auth }) => (
+  <Switch>
     <Route
       exact
       path="/"
@@ -213,7 +212,7 @@ const PublicRoutes = ({ profile, auth }) => (
         return <Callback {...props} />
       }}
     />
-  </>
+  </Switch>
 )
 
-export { AdminRoutes, UserRoutes, PublicRoutes }
+export { AdminRoutes, UserRoutes, PublicRoutes, ProfileRoutes }
