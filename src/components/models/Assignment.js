@@ -24,7 +24,7 @@ Assignment.scoreInfo = function(score) {
 }
 
 Assignment.noScore = {
-  title: 'Not Yet Scored',
+  title: 'Not Graded',
   style: {
     iconColor: 'black',
     buttonColor: 'white',

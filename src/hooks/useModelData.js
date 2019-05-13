@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const useModelData = (queryFunction, defaultData = []) => {
+const useModelData = (queryFunction, defaultData = [], callback) => {
   const [forceUpdate, setForceUpdate] = useState(true)
 
   const [loading, setLoading] = useState(true)
@@ -10,7 +10,12 @@ const useModelData = (queryFunction, defaultData = []) => {
     () => {
       queryFunction().then(function(response) {
         setData(response.data)
+
         setLoading(false)
+
+        if (callback) {
+          callback(response.data)
+        }
       })
     },
     // -- this would warn that queryFunction is a missing dependency --
@@ -19,7 +24,11 @@ const useModelData = (queryFunction, defaultData = []) => {
     [forceUpdate]
   )
 
-  return { loading, data, reload: () => setForceUpdate(!forceUpdate) }
+  return {
+    loading,
+    data,
+    reload: () => setForceUpdate(!forceUpdate)
+  }
 }
 
 export default useModelData

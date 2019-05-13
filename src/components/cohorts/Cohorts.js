@@ -57,6 +57,9 @@ const Cohorts = () => {
                             <Link className="button is-primary is-small" to={`/cohorts/${cohort.id}/gradebook`}>
                               Gradebook
                             </Link>
+                            <Link className="button is-primary is-small" to={`/cohorts/${cohort.id}/progress-reports`}>
+                              Progress Reports
+                            </Link>
                           </div>
                         </div>
                       </div>

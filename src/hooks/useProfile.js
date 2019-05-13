@@ -12,8 +12,18 @@ const NULL_PROFILE = {
 }
 
 const useProfile = () => {
+  const fetchProfile = () => {
+    const profile = Profile.find()
+
+    return profile || NULL_PROFILE
+  }
+
+  const unAuthenticatedProfile = () => {
+    return new Promise(resolve => resolve({ data: NULL_PROFILE }))
+  }
+
   const { loading, data: profile, reload: forceUpdateProfile } = useModelData(() =>
-    auth.isAuthenticated ? Profile.find() : new Promise(resolve => resolve(NULL_PROFILE))
+    auth.isAuthenticated ? fetchProfile() : unAuthenticatedProfile()
   )
 
   return loading ? { profile: NULL_PROFILE, forceUpdateProfile: () => {} } : { profile, forceUpdateProfile }

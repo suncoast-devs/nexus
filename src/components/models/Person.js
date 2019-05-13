@@ -23,7 +23,8 @@ const Person = ApplicationRecord.extend({
     assignmentsRepoExists: attr(),
     slackUser: attr(),
     slackInviteCode: attr(),
-    attendanceRecords: hasMany()
+    attendanceRecords: hasMany(),
+    assignments: hasMany()
   }
 })
 

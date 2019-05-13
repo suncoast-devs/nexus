@@ -173,6 +173,7 @@ const Gradebook = ({ cohort_id }) => {
   return (
     <section className="section">
       <div className="container">
+        <h1 className="title">Gradebook for {cohort.name}</h1>
         <table className="table assignment-table is-fullwidth is-hoverable">
           <thead>
             <tr>

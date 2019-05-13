@@ -21,6 +21,10 @@ $text: $asphalt;
 
 @import '~bulma/bulma';
 
+.has-cursor-pointer {
+  cursor: pointer;
+}
+
 .checkbox input {
   margin-right: 0.5rem;
 }
@@ -55,7 +59,6 @@ $text: $asphalt;
   }
 }
 
-.navbar-link:not(.is-arrowless):after,
-.select:not(.is-multiple):not(.is-loading):after {
+.navbar-link:not(.is-arrowless):after {
   top: auto;
 }

@@ -8,5 +8,20 @@ import CohortDate from './CohortDate'
 import AttendanceRecord from './AttendanceRecord'
 import Homework from './Homework'
 import Assignment from './Assignment'
+import ProgressReport from './ProgressReport'
+import StudentProgressReport from './StudentProgressReport'
 
-export { Cohort, CohortDate, Program, Homework, Assignment, Unit, Person, Profile, StudentEnrollment, AttendanceRecord }
+export {
+  Cohort,
+  CohortDate,
+  Program,
+  ProgressReport,
+  StudentProgressReport,
+  Homework,
+  Assignment,
+  Unit,
+  Person,
+  Profile,
+  StudentEnrollment,
+  AttendanceRecord
+}
