@@ -26,7 +26,9 @@ const renderProfile = profile => (
         </figure>
       </div>
       <div className="media-content">
-        <p className="is-6">{profile.fullName}</p>
+        <p className="is-6" style={{ lineHeight: '32px' }}>
+          {profile.fullName}
+        </p>
       </div>
     </div>
   </>
