@@ -10,6 +10,9 @@ const admin = () => (
       <NavLink className="navbar-item" activeClassName="is-active" to="/cohorts">
         Cohorts
       </NavLink>
+      <NavLink className="navbar-item" activeClassName="is-active" to="/people">
+        People
+      </NavLink>
     </div>
   </>
 )

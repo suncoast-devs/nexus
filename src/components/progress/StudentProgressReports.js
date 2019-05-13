@@ -5,7 +5,9 @@ import useModelData from '../../hooks/useModelData'
 import LoadingIndicator from '../utils/LoadingIndicator'
 
 const StudentProgressReports = ({ profile }) => {
-  const { loading: loadingStudentProgressReports, data: reports } = useModelData(() => StudentProgressReport.all())
+  const { loading: loadingStudentProgressReports, data: reports } = useModelData(() =>
+    StudentProgressReport.where({ person_id: profile.id }).all()
+  )
 
   if (loadingStudentProgressReports) {
     return <LoadingIndicator />

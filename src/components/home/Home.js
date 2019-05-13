@@ -15,7 +15,7 @@ const Home = ({ profile, isAuthenticated }) => {
               </div>
               <div className="message-body" style={{ textAlign: 'center' }}>
                 <p>
-                  <img src={banner} style={{ width: '25%' }} />
+                  <img alt="banner" src={banner} style={{ width: '25%' }} />
                 </p>
                 <p>Welcome to Nexus, your student information management system</p>
               </div>

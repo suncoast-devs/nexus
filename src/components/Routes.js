@@ -1,27 +1,61 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
-import Callback from './Callback'
-import Home from './home/Home'
-import NewCohort from './cohorts/NewCohort'
-import EditCohort from './cohorts/EditCohort'
-import Cohorts from './cohorts/Cohorts'
-import Gradebook from './gradebook/Gradebook'
-import StudentGradebook from './gradebook/StudentGradebook'
-import EditHomeworks from './homeworks/EditHomeworks'
-import EditProfile from './EditProfile'
-import EditAttendance from './attendance/EditAttendance'
-import ShowAttendance from './attendance/ShowAttendance'
-import NewProgressReport from './progress/NewProgressReport'
-import ProgressReportIndex from './progress/ProgressReportIndex'
-import ProgressReports from './progress/ProgressReports'
 import AdminShowAttendances from './attendance/AdminShowAttendances'
 import AdminShowGradebooks from './gradebook/AdminShowGradebooks'
 import AdminShowProgressReports from './progress/AdminShowProgressReports'
+import Callback from './Callback'
+import Cohorts from './cohorts/Cohorts'
+import EditAttendance from './attendance/EditAttendance'
+import EditCohort from './cohorts/EditCohort'
+import EditHomeworks from './homeworks/EditHomeworks'
+import EditProfile from './EditProfile'
+import Gradebook from './gradebook/Gradebook'
+import Home from './home/Home'
+import NewCohort from './cohorts/NewCohort'
+import NewProgressReport from './progress/NewProgressReport'
+import People from './People'
+import ProfileLoader from './utils/ProfileLoader'
+import ProgressReportIndex from './progress/ProgressReportIndex'
+import ProgressReports from './progress/ProgressReports'
+import StudentAttendance from './attendance/StudentAttendance'
+import StudentGradebook from './gradebook/StudentGradebook'
 import StudentProgressReports from './progress/StudentProgressReports'
 
 const AdminRoutes = ({ profile, auth }) => (
   <Switch>
+    <Route exact path="/people" render={props => <People />} />
+
+    <Route
+      exact
+      path="/people/:id/gradebook"
+      render={props => (
+        <ProfileLoader id={props.match.params.id}>
+          <StudentGradebook profile={profile} auth={auth} {...props} />
+        </ProfileLoader>
+      )}
+    />
+
+    <Route
+      exact
+      path="/people/:id/attendance"
+      render={props => (
+        <ProfileLoader id={props.match.params.id}>
+          <StudentAttendance profile={profile} auth={auth} {...props} />
+        </ProfileLoader>
+      )}
+    />
+
+    <Route
+      exact
+      path="/people/:id/progress-reports"
+      render={props => (
+        <ProfileLoader id={props.match.params.id}>
+          <StudentProgressReports auth={auth} {...props} />
+        </ProfileLoader>
+      )}
+    />
+
     <Route
       exact
       path="/cohorts/:id/attendance"
@@ -98,7 +132,7 @@ const UserRoutes = ({ profile, forceUpdateProfile, auth }) => (
         profile.isAdmin ? (
           <AdminShowAttendances profile={profile} {...props} />
         ) : (
-          <ShowAttendance profile={profile} auth={auth} {...props} />
+          <StudentAttendance profile={profile} auth={auth} {...props} />
         )
       }
     />

@@ -6,7 +6,7 @@ import useModelData from '../../hooks/useModelData'
 import AttendanceCell from './AttendanceCell'
 import { AttendanceRecord } from '../models'
 
-const ShowAttendance = ({ profile }) => {
+const StudentAttendance = ({ profile }) => {
   const { loading, data } = useModelData(() =>
     AttendanceRecord.includes('cohort_date')
       .where({ person_id: profile.id })
@@ -57,4 +57,4 @@ const ShowAttendance = ({ profile }) => {
   )
 }
 
-export default ShowAttendance
+export default StudentAttendance
