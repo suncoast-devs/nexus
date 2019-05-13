@@ -8,7 +8,7 @@ import LoadingIndicator from './utils/LoadingIndicator'
 import { LeftRight } from './utils/LeftRight'
 
 const People = () => {
-  const [search, setSearch] = useState()
+  const [search, setSearch] = useState('')
   const { loading, data: people } = useModelData(() => Person.all())
 
   if (loading) {
@@ -21,7 +21,21 @@ const People = () => {
     )
   }
 
-  const peopleToDisplay = search ? people.filter(person => person.fullName.includes(search)) : people
+  const PersonButtons = ({ person }) => (
+    <span className="buttons">
+      <Link to={`/people/${person.id}/gradebook`} className="button is-small is-primary">
+        Gradebook
+      </Link>
+      <Link to={`/people/${person.id}/attendance`} className="button is-small is-primary">
+        Attendance
+      </Link>
+      <Link to={`/people/${person.id}/progress-reports`} className="button is-small is-primary">
+        Progress Reports
+      </Link>
+    </span>
+  )
+
+  const peopleToDisplay = search ? people.filter(person => person.isMatch(search)) : people
 
   return (
     <section className="section">
@@ -44,22 +58,7 @@ const People = () => {
           </div>
           {peopleToDisplay.map(person => (
             <div key={person.id} className="panel-block is-block">
-              <LeftRight
-                left={<PersonComponent person={person} />}
-                right={
-                  <span className="buttons">
-                    <Link to={`/people/${person.id}/gradebook`} className="button is-small is-primary">
-                      Gradebook
-                    </Link>
-                    <Link to={`/people/${person.id}/attendance`} className="button is-small is-primary">
-                      Attendance
-                    </Link>
-                    <Link to={`/people/${person.id}/progress-reports`} className="button is-small is-primary">
-                      Progress Reports
-                    </Link>
-                  </span>
-                }
-              />
+              <LeftRight left={<PersonComponent person={person} />} right={<PersonButtons person={person} />} />
             </div>
           ))}
         </nav>

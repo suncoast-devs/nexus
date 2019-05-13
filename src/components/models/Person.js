@@ -28,4 +28,20 @@ const Person = ApplicationRecord.extend({
   }
 })
 
+Person.prototype.isMatch = function(text) {
+  const lowerText = text.toLowerCase()
+
+  return [
+    this.fullName,
+    this.givenName,
+    this.fullName,
+    this.familyName,
+    this.additionalName,
+    this.github,
+    this.nickname
+  ]
+    .filter(Boolean)
+    .some(name => name.toLowerCase().includes(lowerText))
+}
+
 export default Person
