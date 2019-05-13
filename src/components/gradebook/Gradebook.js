@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import cx from 'classnames'
 
-import { Homework, Cohort, Assignment } from '../models'
+import { Cohort, Assignment } from '../models'
 import useModelData from '../../hooks/useModelData'
 import PersonComponent from '../Person'
 import LoadingIndicator from '../utils/LoadingIndicator'
@@ -10,7 +10,7 @@ import LoadingButton from '../utils/LoadingButton'
 const Gradebook = ({ cohort_id }) => {
   const { loading: loadingCohort, data: cohort, reload: reloadCohort } = useModelData(
     () =>
-      Cohort.includes('people')
+      Cohort.includes(['people', { homeworks: 'assignments' }])
         .selectExtra({ people: 'issues' })
         .find(cohort_id),
     { people: [] }
@@ -18,18 +18,12 @@ const Gradebook = ({ cohort_id }) => {
 
   const [selectedAssignment, setSelectedAssignment] = useState(0)
 
-  const { loading: loadingHomework, data: homeworks, reload: reloadHomeworks } = useModelData(() =>
-    Homework.includes('assignments')
-      .where({ cohort_id: cohort.id })
-      .all()
-  )
-
-  if (loadingCohort || loadingHomework) {
+  if (loadingCohort) {
     return <LoadingIndicator />
   }
 
   const sortedPeople = cohort.people.sort((a, b) => a.fullName.localeCompare(b.fullName))
-  const sortedHomework = homeworks.sort((a, b) => a.id - b.id)
+  const sortedHomework = cohort.homeworks.sort((a, b) => a.id - b.id)
 
   const notAssigned = homework => (
     <td className="tooltip" style={{ color: '#CCC' }} data-tooltip={`${homework.title} - Not Yet Assigned`}>
@@ -82,7 +76,7 @@ const Gradebook = ({ cohort_id }) => {
 
       assignment.save().then(() => {
         setSelectedAssignment(0)
-        reloadHomeworks()
+        reloadCohort()
         stopLoading()
       })
     }
@@ -160,7 +154,6 @@ const Gradebook = ({ cohort_id }) => {
     })
 
     const finish = () => {
-      reloadHomeworks()
       reloadCohort()
       stopLoading()
     }
@@ -203,7 +196,7 @@ const Gradebook = ({ cohort_id }) => {
                     @{person.github}
                   </a>
                 </td>
-                {homeworks.map(homework => {
+                {cohort.homeworks.map(homework => {
                   const assignment = homework.assignments.find(assignment => (assignment.person_id = person.id))
                   return (
                     <HomeworkTableData key={homework.id} person={person} assignment={assignment} homework={homework} />
