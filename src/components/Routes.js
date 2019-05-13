@@ -31,7 +31,7 @@ const AdminRoutes = ({ profile, auth }) => (
       path="/people/:id/gradebook"
       render={props => (
         <ProfileLoader id={props.match.params.id}>
-          <StudentGradebook profile={profile} auth={auth} {...props} />
+          <StudentGradebook showTitle profile={profile} auth={auth} {...props} />
         </ProfileLoader>
       )}
     />
@@ -41,7 +41,7 @@ const AdminRoutes = ({ profile, auth }) => (
       path="/people/:id/attendance"
       render={props => (
         <ProfileLoader id={props.match.params.id}>
-          <StudentAttendance profile={profile} auth={auth} {...props} />
+          <StudentAttendance showTitle profile={profile} auth={auth} {...props} />
         </ProfileLoader>
       )}
     />
@@ -51,7 +51,7 @@ const AdminRoutes = ({ profile, auth }) => (
       path="/people/:id/progress-reports"
       render={props => (
         <ProfileLoader id={props.match.params.id}>
-          <StudentProgressReports auth={auth} {...props} />
+          <StudentProgressReports showTitle auth={auth} {...props} />
         </ProfileLoader>
       )}
     />

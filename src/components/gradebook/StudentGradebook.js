@@ -4,9 +4,11 @@ import { Cohort, Assignment } from '../models'
 import useModelData from '../../hooks/useModelData'
 import LoadingIndicator from '../utils/LoadingIndicator'
 
-const StudentGradebook = ({ profile }) => {
+const StudentGradebook = ({ profile, showTitle }) => {
   const { loading: loadingAssignments, data: assignments } = useModelData(() =>
-    Assignment.includes({ homework: 'cohort' }).all()
+    Assignment.where({ person_id: profile.id })
+      .includes({ homework: 'cohort' })
+      .all()
   )
 
   const { loading: loadingCohort, data: cohorts } = useModelData(() =>
@@ -20,6 +22,7 @@ const StudentGradebook = ({ profile }) => {
   return (
     <section className="section">
       <div className="container">
+        {showTitle && <h1 className="title">Grades for: {profile.fullName}</h1>}
         {cohorts.map(cohort => {
           const cohortAssignments = assignments.filter(
             assignment => assignment.homework && assignment.homework.cohort.id === cohort.id

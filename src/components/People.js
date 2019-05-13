@@ -43,7 +43,7 @@ const People = () => {
             </p>
           </div>
           {peopleToDisplay.map(person => (
-            <div className="panel-block is-block">
+            <div key={person.id} className="panel-block is-block">
               <LeftRight
                 left={<PersonComponent person={person} />}
                 right={

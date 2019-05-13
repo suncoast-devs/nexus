@@ -6,7 +6,7 @@ import useModelData from '../../hooks/useModelData'
 import AttendanceCell from './AttendanceCell'
 import { AttendanceRecord } from '../models'
 
-const StudentAttendance = ({ profile }) => {
+const StudentAttendance = ({ profile, showTitle }) => {
   const { loading, data } = useModelData(() =>
     AttendanceRecord.includes('cohort_date')
       .where({ person_id: profile.id })
@@ -26,6 +26,7 @@ const StudentAttendance = ({ profile }) => {
   return (
     <section className="section">
       <div className="container">
+        {showTitle && <h1 className="title">Attendance for: {profile.fullName}</h1>}
         <div className="attendance-table">
           <table className="table is-fullwidth">
             <thead>
