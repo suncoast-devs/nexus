@@ -10,7 +10,7 @@ import LoadingButton from '../utils/LoadingButton'
 const Gradebook = ({ cohort_id }) => {
   const { loading: loadingCohort, data: cohort, reload: reloadCohort } = useModelData(
     () =>
-      Cohort.includes(['people', { homeworks: 'assignments' }])
+      Cohort.includes(['people', { homeworks: { assignments: 'person' } }])
         .selectExtra({ people: 'issues' })
         .find(cohort_id),
     { people: [] }
@@ -203,8 +203,13 @@ const Gradebook = ({ cohort_id }) => {
                   </a>
                 </td>
                 {cohort.homeworks.map(homework => {
-                  const assignment = homework.assignments.find(assignment => (assignment.person_id = person.id))
-                  console.log(homework, assignment)
+                  console.log(
+                    `For homework ${homework.id} looking for assignment with person.id=${
+                      person.id
+                    } within: ${homework.assignments.map(a => a.person.id).join(',')}`
+                  )
+                  const assignment = homework.assignments.find(assignment => (assignment.person.id = person.id))
+                  console.log(assignment)
                   return (
                     <HomeworkTableData key={homework.id} person={person} assignment={assignment} homework={homework} />
                   )
