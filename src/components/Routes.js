@@ -23,7 +23,7 @@ import StudentGradebook from './gradebook/StudentGradebook'
 import StudentProgressReports from './progress/StudentProgressReports'
 
 const PeopleRoutes = ({ profile, auth }) => (
-  <>
+  <Switch>
     <Route exact path="/people" render={props => <People />} />
 
     <Route
@@ -55,11 +55,11 @@ const PeopleRoutes = ({ profile, auth }) => (
         </ProfileLoader>
       )}
     />
-  </>
+  </Switch>
 )
 
 const CohortAdminRoutes = ({ profile, auth }) => (
-  <>
+  <Switch>
     <Route
       exact
       path="/cohorts/:id/attendance"
@@ -97,6 +97,7 @@ const CohortAdminRoutes = ({ profile, auth }) => (
     />
 
     <Route
+      exact
       path="/cohorts/:id"
       render={props => {
         return <EditCohort id={props.match.params.id} auth={auth} {...props} />
@@ -110,11 +111,11 @@ const CohortAdminRoutes = ({ profile, auth }) => (
         return <Cohorts auth={auth} {...props} />
       }}
     />
-  </>
+  </Switch>
 )
 
 const AdminProgressReportsRoutes = ({ profile, auth }) => (
-  <>
+  <Switch>
     <Route
       exact
       path="/progress-reports/:progress_report_id"
@@ -128,7 +129,12 @@ const AdminProgressReportsRoutes = ({ profile, auth }) => (
         <ProgressReportIndex id={props.match.params.progress_report_id} index={props.match.params.index} />
       )}
     />
-  </>
+    <Route
+      exact
+      path="/progress-reports"
+      render={props => <AdminShowProgressReports profile={profile} auth={auth} {...props} />}
+    />
+  </Switch>
 )
 
 const AdminRoutes = ({ profile, auth }) => (
@@ -138,11 +144,6 @@ const AdminRoutes = ({ profile, auth }) => (
     <AdminProgressReportsRoutes profile={profile} auth={auth} />
     <Route exact path="/attendance" render={props => <AdminShowAttendances profile={profile} {...props} />} />
     <Route exact path="/gradebook" render={props => <AdminShowGradebooks profile={profile} auth={auth} {...props} />} />
-    <Route
-      exact
-      path="/progress-reports"
-      render={props => <AdminShowProgressReports profile={profile} auth={auth} {...props} />}
-    />
   </>
 )
 
@@ -162,6 +163,7 @@ const UserRoutes = ({ profile, auth }) => (
 
 const ProfileRoutes = ({ profile, auth, forceUpdateProfile }) => (
   <Route
+    exact
     path="/profile"
     render={props => {
       return <EditProfile profile={profile} forceUpdateProfile={forceUpdateProfile} auth={auth} {...props} />
@@ -198,6 +200,7 @@ const PublicRoutes = ({ profile, auth }) => (
     />
 
     <Route
+      exact
       path="/signout"
       render={props => {
         auth.logout()
@@ -205,6 +208,7 @@ const PublicRoutes = ({ profile, auth }) => (
       }}
     />
     <Route
+      exact
       path="/callback/:jwt"
       render={props => {
         auth.handleAuthentication(props.match.params.jwt)
