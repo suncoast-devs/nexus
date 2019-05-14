@@ -7,6 +7,7 @@ import useModelData from '../../hooks/useModelData'
 import { DeleteButton } from '../utils/Buttons'
 import PersonDropDown from '../PersonDropDown'
 import Person from '../Person'
+import LoadingIndicator from '../utils/LoadingIndicator'
 
 const EditEnrollment = ({ cohort }) => {
   const {
@@ -22,7 +23,7 @@ const EditEnrollment = ({ cohort }) => {
   const { loading: loadingUnits, data: units } = useModelData(() => Unit.where({ program_id: cohort.program_id }).all())
 
   if (loadingStudentEnrollments || loadingUnits) {
-    return <></>
+    return <LoadingIndicator />
   }
 
   const addPerson = person => {
