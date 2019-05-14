@@ -35,7 +35,7 @@ const Gradebook = ({ cohort_id }) => {
 
   const HomeworkTableData = ({ homework, assignment, person }) => {
     if (!assignment) {
-      console.log({ 'assignment.issue': assignment.issue, 'person.issues': person.issues, person })
+      console.log({ 'person.issues': person.issues, person })
       return notAssigned(homework)
     }
 
@@ -44,6 +44,7 @@ const Gradebook = ({ cohort_id }) => {
     console.log({ 'assignment.issue': assignment.issue, 'person.issues': person.issues, issue, person })
 
     if (!issue) {
+      console.log({ 'assignment.issue': assignment.issue, 'person.issues': person.issues, person })
       return notAssigned(homework)
     }
 
