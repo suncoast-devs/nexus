@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 import { Cohort } from '../models'
 import useModelData from '../../hooks/useModelData'
+
+import { ErrorsContext, addErrorsFromObject } from '../Errors'
 
 import history from '../../history'
 import formToObject from '../../utils/formToObject'
@@ -12,6 +14,7 @@ import EditCohortCalendar from './EditCohortCalendar'
 
 const EditCohort = ({ id }) => {
   const { loading, data: cohort } = useModelData(() => Cohort.find(id))
+  const [errors, setErrors] = useContext(ErrorsContext)
 
   const cancel = event => {
     event.preventDefault()
@@ -24,8 +27,12 @@ const EditCohort = ({ id }) => {
 
     const updatedCohort = formToObject(event.target, cohort)
 
-    updatedCohort.save().then(() => {
-      history.push('/cohorts')
+    updatedCohort.save().then(response => {
+      if (response) {
+        history.push('/cohorts')
+      } else {
+        addErrorsFromObject(errors, setErrors, updatedCohort)
+      }
     })
   }
 
