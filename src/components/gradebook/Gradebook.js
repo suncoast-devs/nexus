@@ -208,7 +208,7 @@ const Gradebook = ({ cohort_id }) => {
                       person.id
                     } within: ${homework.assignments.map(a => a.person.id).join(',')}`
                   )
-                  const assignment = homework.assignments.find(assignment => (assignment.person.id = person.id))
+                  const assignment = homework.assignments.find(assignment => assignment.person.id === person.id)
                   console.log(assignment)
                   return (
                     <HomeworkTableData key={homework.id} person={person} assignment={assignment} homework={homework} />
