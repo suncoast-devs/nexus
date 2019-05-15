@@ -51,8 +51,8 @@ const EditAttendance = ({ cohort_id }) => {
     }
 
     return (
-      <th style={{ cursor: 'pointer' }} onClick={onClick}>
-        {moment(cohortDate.day).format('ddd MM/DD')}
+      <th className="has-cursor-pointer" style={{ textAlign: 'center' }} onClick={onClick}>
+        {cohortDate.formattedDate}
       </th>
     )
   }

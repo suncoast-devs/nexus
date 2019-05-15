@@ -33,7 +33,9 @@ const StudentAttendance = ({ profile, showTitle }) => {
               <tr>
                 <th>Name</th>
                 {attendanceRecords.map(attendanceRecord => (
-                  <th key={attendanceRecord.id}>{moment(attendanceRecord.cohortDate.day).format('ddd MM/DD')}</th>
+                  <th style={{ textAlign: 'center' }} key={attendanceRecord.id}>
+                    {attendanceRecord.cohortDate.formattedDate}
+                  </th>
                 ))}
               </tr>
             </thead>

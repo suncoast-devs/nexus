@@ -56,9 +56,7 @@ const AttendanceModal = ({ selectedAttendanceRecord, onClose }) => {
       title={
         <span>
           Attendance for <span className="has-text-primary">{selectedAttendanceRecord.person.fullName}</span> on{' '}
-          <span className="has-text-primary">
-            {moment(selectedAttendanceRecord.cohortDate.day).format('ddd MM/DD')}
-          </span>
+          <span className="has-text-primary">{selectedAttendanceRecord.cohortDate.formattedDate}</span>
         </span>
       }
     >
