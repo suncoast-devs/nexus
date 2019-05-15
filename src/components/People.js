@@ -9,7 +9,7 @@ import { LeftRight } from './utils/LeftRight'
 
 const People = () => {
   const [search, setSearch] = useState('')
-  const { loading, data: people } = useModelData(() => Person.all())
+  const { loading, data: people } = useModelData(() => Person.selectExtra(['token']).all())
 
   if (loading) {
     return (
@@ -31,6 +31,9 @@ const People = () => {
       </Link>
       <Link to={`/people/${person.id}/progress-reports`} className="button is-small is-primary">
         Progress Reports
+      </Link>
+      <Link to={`/impersonate/${person.token}`} className="button is-small is-primary">
+        Impersonate
       </Link>
     </span>
   )

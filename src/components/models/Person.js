@@ -19,6 +19,7 @@ const Person = ApplicationRecord.extend({
     shirtSize: attr(),
     dietaryNote: attr(),
     issues: attr(),
+    token: attr(),
     smallProfileImageUrl: attr(),
     assignmentsRepoExists: attr(),
     slackUser: attr(),

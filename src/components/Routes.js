@@ -144,6 +144,15 @@ const AdminRoutes = ({ profile, auth }) => (
     <AdminProgressReportsRoutes profile={profile} auth={auth} />
     <Route exact path="/attendance" render={props => <AdminShowAttendances profile={profile} {...props} />} />
     <Route exact path="/gradebook" render={props => <AdminShowGradebooks profile={profile} auth={auth} {...props} />} />
+    <Route
+      exact
+      path="/impersonate/:jwt"
+      render={props => {
+        auth.handleAuthentication(props.match.params.jwt)
+
+        return <Callback {...props} />
+      }}
+    />
   </>
 )
 
