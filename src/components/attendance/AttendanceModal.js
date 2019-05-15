@@ -8,13 +8,13 @@ const AttendanceModal = ({ selectedAttendanceRecord, onClose }) => {
   const [note, setNote] = useState(selectedAttendanceRecord.note || '')
 
   const destroy = () => {
-    selectedAttendanceRecord.destroy().then(onClose())
+    selectedAttendanceRecord.destroy().then(() => onClose())
   }
 
   const save = () => {
     selectedAttendanceRecord.status = statusKey
     selectedAttendanceRecord.note = note
-    selectedAttendanceRecord.save().then(onClose())
+    selectedAttendanceRecord.save().then(() => onClose())
   }
 
   const nonEmptyStatuses = statuses.filter(status => status.key !== ' ')
