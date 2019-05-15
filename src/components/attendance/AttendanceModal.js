@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import statuses from './statuses'
-import moment from 'moment'
 import cx from 'classnames'
 import { ModalForm } from '../utils/ModalForm'
 

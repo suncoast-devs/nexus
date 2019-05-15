@@ -1,5 +1,4 @@
 import React from 'react'
-import moment from 'moment'
 
 import Person from '../Person'
 import useModelData from '../../hooks/useModelData'
