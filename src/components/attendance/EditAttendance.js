@@ -52,7 +52,7 @@ const EditAttendance = ({ cohort_id }) => {
 
     return (
       <th className="has-cursor-pointer" style={{ textAlign: 'center' }} onClick={onClick}>
-        {cohortDate.formattedDate}
+        {cohortDate.formattedDate()}
       </th>
     )
   }
