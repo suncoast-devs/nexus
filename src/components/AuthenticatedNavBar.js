@@ -3,22 +3,25 @@ import { Link, NavLink } from 'react-router-dom'
 import icon from '../images/icon.svg'
 import cx from 'classnames'
 
-const admin = () => (
-  <>
-    <div className="navbar-link">Admin</div>
-    <div className="navbar-dropdown is-boxed">
-      <NavLink className="navbar-item" activeClassName="is-active" to="/cohorts">
-        Cohorts
-      </NavLink>
-      <NavLink className="navbar-item" activeClassName="is-active" to="/people">
-        People
-      </NavLink>
-    </div>
-  </>
-)
+const AuthenticatedNavBar = props => {
+  const [active, setActive] = useState(false)
+  const { profile } = props
 
-const renderProfile = profile => (
-  <>
+  const Admin = () => (
+    <>
+      <div className="navbar-link">Admin</div>
+      <div className="navbar-dropdown is-boxed">
+        <NavLink className="navbar-item" activeClassName="is-active" to="/cohorts">
+          Cohorts
+        </NavLink>
+        <NavLink className="navbar-item" activeClassName="is-active" to="/people">
+          People
+        </NavLink>
+      </div>
+    </>
+  )
+
+  const ProfileDropDown = ({ profile }) => (
     <div className="media">
       <div className="media-left">
         <figure className="image is-32x32">
@@ -31,14 +34,9 @@ const renderProfile = profile => (
         </p>
       </div>
     </div>
-  </>
-)
+  )
 
-const AuthenticatedNavBar = props => {
-  const [active, setActive] = useState(false)
-  const { profile } = props
-
-  const burger = (
+  const Burger = () => (
     <div
       className={cx('navbar-burger', 'burger', {
         'is-active': active
@@ -46,7 +44,6 @@ const AuthenticatedNavBar = props => {
       aria-label="menu"
       aria-expanded={active}
       role="button"
-      onClick={() => setActive(!active)}
     >
       <span aria-hidden="true" />
       <span aria-hidden="true" />
@@ -54,7 +51,7 @@ const AuthenticatedNavBar = props => {
     </div>
   )
 
-  const profileMenu = (
+  const ProfileMenu = () => (
     <>
       <NavLink className="navbar-item" activeClassName="is-active" to="/profile">
         Profile
@@ -70,12 +67,17 @@ const AuthenticatedNavBar = props => {
   )
 
   return (
-    <nav className="navbar has-shadow is-primary" role="navigation" aria-label="main navigation">
+    <nav
+      className="navbar has-shadow is-primary"
+      role="navigation"
+      aria-label="main navigation"
+      onClick={() => setActive(!active)}
+    >
       <div className="navbar-brand">
         <Link to="/" className="navbar-item">
           <img src={icon} alt="Suncoast Developers Guild" height="28" width="28" />
         </Link>
-        {burger}
+        <Burger />
       </div>
       <div className={cx('navbar-menu', { 'is-active': active })}>
         <div className="navbar-start">
@@ -88,12 +90,16 @@ const AuthenticatedNavBar = props => {
           <NavLink className="navbar-item" activeClassName="is-active" to="/progress-reports">
             Progress Reports
           </NavLink>
-          <div className="navbar-item has-dropdown is-hoverable">{profile.isAdmin && admin()}</div>
+          <div className="navbar-item has-dropdown is-hoverable">{profile.isAdmin && <Admin />}</div>
         </div>
         <div className="navbar-end">
           <div className="navbar-item has-dropdown is-hoverable">
-            <div className="navbar-link">{renderProfile(profile)}</div>
-            <div className="navbar-dropdown is-right">{profileMenu}</div>
+            <div className="navbar-link">
+              <ProfileDropDown profile={profile} />
+            </div>
+            <div className="navbar-dropdown is-right">
+              <ProfileMenu />
+            </div>
           </div>
         </div>
       </div>
