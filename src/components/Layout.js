@@ -44,7 +44,7 @@ const Layout = ({ profile, forceUpdateProfile, auth }) => {
       ) : (
         <UserRoutes forceUpdateProfile={forceUpdateProfile} profile={profile} auth={auth} />
       )}
-      <ProfileRoutes />
+      <ProfileRoutes profile={profile} auth={auth} />
     </>
   )
 }
