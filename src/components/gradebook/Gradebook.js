@@ -22,8 +22,6 @@ const Gradebook = ({ cohort_id }) => {
     return <LoadingIndicator />
   }
 
-  console.log(cohort)
-
   const sortedPeople = cohort.people.sort((a, b) => a.fullName.localeCompare(b.fullName))
   const sortedHomework = cohort.homeworks.sort((a, b) => a.id - b.id)
 
@@ -35,16 +33,12 @@ const Gradebook = ({ cohort_id }) => {
 
   const HomeworkTableData = ({ homework, assignment, person }) => {
     if (!assignment) {
-      console.log({ 'person.issues': person.issues, person })
       return notAssigned(homework)
     }
 
     const issue = person.issues.find(issue => issue.number === assignment.issue)
 
-    console.log({ 'assignment.issue': assignment.issue, 'person.issues': person.issues, issue, person })
-
     if (!issue) {
-      console.log({ 'assignment.issue': assignment.issue, 'person.issues': person.issues, person })
       return notAssigned(homework)
     }
 
@@ -203,13 +197,7 @@ const Gradebook = ({ cohort_id }) => {
                   </a>
                 </td>
                 {cohort.homeworks.map(homework => {
-                  console.log(
-                    `For homework ${homework.id} looking for assignment with person.id=${
-                      person.id
-                    } within: ${homework.assignments.map(a => a.person.id).join(',')}`
-                  )
                   const assignment = homework.assignments.find(assignment => assignment.person.id === person.id)
-                  console.log(assignment)
                   return (
                     <HomeworkTableData key={homework.id} person={person} assignment={assignment} homework={homework} />
                   )
