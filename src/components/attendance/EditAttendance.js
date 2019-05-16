@@ -8,6 +8,69 @@ import AttendanceCell from './AttendanceCell'
 import AttendanceModal from './AttendanceModal'
 import LoadingIndicator from '../utils/LoadingIndicator'
 
+const AttendanceHeaderCell = ({ cohort, reload, cohortDate }) => {
+  const onClick = () => {
+    const answer = window.confirm('This will set all students to present for the day. Continue?')
+    if (!answer) {
+      return
+    }
+
+    const deletes = cohortDate.attendanceRecords.map(record => record.destroy())
+
+    Promise.all(deletes).then(() => {
+      const inserts = cohort.people.map(person => {
+        let attendanceRecord = new AttendanceRecord()
+        attendanceRecord.status = 'P'
+        attendanceRecord.note = ''
+        attendanceRecord.person_id = person.id
+        attendanceRecord.cohort_date_id = cohortDate.id
+        return attendanceRecord.save()
+      })
+
+      Promise.all(inserts).then(reload)
+    })
+  }
+
+  return (
+    <th className="has-cursor-pointer" style={{ textAlign: 'center' }} onClick={onClick}>
+      {cohortDate.formattedDate()}
+    </th>
+  )
+}
+
+const AttendanceRow = ({ sortedCohortDates, setSelectedAttendanceRecord, setShowModal, person }) => {
+  const attendanceRecordForDate = cohortDate =>
+    cohortDate.attendanceRecords.find(record => record.person.id === person.id) || new AttendanceRecord({ status: ' ' })
+
+  return (
+    <tr>
+      <td>
+        <PersonComponent person={person} />
+      </td>
+      {sortedCohortDates.map(cohortDate => {
+        const attendanceRecord = attendanceRecordForDate(cohortDate)
+
+        attendanceRecord.cohortDate = cohortDate
+        attendanceRecord.cohort_date_id = cohortDate.id
+        attendanceRecord.person = person
+        attendanceRecord.person_id = person.id
+
+        return (
+          <AttendanceCell
+            key={cohortDate.day}
+            statusKey={attendanceRecord.status}
+            note={attendanceRecord.note}
+            onClick={() => {
+              setSelectedAttendanceRecord(attendanceRecord)
+              setShowModal(true)
+            }}
+          />
+        )
+      })}
+    </tr>
+  )
+}
+
 const EditAttendance = ({ cohort_id }) => {
   const [showModal, setShowModal] = useState(false)
   const [onlyToday, setOnlyToday] = useState(true)
@@ -26,70 +89,6 @@ const EditAttendance = ({ cohort_id }) => {
   const sortedCohortDates = onlyToday
     ? cohort.cohortDates.filter(date => date.day === today)
     : cohort.cohortDates.sort((a, b) => a.day.localeCompare(b.day))
-
-  const AttendanceHeaderCell = ({ cohortDate }) => {
-    const onClick = () => {
-      const answer = window.confirm('This will set all students to present for the day. Continue?')
-      if (!answer) {
-        return
-      }
-
-      const deletes = cohortDate.attendanceRecords.map(record => record.destroy())
-
-      Promise.all(deletes).then(() => {
-        const inserts = cohort.people.map(person => {
-          let attendanceRecord = new AttendanceRecord()
-          attendanceRecord.status = 'P'
-          attendanceRecord.note = ''
-          attendanceRecord.person_id = person.id
-          attendanceRecord.cohort_date_id = cohortDate.id
-          return attendanceRecord.save()
-        })
-
-        Promise.all(inserts).then(reload)
-      })
-    }
-
-    return (
-      <th className="has-cursor-pointer" style={{ textAlign: 'center' }} onClick={onClick}>
-        {cohortDate.formattedDate()}
-      </th>
-    )
-  }
-
-  const AttendanceRow = ({ person }) => {
-    const attendanceRecordForDate = cohortDate =>
-      cohortDate.attendanceRecords.find(record => record.person.id === person.id) ||
-      new AttendanceRecord({ status: ' ' })
-
-    return (
-      <tr>
-        <td>
-          <PersonComponent person={person} />
-        </td>
-        {sortedCohortDates.map(cohortDate => {
-          const attendanceRecord = attendanceRecordForDate(cohortDate)
-
-          attendanceRecord.cohortDate = cohortDate
-          attendanceRecord.cohort_date_id = cohortDate.id
-          attendanceRecord.person = person
-          attendanceRecord.person_id = person.id
-
-          return (
-            <AttendanceCell
-              key={cohortDate.day}
-              statusKey={attendanceRecord.status}
-              note={attendanceRecord.note}
-              onClick={() => {
-                setSelectedAttendanceRecord(attendanceRecord)
-                setShowModal(true)
-              }}
-            />
-          )
-        })}
-      </tr>
-    )
-  }
 
   return (
     <div className="section">
@@ -118,7 +117,7 @@ const EditAttendance = ({ cohort_id }) => {
               <tr>
                 <th>Name</th>
                 {sortedCohortDates.map(cohortDate => (
-                  <AttendanceHeaderCell key={cohortDate.id} cohortDate={cohortDate} />
+                  <AttendanceHeaderCell key={cohortDate.id} cohort={cohort} reload={reload} cohortDate={cohortDate} />
                 ))}
               </tr>
             </thead>
@@ -126,7 +125,13 @@ const EditAttendance = ({ cohort_id }) => {
               {cohort.people
                 .sort((a, b) => a.fullName.localeCompare(b.fullName))
                 .map(person => (
-                  <AttendanceRow key={person.id} person={person} />
+                  <AttendanceRow
+                    key={person.id}
+                    sortedCohortDates={sortedCohortDates}
+                    setSelectedAttendanceRecord={setSelectedAttendanceRecord}
+                    setShowModal={setShowModal}
+                    person={person}
+                  />
                 ))}
             </tbody>
           </table>
