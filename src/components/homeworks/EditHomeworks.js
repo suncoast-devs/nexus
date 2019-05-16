@@ -57,7 +57,7 @@ const EditHomework = ({ cohort, reloadCohort, homework, setHomework }) => {
             <div className="field">
               <label className="label">Body</label>
               <div className="control">
-                <textarea className="input" defaultValue={homework.body} name="body" rows="8" placeholder="Body" />
+                <textarea className="textarea" defaultValue={homework.body} name="body" rows="8" placeholder="Body" />
               </div>
             </div>
             <div className="field">

@@ -16,7 +16,7 @@ import NewCohort from './cohorts/NewCohort'
 import NewProgressReport from './progress/NewProgressReport'
 import People from './People'
 import ProfileLoader from './utils/ProfileLoader'
-import ProgressReportIndex from './progress/ProgressReportIndex'
+import ProgressReportIndex from './progress/generate/ProgressReportIndex'
 import ProgressReports from './progress/ProgressReports'
 import StudentAttendance from './attendance/StudentAttendance'
 import StudentGradebook from './gradebook/StudentGradebook'
@@ -126,7 +126,11 @@ const AdminProgressReportsRoutes = ({ profile, auth }) => (
       exact
       path="/progress-reports/:progress_report_id/:index"
       render={props => (
-        <ProgressReportIndex id={props.match.params.progress_report_id} index={props.match.params.index} />
+        <ProgressReportIndex
+          id={props.match.params.progress_report_id}
+          progressReportBaseURL={`/progress-reports/${props.match.params.progress_report_id}`}
+          index={props.match.params.index}
+        />
       )}
     />
     <Route
