@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Homework, Cohort } from '@/components//models'
+import { Homework, Cohort } from '@/components/models'
 import formToObject from '@/utils/formToObject'
 import useModelData from '@/hooks/useModelData'
 
@@ -33,7 +33,7 @@ const EditHomework = ({ cohort, reloadCohort, homework, setHomework }) => {
         <div className="modal-card">
           <header className="modal-card-head">
             <p className="modal-card-title">Homework</p>
-            <button className="delete" aria-label="close" onClick={() => setHomework()} />
+            <span className="delete" aria-label="close" onClick={() => setHomework()} />
           </header>
           <section className="modal-card-body">
             <div className="field">
@@ -98,12 +98,22 @@ const EditHomeworks = ({ cohort_id }) => {
 
   return (
     <section className="section">
-      <div className="container">
+      <div
+        className="container"
+        onKeyDown={event => {
+          if (event.keyCode === 27) {
+            setHomework()
+          }
+        }}
+      >
         {homework && (
           <EditHomework cohort={cohort} reloadCohort={reloadCohort} homework={homework} setHomework={setHomework} />
         )}
 
-        <button className="button is-primary" onClick={() => setHomework(new Homework())}>
+        <button
+          className="button is-primary"
+          onClick={() => setHomework(new Homework({ countsTowardsCompletion: true }))}
+        >
           New Homework
         </button>
 
