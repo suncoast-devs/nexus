@@ -25,15 +25,20 @@ const Gradebook = ({ cohort_id }) => {
   const sortedPeople = cohort.people.sort((a, b) => a.fullName.localeCompare(b.fullName))
   const sortedHomework = cohort.homeworks.sort((a, b) => a.id - b.id)
 
-  const notAssigned = homework => (
-    <td className="tooltip" style={{ color: '#CCC' }} data-tooltip={`${homework.title} - Not Yet Assigned`}>
+  const notAssigned = (homework, person) => (
+    <td
+      className="tooltip"
+      style={{ color: '#CCC' }}
+      data-tooltip={`${homework.title} - Not Yet Assigned`}
+      onClick={() => createAssignment(homework, person)}
+    >
       <i className="far fa-circle" />
     </td>
   )
 
   const HomeworkTableData = ({ homework, assignment, person }) => {
     if (!assignment) {
-      return notAssigned(homework)
+      return notAssigned(homework, person)
     }
 
     const issue = person.issues.find(issue => issue.number === assignment.issue)
@@ -135,6 +140,22 @@ const Gradebook = ({ cohort_id }) => {
         </div>
       </div>
     )
+  }
+
+  const createAssignment = (homework, person) => {
+    const shouldAssign = window.confirm(`Assign this homework?`)
+
+    if (!shouldAssign) {
+      return
+    }
+
+    const assignment = new Assignment()
+    assignment.person_id = person.id
+    assignment.homework_id = homework.id
+
+    return assignment.save().then(response => {
+      reloadCohort()
+    })
   }
 
   const createAssignments = (homework, stopLoading) => {
