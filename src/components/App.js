@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Router } from 'react-router-dom'
 
-import auth from '../Auth'
-import history from '../history'
-import Layout from './Layout'
-import useProfile from '../hooks/useProfile'
-import { ErrorsContext } from './Errors'
+import auth from '@/Auth'
+import history from '@/history'
+import Layout from '@/components/Layout'
+import useProfile from '@/hooks/useProfile'
+import { ErrorsContext } from '@/components/Errors'
 
 const App = props => {
   const { profile, forceUpdateProfile } = useProfile()

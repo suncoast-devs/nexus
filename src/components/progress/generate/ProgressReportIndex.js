@@ -2,11 +2,11 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
 
-import history from '../../../history'
-import useModelData from '../../../hooks/useModelData'
-import { ProgressReport, StudentProgressReport, Assignment } from '../../models'
+import history from '@/history'
+import useModelData from '@/hooks/useModelData'
+import { ProgressReport, StudentProgressReport, Assignment } from '@/components/models'
 import GenerateStudentProgressReport from './GenerateStudentProgressReport'
-import PersonComponent from '../../Person'
+import PersonComponent from '@/components/Person'
 
 const Sidebar = ({ progressReportBaseURL, progressReport, index, isOnCompletePage }) => {
   const peopleOrderedByIndex = progressReport.idsOfPeople.map(person_id =>

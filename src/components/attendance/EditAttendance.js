@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import moment from 'moment'
 
-import { Cohort, AttendanceRecord } from '../models'
-import useModelData from '../../hooks/useModelData'
-import PersonComponent from '../Person'
+import { Cohort, AttendanceRecord } from '@/components/models'
+import useModelData from '@/hooks/useModelData'
+import PersonComponent from '@/components/Person'
 import AttendanceCell from './AttendanceCell'
 import AttendanceModal from './AttendanceModal'
-import LoadingIndicator from '../utils/LoadingIndicator'
+import LoadingIndicator from '@/components/utils/LoadingIndicator'
 
 const AttendanceHeaderCell = ({ cohort, reload, cohortDate }) => {
   const onClick = () => {

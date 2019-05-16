@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import cx from 'classnames'
 
-import { Cohort, Assignment } from '../models'
-import useModelData from '../../hooks/useModelData'
-import PersonComponent from '../Person'
-import LoadingIndicator from '../utils/LoadingIndicator'
-import LoadingButton from '../utils/LoadingButton'
+import { Cohort, Assignment } from '@/components/models'
+import useModelData from '@/hooks/useModelData'
+import PersonComponent from '@/components//Person'
+import LoadingIndicator from '@/components/utils/LoadingIndicator'
+import LoadingButton from '@/components//utils/LoadingButton'
 
 const Gradebook = ({ cohort_id }) => {
   const { loading: loadingCohort, data: cohort, reload: reloadCohort } = useModelData(

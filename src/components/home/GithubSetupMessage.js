@@ -1,6 +1,6 @@
 import React from 'react'
-import useModelData from '../../hooks/useModelData'
-import { Person } from '../models'
+import useModelData from '@/hooks/useModelData'
+import { Person } from '@/components/models'
 
 const GithubSetupMessage = ({ profile }) => {
   const { loading, data: person } = useModelData(() => Person.selectExtra(['assignments_repo_exists']).find(profile.id))

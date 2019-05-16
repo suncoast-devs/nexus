@@ -1,9 +1,9 @@
 import React from 'react'
 
-import Person from '../Person'
-import useModelData from '../../hooks/useModelData'
+import Person from '@/components//Person'
+import useModelData from '@/hooks/useModelData'
 import AttendanceCell from './AttendanceCell'
-import { AttendanceRecord } from '../models'
+import { AttendanceRecord } from '@/components/models'
 
 const StudentAttendance = ({ profile, showTitle }) => {
   const { loading, data } = useModelData(() =>

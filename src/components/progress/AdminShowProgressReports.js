@@ -1,8 +1,8 @@
 import React from 'react'
 
-import useModelData from '../../hooks/useModelData'
-import { Cohort } from '../models'
-import ProgressReports from './ProgressReports'
+import useModelData from '@/hooks/useModelData'
+import { Cohort } from '@/components/models'
+import ProgressReports from '@/components/progress/ProgressReports'
 
 const AdminShowProgressReports = props => {
   const { data: cohorts } = useModelData(() => Cohort.active())

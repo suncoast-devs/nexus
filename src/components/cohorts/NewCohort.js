@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 
-import { Cohort } from '../models'
-import ErrorNotification from '../utils/ErrorNotification'
-import history from '../../history'
-import formToObject from '../../utils/formToObject'
+import { Cohort } from '@/components/models'
+import ErrorNotification from '@/components/utils/ErrorNotification'
+import history from '@/history'
+import formToObject from '@/utils/formToObject'
 import Form from './Form'
 
 const NewCohort = () => {

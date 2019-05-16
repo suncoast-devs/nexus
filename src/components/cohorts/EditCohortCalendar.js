@@ -2,8 +2,8 @@ import React from 'react'
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
 
-import { Cohort, CohortDate } from '../models'
-import useModelData from '../../hooks/useModelData'
+import { Cohort, CohortDate } from '@/components/models'
+import useModelData from '@/hooks/useModelData'
 
 const EditCohortCalendar = ({ cohort_id }) => {
   const { loading, data: cohort, reload: reloadCohort } = useModelData(() =>

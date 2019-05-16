@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Homework, Cohort } from '../models'
-import formToObject from '../../utils/formToObject'
-import useModelData from '../../hooks/useModelData'
+import { Homework, Cohort } from '@/components//models'
+import formToObject from '@/utils/formToObject'
+import useModelData from '@/hooks/useModelData'
 
 const EditHomework = ({ cohort, reloadCohort, homework, setHomework }) => {
   const submit = event => {

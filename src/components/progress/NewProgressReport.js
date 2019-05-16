@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import cx from 'classnames'
 import moment from 'moment'
 
-import history from '../../history'
-import useModelData from '../../hooks/useModelData'
-import { Cohort, ProgressReport } from '../models'
-import Person from '../Person'
-import { LeftRight } from '../utils/LeftRight'
+import history from '@/history'
+import useModelData from '@/hooks/useModelData'
+import { Cohort, ProgressReport } from '@/components/models'
+import Person from '@/components/Person'
+import { LeftRight } from '@/components/utils/LeftRight'
 
 const NewProgressReport = ({ cohort_id }) => {
   const { data: cohort } = useModelData(

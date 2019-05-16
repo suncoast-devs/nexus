@@ -1,7 +1,7 @@
 import React from 'react'
 import SlackInviteMessage from './SlackInviteMessage'
 import GithubSetupMessage from './GithubSetupMessage'
-import banner from '../../images/banner.svg'
+import banner from '@/images/banner.svg'
 
 const Home = ({ profile, isAuthenticated }) => {
   return (

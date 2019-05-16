@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import cx from 'classnames'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
-import { Unit, StudentEnrollment } from '../models'
-import useModelData from '../../hooks/useModelData'
-import { DeleteButton } from '../utils/Buttons'
-import PersonDropDown from '../PersonDropDown'
-import Person from '../Person'
-import LoadingIndicator from '../utils/LoadingIndicator'
+import { Unit, StudentEnrollment } from '@/components/models'
+import useModelData from '@/hooks/useModelData'
+import { DeleteButton } from '@/components//utils/Buttons'
+import PersonDropDown from '@/components//PersonDropDown'
+import Person from '@/components/Person'
+import LoadingIndicator from '@/components/utils/LoadingIndicator'
 
 const EditEnrollment = ({ cohort }) => {
   const {

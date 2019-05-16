@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import icon from '../images/icon.svg'
+import icon from '@/images/icon.svg'
 import cx from 'classnames'
 
 const AuthenticatedNavBar = props => {

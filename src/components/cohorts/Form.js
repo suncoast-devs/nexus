@@ -1,9 +1,9 @@
 import React from 'react'
 import Select from 'react-select'
 
-import { Program } from '../models'
-import useModelData from '../../hooks/useModelData'
-import { InputField } from '../utils/Fields'
+import { Program } from '@/components/models'
+import useModelData from '@/hooks/useModelData'
+import { InputField } from '@/components/utils/Fields'
 
 const ProgramDropDown = ({ cohort }) => {
   const { data: programs } = useModelData(() => Program.all(), [])

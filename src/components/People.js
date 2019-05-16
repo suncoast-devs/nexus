@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import useModelData from '../hooks/useModelData'
-import { Person } from './models'
-import PersonComponent from './Person'
-import LoadingIndicator from './utils/LoadingIndicator'
-import { LeftRight } from './utils/LeftRight'
+import useModelData from '@/hooks/useModelData'
+import { Person } from '@/components//models'
+import PersonComponent from '@/components/Person'
+import LoadingIndicator from '@/components/utils/LoadingIndicator'
+import { LeftRight } from '@/components/utils/LeftRight'
 
 const People = () => {
   const [search, setSearch] = useState('')

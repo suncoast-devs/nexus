@@ -1,8 +1,8 @@
 import React from 'react'
 import Select from 'react-select'
 
-import useModelData from '../hooks/useModelData'
-import Person from './models/Person'
+import useModelData from '@/hooks/useModelData'
+import Person from '@/components//models/Person'
 
 const PersonDropDown = ({ onSelect, placeholder, isMulti, isSearchable, excludedIDs = [] }) => {
   // eslint-disable-next-line

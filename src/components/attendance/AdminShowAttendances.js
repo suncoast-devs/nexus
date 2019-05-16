@@ -1,7 +1,7 @@
 import React from 'react'
 
-import useModelData from '../../hooks/useModelData'
-import { Cohort } from '../models'
+import useModelData from '@/hooks/useModelData'
+import { Cohort } from '@/components/models'
 import EditAttendance from './EditAttendance'
 
 const AdminShowAttendances = props => {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Cohort } from '../models'
-import useModelData from '../../hooks/useModelData'
+import { Cohort } from '@/components/models'
+import useModelData from '@/hooks/useModelData'
 
 const Cohorts = () => {
   const { loading, data: cohorts } = useModelData(() =>

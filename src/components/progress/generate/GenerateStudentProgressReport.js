@@ -1,9 +1,9 @@
 import React, { useRef, useEffect, useReducer } from 'react'
 import html2canvas from 'html2canvas'
 
-import { Assignment } from '../../models'
-import logo from '../../../images/logo.png'
-import LoadingButton from '../../utils/LoadingButton'
+import { Assignment } from '@/components/models'
+import logo from '@/images/logo.png'
+import LoadingButton from '@/components/utils/LoadingButton'
 
 const EditorButtons = ({ onDone, onSkip }) => {
   return (

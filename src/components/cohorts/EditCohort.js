@@ -1,13 +1,13 @@
 import React, { useContext } from 'react'
 
-import { Cohort } from '../models'
-import useModelData from '../../hooks/useModelData'
+import { Cohort } from '@/components/models'
+import useModelData from '@/hooks/useModelData'
 
-import { ErrorsContext, addErrorsFromObject } from '../Errors'
+import { ErrorsContext, addErrorsFromObject } from '@/components/Errors'
 
-import history from '../../history'
-import formToObject from '../../utils/formToObject'
-import { Tabs, TabHeader, Tab } from '../utils/Tabs'
+import history from '@/history'
+import formToObject from '@/utils/formToObject'
+import { Tabs, TabHeader, Tab } from '@/components/utils/Tabs'
 import Form from './Form'
 import EditEnrollment from './EditEnrollment'
 import EditCohortCalendar from './EditCohortCalendar'

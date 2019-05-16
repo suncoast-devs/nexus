@@ -1,6 +1,6 @@
 import React from 'react'
-import useModelData from '../../hooks/useModelData'
-import { Cohort } from '../models'
+import useModelData from '@/hooks/useModelData'
+import { Cohort } from '@/components/models'
 import Gradebook from './Gradebook'
 
 const AdminShowGradebooks = props => {

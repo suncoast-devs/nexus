@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Cohort } from '../models'
-import useModelData from '../../hooks/useModelData'
-import { LeftRight } from '../utils/LeftRight'
+import { Cohort } from '@/components/models'
+import useModelData from '@/hooks/useModelData'
+import { LeftRight } from '@/components/utils/LeftRight'
 
 const ProgressReports = ({ cohort_id, allowNew }) => {
   const { loading, data: cohort } = useModelData(() =>
