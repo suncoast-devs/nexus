@@ -7,6 +7,148 @@ import PersonComponent from '@/components//Person'
 import LoadingIndicator from '@/components/utils/LoadingIndicator'
 import LoadingButton from '@/components//utils/LoadingButton'
 
+const AssignmentModal = ({ person, assignment, homework, issue, reloadCohort, onClose }) => {
+  const assignScore = (score, stopLoading) => {
+    assignment.score = score
+
+    assignment.save().then(() => {
+      onClose()
+      reloadCohort()
+      stopLoading()
+    })
+  }
+
+  return (
+    <div className="modal is-active">
+      <div className="modal-background" />
+      <div className="modal-card" style={{ minWidth: '60vw' }}>
+        <header className="modal-card-head">
+          <p className="modal-card-title">
+            {homework.title} - {person.fullName}
+          </p>
+          <button className="delete" aria-label="close" onClick={onClose} />
+        </header>
+        <section className="modal-card-body">
+          <table className="table">
+            <thead />
+            <tbody>
+              <tr>
+                <th>State</th>
+                <th>{issue.state}</th>
+              </tr>
+              <tr>
+                <td>
+                  <i className="fas fa-code-branch" />
+                </td>
+                <td>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={`https://github.com/${person.github}/${person.assignmentsRepo}/issues/${issue.number}`}
+                  >
+                    #{issue.number}
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div className="buttons">
+            {Assignment.scoreInfos.map((info, index) => {
+              return (
+                <LoadingButton
+                  key={index}
+                  className={cx({
+                    'is-active': index === assignment.score
+                  })}
+                  style={{ backgroundColor: info.style.buttonColor, color: info.style.textColor }}
+                  onClick={stopLoading => assignScore(index, stopLoading)}
+                >
+                  {info.title}
+                </LoadingButton>
+              )
+            })}
+          </div>
+        </section>
+      </div>
+    </div>
+  )
+}
+
+const HomeworkTableData = ({
+  person,
+  assignment,
+  homework,
+  reloadCohort,
+  selectedAssignment,
+  setSelectedAssignment
+}) => {
+  const createAssignment = (homework, person) => {
+    const shouldAssign = window.confirm(`Assign this homework?`)
+
+    if (!shouldAssign) {
+      return
+    }
+
+    const assignment = new Assignment()
+    assignment.person_id = person.id
+    assignment.homework_id = homework.id
+
+    return assignment.save().then(response => {
+      reloadCohort()
+    })
+  }
+
+  const notAssigned = (homework, person) => (
+    <td
+      className="tooltip"
+      style={{ color: '#CCC' }}
+      data-tooltip={`${homework.title} - Not Yet Assigned`}
+      onClick={() => createAssignment(homework, person)}
+    >
+      <i className="far fa-circle" />
+    </td>
+  )
+
+  if (!assignment) {
+    return notAssigned(homework, person)
+  }
+
+  const issue = person.issues.find(issue => issue.number === assignment.issue)
+
+  if (!issue) {
+    return notAssigned(homework)
+  }
+
+  const scoreInfo = assignment.scoreInfo()
+  const style = { color: scoreInfo.style.iconColor }
+  const tooltip = `${homework.title} - ${scoreInfo.title}`
+  const icon = issue.state === 'closed' ? <i className="fas fa-circle" /> : <i className="far fa-circle" />
+  const modal = selectedAssignment === assignment.id && (
+    <td>
+      <AssignmentModal
+        person={person}
+        assignment={assignment}
+        homework={homework}
+        issue={issue}
+        setSelectedAssignment={setSelectedAssignment}
+        reloadCohort={reloadCohort}
+        onClose={() => setSelectedAssignment(0)}
+      />
+    </td>
+  )
+
+  return (
+    <>
+      <td className="tooltip" data-tooltip={tooltip} onClick={() => setSelectedAssignment(assignment.id)}>
+        <span className="icon is-medium" style={style}>
+          {icon}
+        </span>
+      </td>
+      {modal}
+    </>
+  )
+}
+
 const Gradebook = ({ cohort_id }) => {
   const { loading: loadingCohort, data: cohort, reload: reloadCohort } = useModelData(
     () =>
@@ -24,139 +166,6 @@ const Gradebook = ({ cohort_id }) => {
 
   const sortedPeople = cohort.people.sort((a, b) => a.fullName.localeCompare(b.fullName))
   const sortedHomework = cohort.homeworks.sort((a, b) => a.id - b.id)
-
-  const notAssigned = (homework, person) => (
-    <td
-      className="tooltip"
-      style={{ color: '#CCC' }}
-      data-tooltip={`${homework.title} - Not Yet Assigned`}
-      onClick={() => createAssignment(homework, person)}
-    >
-      <i className="far fa-circle" />
-    </td>
-  )
-
-  const HomeworkTableData = ({ homework, assignment, person }) => {
-    if (!assignment) {
-      return notAssigned(homework, person)
-    }
-
-    const issue = person.issues.find(issue => issue.number === assignment.issue)
-
-    if (!issue) {
-      return notAssigned(homework)
-    }
-
-    const scoreInfo = assignment.scoreInfo()
-    const style = { color: scoreInfo.style.iconColor }
-    const tooltip = `${homework.title} - ${scoreInfo.title}`
-    const icon = issue.state === 'closed' ? <i className="fas fa-circle" /> : <i className="far fa-circle" />
-    const modal = selectedAssignment === assignment.id && (
-      <td>
-        <AssignmentModal
-          person={person}
-          homework={homework}
-          assignment={assignment}
-          issue={issue}
-          onClose={() => setSelectedAssignment(0)}
-        />
-      </td>
-    )
-
-    return (
-      <>
-        <td className="tooltip" data-tooltip={tooltip} onClick={() => setSelectedAssignment(assignment.id)}>
-          <span className="icon is-medium" style={style}>
-            {icon}
-          </span>
-        </td>
-        {modal}
-      </>
-    )
-  }
-
-  const AssignmentModal = ({ person, issue, assignment, homework, onClose }) => {
-    const assignScore = (score, stopLoading) => {
-      assignment.score = score
-
-      assignment.save().then(() => {
-        setSelectedAssignment(0)
-        reloadCohort()
-        stopLoading()
-      })
-    }
-
-    return (
-      <div className="modal is-active">
-        <div className="modal-background" />
-        <div className="modal-card" style={{ minWidth: '60vw' }}>
-          <header className="modal-card-head">
-            <p className="modal-card-title">
-              {homework.title} - {person.fullName}
-            </p>
-            <button className="delete" aria-label="close" onClick={onClose} />
-          </header>
-          <section className="modal-card-body">
-            <table className="table">
-              <thead />
-              <tbody>
-                <tr>
-                  <th>State</th>
-                  <th>{issue.state}</th>
-                </tr>
-                <tr>
-                  <td>
-                    <i className="fas fa-code-branch" />
-                  </td>
-                  <td>
-                    <a
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={`https://github.com/${person.github}/${person.assignmentsRepo}/issues/${issue.number}`}
-                    >
-                      #{issue.number}
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div className="buttons">
-              {Assignment.scoreInfos.map((info, index) => {
-                return (
-                  <LoadingButton
-                    key={index}
-                    className={cx({
-                      'is-active': index === assignment.score
-                    })}
-                    style={{ backgroundColor: info.style.buttonColor, color: info.style.textColor }}
-                    onClick={stopLoading => assignScore(index, stopLoading)}
-                  >
-                    {info.title}
-                  </LoadingButton>
-                )
-              })}
-            </div>
-          </section>
-        </div>
-      </div>
-    )
-  }
-
-  const createAssignment = (homework, person) => {
-    const shouldAssign = window.confirm(`Assign this homework?`)
-
-    if (!shouldAssign) {
-      return
-    }
-
-    const assignment = new Assignment()
-    assignment.person_id = person.id
-    assignment.homework_id = homework.id
-
-    return assignment.save().then(response => {
-      reloadCohort()
-    })
-  }
 
   const createAssignments = (homework, stopLoading) => {
     const shouldAssign = window.confirm(`Assign this homework?`)
@@ -220,7 +229,15 @@ const Gradebook = ({ cohort_id }) => {
                 {cohort.homeworks.map(homework => {
                   const assignment = homework.assignments.find(assignment => assignment.person.id === person.id)
                   return (
-                    <HomeworkTableData key={homework.id} person={person} assignment={assignment} homework={homework} />
+                    <HomeworkTableData
+                      key={homework.id}
+                      person={person}
+                      assignment={assignment}
+                      homework={homework}
+                      reloadCohort={reloadCohort}
+                      selectedAssignment={selectedAssignment}
+                      setSelectedAssignment={setSelectedAssignment}
+                    />
                   )
                 })}
               </tr>
