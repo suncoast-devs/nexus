@@ -4,5 +4,10 @@ import App from './components/App'
 import './styles/screen.scss'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import 'bulma-extensions/bulma-tooltip/dist/css/bulma-tooltip.min.css'
+import * as Sentry from '@sentry/browser'
+
+if (process.env.SENTRY_DSN) {
+  Sentry.init({ dsn: process.env.SENTRY_DSN })
+}
 
 ReactDOM.render(<App />, document.getElementById('root'))
