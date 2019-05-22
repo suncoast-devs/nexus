@@ -12,9 +12,9 @@ const AssignmentModal = ({ person, assignment, homework, issue, reloadCohort, on
     assignment.score = score
 
     assignment.save().then(() => {
-      onClose()
       reloadCohort()
       stopLoading()
+      onClose()
     })
   }
 
