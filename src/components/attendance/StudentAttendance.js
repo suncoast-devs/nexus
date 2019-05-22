@@ -33,7 +33,7 @@ const StudentAttendance = ({ profile, showTitle }) => {
                 <th>Name</th>
                 {attendanceRecords.map(attendanceRecord => (
                   <th style={{ textAlign: 'center' }} key={attendanceRecord.id}>
-                    {attendanceRecord.cohortDate.formattedDate}
+                    {attendanceRecord.cohortDate.formattedDate()}
                   </th>
                 ))}
               </tr>
