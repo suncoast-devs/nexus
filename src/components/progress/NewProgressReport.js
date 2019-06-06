@@ -18,14 +18,16 @@ const NewProgressReport = ({ cohort_id }) => {
       const alreadyReportedHomeworkIDs = new Set(
         cohort.progressReports.filter(report => report.completed).flatMap(report => report.idsOfHomeworks)
       )
-      const allHomeworkIDs = cohort.homeworks.map(homework => homework.id)
+      const allAssignedHomeworkIDs = cohort.homeworks
+        .filter(homework => homework.assignmentsCount > 0)
+        .map(homework => homework.id)
 
       const sortedReports = cohort.progressReports.sort((a, b) => a.endDate.localeCompare(b.endDate))
 
       const endOfMostRecentReport =
         sortedReports.length > 0 ? sortedReports[sortedReports.length - 1].endDate : cohort.startDate
 
-      setSelectedHomeworkIDs(allHomeworkIDs.filter(id => !alreadyReportedHomeworkIDs.has(parseInt(id))))
+      setSelectedHomeworkIDs(allAssignedHomeworkIDs.filter(id => !alreadyReportedHomeworkIDs.has(parseInt(id))))
       setStartDate(endOfMostRecentReport)
       setEndDate(moment().format('YYYY-MM-DD'))
     }
