@@ -6,9 +6,7 @@ import LoadingIndicator from '@/components/utils/LoadingIndicator'
 
 const StudentGradebook = ({ profile, showTitle }) => {
   const { loading: loadingAssignments, data: assignments } = useModelData(() =>
-    Assignment.where({ person_id: profile.id })
-      .includes({ homework: 'cohort' })
-      .all()
+    Assignment.includes({ homework: 'cohort' }).all()
   )
 
   const { loading: loadingCohort, data: cohorts } = useModelData(() =>
