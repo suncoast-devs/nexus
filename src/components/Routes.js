@@ -119,7 +119,13 @@ const AdminProgressReportsRoutes = ({ profile, auth }) => (
     <Route
       exact
       path="/progress-reports/:progress_report_id"
-      render={props => <ProgressReportIndex id={props.match.params.progress_report_id} index="complete" />}
+      render={props => (
+        <ProgressReportIndex
+          id={props.match.params.progress_report_id}
+          progressReportBaseURL={`/progress-reports/${props.match.params.progress_report_id}`}
+          index="complete"
+        />
+      )}
     />
 
     <Route

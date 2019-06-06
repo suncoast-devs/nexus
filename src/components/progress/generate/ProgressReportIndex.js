@@ -97,12 +97,15 @@ const Editor = ({ progressReport, onSaveStudentReport, index, onSkip }) => {
 
 const Main = ({ progressReport, index, isOnCompletePage, markProgressReportComplete, onSaveStudentReport, onSkip }) => {
   if (progressReport.completed) {
+    const studentProgressReport = progressReport.studentProgressReports[index]
+
     return (
       <article className="message is-info">
         <div className="message-header">
           <p>Completed</p>
         </div>
         <div className="message-body">This progress report is complete and submitted to students.</div>
+        {studentProgressReport && <img src={studentProgressReport.reportImageUrl} alt="Progress report" />}
       </article>
     )
   }
@@ -170,10 +173,13 @@ const ProgressReportIndex = ({ id, progressReportBaseURL, index }) => {
   return (
     <section className="section">
       <div className="columns">
-        <div className="column is-one-fifth">
+        <div className="column is-one-fifth" style={{ position: 'fixed', height: '85vh', overflowY: 'scroll' }}>
           <Sidebar progressReportBaseURL={progressReportBaseURL} progressReport={progressReport} index={index} />
         </div>
-        <div className="column is-four-fifths">
+        <div
+          className="column is-offset-one-fifth is-four-fifths"
+          style={{ position: 'fixed', height: '85vh', overflowY: 'scroll' }}
+        >
           <Main
             progressReport={progressReport}
             index={index}
