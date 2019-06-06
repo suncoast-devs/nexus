@@ -39,7 +39,7 @@ const NewProgressReport = ({ cohort_id }) => {
   const [endDate, setEndDate] = useState()
 
   const sortedPeople = cohort.people.sort((a, b) => a.fullName.localeCompare(b.fullName))
-  const sortedHomeworks = cohort.homeworks.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+  const sortedHomeworks = cohort.homeworks.sort((a, b) => a.createdAt.localeCompare(b.createdAt))
 
   const toggleHomework = (selected, homework) =>
     setSelectedHomeworkIDs(
