@@ -20,9 +20,8 @@ const EditEnrollment = ({ cohort }) => {
       .where({ cohort_id: cohort.id })
       .all()
   )
-  const { loading: loadingUnits, data: units } = useModelData(() => Unit.where({ program_id: cohort.program_id }).all())
 
-  if (loadingStudentEnrollments || loadingUnits) {
+  if (loadingStudentEnrollments) {
     return <LoadingIndicator />
   }
 
@@ -80,7 +79,7 @@ const EditEnrollment = ({ cohort }) => {
           <th>Github Repo</th>
           <th>Slack Integration</th>
           <th>Invitation Code</th>
-          {units.map(unit => (
+          {cohort.units.map(unit => (
             <th key={unit.id} style={{ cursor: 'pointer' }} onClick={() => enrollEveryoneInUnit(unit)}>
               {unit.title}
             </th>
@@ -126,7 +125,7 @@ const EditEnrollment = ({ cohort }) => {
                     <InvitationCode invitationCode={studentEnrollment.invitationCode} />
                   )}
                 </td>
-                {units.map(unit => (
+                {cohort.units.map(unit => (
                   <td key={unit.id} style={{ textAlign: 'center' }}>
                     <input
                       type="checkbox"

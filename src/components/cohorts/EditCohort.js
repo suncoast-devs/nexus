@@ -13,7 +13,7 @@ import EditEnrollment from './EditEnrollment'
 import EditCohortCalendar from './EditCohortCalendar'
 
 const EditCohort = ({ id }) => {
-  const { loading, data: cohort } = useModelData(() => Cohort.find(id))
+  const { loading, data: cohort } = useModelData(() => Cohort.selectExtra(['units']).find(id))
   const [errors, setErrors] = useContext(ErrorsContext)
 
   const cancel = event => {

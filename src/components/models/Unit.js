@@ -10,7 +10,6 @@ const Unit = ApplicationRecord.extend({
     cohort_id: attr(),
 
     program: belongsTo(),
-    program_id: attr(),
 
     title: attr(),
 
