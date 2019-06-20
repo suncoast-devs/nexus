@@ -50,7 +50,13 @@ const NewPersonModal = ({ isActive, onSave, onClose }) => {
             <button type="submit" className="button is-success">
               Save
             </button>
-            <button className="button" onClick={onClose}>
+            <button
+              className="button"
+              onClick={event => {
+                event.preventDefault()
+                onClose()
+              }}
+            >
               Cancel
             </button>
           </footer>
