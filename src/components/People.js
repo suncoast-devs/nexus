@@ -69,7 +69,11 @@ const NewPersonModal = ({ isActive, onSave, onClose }) => {
 const People = () => {
   const [showNewPerson, setShowNewPerson] = useState(false)
   const [search, setSearch] = useState('')
-  const { loading, reload: reloadPeople, data: people } = useModelData(() => Person.selectExtra(['token']).all())
+  const { loading, reload: reloadPeople, data: people } = useModelData(() =>
+    Person.selectExtra(['token'])
+      .per(999)
+      .all()
+  )
 
   if (loading) {
     return (

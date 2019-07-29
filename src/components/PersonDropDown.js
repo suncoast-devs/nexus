@@ -6,7 +6,7 @@ import Person from '@/components//models/Person'
 
 const PersonDropDown = ({ onSelect, placeholder, isMulti, isSearchable, excludedIDs = [] }) => {
   // eslint-disable-next-line
-  const { data: people } = useModelData(() => Person.all())
+  const { data: people } = useModelData(() => Person.per(999).all())
   const [value, setValue] = useState(null)
 
   useEffect(() => {
