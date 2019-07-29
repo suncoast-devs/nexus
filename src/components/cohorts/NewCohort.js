@@ -20,6 +20,7 @@ const NewCohort = () => {
     event.preventDefault()
 
     const updatedCohort = formToObject(event.target, cohort)
+    console.log({ cohort })
 
     updatedCohort.save().then(response => {
       if (response) {

@@ -4,7 +4,7 @@ import moment from 'moment'
 
 const Cohort = ApplicationRecord.extend({
   static: {
-    jsonapiType: 'cohorts'
+    jsonapiType: 'cohorts',
   },
   // ... code ...
   attrs: {
@@ -13,11 +13,12 @@ const Cohort = ApplicationRecord.extend({
     endDate: attr(),
     units: attr(),
     program: belongsTo(),
+    programId: attr(),
     people: hasMany(),
     cohortDates: hasMany(),
     homeworks: hasMany(),
-    progressReports: hasMany()
-  }
+    progressReports: hasMany(),
+  },
 })
 
 Cohort.active = () => {

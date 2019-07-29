@@ -18,7 +18,7 @@ const ProgramDropDown = ({ cohort }) => {
           placeholder="Select a program"
           isSearchable
           onChange={selectedProgram => {
-            cohort.program_id = selectedProgram.value
+            cohort.programId = selectedProgram.value
           }}
           options={options}
         />
