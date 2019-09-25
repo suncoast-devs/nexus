@@ -82,8 +82,8 @@ const Editor = ({ progressReport, onSaveStudentReport, index, onSkip }) => {
     new StudentProgressReport({ content: {} })
 
   const onCreate = ({ doingWell, improve, attendanceIssues, image }) => {
-    studentProgressReport.progress_report_id = progressReport.id
-    studentProgressReport.person_id = person.id
+    studentProgressReport.progressReportId = progressReport.id
+    studentProgressReport.personId = person.id
     studentProgressReport.content = { doingWell, improve, attendanceIssues }
     studentProgressReport.reportImageData = image.dataURL
     studentProgressReport.save().then(onSaveStudentReport)
