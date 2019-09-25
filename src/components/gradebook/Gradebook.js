@@ -210,7 +210,7 @@ const Gradebook = ({ cohort_id }) => {
   }
 
   return (
-    <section className="section">
+    <section className="gradebook section">
       <h1 className="title">Gradebook for {cohort.name}</h1>
       <table className="table assignment-table is-fullwidth is-hoverable">
         <thead>
