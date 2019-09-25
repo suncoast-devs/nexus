@@ -245,33 +245,48 @@ const Gradebook = ({ cohort_id }) => {
             </tr>
           </thead>
           <tbody>
-            {sortedPeople.map(person => (
-              <tr key={person.id}>
-                <td>
-                  <PersonComponent person={person} />
-                </td>
-                <td>
-                  <a target="_blank" rel="noopener noreferrer" href={`https://github.com/${person.github}`}>
-                    @{person.github}
-                  </a>
-                </td>
-                <td>{completedPercentage(person)} %</td>
-                {cohort.homeworks.map(homework => {
-                  const assignment = homework.assignments.find(assignment => assignment.person.id === person.id)
-                  return (
-                    <HomeworkTableData
-                      key={homework.id}
-                      person={person}
-                      assignment={assignment}
-                      homework={homework}
-                      reloadCohort={reloadCohort}
-                      selectedAssignment={selectedAssignment}
-                      setSelectedAssignment={setSelectedAssignment}
-                    />
-                  )
-                })}
-              </tr>
-            ))}
+            {sortedPeople.map(person => {
+              const completedPercentageForPerson = completedPercentage(person)
+
+              return (
+                <tr key={person.id}>
+                  <td>
+                    <PersonComponent person={person} />
+                  </td>
+                  <td>
+                    <a target="_blank" rel="noopener noreferrer" href={`https://github.com/${person.github}`}>
+                      @{person.github}
+                    </a>
+                  </td>
+                  {countedHomeworks > 0 ? (
+                    <td
+                      className={cx({
+                        'has-text-danger': completedPercentageForPerson < 80.0,
+                        'has-text-success': completedPercentageForPerson >= 80.0,
+                      })}
+                    >
+                      {completedPercentageForPerson} %
+                    </td>
+                  ) : (
+                    <td />
+                  )}
+                  {cohort.homeworks.map(homework => {
+                    const assignment = homework.assignments.find(assignment => assignment.person.id === person.id)
+                    return (
+                      <HomeworkTableData
+                        key={homework.id}
+                        person={person}
+                        assignment={assignment}
+                        homework={homework}
+                        reloadCohort={reloadCohort}
+                        selectedAssignment={selectedAssignment}
+                        setSelectedAssignment={setSelectedAssignment}
+                      />
+                    )
+                  })}
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </div>
