@@ -99,10 +99,6 @@ const Main = ({ progressReport, index, isOnCompletePage, markProgressReportCompl
   if (progressReport.completed) {
     const studentProgressReport = progressReport.studentProgressReports[index]
 
-    const fileName = `progress-report-for-${studentProgressReport.person.fullName}-between-${
-      progressReport.startDate
-    }-to-${progressReport.endDate}.png`
-
     return (
       <>
         <article className="message is-info">
@@ -115,7 +111,7 @@ const Main = ({ progressReport, index, isOnCompletePage, markProgressReportCompl
           <div className="level-right">
             <div className="level-item">
               {studentProgressReport.reportImageUrl ? (
-                <a download={fileName} href={studentProgressReport.reportImageUrl} className="button is-primary">
+                <a download href={studentProgressReport.reportImageUrl} className="button is-primary">
                   Download
                 </a>
               ) : (
