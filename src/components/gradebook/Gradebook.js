@@ -195,6 +195,10 @@ const Gradebook = ({ cohort_id }) => {
 
   const countedHomeworks = cohort.homeworks.filter(homework => homework.countsTowardsCompletion).length
   const completedPercentage = person => {
+    if (countedHomeworks === 0) {
+      return 'N/A'
+    }
+
     return (
       (cohort.homeworks.filter(homework => {
         const assignment = homework.assignments.find(assignment => assignment.person.id === person.id)
