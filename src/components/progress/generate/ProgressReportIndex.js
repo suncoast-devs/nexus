@@ -26,7 +26,7 @@ const Sidebar = ({ progressReportBaseURL, progressReport, index, isOnCompletePag
             <div
               className={cx('panel-block is-block', {
                 'has-background-grey-light': sidebarIndex === index,
-                'has-text-white': sidebarIndex === index
+                'has-text-white': sidebarIndex === index,
               })}
             >
               <PersonComponent person={person} />
@@ -48,7 +48,7 @@ const Sidebar = ({ progressReportBaseURL, progressReport, index, isOnCompletePag
         <div
           className={cx('panel-block is-block', {
             'has-background-grey-light': isOnCompletePage,
-            'has-text-white': isOnCompletePage
+            'has-text-white': isOnCompletePage,
           })}
         >
           Done
@@ -99,14 +99,33 @@ const Main = ({ progressReport, index, isOnCompletePage, markProgressReportCompl
   if (progressReport.completed) {
     const studentProgressReport = progressReport.studentProgressReports[index]
 
+    const fileName = `progress-report-for-${studentProgressReport.person.fullName}-between-${
+      progressReport.startDate
+    }-to-${progressReport.endDate}.png`
+
     return (
-      <article className="message is-info">
-        <div className="message-header">
-          <p>Completed</p>
-        </div>
-        <div className="message-body">This progress report is complete and submitted to students.</div>
+      <>
+        <article className="message is-info">
+          <div className="message-header">
+            <p>Completed</p>
+          </div>
+          <div className="message-body">This progress report is complete and submitted to students.</div>
+        </article>
+        <nav className="level">
+          <div className="level-right">
+            <div className="level-item">
+              {studentProgressReport.reportImageUrl ? (
+                <a download={fileName} href={studentProgressReport.reportImageUrl} className="button is-primary">
+                  Download
+                </a>
+              ) : (
+                ''
+              )}
+            </div>
+          </div>
+        </nav>
         {studentProgressReport && <img src={studentProgressReport.reportImageUrl} alt="Progress report" />}
-      </article>
+      </>
     )
   }
 
@@ -129,7 +148,7 @@ const ProgressReportIndex = ({ id, progressReportBaseURL, index }) => {
       ProgressReport.includes([
         'homeworks',
         { student_progress_reports: 'person' },
-        { people: { assignments: 'homework' } }
+        { people: { assignments: 'homework' } },
       ]).find(id),
     null
   )
