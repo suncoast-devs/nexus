@@ -7,6 +7,7 @@ import useModelData from '@/hooks/useModelData'
 import { ProgressReport, StudentProgressReport, Assignment } from '@/components/models'
 import GenerateStudentProgressReport from './GenerateStudentProgressReport'
 import PersonComponent from '@/components/Person'
+import LoadingIndicator from '@/components/utils/LoadingIndicator'
 
 const Sidebar = ({ progressReportBaseURL, progressReport, index, isOnCompletePage }) => {
   const peopleOrderedByIndex = progressReport.idsOfPeople.map(person_id =>
@@ -153,7 +154,7 @@ const ProgressReportIndex = ({ id, progressReportBaseURL, index }) => {
   useEffect(reloadProgressReport, [index])
 
   if (loadingProgressReport) {
-    return <></>
+    return <LoadingIndicator />
   }
 
   const isOnCompletePage = 'complete' === index
