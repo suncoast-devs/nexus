@@ -12,6 +12,7 @@ const Cohort = ApplicationRecord.extend({
     startDate: attr(),
     endDate: attr(),
     units: attr(),
+    active: attr(),
     program: belongsTo(),
     programId: attr(),
     people: hasMany(),
@@ -24,9 +25,7 @@ const Cohort = ApplicationRecord.extend({
 Cohort.active = () => {
   return Cohort.all().then(response => {
     return new Promise((resolve, reject) => {
-      const today = moment().format('YYYY-MM-DD')
-
-      resolve({ data: response.data.filter(cohort => cohort.startDate <= today && today <= cohort.endDate) })
+      resolve({ data: response.data.filter(cohort => cohort.active) })
     })
   })
 }
