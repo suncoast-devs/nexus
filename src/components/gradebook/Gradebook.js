@@ -220,6 +220,7 @@ const Gradebook = ({ cohort_id }) => {
               <th>
                 <i className="fab fa-github-alt" />
               </th>
+              <th />
               {sortedHomework.map(homework => (
                 <th key={homework.id} className="tooltip" data-tooltip={homework.title}>
                   <LoadingButton onClick={stopLoading => createAssignments(homework, stopLoading)}>
@@ -229,10 +230,9 @@ const Gradebook = ({ cohort_id }) => {
                   </LoadingButton>
                 </th>
               ))}
-              <th />
             </tr>
             <tr>
-              <th colSpan={2}>Counts Towards Completion</th>
+              <th colSpan={3}>{countedHomeworks} Homeworks Count Towards Completion</th>
               {sortedHomework.map(homework =>
                 homework.countsTowardsCompletion ? (
                   <th key={homework.id}>
@@ -242,7 +242,6 @@ const Gradebook = ({ cohort_id }) => {
                   <th />
                 )
               )}
-              <th>{countedHomeworks}</th>
             </tr>
           </thead>
           <tbody>
@@ -256,6 +255,7 @@ const Gradebook = ({ cohort_id }) => {
                     @{person.github}
                   </a>
                 </td>
+                <td>{completedPercentage(person)} %</td>
                 {cohort.homeworks.map(homework => {
                   const assignment = homework.assignments.find(assignment => assignment.person.id === person.id)
                   return (
@@ -270,7 +270,6 @@ const Gradebook = ({ cohort_id }) => {
                     />
                   )
                 })}
-                <td>{completedPercentage(person)} %</td>
               </tr>
             ))}
           </tbody>
