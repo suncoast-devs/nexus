@@ -3,7 +3,7 @@ import { attr, belongsTo, hasMany } from 'spraypaint'
 
 const ProgressReport = ApplicationRecord.extend({
   static: {
-    jsonapiType: 'progress_reports'
+    jsonapiType: 'progress_reports',
   },
   // ... code ...
   attrs: {
@@ -16,8 +16,13 @@ const ProgressReport = ApplicationRecord.extend({
     cohort: belongsTo(),
     studentProgressReports: hasMany(),
     people: hasMany(),
-    homeworks: hasMany()
-  }
+    homeworks: hasMany(),
+  },
+  methods: {
+    sortedIdsOfPeople: function() {
+      return this.idsOfPeople.sort((a, b) => a - b)
+    },
+  },
 })
 
 export default ProgressReport

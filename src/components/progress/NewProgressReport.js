@@ -54,7 +54,7 @@ const NewProgressReport = ({ cohort_id }) => {
   const panelClass = selected =>
     cx('panel-block', 'has-cursor-pointer', 'is-block', {
       'has-background-success': selected,
-      'has-text-white': selected
+      'has-text-white': selected,
     })
 
   const DateRange = () => (

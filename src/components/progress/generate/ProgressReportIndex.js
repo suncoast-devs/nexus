@@ -9,41 +9,45 @@ import GenerateStudentProgressReport from './GenerateStudentProgressReport'
 import PersonComponent from '@/components/Person'
 import LoadingIndicator from '@/components/utils/LoadingIndicator'
 
-const Sidebar = ({ progressReportBaseURL, progressReport, index, isOnCompletePage }) => {
-  const peopleOrderedByIndex = progressReport.idsOfPeople.map(person_id =>
-    progressReport.people.find(person => parseInt(person.id) === person_id)
+const SidebarLink = ({ progressReport, progressReportBaseURL, index, person, sidebarIndex }) => {
+  const studentProgressReport =
+    progressReport.studentProgressReports.find(report => parseInt(report.person.id) === parseInt(person.id)) ||
+    new StudentProgressReport({ content: {} })
+
+  return (
+    <Link key={sidebarIndex} to={`${progressReportBaseURL}/${sidebarIndex}`}>
+      <div
+        className={cx('panel-block is-block', {
+          'has-background-grey-light': sidebarIndex === index,
+          'has-text-white': sidebarIndex === index,
+        })}
+      >
+        <PersonComponent person={person} />
+        {studentProgressReport.reportImageUrl ? (
+          <img
+            alt={`progress report for ${person.fullName}`}
+            style={{ opacity: '0.5' }}
+            src={studentProgressReport.reportImageUrl}
+          />
+        ) : (
+          <span>None</span>
+        )}
+      </div>
+    </Link>
   )
+}
+
+const Sidebar = ({ progressReportBaseURL, progressReport, index, isOnCompletePage }) => {
+  const peopleOrderedByIndex = progressReport
+    .sortedIdsOfPeople()
+    .map(personId => progressReport.people.find(person => parseInt(person.id) === parseInt(personId)))
 
   return (
     <nav className="panel">
       <p className="panel-heading has-background-info has-text-white">People</p>
-      {peopleOrderedByIndex.map((person, sidebarIndex) => {
-        const studentProgressReport =
-          progressReport.studentProgressReports.find(report => report.person.id === person.id) ||
-          new StudentProgressReport({ content: {} })
-
-        return (
-          <Link key={sidebarIndex} to={`${progressReportBaseURL}/${sidebarIndex}`}>
-            <div
-              className={cx('panel-block is-block', {
-                'has-background-grey-light': sidebarIndex === index,
-                'has-text-white': sidebarIndex === index,
-              })}
-            >
-              <PersonComponent person={person} />
-              {studentProgressReport.reportImageUrl ? (
-                <img
-                  alt={`progress report for ${person.fullName}`}
-                  style={{ opacity: '0.5' }}
-                  src={studentProgressReport.reportImageUrl}
-                />
-              ) : (
-                <span>None</span>
-              )}
-            </div>
-          </Link>
-        )
-      })}
+      {peopleOrderedByIndex.map((person, sidebarIndex) => (
+        <SidebarLink key={person.id} {...{ progressReport, progressReportBaseURL, index, person, sidebarIndex }} />
+      ))}
 
       <Link to={`${progressReportBaseURL}/complete`}>
         <div
@@ -60,7 +64,9 @@ const Sidebar = ({ progressReportBaseURL, progressReport, index, isOnCompletePag
 }
 
 const Editor = ({ progressReport, onSaveStudentReport, index, onSkip }) => {
-  const person = progressReport.people.find(person => parseInt(person.id) === progressReport.idsOfPeople[index])
+  const person = progressReport.people.find(
+    person => parseInt(person.id) === parseInt(progressReport.sortedIdsOfPeople()[index])
+  )
 
   const assignmentsForReport = progressReport.homeworks.map(homework => {
     const assignment = person.assignments.find(assignment => assignment.homework.id === homework.id) || new Assignment()
@@ -70,7 +76,7 @@ const Editor = ({ progressReport, onSaveStudentReport, index, onSkip }) => {
   })
 
   const studentProgressReport =
-    progressReport.studentProgressReports.find(report => report.person.id === person.id) ||
+    progressReport.studentProgressReports.find(report => parseInt(report.person.id) === parseInt(person.id)) ||
     new StudentProgressReport({ content: {} })
 
   const onCreate = ({ doingWell, improve, attendanceIssues, image }) => {
@@ -98,7 +104,11 @@ const Editor = ({ progressReport, onSaveStudentReport, index, onSkip }) => {
 
 const Main = ({ progressReport, index, isOnCompletePage, markProgressReportComplete, onSaveStudentReport, onSkip }) => {
   if (progressReport.completed) {
-    const studentProgressReport = progressReport.studentProgressReports[index]
+    const idOfStudent = progressReport.sortedIdsOfPeople()[index]
+
+    const studentProgressReport = progressReport.studentProgressReports.find(
+      studentProgressReport => parseInt(studentProgressReport.personId) === parseInt(idOfStudent)
+    )
 
     return (
       <>
@@ -164,7 +174,7 @@ const ProgressReportIndex = ({ id, progressReportBaseURL, index }) => {
 
   const onSkip = () => {
     // Move to the next report if it is there, or to the 'complete' page otherwise
-    if (index + 1 < progressReport.idsOfPeople.length) {
+    if (index + 1 < progressReport.sortedIdsOfPeople().length) {
       history.push(`${progressReportBaseURL}/${index + 1}`)
     } else {
       history.push(`${progressReportBaseURL}/complete`)
