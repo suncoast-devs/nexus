@@ -49,16 +49,18 @@ const Sidebar = ({ progressReportBaseURL, progressReport, index, isOnCompletePag
         <SidebarLink key={person.id} {...{ progressReport, progressReportBaseURL, index, person, sidebarIndex }} />
       ))}
 
-      <Link to={`${progressReportBaseURL}/complete`}>
-        <div
-          className={cx('panel-block is-block', {
-            'has-background-grey-light': isOnCompletePage,
-            'has-text-white': isOnCompletePage,
-          })}
-        >
-          Done
-        </div>
-      </Link>
+      {!progressReport.completed && (
+        <Link to={`${progressReportBaseURL}/complete`}>
+          <div
+            className={cx('panel-block is-block', {
+              'has-background-grey-light': isOnCompletePage,
+              'has-text-white': isOnCompletePage,
+            })}
+          >
+            Done
+          </div>
+        </Link>
+      )}
     </nav>
   )
 }
@@ -104,6 +106,10 @@ const Editor = ({ progressReport, onSaveStudentReport, index, onSkip }) => {
 
 const Main = ({ progressReport, index, isOnCompletePage, markProgressReportComplete, onSaveStudentReport, onSkip }) => {
   if (progressReport.completed) {
+    if (isOnCompletePage) {
+      return <></>
+    }
+
     const idOfStudent = progressReport.sortedIdsOfPeople()[index]
 
     const studentProgressReport = progressReport.studentProgressReports.find(
@@ -165,6 +171,11 @@ const ProgressReportIndex = ({ id, progressReportBaseURL, index }) => {
 
   if (loadingProgressReport) {
     return <LoadingIndicator />
+  }
+
+  if (index === 'none') {
+    history.push(`${progressReportBaseURL}/0`)
+    return <></>
   }
 
   const isOnCompletePage = 'complete' === index

@@ -123,7 +123,7 @@ const AdminProgressReportsRoutes = ({ profile, auth }) => (
         <ProgressReportIndex
           id={props.match.params.progress_report_id}
           progressReportBaseURL={`/progress-reports/${props.match.params.progress_report_id}`}
-          index="complete"
+          index="none"
         />
       )}
     />
