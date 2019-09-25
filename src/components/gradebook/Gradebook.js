@@ -211,85 +211,83 @@ const Gradebook = ({ cohort_id }) => {
 
   return (
     <section className="section">
-      <div className="container">
-        <h1 className="title">Gradebook for {cohort.name}</h1>
-        <table className="table assignment-table is-fullwidth is-hoverable">
-          <thead>
-            <tr>
-              <th>Student</th>
-              <th>
-                <i className="fab fa-github-alt" />
+      <h1 className="title">Gradebook for {cohort.name}</h1>
+      <table className="table assignment-table is-fullwidth is-hoverable">
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>
+              <i className="fab fa-github-alt" />
+            </th>
+            <th />
+            {sortedHomework.map(homework => (
+              <th key={homework.id} className="tooltip" data-tooltip={homework.title}>
+                <LoadingButton onClick={stopLoading => createAssignments(homework, stopLoading)}>
+                  <span className="icon is-medium">
+                    <i className="fas fa-share" />
+                  </span>
+                </LoadingButton>
               </th>
-              <th />
-              {sortedHomework.map(homework => (
-                <th key={homework.id} className="tooltip" data-tooltip={homework.title}>
-                  <LoadingButton onClick={stopLoading => createAssignments(homework, stopLoading)}>
-                    <span className="icon is-medium">
-                      <i className="fas fa-share" />
-                    </span>
-                  </LoadingButton>
+            ))}
+          </tr>
+          <tr>
+            <th colSpan={3}>{countedHomeworks} Homeworks Count Towards Completion</th>
+            {sortedHomework.map(homework =>
+              homework.countsTowardsCompletion ? (
+                <th key={homework.id}>
+                  <i className="fa fa-check has-text-success" />
                 </th>
-              ))}
-            </tr>
-            <tr>
-              <th colSpan={3}>{countedHomeworks} Homeworks Count Towards Completion</th>
-              {sortedHomework.map(homework =>
-                homework.countsTowardsCompletion ? (
-                  <th key={homework.id}>
-                    <i className="fa fa-check has-text-success" />
-                  </th>
-                ) : (
-                  <th />
-                )
-              )}
-            </tr>
-          </thead>
-          <tbody>
-            {sortedPeople.map(person => {
-              const completedPercentageForPerson = completedPercentage(person)
-
-              return (
-                <tr key={person.id}>
-                  <td>
-                    <PersonComponent person={person} />
-                  </td>
-                  <td>
-                    <a target="_blank" rel="noopener noreferrer" href={`https://github.com/${person.github}`}>
-                      @{person.github}
-                    </a>
-                  </td>
-                  {countedHomeworks > 0 ? (
-                    <td
-                      className={cx({
-                        'has-text-danger': completedPercentageForPerson < 80.0,
-                        'has-text-success': completedPercentageForPerson >= 80.0,
-                      })}
-                    >
-                      {completedPercentageForPerson} %
-                    </td>
-                  ) : (
-                    <td />
-                  )}
-                  {cohort.homeworks.map(homework => {
-                    const assignment = homework.assignments.find(assignment => assignment.person.id === person.id)
-                    return (
-                      <HomeworkTableData
-                        key={homework.id}
-                        person={person}
-                        assignment={assignment}
-                        homework={homework}
-                        reloadCohort={reloadCohort}
-                        selectedAssignment={selectedAssignment}
-                        setSelectedAssignment={setSelectedAssignment}
-                      />
-                    )
-                  })}
-                </tr>
+              ) : (
+                <th />
               )
-            })}
-          </tbody>
-        </table>
-      </div>
+            )}
+          </tr>
+        </thead>
+        <tbody>
+          {sortedPeople.map(person => {
+            const completedPercentageForPerson = completedPercentage(person)
+
+            return (
+              <tr key={person.id}>
+                <td>
+                  <PersonComponent person={person} />
+                </td>
+                <td>
+                  <a target="_blank" rel="noopener noreferrer" href={`https://github.com/${person.github}`}>
+                    @{person.github}
+                  </a>
+                </td>
+                {countedHomeworks > 0 ? (
+                  <td
+                    className={cx({
+                      'has-text-danger': completedPercentageForPerson < 80.0,
+                      'has-text-success': completedPercentageForPerson >= 80.0,
+                    })}
+                  >
+                    {completedPercentageForPerson} %
+                  </td>
+                ) : (
+                  <td />
+                )}
+                {cohort.homeworks.map(homework => {
+                  const assignment = homework.assignments.find(assignment => assignment.person.id === person.id)
+                  return (
+                    <HomeworkTableData
+                      key={homework.id}
+                      person={person}
+                      assignment={assignment}
+                      homework={homework}
+                      reloadCohort={reloadCohort}
+                      selectedAssignment={selectedAssignment}
+                      setSelectedAssignment={setSelectedAssignment}
+                    />
+                  )
+                })}
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
     </section>
   )
 }
