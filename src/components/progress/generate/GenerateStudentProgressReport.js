@@ -23,63 +23,65 @@ const Editing = ({ showInput, shortName, fullName, assignments, state, dispatch,
     {
       label: `What is ${shortName} doing well?`,
       field: 'doingWell',
-      placeholder: 'Great CSS, good job creating re-usable code, etc...'
+      placeholder: 'Great CSS, good job creating re-usable code, etc...',
     },
     {
       label: `Where can ${shortName} improve?`,
       field: 'improve',
-      placeholder: 'Work on problem solving, repeat old homeworks, etc...'
+      placeholder: 'Work on problem solving, repeat old homeworks, etc...',
     },
     {
       label: `Attendance issues for ${shortName}`,
       field: 'attendanceIssues',
-      placeholder: 'No Attendance Issues'
-    }
+      placeholder: 'No Attendance Issues',
+    },
   ]
 
   return (
-    <section>
-      <article className="media">
-        <figure className="media-left">
-          <p className="image is-128x128">
-            <img alt="logo" src={logo} />
-          </p>
-        </figure>
-        <div className="media-content">
-          <div className="content">
-            <h1 className="title">Progress Report for {fullName}</h1>
-            <h2 className="title">{title}</h2>
-          </div>
-        </div>
-      </article>
-      <form>
-        {prompts.map((prompt, index) => (
-          <div key={index} className="field">
-            <label className="label">{prompt.label}</label>
-            <div className="control">
-              {showInput ? (
-                <textarea
-                  value={state[prompt.field]}
-                  onChange={event => dispatch({ type: prompt.field, value: event.target.value })}
-                  className="textarea"
-                  rows={4}
-                  placeholder={prompt.placeholder}
-                />
-              ) : (
-                <h6 className="title is-6">{state[prompt.field]}</h6>
-              )}
+    <section className="section">
+      <div className="container">
+        <article className="media">
+          <figure className="media-left">
+            <p className="image is-128x128">
+              <img alt="logo" src={logo} />
+            </p>
+          </figure>
+          <div className="media-content">
+            <div className="content">
+              <h1 className="title">Progress Report for {fullName}</h1>
+              <h2 className="title">{title}</h2>
             </div>
           </div>
-        ))}
-      </form>
-
-      <section className="section">
-        <div className="columns is-multiline">
-          {assignments.map(assignment => (
-            <AssignmentCard key={assignment.homework.id} assignment={assignment} />
+        </article>
+        <form>
+          {prompts.map((prompt, index) => (
+            <div key={index} className="field">
+              <label className="label">{prompt.label}</label>
+              <div className="control">
+                {showInput ? (
+                  <textarea
+                    value={state[prompt.field]}
+                    onChange={event => dispatch({ type: prompt.field, value: event.target.value })}
+                    className="textarea"
+                    rows={4}
+                    placeholder={prompt.placeholder}
+                  />
+                ) : (
+                  <h6 className="title is-6">{state[prompt.field]}</h6>
+                )}
+              </div>
+            </div>
           ))}
-        </div>
-      </section>
+        </form>
+
+        <section className="section">
+          <div className="columns is-multiline">
+            {assignments.map(assignment => (
+              <AssignmentCard key={assignment.homework.id} assignment={assignment} />
+            ))}
+          </div>
+        </section>
+      </div>
     </section>
   )
 }
@@ -117,14 +119,14 @@ const GenerateStudentProgressReport = ({
   assignments,
   person,
   onCreate,
-  onSkip
+  onSkip,
 }) => {
   const shortName = person.givenName || person.fullName
   const initialStep = reportImageUrl ? 'complete' : 'editing'
 
   const [state, dispatch] = useReducer((state, action) => ({ ...state, [action.type]: action.value }), {
     step: initialStep,
-    ...content
+    ...content,
   })
 
   const report = useRef(null)
