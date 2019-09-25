@@ -3,16 +3,17 @@ import { attr, belongsTo } from 'spraypaint'
 
 const Assignment = ApplicationRecord.extend({
   static: {
-    jsonapiType: 'assignments'
+    jsonapiType: 'assignments',
   },
   attrs: {
     score: attr(),
     issue: attr(),
     person_id: attr(),
     homework_id: attr(),
+    completed: attr(),
     person: belongsTo(),
-    homework: belongsTo()
-  }
+    homework: belongsTo(),
+  },
 })
 
 Assignment.prototype.scoreInfo = function() {
@@ -28,8 +29,8 @@ Assignment.noScore = {
   style: {
     iconColor: 'black',
     buttonColor: 'white',
-    textColor: 'black'
-  }
+    textColor: 'black',
+  },
 }
 
 Assignment.scoreInfos = [
@@ -38,41 +39,41 @@ Assignment.scoreInfos = [
     style: {
       iconColor: 'black',
       buttonColor: 'white',
-      textColor: 'black'
-    }
+      textColor: 'black',
+    },
   },
   {
     title: 'Needs Improvement',
     style: {
       buttonColor: 'rgb(217, 83, 79)',
       iconColor: 'rgb(217, 83, 79)',
-      textColor: 'white'
-    }
+      textColor: 'white',
+    },
   },
   {
     title: 'Acceptable',
     style: {
       buttonColor: 'rgb(240, 173, 78)',
       iconColor: 'rgb(240, 173, 78)',
-      textColor: 'white'
-    }
+      textColor: 'white',
+    },
   },
   {
     title: 'Meets Expectation',
     style: {
       buttonColor: 'rgb(49, 176, 213)',
       iconColor: 'rgb(49, 176, 213)',
-      textColor: 'white'
-    }
+      textColor: 'white',
+    },
   },
   {
     title: 'Exceeds Expectation',
     style: {
       buttonColor: 'rgb(51, 122, 183)',
       iconColor: 'rgb(51, 122, 183)',
-      textColor: 'white'
-    }
-  }
+      textColor: 'white',
+    },
+  },
 ]
 
 export default Assignment

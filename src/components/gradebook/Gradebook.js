@@ -58,7 +58,7 @@ const AssignmentModal = ({ person, assignment, homework, issue, reloadCohort, on
                 <LoadingButton
                   key={index}
                   className={cx({
-                    'is-active': index === assignment.score
+                    'is-active': index === assignment.score,
                   })}
                   style={{ backgroundColor: info.style.buttonColor, color: info.style.textColor }}
                   onClick={stopLoading => assignScore(index, stopLoading)}
@@ -80,7 +80,7 @@ const HomeworkTableData = ({
   homework,
   reloadCohort,
   selectedAssignment,
-  setSelectedAssignment
+  setSelectedAssignment,
 }) => {
   const createAssignment = (homework, person) => {
     const shouldAssign = window.confirm(`Assign this homework?`)
@@ -193,6 +193,18 @@ const Gradebook = ({ cohort_id }) => {
       .catch(finish)
   }
 
+  const countedHomeworks = cohort.homeworks.filter(homework => homework.countsTowardsCompletion).length
+  const completedPercentage = person => {
+    return (
+      (cohort.homeworks.filter(homework => {
+        const assignment = homework.assignments.find(assignment => assignment.person.id === person.id)
+        return assignment && homework.countsTowardsCompletion && assignment.completed
+      }).length *
+        100.0) /
+      countedHomeworks
+    ).toFixed(1)
+  }
+
   return (
     <section className="section">
       <div className="container">
@@ -213,6 +225,20 @@ const Gradebook = ({ cohort_id }) => {
                   </LoadingButton>
                 </th>
               ))}
+              <th />
+            </tr>
+            <tr>
+              <th colSpan={2}>Counts Towards Completion</th>
+              {sortedHomework.map(homework =>
+                homework.countsTowardsCompletion ? (
+                  <th key={homework.id}>
+                    <i className="fa fa-check has-text-success" />
+                  </th>
+                ) : (
+                  <th />
+                )
+              )}
+              <th>{countedHomeworks}</th>
             </tr>
           </thead>
           <tbody>
@@ -240,6 +266,7 @@ const Gradebook = ({ cohort_id }) => {
                     />
                   )
                 })}
+                <td>{completedPercentage(person)} %</td>
               </tr>
             ))}
           </tbody>
