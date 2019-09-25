@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Cohort } from '@/components/models'
 import useModelData from '@/hooks/useModelData'
 import { LeftRight } from '@/components/utils/LeftRight'
+import LoadingIndicator from '@/components/utils/LoadingIndicator'
 
 const ProgressReports = ({ cohort_id, allowNew }) => {
   const { loading, data: cohort } = useModelData(() =>
@@ -10,7 +11,7 @@ const ProgressReports = ({ cohort_id, allowNew }) => {
   )
 
   if (loading) {
-    return <></>
+    return <LoadingIndicator />
   }
 
   return (

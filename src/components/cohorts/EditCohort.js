@@ -8,6 +8,7 @@ import { ErrorsContext, addErrorsFromObject } from '@/components/Errors'
 import history from '@/history'
 import formToObject from '@/utils/formToObject'
 import { Tabs, TabHeader, Tab } from '@/components/utils/Tabs'
+import LoadingIndicator from '@/components/utils/LoadingIndicator'
 import Form from './Form'
 import EditEnrollment from './EditEnrollment'
 import EditCohortCalendar from './EditCohortCalendar'
@@ -37,7 +38,7 @@ const EditCohort = ({ id }) => {
   }
 
   if (loading) {
-    return <></>
+    return <LoadingIndicator />
   }
 
   return (

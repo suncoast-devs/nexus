@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Cohort } from '@/components/models'
 import useModelData from '@/hooks/useModelData'
+import LoadingIndicator from '@/components/utils/LoadingIndicator'
 
 const CohortTable = ({ cohorts, title }) => {
   return (
@@ -62,7 +63,7 @@ const Cohorts = () => {
   )
 
   if (loading) {
-    return <></>
+    return <LoadingIndicator />
   }
 
   return (
