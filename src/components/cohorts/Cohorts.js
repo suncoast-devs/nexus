@@ -56,7 +56,7 @@ const CohortTable = ({ cohorts, title }) => {
 }
 
 const Cohorts = () => {
-  const { loading, data: cohorts } = useModelData(() => Cohort.order({ start_date: 'asc' }).all())
+  const { loading, data: cohorts } = useModelData(() => Cohort.order({ start_date: 'desc' }).all())
 
   if (loading) {
     return <LoadingIndicator />
