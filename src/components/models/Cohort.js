@@ -22,12 +22,4 @@ const Cohort = ApplicationRecord.extend({
   },
 })
 
-Cohort.active = () => {
-  return Cohort.all().then(response => {
-    return new Promise((resolve, reject) => {
-      resolve({ data: response.data.filter(cohort => cohort.active) })
-    })
-  })
-}
-
 export default Cohort

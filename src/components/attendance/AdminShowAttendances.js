@@ -5,7 +5,7 @@ import { Cohort } from '@/components/models'
 import EditAttendance from './EditAttendance'
 
 const AdminShowAttendances = props => {
-  const { data: cohorts } = useModelData(() => Cohort.active())
+  const { data: cohorts } = useModelData(() => Cohort.where({ active: true }).all())
 
   return cohorts
     .sort(cohort => cohort.name.localeCompare(cohort.name))
