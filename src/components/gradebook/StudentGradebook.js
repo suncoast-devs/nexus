@@ -24,10 +24,10 @@ const StudentGradebook = ({ profile, showTitle }) => {
       <div className="container">
         {showTitle && <h1 className="title">Grades for: {profile.fullName}</h1>}
         {cohorts.map(cohort => {
-          const assignments = cohort.assignmentsForThisCohort(assignments)
+          const cohortAssignments = cohort.assignmentsForThisCohort(assignments)
 
           return (
-            assignments.length > 0 && <React.Fragment key={cohort.id}>
+            cohortAssignments.length > 0 ? <React.Fragment key={cohort.id}>
               <h1 className="title">{cohort.name}</h1>
 
               <table className="table is-fullwidth is-hoverable">
@@ -38,7 +38,7 @@ const StudentGradebook = ({ profile, showTitle }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {assignments.map(assignment => {
+                  {cohortAssignments.map(assignment => {
                     return (
                       <tr key={assignment.id}>
                         <td>
@@ -59,7 +59,7 @@ const StudentGradebook = ({ profile, showTitle }) => {
                   })}
                 </tbody>
               </table>
-            </React.Fragment>
+            </React.Fragment> : <></>
           )
         })}
       </div>
