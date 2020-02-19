@@ -20,6 +20,12 @@ const Cohort = ApplicationRecord.extend({
     homeworks: hasMany(),
     progressReports: hasMany(),
   },
+
+  methods: {
+    assignmentsForThisCohort: function(assignments) {
+      return assignments.filter(assignment => assignment.homework && assignment.homework.cohort.id === this.id)
+    },
+  },
 })
 
 export default Cohort

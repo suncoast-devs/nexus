@@ -6,7 +6,9 @@ import LoadingIndicator from '@/components/utils/LoadingIndicator'
 
 const StudentGradebook = ({ profile, showTitle }) => {
   const { loading: loadingAssignments, data: assignments } = useModelData(() =>
-    Assignment.includes({ homework: 'cohort' }).all()
+    Assignment.includes({ homework: 'cohort' })
+      .where({ personId: profile.id })
+      .all()
   )
 
   const { loading: loadingCohort, data: cohorts } = useModelData(() =>
@@ -22,10 +24,6 @@ const StudentGradebook = ({ profile, showTitle }) => {
       <div className="container">
         {showTitle && <h1 className="title">Grades for: {profile.fullName}</h1>}
         {cohorts.map(cohort => {
-          const cohortAssignments = assignments.filter(
-            assignment => assignment.homework && assignment.homework.cohort.id === cohort.id
-          )
-
           return (
             <React.Fragment key={cohort.id}>
               <h1 className="title">{cohort.name}</h1>
@@ -38,7 +36,7 @@ const StudentGradebook = ({ profile, showTitle }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {cohortAssignments.map(assignment => {
+                  {assignmentsForThisCohort(assignments).map(assignment => {
                     return (
                       <tr key={assignment.id}>
                         <td>
@@ -48,9 +46,7 @@ const StudentGradebook = ({ profile, showTitle }) => {
                           <a
                             target="_blank"
                             rel="noopener noreferrer"
-                            href={`https://github.com/${profile.github}/${profile.assignmentsRepo}/issues/${
-                              assignment.issue
-                            }`}
+                            href={`https://github.com/${profile.github}/${profile.assignmentsRepo}/issues/${assignment.issue}`}
                           >
                             {assignment.homework.title}
                           </a>

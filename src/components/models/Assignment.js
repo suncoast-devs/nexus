@@ -8,8 +8,8 @@ const Assignment = ApplicationRecord.extend({
   attrs: {
     score: attr(),
     issue: attr(),
-    person_id: attr(),
-    homework_id: attr(),
+    personId: attr(),
+    homeworkId: attr(),
     completed: attr(),
     person: belongsTo(),
     homework: belongsTo(),
