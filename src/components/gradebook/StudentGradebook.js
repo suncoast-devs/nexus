@@ -36,7 +36,7 @@ const StudentGradebook = ({ profile, showTitle }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {assignmentsForThisCohort(assignments).map(assignment => {
+                  {cohort.assignmentsForThisCohort(assignments).map(assignment => {
                     return (
                       <tr key={assignment.id}>
                         <td>
