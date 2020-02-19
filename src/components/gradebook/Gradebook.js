@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Link from 'react-router-dom'
 import cx from 'classnames'
 
 import { Cohort, Assignment } from '@/components/models'
@@ -250,7 +251,7 @@ const Gradebook = ({ cohort_id }) => {
             return (
               <tr key={person.id}>
                 <td>
-                  <PersonComponent person={person} />
+                  <Link to={`/people/${person.id}/gradebook`}><PersonComponent person={person} /></Link>
                 </td>
                 <td>
                   <a target="_blank" rel="noopener noreferrer" href={`https://github.com/${person.github}`}>
