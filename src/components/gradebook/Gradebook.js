@@ -91,8 +91,8 @@ const HomeworkTableData = ({
     }
 
     const assignment = new Assignment()
-    assignment.person_id = person.id
-    assignment.homework_id = homework.id
+    assignment.personId = person.id
+    assignment.homeworkId = homework.id
 
     return assignment.save().then(response => {
       reloadCohort()
@@ -178,8 +178,8 @@ const Gradebook = ({ cohort_id }) => {
 
     const promises = cohort.people.map(person => {
       const assignment = new Assignment()
-      assignment.person_id = person.id
-      assignment.homework_id = homework.id
+      assignment.personId = person.id
+      assignment.homeworkId = homework.id
 
       return assignment.save()
     })
