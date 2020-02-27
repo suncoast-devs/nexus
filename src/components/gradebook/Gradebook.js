@@ -154,7 +154,7 @@ const HomeworkTableData = ({
 const Gradebook = ({ cohort_id }) => {
   const { loading: loadingCohort, data: cohort, reload: reloadCohort } = useModelData(
     () =>
-      Cohort.includes(['people', { homeworks: { assignments: 'person' } }])
+      Cohort.includes([{ people: 'assignments', homeworks: { assignments: 'person' } }])
         .selectExtra({ people: 'issues' })
         .find(cohort_id),
     { people: [] }
@@ -233,7 +233,10 @@ const Gradebook = ({ cohort_id }) => {
         </thead>
         <tbody>
           {sortedPeople.map(person => {
-            const completedPercentageForPerson = homeworkCompletedPercentage({ homeworks: cohort.homeworks, person })
+            const completedPercentageForPerson = homeworkCompletedPercentage({
+              homeworks: cohort.homeworks,
+              assignments: person.assignments,
+            })
 
             return (
               <tr key={person.id}>
