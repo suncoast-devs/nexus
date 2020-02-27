@@ -7,6 +7,7 @@ import useModelData from '@/hooks/useModelData'
 import PersonComponent from '@/components//Person'
 import LoadingIndicator from '@/components/utils/LoadingIndicator'
 import LoadingButton from '@/components//utils/LoadingButton'
+import { homeworkCompletedPercentage } from './gradebookUtils'
 
 const AssignmentModal = ({ person, assignment, homework, issue, reloadCohort, onClose }) => {
   const assignScore = (score, stopLoading) => {
@@ -195,20 +196,6 @@ const Gradebook = ({ cohort_id }) => {
   }
 
   const countedHomeworks = cohort.homeworks.filter(homework => homework.countsTowardsCompletion).length
-  const completedPercentage = person => {
-    if (countedHomeworks === 0) {
-      return 'N/A'
-    }
-
-    return (
-      (cohort.homeworks.filter(homework => {
-        const assignment = homework.assignments.find(assignment => assignment.person.id === person.id)
-        return assignment && homework.countsTowardsCompletion && assignment.completed
-      }).length *
-        100.0) /
-      countedHomeworks
-    ).toFixed(1)
-  }
 
   return (
     <section className="gradebook section">
@@ -246,12 +233,14 @@ const Gradebook = ({ cohort_id }) => {
         </thead>
         <tbody>
           {sortedPeople.map(person => {
-            const completedPercentageForPerson = completedPercentage(person)
+            const completedPercentageForPerson = homeworkCompletedPercentage({ homeworks: cohort.homeworks, person })
 
             return (
               <tr key={person.id}>
                 <td>
-                  <Link to={`/people/${person.id}/gradebook`}><PersonComponent person={person} /></Link>
+                  <Link to={`/people/${person.id}/gradebook`}>
+                    <PersonComponent person={person} />
+                  </Link>
                 </td>
                 <td>
                   <a target="_blank" rel="noopener noreferrer" href={`https://github.com/${person.github}`}>

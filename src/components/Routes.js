@@ -170,7 +170,12 @@ const UserRoutes = ({ profile, auth }) => (
   <Switch>
     <Route exact path="/attendance" render={props => <StudentAttendance profile={profile} auth={auth} {...props} />} />
 
-    <Route exact path="/gradebook" render={props => <StudentGradebook profile={profile} auth={auth} {...props} />} />
+    <Route
+      exact
+      path="/gradebook"
+      render={props => <StudentGradebook profile={profile} auth={auth} {...props} />}
+      showTitle={true}
+    />
 
     <Route
       exact

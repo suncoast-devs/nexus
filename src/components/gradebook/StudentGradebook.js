@@ -3,6 +3,7 @@ import React from 'react'
 import { Cohort, Assignment } from '@/components/models'
 import useModelData from '@/hooks/useModelData'
 import LoadingIndicator from '@/components/utils/LoadingIndicator'
+import { homeworkCompletedPercentage, completedHomeworks, neededHomeworksToExceedPercentage } from './gradebookUtils'
 
 const StudentGradebook = ({ profile, showTitle }) => {
   const { loading: loadingAssignments, data: assignments } = useModelData(() =>
@@ -26,9 +27,19 @@ const StudentGradebook = ({ profile, showTitle }) => {
         {cohorts.map(cohort => {
           const cohortAssignments = cohort.assignmentsForThisCohort(assignments)
 
-          return (
-            cohortAssignments.length > 0 ? <React.Fragment key={cohort.id}>
+          const completed = completedHomeworks({ homeworks: cohort.homeworks, person: profile })
+          const percentage = homeworkCompletedPercentage({ homeworks: cohort.homeworks, person: profile })
+          const needed = neededHomeworksToExceedPercentage({ homeworks: cohort.homeworks, person: profile })
+
+          return cohortAssignments.length > 0 ? (
+            <React.Fragment key={cohort.id}>
               <h1 className="title">{cohort.name}</h1>
+
+              <div className="notification is-primary">
+                You have completed <strong>{completed}</strong> assignments for a completion rate of{' '}
+                <strong>{percentage}%</strong>. You need <strong>{needed}</strong>
+                more assignments to reach <strong>80%</strong>
+              </div>
 
               <table className="table is-fullwidth is-hoverable">
                 <thead>
@@ -48,7 +59,9 @@ const StudentGradebook = ({ profile, showTitle }) => {
                           <a
                             target="_blank"
                             rel="noopener noreferrer"
-                            href={`https://github.com/${profile.github}/${profile.assignmentsRepo}/issues/${assignment.issue}`}
+                            href={`https://github.com/${profile.github}/${profile.assignmentsRepo}/issues/${
+                              assignment.issue
+                            }`}
                           >
                             {assignment.homework.title}
                           </a>
@@ -59,7 +72,9 @@ const StudentGradebook = ({ profile, showTitle }) => {
                   })}
                 </tbody>
               </table>
-            </React.Fragment> : <></>
+            </React.Fragment>
+          ) : (
+            <></>
           )
         })}
       </div>
