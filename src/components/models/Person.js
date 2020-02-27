@@ -3,7 +3,7 @@ import { attr, hasMany } from 'spraypaint'
 
 const Person = ApplicationRecord.extend({
   static: {
-    jsonapiType: 'people'
+    jsonapiType: 'people',
   },
   attrs: {
     isAdmin: attr(),
@@ -24,9 +24,10 @@ const Person = ApplicationRecord.extend({
     assignmentsRepoExists: attr(),
     slackUser: attr(),
     slackInviteCode: attr(),
+    cohorts: hasMany(),
     attendanceRecords: hasMany(),
-    assignments: hasMany()
-  }
+    assignments: hasMany(),
+  },
 })
 
 Person.prototype.isMatch = function(text) {
@@ -39,7 +40,7 @@ Person.prototype.isMatch = function(text) {
     this.familyName,
     this.additionalName,
     this.github,
-    this.nickname
+    this.nickname,
   ]
     .filter(Boolean)
     .some(name => name.toLowerCase().includes(lowerText))

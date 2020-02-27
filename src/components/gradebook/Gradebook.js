@@ -254,7 +254,7 @@ const Gradebook = ({ cohort_id }) => {
                       'has-text-success': completedPercentageForPerson >= 80.0,
                     })}
                   >
-                    {completedPercentageForPerson} %
+                    {completedPercentageForPerson.toFixed(1)} %
                   </td>
                 ) : (
                   <td />

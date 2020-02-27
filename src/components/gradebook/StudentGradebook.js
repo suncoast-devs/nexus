@@ -4,6 +4,7 @@ import { Cohort, Assignment } from '@/components/models'
 import useModelData from '@/hooks/useModelData'
 import LoadingIndicator from '@/components/utils/LoadingIndicator'
 import { homeworkCompletedPercentage, completedHomeworks, neededHomeworksToExceedPercentage } from './gradebookUtils'
+import Person from '@/components/models/Person'
 
 const StudentGradebook = ({ profile, showTitle }) => {
   const { loading: loadingAssignments, data: assignments } = useModelData(() =>
@@ -12,13 +13,15 @@ const StudentGradebook = ({ profile, showTitle }) => {
       .all()
   )
 
-  const { loading: loadingCohort, data: cohorts } = useModelData(() =>
-    Cohort.where({ id: assignments.map(assignment => assignment.homework.cohort_id) }).all()
+  const { loading: loadingPerson, data: person } = useModelData(() =>
+    Person.includes({ cohorts: 'homeworks' }).find(profile.id)
   )
 
-  if (loadingCohort || loadingAssignments) {
+  if (loadingPerson || loadingAssignments) {
     return <LoadingIndicator />
   }
+
+  const cohorts = person.cohorts
 
   return (
     <section className="section">
@@ -28,17 +31,17 @@ const StudentGradebook = ({ profile, showTitle }) => {
           const cohortAssignments = cohort.assignmentsForThisCohort(assignments)
 
           const completed = completedHomeworks({ homeworks: cohort.homeworks, person: profile })
-          const percentage = homeworkCompletedPercentage({ homeworks: cohort.homeworks, person: profile })
           const needed = neededHomeworksToExceedPercentage({ homeworks: cohort.homeworks, person: profile })
+          const percentage = homeworkCompletedPercentage({ homeworks: cohort.homeworks, person: profile })
 
-          return cohortAssignments.length > 0 ? (
+          return cohortAssignments.length >= 0 ? (
             <React.Fragment key={cohort.id}>
               <h1 className="title">{cohort.name}</h1>
 
               <div className="notification is-primary">
-                You have completed <strong>{completed}</strong> assignments for a completion rate of{' '}
-                <strong>{percentage}%</strong>. You need <strong>{needed}</strong>
-                more assignments to reach <strong>80%</strong>
+                You have completed <strong>{completed ? completed.length : 0}</strong> assignments for a completion rate
+                of <strong>{percentage.toFixed(1)}%</strong>. You need <strong>{needed ? needed : 'N/A'}</strong> more
+                assignments to reach <strong>80%</strong>
               </div>
 
               <table className="table is-fullwidth is-hoverable">
@@ -74,7 +77,7 @@ const StudentGradebook = ({ profile, showTitle }) => {
               </table>
             </React.Fragment>
           ) : (
-            <></>
+            <React.Fragment key={cohort.id} />
           )
         })}
       </div>

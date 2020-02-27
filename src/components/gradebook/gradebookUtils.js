@@ -4,7 +4,9 @@ export const neededHomeworksToExceedPercentage = ({ homeworks, person, neededPer
     return null
   }
 
-  return Math.max((countedHomeworks * 100.0) / neededPercentage - completedHomeworks({ homeworks, person }))
+  const completedPercentage = homeworkCompletedPercentage({ homeworks, person })
+
+  return Math.ceil(Math.max(0, ((neededPercentage - completedPercentage) / 100.0) * countedHomeworks))
 }
 
 export const completedHomeworks = ({ homeworks, person }) => {
@@ -19,5 +21,6 @@ export const homeworkCompletedPercentage = ({ homeworks, person }) => {
   if (countedHomeworks === 0) {
     return 'N/A'
   }
-  return ((completedHomeworks({ homeworks, person }).length * 100.0) / countedHomeworks).toFixed(1)
+
+  return (completedHomeworks({ homeworks, person }).length * 100.0) / countedHomeworks
 }

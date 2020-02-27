@@ -8,7 +8,7 @@ const NULL_PROFILE = {
   id: 0,
   isAdmin: false,
   fullName: '',
-  smallProfileImageUrl: icon
+  smallProfileImageUrl: icon,
 }
 
 const useProfile = () => {
@@ -17,7 +17,7 @@ const useProfile = () => {
   }
 
   const { loading, data: fetchedProfile, reload: reloadProfile } = useModelData(() =>
-    auth.isAuthenticated ? Profile.find() : unAuthenticatedProfile()
+    auth.isAuthenticated ? Profile.includes('cohorts').find() : unAuthenticatedProfile()
   )
 
   const profile = (loading ? NULL_PROFILE : fetchedProfile) || NULL_PROFILE
