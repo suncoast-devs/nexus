@@ -4,6 +4,7 @@ import moment from 'moment'
 import { Cohort, AttendanceRecord } from '@/components/models'
 import useModelData from '@/hooks/useModelData'
 import PersonComponent from '@/components/Person'
+import InactivePerson from '@/components/InactivePerson'
 import AttendanceCell from './AttendanceCell'
 import AttendanceModal from './AttendanceModal'
 import LoadingIndicator from '@/components/utils/LoadingIndicator'
@@ -38,15 +39,13 @@ const AttendanceHeaderCell = ({ cohort, reload, cohortDate }) => {
   )
 }
 
-const AttendanceRow = ({ sortedCohortDates, setSelectedAttendanceRecord, setShowModal, person }) => {
+const AttendanceRow = ({ sortedCohortDates, setSelectedAttendanceRecord, setShowModal, person, active }) => {
   const attendanceRecordForDate = cohortDate =>
     cohortDate.attendanceRecords.find(record => record.person.id === person.id) || new AttendanceRecord({ status: ' ' })
 
   return (
     <tr>
-      <td>
-        <PersonComponent person={person} />
-      </td>
+      <td>{active ? <PersonComponent person={person} /> : <InactivePerson person={person} />}</td>
       {sortedCohortDates.map(cohortDate => {
         const attendanceRecord = attendanceRecordForDate(cohortDate)
 
@@ -58,6 +57,7 @@ const AttendanceRow = ({ sortedCohortDates, setSelectedAttendanceRecord, setShow
         return (
           <AttendanceCell
             key={cohortDate.day}
+            active={active}
             statusKey={attendanceRecord.status}
             note={attendanceRecord.note}
             onClick={() => {
@@ -77,7 +77,9 @@ const EditAttendance = ({ cohort_id }) => {
   const [selectedAttendanceRecord, setSelectedAttendanceRecord] = useState()
 
   const { loading, data: cohort, reload } = useModelData(() =>
-    Cohort.includes(['people', { cohort_dates: { attendance_records: 'person' } }]).find(cohort_id)
+    Cohort.includes([{ student_enrollments: 'person' }, { cohort_dates: { attendance_records: 'person' } }]).find(
+      cohort_id
+    )
   )
 
   if (loading) {
@@ -89,6 +91,14 @@ const EditAttendance = ({ cohort_id }) => {
   const sortedCohortDates = onlyToday
     ? cohort.cohortDates.filter(date => date.day === today)
     : cohort.cohortDates.sort((a, b) => a.day.localeCompare(b.day))
+
+  const activeEnrollments = cohort.studentEnrollments
+    .filter(enrollment => enrollment.active)
+    .sort((a, b) => a.person.fullName.localeCompare(b.person.fullName))
+
+  const inactiveEnrollments = cohort.studentEnrollments
+    .filter(enrollment => !enrollment.active)
+    .sort((a, b) => a.person.fullName.localeCompare(b.person.fullName))
 
   return (
     <div className="section">
@@ -122,17 +132,26 @@ const EditAttendance = ({ cohort_id }) => {
               </tr>
             </thead>
             <tbody>
-              {cohort.people
-                .sort((a, b) => a.fullName.localeCompare(b.fullName))
-                .map(person => (
-                  <AttendanceRow
-                    key={person.id}
-                    sortedCohortDates={sortedCohortDates}
-                    setSelectedAttendanceRecord={setSelectedAttendanceRecord}
-                    setShowModal={setShowModal}
-                    person={person}
-                  />
-                ))}
+              {activeEnrollments.map(enrollment => (
+                <AttendanceRow
+                  key={enrollment.person.id}
+                  sortedCohortDates={sortedCohortDates}
+                  setSelectedAttendanceRecord={setSelectedAttendanceRecord}
+                  setShowModal={setShowModal}
+                  person={enrollment.person}
+                  active={enrollment.active}
+                />
+              ))}
+              {inactiveEnrollments.map(enrollment => (
+                <AttendanceRow
+                  key={enrollment.person.id}
+                  sortedCohortDates={sortedCohortDates}
+                  setSelectedAttendanceRecord={setSelectedAttendanceRecord}
+                  setShowModal={setShowModal}
+                  person={enrollment.person}
+                  active={enrollment.active}
+                />
+              ))}
             </tbody>
           </table>
         </div>

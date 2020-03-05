@@ -2,15 +2,11 @@ import React from 'react'
 
 const iconStyle = { width: '32px', height: '32px', textAlign: 'center', verticalAlign: 'center', lineHeight: '32px' }
 
-const Person = ({ person }) => {
+const InactivePerson = ({ person }) => {
   return (
-    <article className="media">
+    <article className="media has-text-danger">
       <figure className="media-left">
-        {person.smallProfileImageUrl ? (
-          <img alt={person.fullName} src={person.smallProfileImageUrl} />
-        ) : (
-          <i style={iconStyle} className="fas fa-user" />
-        )}
+        <i style={iconStyle} className="fas fa-user" />
       </figure>
       <div className="media-content">
         <div className="content">{person.fullName}</div>
@@ -19,4 +15,4 @@ const Person = ({ person }) => {
   )
 }
 
-export default Person
+export default InactivePerson

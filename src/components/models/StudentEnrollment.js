@@ -3,9 +3,11 @@ import { attr, belongsTo } from 'spraypaint'
 
 const StudentEnrollment = ApplicationRecord.extend({
   static: {
-    jsonapiType: 'student_enrollments'
+    jsonapiType: 'student_enrollments',
   },
   attrs: {
+    active: attr(),
+
     cohort_id: attr(),
     cohort: belongsTo(),
 
@@ -13,8 +15,8 @@ const StudentEnrollment = ApplicationRecord.extend({
     invitationCode: attr(),
 
     person_id: attr(),
-    person: belongsTo()
-  }
+    person: belongsTo(),
+  },
 })
 
 StudentEnrollment.prototype.isInUnit = function(unit) {

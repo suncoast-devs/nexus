@@ -13,7 +13,7 @@ const EditEnrollment = ({ cohort }) => {
   const {
     loading: loadingStudentEnrollments,
     data: studentEnrollments,
-    reload: reloadStudentEnrollments
+    reload: reloadStudentEnrollments,
   } = useModelData(() =>
     StudentEnrollment.includes('person')
       .selectExtra({ people: 'assignments_repo_exists' })
@@ -36,6 +36,11 @@ const EditEnrollment = ({ cohort }) => {
 
   const deletePerson = studentEnrollment => {
     studentEnrollment.destroy().then(reloadStudentEnrollments)
+  }
+
+  const setActive = (studentEnrollment, active) => {
+    studentEnrollment.active = active
+    studentEnrollment.save().then(reloadStudentEnrollments)
   }
 
   const toggleUnit = (studentEnrollment, unit) => {
@@ -79,11 +84,7 @@ const EditEnrollment = ({ cohort }) => {
           <th>Github Repo</th>
           <th>Slack Integration</th>
           <th>Invitation Code</th>
-          {cohort.units.map(unit => (
-            <th key={unit.id} style={{ cursor: 'pointer' }} onClick={() => enrollEveryoneInUnit(unit)}>
-              {unit.title}
-            </th>
-          ))}
+          <th>Active</th>
           <th>Remove</th>
         </tr>
       </thead>
@@ -125,15 +126,15 @@ const EditEnrollment = ({ cohort }) => {
                     <InvitationCode invitationCode={studentEnrollment.invitationCode} />
                   )}
                 </td>
-                {cohort.units.map(unit => (
-                  <td key={unit.id} style={{ textAlign: 'center' }}>
-                    <input
-                      type="checkbox"
-                      onChange={() => toggleUnit(studentEnrollment, unit)}
-                      checked={studentEnrollment.isInUnit(unit)}
-                    />
-                  </td>
-                ))}
+                <td>
+                  <input
+                    type="checkbox"
+                    onChange={event => {
+                      setActive(studentEnrollment, event.target.checked)
+                    }}
+                    checked={studentEnrollment.active}
+                  />
+                </td>
                 <td style={{ textAlign: 'center' }}>
                   <DeleteButton onClick={() => deletePerson(studentEnrollment)} />
                 </td>

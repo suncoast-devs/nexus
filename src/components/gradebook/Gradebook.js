@@ -4,9 +4,10 @@ import cx from 'classnames'
 
 import { Cohort, Assignment } from '@/components/models'
 import useModelData from '@/hooks/useModelData'
-import PersonComponent from '@/components//Person'
+import PersonComponent from '@/components/Person'
+import InactivePerson from '@/components/InactivePerson'
 import LoadingIndicator from '@/components/utils/LoadingIndicator'
-import LoadingButton from '@/components//utils/LoadingButton'
+import LoadingButton from '@/components/utils/LoadingButton'
 import { homeworkCompletedPercentage } from './gradebookUtils'
 
 const AssignmentModal = ({ person, assignment, homework, issue, reloadCohort, onClose }) => {
@@ -78,6 +79,7 @@ const AssignmentModal = ({ person, assignment, homework, issue, reloadCohort, on
 
 const HomeworkTableData = ({
   person,
+  personIsActive,
   assignment,
   homework,
   reloadCohort,
@@ -105,7 +107,7 @@ const HomeworkTableData = ({
       className="tooltip"
       style={{ color: '#CCC' }}
       data-tooltip={`${homework.title} - Not Yet Assigned`}
-      onClick={() => createAssignment(homework, person)}
+      onClick={() => personIsActive && createAssignment(homework, person)}
     >
       <i className="far fa-circle" />
     </td>
@@ -154,7 +156,7 @@ const HomeworkTableData = ({
 const Gradebook = ({ cohort_id }) => {
   const { loading: loadingCohort, data: cohort, reload: reloadCohort } = useModelData(
     () =>
-      Cohort.includes([{ people: 'assignments', homeworks: { assignments: 'person' } }])
+      Cohort.includes([{ student_enrollments: { person: 'assignments' }, homeworks: { assignments: 'person' } }])
         .selectExtra({ people: 'issues' })
         .find(cohort_id),
     { people: [] }
@@ -166,7 +168,14 @@ const Gradebook = ({ cohort_id }) => {
     return <LoadingIndicator />
   }
 
-  const sortedPeople = cohort.people.sort((a, b) => a.fullName.localeCompare(b.fullName))
+  const activeEnrollments = cohort.studentEnrollments
+    .filter(enrollment => enrollment.active)
+    .sort((a, b) => a.person.fullName.localeCompare(b.person.fullName))
+
+  const inactiveEnrollments = cohort.studentEnrollments
+    .filter(enrollment => !enrollment.active)
+    .sort((a, b) => a.person.fullName.localeCompare(b.person.fullName))
+
   const sortedHomework = cohort.homeworks.sort((a, b) => a.id - b.id)
 
   const createAssignments = (homework, stopLoading) => {
@@ -196,6 +205,67 @@ const Gradebook = ({ cohort_id }) => {
   }
 
   const countedHomeworks = cohort.homeworks.filter(homework => homework.countsTowardsCompletion).length
+
+  const enrollmentRows = enrollments =>
+    enrollments.map(enrollment => {
+      const person = enrollment.person
+
+      const completedPercentageForPerson = homeworkCompletedPercentage({
+        homeworks: cohort.homeworks,
+        assignments: person.assignments,
+      })
+
+      return (
+        <tr key={person.id}>
+          <td>
+            {enrollment.active ? (
+              <Link to={`/people/${person.id}/gradebook`}>
+                <PersonComponent person={person} />
+              </Link>
+            ) : (
+              <InactivePerson person={person} />
+            )}
+          </td>
+          <td>
+            <a
+              className={cx({ 'has-text-danger': !enrollment.active })}
+              target="_blank"
+              rel="noopener noreferrer"
+              href={`https://github.com/${person.github}`}
+            >
+              @{person.github}
+            </a>
+          </td>
+          {countedHomeworks > 0 ? (
+            <td
+              className={cx({
+                'has-text-danger': completedPercentageForPerson < 80.0,
+                'has-text-success': completedPercentageForPerson >= 80.0,
+              })}
+            >
+              {completedPercentageForPerson.toFixed(1)} %
+            </td>
+          ) : (
+            <td />
+          )}
+          {cohort.homeworks.map(homework => {
+            const assignment = homework.assignments.find(assignment => assignment.person.id === person.id)
+            return (
+              <HomeworkTableData
+                key={homework.id}
+                person={person}
+                personIsActive={enrollment.active}
+                assignment={assignment}
+                homework={homework}
+                reloadCohort={reloadCohort}
+                selectedAssignment={selectedAssignment}
+                setSelectedAssignment={setSelectedAssignment}
+              />
+            )
+          })}
+        </tr>
+      )
+    })
 
   return (
     <section className="gradebook section">
@@ -232,53 +302,8 @@ const Gradebook = ({ cohort_id }) => {
           </tr>
         </thead>
         <tbody>
-          {sortedPeople.map(person => {
-            const completedPercentageForPerson = homeworkCompletedPercentage({
-              homeworks: cohort.homeworks,
-              assignments: person.assignments,
-            })
-
-            return (
-              <tr key={person.id}>
-                <td>
-                  <Link to={`/people/${person.id}/gradebook`}>
-                    <PersonComponent person={person} />
-                  </Link>
-                </td>
-                <td>
-                  <a target="_blank" rel="noopener noreferrer" href={`https://github.com/${person.github}`}>
-                    @{person.github}
-                  </a>
-                </td>
-                {countedHomeworks > 0 ? (
-                  <td
-                    className={cx({
-                      'has-text-danger': completedPercentageForPerson < 80.0,
-                      'has-text-success': completedPercentageForPerson >= 80.0,
-                    })}
-                  >
-                    {completedPercentageForPerson.toFixed(1)} %
-                  </td>
-                ) : (
-                  <td />
-                )}
-                {cohort.homeworks.map(homework => {
-                  const assignment = homework.assignments.find(assignment => assignment.person.id === person.id)
-                  return (
-                    <HomeworkTableData
-                      key={homework.id}
-                      person={person}
-                      assignment={assignment}
-                      homework={homework}
-                      reloadCohort={reloadCohort}
-                      selectedAssignment={selectedAssignment}
-                      setSelectedAssignment={setSelectedAssignment}
-                    />
-                  )
-                })}
-              </tr>
-            )
-          })}
+          {enrollmentRows(activeEnrollments)}
+          {enrollmentRows(inactiveEnrollments)}
         </tbody>
       </table>
     </section>

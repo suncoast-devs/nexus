@@ -1,6 +1,5 @@
 import ApplicationRecord from './ApplicationRecord'
 import { attr, hasMany, belongsTo } from 'spraypaint'
-import moment from 'moment'
 
 const Cohort = ApplicationRecord.extend({
   static: {
@@ -15,6 +14,7 @@ const Cohort = ApplicationRecord.extend({
     active: attr(),
     program: belongsTo(),
     programId: attr(),
+    studentEnrollments: hasMany(),
     people: hasMany(),
     cohortDates: hasMany(),
     homeworks: hasMany(),
