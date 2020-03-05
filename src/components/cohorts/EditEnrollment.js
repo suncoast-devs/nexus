@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import cx from 'classnames'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
-import { Unit, StudentEnrollment } from '@/components/models'
+import { StudentEnrollment } from '@/components/models'
 import useModelData from '@/hooks/useModelData'
 import { DeleteButton } from '@/components//utils/Buttons'
 import PersonDropDown from '@/components//PersonDropDown'
@@ -41,24 +41,6 @@ const EditEnrollment = ({ cohort }) => {
   const setActive = (studentEnrollment, active) => {
     studentEnrollment.active = active
     studentEnrollment.save().then(reloadStudentEnrollments)
-  }
-
-  const toggleUnit = (studentEnrollment, unit) => {
-    studentEnrollment.toggleUnit(unit)
-    studentEnrollment.save().then(reloadStudentEnrollments)
-  }
-
-  const enrollEveryoneInUnit = unit => {
-    if (!window.confirm(`Enroll everyone in ${unit.title}`)) {
-      return
-    }
-
-    const promises = studentEnrollments.map(studentEnrollment => {
-      studentEnrollment.ensureUnit(unit)
-      return studentEnrollment.save()
-    })
-
-    Promise.all(promises).then(reloadStudentEnrollments)
   }
 
   const InvitationCode = ({ invitationCode }) => {

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Cohort, Assignment } from '@/components/models'
+import { Assignment } from '@/components/models'
 import useModelData from '@/hooks/useModelData'
 import LoadingIndicator from '@/components/utils/LoadingIndicator'
 import {
