@@ -17,17 +17,17 @@ const AttendanceHeaderCell = ({ cohort, reload, cohortDate }) => {
     }
 
     const deletes = cohortDate.attendanceRecords.map(record => record.destroy())
+    const inserts = cohort.studentEnrollments.map(enrollment => {
+      let attendanceRecord = new AttendanceRecord()
+      attendanceRecord.status = enrollment.active ? 'P' : 'D'
+      attendanceRecord.note = ''
+      attendanceRecord.person_id = enrollment.person.id
+      attendanceRecord.cohort_date_id = cohortDate.id
+      return attendanceRecord.save()
+    })
 
-    Promise.all(deletes).then(() => {
-      const inserts = cohort.people.map(person => {
-        let attendanceRecord = new AttendanceRecord()
-        attendanceRecord.status = 'P'
-        attendanceRecord.note = ''
-        attendanceRecord.person_id = person.id
-        attendanceRecord.cohort_date_id = cohortDate.id
-        return attendanceRecord.save()
-      })
-
+    const all = deletes.concat(inserts)
+    Promise.all(all).then(() => {
       Promise.all(inserts).then(reload)
     })
   }
