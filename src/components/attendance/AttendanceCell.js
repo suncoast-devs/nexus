@@ -9,7 +9,7 @@ const AttendanceCell = ({ onClick, statusKey, note, active }) => {
     <td
       className={cx('is-medium', 'has-text-white', 'has-text-centered', status.className, 'tooltip')}
       data-tooltip={`${status.text} ${note ? ' - ' : ''} ${note || ''}`}
-      onClick={active && onClick}
+      onClick={active ? onClick : () => {}}
     >
       {status.icon}
     </td>
