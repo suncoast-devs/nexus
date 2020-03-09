@@ -186,9 +186,9 @@ const Gradebook = ({ cohort_id }) => {
       return
     }
 
-    const promises = cohort.people.map(person => {
+    const promises = cohort.studentEnrollments.map(enrollment => {
       const assignment = new Assignment()
-      assignment.personId = person.id
+      assignment.personId = enrollment.person.id
       assignment.homeworkId = homework.id
 
       return assignment.save()
