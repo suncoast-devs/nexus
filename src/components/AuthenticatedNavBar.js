@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import icon from '@/images/icon.svg'
 import cx from 'classnames'
+import { PersonImage } from './PersonImage'
 
 const AuthenticatedNavBar = props => {
   const [active, setActive] = useState(false)
@@ -25,7 +26,7 @@ const AuthenticatedNavBar = props => {
     <div className="media">
       <div className="media-left">
         <figure className="image is-32x32">
-          <img className="is-rounded" alt="avatar" src={profile.smallProfileImageUrl || icon} />
+          {profile.loading ? <></> : <PersonImage url={profile.smallProfileImageUrl} imgClassName="is-rounded" />}
         </figure>
       </div>
       <div className="media-content">
@@ -39,7 +40,7 @@ const AuthenticatedNavBar = props => {
   const Burger = () => (
     <div
       className={cx('navbar-burger', 'burger', {
-        'is-active': active
+        'is-active': active,
       })}
       aria-label="menu"
       aria-expanded={active}

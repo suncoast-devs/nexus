@@ -1,16 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { PersonImage } from './PersonImage'
 
-const iconStyle = { width: '32px', height: '32px', textAlign: 'center', verticalAlign: 'center', lineHeight: '32px' }
-
-const PersonImage = ({ alt, url }) => {
-  const [error, setError] = useState(!url)
-
-  if (error) {
-    return <i style={iconStyle} className="fas fa-user" />
-  } else {
-    return <img alt={alt} src={url} onError={() => setError(true)} />
-  }
+export const iconStyle = {
+  width: '32px',
+  height: '32px',
+  textAlign: 'center',
+  verticalAlign: 'center',
+  lineHeight: '32px',
 }
+
 const Person = ({ person }) => {
   return (
     <article className="media">
