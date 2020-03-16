@@ -27,6 +27,18 @@ const ErrorMessages = () => {
   )
 }
 
+const UserOrAdminRoutes = ({ profile, forceUpdateProfile, auth }) => {
+  if (profile.loading) {
+    return <></>
+  }
+
+  return profile.isAdmin ? (
+    <AdminRoutes {...{ profile, forceUpdateProfile, auth }} />
+  ) : (
+    <UserRoutes {...{ profile, forceUpdateProfile, auth }} />
+  )
+}
+
 const Layout = ({ profile, forceUpdateProfile, auth }) => {
   return (
     <>
@@ -39,11 +51,7 @@ const Layout = ({ profile, forceUpdateProfile, auth }) => {
       <ErrorMessages />
 
       <PublicRoutes profile={profile} auth={auth} />
-      {profile.isAdmin ? (
-        <AdminRoutes profile={profile} auth={auth} />
-      ) : (
-        <UserRoutes forceUpdateProfile={forceUpdateProfile} profile={profile} auth={auth} />
-      )}
+      <UserOrAdminRoutes {...{ profile, forceUpdateProfile, auth }} />
       <ProfileRoutes profile={profile} auth={auth} forceUpdateProfile={forceUpdateProfile} />
     </>
   )
