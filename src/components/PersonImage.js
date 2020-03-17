@@ -1,11 +1,26 @@
 import React, { useState } from 'react'
-import { iconStyle } from './Person'
+
+const iconStyle = {
+  width: '32px',
+  height: '32px',
+  textAlign: 'center',
+  verticalAlign: 'center',
+  lineHeight: '32px',
+}
 
 export const PersonImage = ({ alt, url, imgClassName }) => {
-  const [error, setError] = useState(!url)
-  if (error) {
-    return <i style={iconStyle} className="fas fa-user" />
-  } else {
-    return <img alt={alt} src={url} className={imgClassName} onError={() => setError(true)} />
-  }
+  const [loaded, setLoaded] = useState(false)
+
+  return (
+    <>
+      <i style={Object.assign({ display: loaded ? 'none' : '' }, iconStyle)} className="fas fa-user" />
+      <img
+        style={{ display: loaded ? '' : 'none' }}
+        alt={alt}
+        src={url}
+        className={imgClassName}
+        onLoad={() => setLoaded(true)}
+      />
+    </>
+  )
 }

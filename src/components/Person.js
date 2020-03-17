@@ -1,14 +1,6 @@
 import React from 'react'
 import { PersonImage } from './PersonImage'
 
-export const iconStyle = {
-  width: '32px',
-  height: '32px',
-  textAlign: 'center',
-  verticalAlign: 'center',
-  lineHeight: '32px',
-}
-
 const Person = ({ person }) => {
   return (
     <article className="media">
