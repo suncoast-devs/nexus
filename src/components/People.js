@@ -72,6 +72,7 @@ const People = () => {
   const { loading, reload: reloadPeople, data: people } = useModelData(() =>
     Person.selectExtra(['token'])
       .per(999)
+      .order('full_name')
       .all()
   )
 
