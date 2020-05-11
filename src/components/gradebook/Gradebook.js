@@ -120,7 +120,7 @@ const HomeworkTableData = ({
   const issue = person.issues.find(issue => issue.number === assignment.issue)
 
   if (!issue) {
-    return notAssigned(homework)
+    return notAssigned(homework, person)
   }
 
   const scoreInfo = assignment.scoreInfo()
