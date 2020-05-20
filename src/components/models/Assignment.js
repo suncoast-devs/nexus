@@ -21,7 +21,7 @@ Assignment.prototype.scoreInfo = function() {
 }
 
 Assignment.scoreInfo = function(score) {
-  return score ? Assignment.scoreInfos[parseInt(score)] : Assignment.noScore
+  return score > 0 ? Assignment.scoreInfos[parseInt(score)] : Assignment.noScore
 }
 
 Assignment.noScore = {
