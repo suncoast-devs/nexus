@@ -265,11 +265,13 @@ const Gradebook = ({ cohort_id }) => {
                   'has-text-success': completedPercentageForPerson && completedPercentageForPerson >= 80.0,
                 })}
               >
-                {completedPercentageForPerson ? completedPercentageForPerson.toFixed(1) : 'N/A'} % (
+                {completedPercentageForPerson ? completedPercentageForPerson.toFixed(1) : 'N/A'} %
               </td>
               <td>
-                {completedAssignmentCountForPerson} / {countedHomeworksForPerson})
-                {completedPercentageForPerson && completedPercentageForPerson < 80.0 ? `Needs: {neededHomeworks}` : ''}
+                ({completedAssignmentCountForPerson} / {countedHomeworksForPerson})
+                {completedPercentageForPerson && completedPercentageForPerson < 80.0
+                  ? ` - Needs: ${neededHomeworks}`
+                  : ''}
               </td>
             </>
           ) : (
