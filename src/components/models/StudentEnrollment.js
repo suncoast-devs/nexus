@@ -7,6 +7,10 @@ const StudentEnrollment = ApplicationRecord.extend({
   },
   attrs: {
     active: attr(),
+    auditing: attr(),
+    assignHomework: attr(),
+    showGrade: attr(),
+    generateProgressReport: attr(),
 
     cohort_id: attr(),
     cohort: belongsTo(),

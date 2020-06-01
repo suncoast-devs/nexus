@@ -84,7 +84,7 @@ const AssignmentModal = ({ person, assignment, homework, issue, reloadCohort, on
 
 const HomeworkTableData = ({
   person,
-  personIsActive,
+  personCanBeAssignedHomework,
   assignment,
   homework,
   reloadCohort,
@@ -112,7 +112,7 @@ const HomeworkTableData = ({
       className="tooltip"
       style={{ color: '#CCC' }}
       data-tooltip={`${homework.title} - Not Yet Assigned`}
-      onClick={() => personIsActive && createAssignment(homework, person)}
+      onClick={() => personCanBeAssignedHomework && createAssignment(homework, person)}
     >
       <i className="far fa-circle" />
     </td>
@@ -174,11 +174,11 @@ const Gradebook = ({ cohort_id }) => {
   }
 
   const activeEnrollments = cohort.studentEnrollments
-    .filter(enrollment => enrollment.active)
+    .filter(enrollment => enrollment.showGrade)
     .sort((a, b) => a.person.fullName.localeCompare(b.person.fullName))
 
   const inactiveEnrollments = cohort.studentEnrollments
-    .filter(enrollment => !enrollment.active)
+    .filter(enrollment => !enrollment.showGrade)
     .sort((a, b) => a.person.fullName.localeCompare(b.person.fullName))
 
   const sortedHomework = cohort.homeworks.sort((a, b) => a.id - b.id)
@@ -234,12 +234,12 @@ const Gradebook = ({ cohort_id }) => {
         assignments: person.assignments,
       })
 
-      const isActive = enrollment.active
+      const { active, showGrade } = enrollment
 
       return (
         <tr key={person.id}>
           <td>
-            {isActive ? (
+            {active ? (
               <Link to={`/people/${person.id}/gradebook`}>
                 <PersonComponent person={person} />
               </Link>
@@ -249,7 +249,7 @@ const Gradebook = ({ cohort_id }) => {
           </td>
           <td>
             <a
-              className={cx({ 'has-text-danger': !enrollment.active })}
+              className={cx({ 'has-text-danger': !enrollment.showGrade })}
               target="_blank"
               rel="noopener noreferrer"
               href={`https://github.com/${person.github}`}
@@ -257,7 +257,7 @@ const Gradebook = ({ cohort_id }) => {
               @{person.github}
             </a>
           </td>
-          {countedHomeworks > 0 && isActive ? (
+          {countedHomeworks > 0 && showGrade ? (
             <>
               <td
                 className={cx({
@@ -286,7 +286,7 @@ const Gradebook = ({ cohort_id }) => {
               <HomeworkTableData
                 key={homework.id}
                 person={person}
-                personIsActive={enrollment.active}
+                personCanBeAssignedHomework={enrollment.assignHomework}
                 assignment={assignment}
                 homework={homework}
                 reloadCohort={reloadCohort}

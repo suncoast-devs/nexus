@@ -43,6 +43,11 @@ const EditEnrollment = ({ cohort }) => {
     studentEnrollment.save().then(reloadStudentEnrollments)
   }
 
+  const setAuditing = (studentEnrollment, auditing) => {
+    studentEnrollment.auditing = auditing
+    studentEnrollment.save().then(reloadStudentEnrollments)
+  }
+
   const InvitationCode = ({ invitationCode }) => {
     const [toolTipText, setToolTipText] = useState('Click to Copy URL')
 
@@ -67,6 +72,7 @@ const EditEnrollment = ({ cohort }) => {
           <th>Slack Integration</th>
           <th>Invitation Code</th>
           <th>Active</th>
+          <th>Auditing</th>
           <th>Remove</th>
         </tr>
       </thead>
@@ -115,6 +121,15 @@ const EditEnrollment = ({ cohort }) => {
                       setActive(studentEnrollment, event.target.checked)
                     }}
                     checked={studentEnrollment.active}
+                  />
+                </td>
+                <td>
+                  <input
+                    type="checkbox"
+                    onChange={event => {
+                      setAuditing(studentEnrollment, event.target.checked)
+                    }}
+                    checked={studentEnrollment.auditing}
                   />
                 </td>
                 <td style={{ textAlign: 'center' }}>

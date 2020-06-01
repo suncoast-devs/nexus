@@ -10,10 +10,19 @@ import { LeftRight } from '@/components/utils/LeftRight'
 
 const NewProgressReport = ({ cohort_id }) => {
   const { data: cohort } = useModelData(
-    () => Cohort.includes(['people', 'homeworks', 'progress_reports']).find(cohort_id),
+    () => Cohort.includes(['people', 'student_enrollments', 'homeworks', 'progress_reports']).find(cohort_id),
     new Cohort(),
     cohort => {
-      setSelectedPeopleIDs(cohort.people.map(person => person.id))
+      setSelectedPeopleIDs(
+        cohort.people
+          // Only include people who should get progress reports generated
+          .filter(person =>
+            cohort.studentEnrollments.some(
+              enrollment => enrollment.person_id === person.id && enrollment.generateProgressReport
+            )
+          )
+          .map(person => person.id)
+      )
 
       const alreadyReportedHomeworkIDs = new Set(
         cohort.progressReports.filter(report => report.completed).flatMap(report => report.idsOfHomeworks)
