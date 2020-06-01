@@ -9,6 +9,33 @@ import {
   countOfHomeworksNeededToExceedPercentage,
 } from './gradebookUtils'
 import Person from '@/components/models/Person'
+import cx from 'classnames'
+
+const assignmentRow = (assignment, profile) => {
+  const overdue = assignment.overdue()
+
+  return (
+    <tr key={assignment.id}>
+      <td>
+        <span className="icon">
+          <i className="fas fa-code-branch" />
+        </span>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href={`https://github.com/${profile.github}/${profile.assignmentsRepo}/issues/${assignment.issue}`}
+        >
+          {assignment.homework.title}
+        </a>
+      </td>
+      {overdue ? (
+        <td className={cx({ 'has-text-danger': overdue })}>Overdue</td>
+      ) : (
+        <td>{Assignment.scoreInfo(assignment.score)}</td>
+      )}
+    </tr>
+  )
+}
 
 const StudentGradebook = ({ profile, showTitle }) => {
   const { loading: loadingPerson, data: person } = useModelData(() =>
@@ -51,25 +78,7 @@ const StudentGradebook = ({ profile, showTitle }) => {
                 </thead>
                 <tbody>
                   {cohortAssignments.map(assignment => {
-                    return (
-                      <tr key={assignment.id}>
-                        <td>
-                          <span className="icon">
-                            <i className="fas fa-code-branch" />
-                          </span>
-                          <a
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href={`https://github.com/${profile.github}/${profile.assignmentsRepo}/issues/${
-                              assignment.issue
-                            }`}
-                          >
-                            {assignment.homework.title}
-                          </a>
-                        </td>
-                        <td>{Assignment.scoreInfo(assignment.score).title}</td>
-                      </tr>
-                    )
+                    return assignmentRow(assignment, profile)
                   })}
                 </tbody>
               </table>

@@ -11,8 +11,16 @@ const Assignment = ApplicationRecord.extend({
     personId: attr(),
     homeworkId: attr(),
     completed: attr(),
+    createdAt: attr(),
     person: belongsTo(),
     homework: belongsTo(),
+  },
+  methods: {
+    overdue: function() {
+      const scoreInfo = Assignment.scoreInfo(this.score)
+
+      return scoreInfo.title == Assignment.noScore.title && yesterday < Date.parse(this.createdAt)
+    },
   },
 })
 
