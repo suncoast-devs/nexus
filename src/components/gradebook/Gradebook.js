@@ -12,6 +12,7 @@ import {
   assignedHomeworksForCompletionCount,
   homeworkCompletedPercentage,
   completedAssignmentsCount,
+  countOfHomeworksNeededToExceedPercentage,
 } from './gradebookUtils'
 
 const AssignmentModal = ({ person, assignment, homework, issue, reloadCohort, onClose }) => {
@@ -228,10 +229,17 @@ const Gradebook = ({ cohort_id }) => {
         assignments: person.assignments,
       })
 
+      const neededHomeworks = countOfHomeworksNeededToExceedPercentage({
+        homeworks: cohort.homeworks,
+        assignments: person.assignments,
+      })
+
+      const isActive = enrollment.active
+
       return (
         <tr key={person.id}>
           <td>
-            {enrollment.active ? (
+            {isActive ? (
               <Link to={`/people/${person.id}/gradebook`}>
                 <PersonComponent person={person} />
               </Link>
@@ -249,18 +257,26 @@ const Gradebook = ({ cohort_id }) => {
               @{person.github}
             </a>
           </td>
-          {countedHomeworks > 0 ? (
-            <td
-              className={cx({
-                'has-text-danger': completedPercentageForPerson && completedPercentageForPerson < 80.0,
-                'has-text-success': completedPercentageForPerson && completedPercentageForPerson >= 80.0,
-              })}
-            >
-              {completedPercentageForPerson ? completedPercentageForPerson.toFixed(1) : 'N/A'} % (
-              {completedAssignmentCountForPerson} / {countedHomeworksForPerson})
-            </td>
+          {countedHomeworks > 0 && isActive ? (
+            <>
+              <td
+                className={cx({
+                  'has-text-danger': completedPercentageForPerson && completedPercentageForPerson < 80.0,
+                  'has-text-success': completedPercentageForPerson && completedPercentageForPerson >= 80.0,
+                })}
+              >
+                {completedPercentageForPerson ? completedPercentageForPerson.toFixed(1) : 'N/A'} % (
+              </td>
+              <td>
+                {completedAssignmentCountForPerson} / {countedHomeworksForPerson})
+                {completedPercentageForPerson && completedPercentageForPerson < 80.0 ? `Needs: {neededHomeworks}` : ''}
+              </td>
+            </>
           ) : (
-            <td />
+            <>
+              <td />
+              <td />
+            </>
           )}
           {cohort.homeworks.map(homework => {
             const assignment = homework.assignments.find(assignment => assignment.person.id === person.id)
@@ -303,7 +319,7 @@ const Gradebook = ({ cohort_id }) => {
             ))}
           </tr>
           <tr>
-            <th colSpan={3}>{countedHomeworks} Homeworks Count Towards Completion</th>
+            <th colSpan={4}>{countedHomeworks} Homeworks Count Towards Completion</th>
             {sortedHomework.map(homework =>
               homework.countsTowardsCompletion ? (
                 <th key={homework.id}>
