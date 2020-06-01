@@ -5,8 +5,8 @@ import useModelData from '@/hooks/useModelData'
 import LoadingIndicator from '@/components/utils/LoadingIndicator'
 import {
   homeworkCompletedPercentage,
-  completedAssignmentCount,
-  neededHomeworksToExceedPercentage,
+  completedAssignmentsCount,
+  countOfHomeworksNeededToExceedPercentage,
 } from './gradebookUtils'
 import Person from '@/components/models/Person'
 
@@ -28,8 +28,8 @@ const StudentGradebook = ({ profile, showTitle }) => {
           const cohortAssignments = cohort.assignmentsForThisCohort(assignments)
           const { homeworks } = cohort
 
-          const completedCount = completedAssignmentCount({ assignments: cohortAssignments })
-          const neededCount = neededHomeworksToExceedPercentage({ homeworks, assignments: cohortAssignments })
+          const completedCount = completedAssignmentsCount({ assignments: cohortAssignments })
+          const neededCount = countOfHomeworksNeededToExceedPercentage({ homeworks, assignments: cohortAssignments })
           const percentage = homeworkCompletedPercentage({ homeworks, assignments: cohortAssignments })
 
           return cohortAssignments.length >= 0 ? (
@@ -38,8 +38,8 @@ const StudentGradebook = ({ profile, showTitle }) => {
 
               <div className="notification is-primary">
                 You have completed <strong>{completedCount}</strong> assignments for a completion rate of{' '}
-                <strong>{percentage.toFixed(1)}%</strong>. You need <strong>{neededCount ? neededCount : 'N/A'}</strong>{' '}
-                more assignments to reach <strong>80%</strong>
+                <strong>{percentage ? percentage.toFixed(1) : 'N/A'}%</strong>. You need{' '}
+                <strong>{neededCount ? neededCount : 'N/A'}</strong> more assignments to reach <strong>80%</strong>
               </div>
 
               <table className="table is-fullwidth is-hoverable">

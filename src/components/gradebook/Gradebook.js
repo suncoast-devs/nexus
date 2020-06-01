@@ -8,7 +8,11 @@ import PersonComponent from '@/components/Person'
 import InactivePerson from '@/components/InactivePerson'
 import LoadingIndicator from '@/components/utils/LoadingIndicator'
 import LoadingButton from '@/components/utils/LoadingButton'
-import { homeworkCompletedPercentage } from './gradebookUtils'
+import {
+  assignedHomeworksForCompletionCount,
+  homeworkCompletedPercentage,
+  completedAssignmentsCount,
+} from './gradebookUtils'
 
 const AssignmentModal = ({ person, assignment, homework, issue, reloadCohort, onClose }) => {
   const assignScore = (score, stopLoading) => {
@@ -215,6 +219,15 @@ const Gradebook = ({ cohort_id }) => {
         assignments: person.assignments,
       })
 
+      const countedHomeworksForPerson = assignedHomeworksForCompletionCount({
+        homeworks: cohort.homeworks,
+        assignments: person.assignments,
+      })
+
+      const completedAssignmentCountForPerson = completedAssignmentsCount({
+        assignments: person.assignments,
+      })
+
       return (
         <tr key={person.id}>
           <td>
@@ -239,11 +252,12 @@ const Gradebook = ({ cohort_id }) => {
           {countedHomeworks > 0 ? (
             <td
               className={cx({
-                'has-text-danger': completedPercentageForPerson < 80.0,
-                'has-text-success': completedPercentageForPerson >= 80.0,
+                'has-text-danger': completedPercentageForPerson && completedPercentageForPerson < 80.0,
+                'has-text-success': completedPercentageForPerson && completedPercentageForPerson >= 80.0,
               })}
             >
-              {completedPercentageForPerson.toFixed(1)} %
+              {completedPercentageForPerson ? completedPercentageForPerson.toFixed(1) : 'N/A'} % (
+              {completedAssignmentCountForPerson} / {countedHomeworksForPerson})
             </td>
           ) : (
             <td />
