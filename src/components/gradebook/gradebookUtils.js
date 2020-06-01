@@ -11,7 +11,11 @@ export const completedAssignmentCount = ({ assignments }) =>
   assignments.filter(assignment => assignment.homework.countsTowardsCompletion && assignment.completed).length
 
 export const homeworkCompletedPercentage = ({ homeworks, assignments }) => {
-  const countsTowardsCompletionHomeworksCount = homeworks.filter(homework => homework.countsTowardsCompletion).length
+  // Only count homeworks that have been assigned to this student AND have been assigned
+  const unAssignedHomeworkCount = homeworks.length - assignments.length
+  const countsTowardsCompletionHomeworksCount =
+    homeworks.filter(homework => homework.countsTowardsCompletion).length - unAssignedHomeworkCount
+
   if (countsTowardsCompletionHomeworksCount === 0) {
     return 'N/A'
   }
