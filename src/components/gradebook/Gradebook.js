@@ -235,10 +235,15 @@ const Gradebook = ({ cohort_id }) => {
       })
 
       const { active, showGrade } = enrollment
+      const isPassing = completedPercentageForPerson && completedPercentageForPerson >= 80.0
+      const passFailStyling = cx({
+        'has-text-danger': showGrade && !isPassing,
+        'has-text-success': showGrade && isPassing,
+      })
 
       return (
         <tr key={person.id}>
-          <td>
+          <td className={passFailStyling}>
             {active ? (
               <Link to={`/people/${person.id}/gradebook`}>
                 <PersonComponent person={person} />
@@ -247,31 +252,19 @@ const Gradebook = ({ cohort_id }) => {
               <InactivePerson person={person} />
             )}
           </td>
-          <td>
-            <a
-              className={cx({ 'has-text-danger': !enrollment.showGrade })}
-              target="_blank"
-              rel="noopener noreferrer"
-              href={`https://github.com/${person.github}`}
-            >
+          <td className={passFailStyling}>
+            <a target="_blank" rel="noopener noreferrer" href={`https://github.com/${person.github}`}>
               @{person.github}
             </a>
           </td>
           {countedHomeworks > 0 && showGrade ? (
             <>
-              <td
-                className={cx({
-                  'has-text-danger': completedPercentageForPerson && completedPercentageForPerson < 80.0,
-                  'has-text-success': completedPercentageForPerson && completedPercentageForPerson >= 80.0,
-                })}
-              >
+              <td className={passFailStyling}>
                 {completedPercentageForPerson ? completedPercentageForPerson.toFixed(1) : 'N/A'} %
               </td>
-              <td>
+              <td className={passFailStyling}>
                 ({completedAssignmentCountForPerson} / {countedHomeworksForPerson})
-                {completedPercentageForPerson && completedPercentageForPerson < 80.0
-                  ? ` - Needs: ${neededHomeworks}`
-                  : ''}
+                {isPassing ? '' : ` - Needs: ${neededHomeworks}`}
               </td>
             </>
           ) : (
