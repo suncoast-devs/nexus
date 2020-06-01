@@ -18,8 +18,10 @@ const Assignment = ApplicationRecord.extend({
   methods: {
     overdue: function() {
       const scoreInfo = Assignment.scoreInfo(this.score)
+      const yesterday = Date.now() - 1000 * 60 * 60 * 24
+      const createdAt = Date.parse(this.createdAt)
 
-      return scoreInfo.title == Assignment.noScore.title && yesterday < Date.parse(this.createdAt)
+      return scoreInfo.title == Assignment.noScore.title && createdAt < yesterday
     },
   },
 })

@@ -31,7 +31,7 @@ const assignmentRow = (assignment, profile) => {
       {overdue ? (
         <td className={cx({ 'has-text-danger': overdue })}>Overdue</td>
       ) : (
-        <td>{Assignment.scoreInfo(assignment.score)}</td>
+        <td>{Assignment.scoreInfo(assignment.score).title}</td>
       )}
     </tr>
   )
