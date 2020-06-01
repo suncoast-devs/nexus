@@ -309,7 +309,8 @@ const Gradebook = ({ cohort_id }) => {
             <th>
               <i className="fab fa-github-alt" />
             </th>
-            <th />
+            <th>%</th>
+            <th>Counts</th>
             {sortedHomework.map(homework => (
               <th key={homework.id} className="tooltip" data-tooltip={homework.title}>
                 <LoadingButton onClick={stopLoading => createAssignments(homework, stopLoading)}>
