@@ -18,7 +18,7 @@ const NewProgressReport = ({ cohort_id }) => {
           // Only include people who should get progress reports generated
           .filter(person =>
             cohort.studentEnrollments.some(
-              enrollment => enrollment.person_id === person.id && enrollment.generateProgressReport
+              enrollment => enrollment.person.id === person.id && enrollment.generateProgressReport
             )
           )
           .map(person => person.id)
