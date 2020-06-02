@@ -191,13 +191,15 @@ const Gradebook = ({ cohort_id }) => {
       return
     }
 
-    const promises = activeEnrollments.map(enrollment => {
-      const assignment = new Assignment()
-      assignment.personId = enrollment.person.id
-      assignment.homeworkId = homework.id
+    const promises = cohort.studentEnrollments
+      .filter(enrollment => enrollment.assignHomework)
+      .map(enrollment => {
+        const assignment = new Assignment()
+        assignment.personId = enrollment.person.id
+        assignment.homeworkId = homework.id
 
-      return assignment.save()
-    })
+        return assignment.save()
+      })
 
     const finish = () => {
       reloadCohort()
