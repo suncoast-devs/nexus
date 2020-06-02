@@ -3,7 +3,7 @@ import { PersonImage } from './PersonImage'
 
 const InactivePerson = ({ person }) => {
   return (
-    <article className="media has-text-light">
+    <article className="media has-text-grey">
       <figure className="media-left">
         <PersonImage alt={person.fullName} url={person.smallProfileImageUrl} />
       </figure>
