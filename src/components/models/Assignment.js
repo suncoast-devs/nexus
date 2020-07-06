@@ -36,6 +36,7 @@ Assignment.scoreInfo = function(score) {
 
 Assignment.noScore = {
   title: 'Not Graded',
+  progressReportTitle: 'Not Completed',
   style: {
     iconColor: 'black',
     buttonColor: 'white',

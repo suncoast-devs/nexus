@@ -103,7 +103,7 @@ const AssignmentCard = ({ assignment }) => {
             className="card-footer-item"
             style={{ color: scoreInfo.style.textColor, backgroundColor: scoreInfo.style.buttonColor }}
           >
-            {scoreInfo.title}
+            {scoreInfo.progressReportTitle || scoreInfo.title}
           </span>
         </footer>
       </div>
