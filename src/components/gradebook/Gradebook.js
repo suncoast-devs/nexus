@@ -181,7 +181,7 @@ const Gradebook = ({ cohort_id }) => {
     .filter(enrollment => !enrollment.showGrade)
     .sort((a, b) => a.person.fullName.localeCompare(b.person.fullName))
 
-  const sortedHomework = cohort.homeworks.sort((a, b) => a.id - b.id)
+  const sortedHomework = cohort.homeworks.sort((a, b) => b.id - a.id)
 
   const createAssignments = (homework, stopLoading) => {
     const shouldAssign = window.confirm(`Assign this homework?`)
@@ -315,6 +315,10 @@ const Gradebook = ({ cohort_id }) => {
                 </LoadingButton>
               </th>
             ))}
+          </tr>
+          <tr>
+            <th colSpan={4} />
+            <th colSpan={sortedHomework.length}>Homeworks (most recent first)</th>
           </tr>
           <tr>
             <th colSpan={4}>{countedHomeworks} Homeworks Count Towards Completion</th>

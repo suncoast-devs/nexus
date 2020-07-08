@@ -126,13 +126,15 @@ const EditHomeworks = ({ cohort_id }) => {
             </tr>
           </thead>
           <tbody>
-            {homeworks.map(homework => (
-              <tr key={homework.id} onClick={() => setHomework(homework)}>
-                <td>{homework.name}</td>
-                <td>{homework.summary}</td>
-                <td>{homework.countsTowardsCompletion ? <i className="fas fa-check" /> : ''}</td>
-              </tr>
-            ))}
+            {homeworks
+              .sort((a, b) => b.id - a.id)
+              .map(homework => (
+                <tr key={homework.id} onClick={() => setHomework(homework)}>
+                  <td>{homework.name}</td>
+                  <td>{homework.summary}</td>
+                  <td>{homework.countsTowardsCompletion ? <i className="fas fa-check" /> : ''}</td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
