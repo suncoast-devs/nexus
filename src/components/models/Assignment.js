@@ -30,12 +30,16 @@ Assignment.prototype.scoreInfo = function() {
   return Assignment.scoreInfo(this.score)
 }
 
-Assignment.needsGrade = function(score) {
+Assignment.graded = function(score) {
   return score > 0
 }
 
+Assignment.needsGrade = function(score) {
+  return !Assignment.graded(score)
+}
+
 Assignment.scoreInfo = function(score) {
-  return score > 0 ? Assignment.scoreInfos[parseInt(score)] : Assignment.noScore
+  return Assignment.graded(score) ? Assignment.scoreInfos[parseInt(score)] : Assignment.noScore
 }
 
 Assignment.noScore = {
