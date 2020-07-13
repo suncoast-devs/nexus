@@ -8,7 +8,7 @@ import { Cohort, Assignment } from '@/components/models'
 const GradeQueue = ({ cohort_id }) => {
   const { loading: loadingCohort, data: cohort, reload: reloadCohort } = useModelData(
     () =>
-      Cohort.includes([{ homeworks: { assignments: 'person' } }])
+      Cohort.includes([{ student_enrollments: 'person' }, { homeworks: { assignments: 'person' } }])
         .selectExtra({ people: 'issues' })
         .find(cohort_id),
     { people: [] }
@@ -18,11 +18,19 @@ const GradeQueue = ({ cohort_id }) => {
     return <LoadingIndicator />
   }
 
+  const enrolledPeopleIds = cohort.studentEnrollments
+    .filter(enrollment => enrollment.showGrade)
+    .map(enrollment => enrollment.person.id)
+    .flat()
+
+  const enrolled = person => enrolledPeopleIds.includes(person.id)
+
   const homeworksNeededForCompletion = cohort.homeworks.filter(homework => homework.countsTowardsCompletion)
 
   const ungradedAssignments = homeworksNeededForCompletion
     .map(homework => homework.assignments.filter(assignment => Assignment.needsGrade(assignment.score)))
     .flat()
+    .filter(assignment => enrolled(assignment.person))
 
   return (
     <section className="section">
