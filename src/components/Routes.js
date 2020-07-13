@@ -22,6 +22,7 @@ import ProgressReports from './progress/ProgressReports'
 import StudentAttendance from './attendance/StudentAttendance'
 import StudentGradebook from './gradebook/StudentGradebook'
 import StudentProgressReports from './progress/StudentProgressReports'
+import AdminShowGradeQueues from './gradebook/AdminShowGradeQueues'
 
 const PeopleRoutes = ({ profile, auth }) => (
   <Switch>
@@ -155,7 +156,11 @@ const AdminRoutes = ({ profile, auth }) => (
     <AdminProgressReportsRoutes profile={profile} auth={auth} />
     <Route exact path="/attendance" render={props => <AdminShowAttendances profile={profile} {...props} />} />
     <Route exact path="/gradebook" render={props => <AdminShowGradebooks profile={profile} auth={auth} {...props} />} />
-    <Route exact path="/gradequeue" render={props => <GradeQueue profile={profile} auth={auth} {...props} />} />
+    <Route
+      exact
+      path="/gradequeue"
+      render={props => <AdminShowGradeQueues profile={profile} auth={auth} {...props} />}
+    />
     <Route
       exact
       path="/impersonate/:jwt"
