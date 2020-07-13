@@ -75,11 +75,9 @@ const Editing = ({ showInput, shortName, fullName, assignments, state, dispatch,
         </form>
 
         <section className="section">
-          <div className="columns is-multiline">
-            {assignments.map(assignment => (
-              <AssignmentCard key={assignment.homework.id} assignment={assignment} />
-            ))}
-          </div>
+          {assignments.map(assignment => (
+            <AssignmentCard key={assignment.homework.id} assignment={assignment} />
+          ))}
         </section>
       </div>
     </section>
@@ -88,6 +86,20 @@ const Editing = ({ showInput, shortName, fullName, assignments, state, dispatch,
 
 const AssignmentCard = ({ assignment }) => {
   const scoreInfo = Assignment.scoreInfo(assignment.score)
+
+  return (
+    <div key={assignment.id} className="level py-3 px-3 is-bordered">
+      <div className="level-left">
+        <span className="level-item">{assignment.homework.title}</span>
+      </div>
+      <div
+        className="level-right"
+        style={{ color: scoreInfo.style.textColor, backgroundColor: scoreInfo.style.buttonColor }}
+      >
+        <span className="level-item">{scoreInfo.progressReportTitle || scoreInfo.title}</span>
+      </div>
+    </div>
+  )
 
   return (
     <div key={assignment.id} className="column is-one-quarter">

@@ -11,6 +11,7 @@ import EditCohort from './cohorts/EditCohort'
 import EditHomeworks from './homeworks/EditHomeworks'
 import EditProfile from './EditProfile'
 import Gradebook from './gradebook/Gradebook'
+import GradeQueue from './gradebook/GradeQueue'
 import Home from './home/Home'
 import NewCohort from './cohorts/NewCohort'
 import NewProgressReport from './progress/NewProgressReport'
@@ -154,6 +155,7 @@ const AdminRoutes = ({ profile, auth }) => (
     <AdminProgressReportsRoutes profile={profile} auth={auth} />
     <Route exact path="/attendance" render={props => <AdminShowAttendances profile={profile} {...props} />} />
     <Route exact path="/gradebook" render={props => <AdminShowGradebooks profile={profile} auth={auth} {...props} />} />
+    <Route exact path="/gradequeue" render={props => <GradeQueue profile={profile} auth={auth} {...props} />} />
     <Route
       exact
       path="/impersonate/:jwt"

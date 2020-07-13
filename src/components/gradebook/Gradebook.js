@@ -211,7 +211,8 @@ const Gradebook = ({ cohort_id }) => {
       .catch(finish)
   }
 
-  const countedHomeworks = cohort.homeworks.filter(homework => homework.countsTowardsCompletion).length
+  const homeworksNeededForCompletion = cohort.homeworks.filter(homework => homework.countsTowardsCompletion)
+  const countedHomeworks = homeworksNeededForCompletion.length
 
   const enrollmentRows = enrollments =>
     enrollments.map(enrollment => {
