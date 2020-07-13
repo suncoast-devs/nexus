@@ -25,12 +25,20 @@ const GradeQueue = ({ cohort_id }) => {
 
   const enrolled = person => enrolledPeopleIds.includes(person.id)
 
+  const assignmentClosed = assignment => {
+    const person = assignment.person
+    const issue = person.issues.find(issue => issue.number === assignment.issue) || {}
+
+    return issue.state === 'closed'
+  }
+
   const homeworksNeededForCompletion = cohort.homeworks.filter(homework => homework.countsTowardsCompletion)
 
   const ungradedAssignments = homeworksNeededForCompletion
     .map(homework => homework.assignments.filter(assignment => Assignment.needsGrade(assignment.score)))
     .flat()
     .filter(assignment => enrolled(assignment.person))
+    .filter(assignment => assignmentClosed(assignment))
 
   return (
     <section className="section">
