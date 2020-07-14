@@ -1,18 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import useModelData from '@/hooks/useModelData'
 
+import LoadingButton from '@/components/utils/LoadingButton'
 import PersonComponent from '@/components/Person'
 import LoadingIndicator from '@/components/utils/LoadingIndicator'
 import { Cohort, Assignment } from '@/components/models'
 
 const GradeQueue = ({ cohort_id }) => {
-  const { loading: loadingCohort, data: cohort, reload: reloadCohort } = useModelData(
+  const { loading: loadingCohort, data: cohort } = useModelData(
     () =>
       Cohort.includes([{ student_enrollments: 'person' }, { homeworks: { assignments: 'person' } }])
         .selectExtra({ people: 'issues' })
         .find(cohort_id),
     { people: [] }
   )
+  const [refresh, setRefresh] = useState(false)
 
   if (loadingCohort) {
     return <LoadingIndicator />
@@ -40,6 +42,15 @@ const GradeQueue = ({ cohort_id }) => {
     .filter(assignment => enrolled(assignment.person))
     .filter(assignment => assignmentClosed(assignment))
 
+  const assignScore = (assignment, score, stopLoading) => {
+    assignment.score = score
+
+    assignment.save().then(() => {
+      stopLoading()
+      setRefresh(!refresh)
+    })
+  }
+
   return (
     <section className="section">
       <h1 className="title">Grading Queue - {ungradedAssignments.length} to grade</h1>
@@ -49,6 +60,7 @@ const GradeQueue = ({ cohort_id }) => {
           <tr>
             <th>Student</th>
             <th>Assignment</th>
+            <th>Grade</th>
           </tr>
         </thead>
         <tbody>
@@ -69,6 +81,19 @@ const GradeQueue = ({ cohort_id }) => {
                   >
                     {assignment.homework.title}
                   </a>
+                </td>
+                <td>
+                  {Assignment.scoreInfos.map((info, score) => {
+                    return (
+                      <LoadingButton
+                        key={score}
+                        style={{ backgroundColor: info.style.buttonColor, color: info.style.textColor }}
+                        onClick={stopLoading => assignScore(assignment, score, stopLoading)}
+                      >
+                        {info.title}
+                      </LoadingButton>
+                    )
+                  })}
                 </td>
               </tr>
             )
