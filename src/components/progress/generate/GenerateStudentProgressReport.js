@@ -75,9 +75,16 @@ const Editing = ({ showInput, shortName, fullName, assignments, state, dispatch,
         </form>
 
         <section className="section">
-          {assignments.map(assignment => (
-            <AssignmentCard key={assignment.homework.id} assignment={assignment} />
-          ))}
+          <div className="columns">
+            <div className="column is-three-fifths is-offset-one-fifth">
+              <div className="list">
+                <div className="list-item has-text-centered is-size-3">Assignments</div>
+                {assignments.map(assignment => (
+                  <AssignmentCard key={assignment.homework.id} assignment={assignment} />
+                ))}
+              </div>
+            </div>
+          </div>
         </section>
       </div>
     </section>
@@ -88,36 +95,21 @@ const AssignmentCard = ({ assignment }) => {
   const scoreInfo = Assignment.scoreInfo(assignment.score)
 
   return (
-    <div key={assignment.id} className="level py-3 px-3 is-bordered">
-      <div className="level-left">
-        <span className="level-item">{assignment.homework.title}</span>
-      </div>
-      <div
-        className="level-right"
-        style={{ color: scoreInfo.style.textColor, backgroundColor: scoreInfo.style.buttonColor }}
-      >
-        <span className="level-item">{scoreInfo.progressReportTitle || scoreInfo.title}</span>
-      </div>
-    </div>
-  )
-
-  return (
-    <div key={assignment.id} className="column is-one-quarter">
-      <div
-        className="card"
-        style={{ borderWidth: '2px', borderStyle: 'solid', borderColor: scoreInfo.style.buttonColor }}
-      >
-        <div className="card-content is-size-3 title">
-          <div className="content">{assignment.homework.title}</div>
+    <div
+      key={assignment.id}
+      className="list-item"
+      style={{
+        color: scoreInfo.style.progressReportTextColor || scoreInfo.style.textColor,
+        backgroundColor: scoreInfo.style.progressReportBackgroundColor || scoreInfo.style.buttonColor,
+      }}
+    >
+      <div className="level is-size-5">
+        <div className="level-left">
+          <span className="level-item">{assignment.homework.title}</span>
         </div>
-        <footer className="card-footer">
-          <span
-            className="card-footer-item"
-            style={{ color: scoreInfo.style.textColor, backgroundColor: scoreInfo.style.buttonColor }}
-          >
-            {scoreInfo.progressReportTitle || scoreInfo.title}
-          </span>
-        </footer>
+        <div className="level-right">
+          <span className="level-item">{scoreInfo.progressReportTitle || scoreInfo.title}</span>
+        </div>
       </div>
     </div>
   )

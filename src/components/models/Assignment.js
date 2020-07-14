@@ -49,6 +49,8 @@ Assignment.noScore = {
     iconColor: 'black',
     buttonColor: 'white',
     textColor: 'black',
+    progressReportTextColor: 'white',
+    progressReportBackgroundColor: 'rgb(217, 83, 79)',
   },
 }
 
@@ -59,6 +61,8 @@ Assignment.scoreInfos = [
       iconColor: 'black',
       buttonColor: 'white',
       textColor: 'black',
+      progressReportTextColor: 'white',
+      progressReportBackgroundColor: 'rgb(217, 83, 79)',
     },
   },
   {
