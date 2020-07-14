@@ -79,9 +79,11 @@ const Editing = ({ showInput, shortName, fullName, assignments, state, dispatch,
             <div className="column is-three-fifths is-offset-one-fifth">
               <div className="list">
                 <div className="list-item has-text-centered is-size-3">Assignments</div>
-                {assignments.map(assignment => (
-                  <AssignmentCard key={assignment.homework.id} assignment={assignment} />
-                ))}
+                {assignments
+                  .sort((a, b) => a.homework.id - b.homework.id)
+                  .map(assignment => (
+                    <AssignmentCard key={assignment.homework.id} assignment={assignment} />
+                  ))}
               </div>
             </div>
           </div>
