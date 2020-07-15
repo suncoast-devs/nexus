@@ -83,17 +83,19 @@ const GradeQueue = ({ cohort_id }) => {
                   </a>
                 </td>
                 <td>
-                  {Assignment.scoreInfos.map((info, score) => {
-                    return (
-                      <LoadingButton
-                        key={score}
-                        style={{ backgroundColor: info.style.buttonColor, color: info.style.textColor }}
-                        onClick={stopLoading => assignScore(assignment, score, stopLoading)}
-                      >
-                        {info.title}
-                      </LoadingButton>
-                    )
-                  })}
+                  <div className="buttons">
+                    {Assignment.scoreInfos.map((info, score) => {
+                      return (
+                        <LoadingButton
+                          key={score}
+                          style={{ backgroundColor: info.style.buttonColor, color: info.style.textColor }}
+                          onClick={stopLoading => assignScore(assignment, score, stopLoading)}
+                        >
+                          {info.title}
+                        </LoadingButton>
+                      )
+                    })}
+                  </div>
                 </td>
               </tr>
             )
