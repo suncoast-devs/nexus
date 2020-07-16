@@ -10,6 +10,7 @@ import Homework from './Homework'
 import Assignment from './Assignment'
 import ProgressReport from './ProgressReport'
 import StudentProgressReport from './StudentProgressReport'
+import AssignmentEvent from './AssignmentEvent'
 
 export {
   Cohort,
@@ -19,9 +20,10 @@ export {
   StudentProgressReport,
   Homework,
   Assignment,
+  AssignmentEvent,
   Unit,
   Person,
   Profile,
   StudentEnrollment,
-  AttendanceRecord
+  AttendanceRecord,
 }

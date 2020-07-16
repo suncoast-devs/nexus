@@ -3,20 +3,23 @@ import { attr, belongsTo, hasMany } from 'spraypaint'
 
 const Homework = ApplicationRecord.extend({
   static: {
-    jsonapiType: 'homeworks'
+    jsonapiType: 'homeworks',
   },
   attrs: {
     name: attr(),
     body: attr(),
     summary: attr(),
     title: attr(),
-    cohort_id: attr(),
+    turnInType: attr(),
     assignmentsCount: attr(),
     countsTowardsCompletion: attr(),
+    dueAt: attr(),
     createdAt: attr(),
+
+    cohort_id: attr(),
     cohort: belongsTo(),
-    assignments: hasMany()
-  }
+    assignments: hasMany(),
+  },
 })
 
 export default Homework

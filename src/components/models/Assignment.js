@@ -1,5 +1,5 @@
 import ApplicationRecord from './ApplicationRecord'
-import { attr, belongsTo } from 'spraypaint'
+import { attr, belongsTo, hasMany } from 'spraypaint'
 
 const Assignment = ApplicationRecord.extend({
   static: {
@@ -10,19 +10,13 @@ const Assignment = ApplicationRecord.extend({
     issue: attr(),
     personId: attr(),
     homeworkId: attr(),
-    completed: attr(),
+    turnedIn: attr(),
     createdAt: attr(),
+    overdue: attr(),
+
     person: belongsTo(),
     homework: belongsTo(),
-  },
-  methods: {
-    overdue: function() {
-      const scoreInfo = Assignment.scoreInfo(this.score)
-      const yesterday = Date.now() - 1000 * 60 * 60 * 24
-      const createdAt = Date.parse(this.createdAt)
-
-      return scoreInfo.title === Assignment.noScore.title && createdAt < yesterday
-    },
+    assignmentEvents: hasMany(),
   },
 })
 

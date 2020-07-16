@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import moment from 'moment'
+
 import { Homework, Cohort } from '@/components/models'
 import formToObject from '@/utils/formToObject'
 import useModelData from '@/hooks/useModelData'
@@ -37,6 +39,17 @@ const EditHomework = ({ cohort, reloadCohort, homework, setHomework }) => {
           </header>
           <section className="modal-card-body">
             <div className="field">
+              <label className="label">Due</label>
+              <div className="control">
+                <input
+                  className="date"
+                  defaultValue={moment(homework.dueAt).format('YYYY-MM-DD')}
+                  name="dueAt"
+                  type="date"
+                />
+              </div>
+            </div>
+            <div className="field">
               <label className="label">Name</label>
               <div className="control">
                 <input className="input" defaultValue={homework.name} name="name" type="text" placeholder="Name" />
@@ -58,6 +71,17 @@ const EditHomework = ({ cohort, reloadCohort, homework, setHomework }) => {
               <label className="label">Body</label>
               <div className="control">
                 <textarea className="textarea" defaultValue={homework.body} name="body" rows="8" placeholder="Body" />
+              </div>
+            </div>
+            <div className="field">
+              <label className="label">Turn In Type</label>
+              <div className="select">
+                <select name="turnInType" defaultValue={homework.turnInType}>
+                  <option value="github repo">GitHub Repo</option>
+                  <option value="gist">Gist</option>
+                  <option value="comment">Comment</option>
+                  <option value="url">URL</option>
+                </select>
               </div>
             </div>
             <div className="field">
@@ -112,7 +136,7 @@ const EditHomeworks = ({ cohort_id }) => {
 
         <button
           className="button is-primary"
-          onClick={() => setHomework(new Homework({ countsTowardsCompletion: true }))}
+          onClick={() => setHomework(new Homework({ dueAt: moment().add(1, 'days'), countsTowardsCompletion: true }))}
         >
           New Homework
         </button>

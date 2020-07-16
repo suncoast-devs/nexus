@@ -2,9 +2,10 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^5.1.0",
+    "@github-docs/render-content": "^2.3.0",
     "@sentry/browser": "^5.2.1",
     "auth0-js": "^9.8.0",
-    "bulma": "^0.7.2",
+    "bulma": "^0.9.0",
     "bulma-extensions": "^6.2.5",
     "classnames": "^2.2.6",
     "html2canvas": "^1.0.0-rc.1",
