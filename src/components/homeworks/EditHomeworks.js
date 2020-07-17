@@ -94,6 +94,12 @@ const EditHomework = ({ cohort, reloadCohort, homework, setHomework }) => {
                 Counts Towards Completion
               </label>
             </div>
+            <div className="field">
+              <label className="checkbox">
+                <input type="checkbox" defaultChecked={homework.assigned} name="assigned" />
+                Assigned
+              </label>
+            </div>
           </section>
           <footer className="modal-card-foot">
             <button className="button is-success">Save</button>

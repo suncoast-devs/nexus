@@ -1,47 +1,43 @@
 import React from 'react'
-
-import { Assignment } from '@/components/models'
-import useModelData from '@/hooks/useModelData'
-import LoadingIndicator from '@/components/utils/LoadingIndicator'
-import {
-  homeworkCompletedPercentage,
-  completedAssignmentsCount,
-  countOfHomeworksNeededToExceedPercentage,
-} from './gradebookUtils'
-import Person from '@/components/models/Person'
 import cx from 'classnames'
 import { Link } from 'react-router-dom'
 
+import { Cohort, Assignment } from '@/components/models'
+import useModelData from '@/hooks/useModelData'
+import LoadingIndicator from '@/components/utils/LoadingIndicator'
+
 const StudentGradebook = ({ profile, showTitle }) => {
-  const { loading: loadingPerson, data: person } = useModelData(() =>
-    Person.includes([{ assignments: { homework: 'cohort' }, cohorts: 'homeworks' }]).find(profile.id)
+  const { loading: loadingCohorts, data: cohorts } = useModelData(() =>
+    Cohort.includes([{ student_enrollments: { person: { assignments: 'homework' } } }])
+      .where({ student_enrollments: { person_id: profile.id } })
+      .selectExtra({
+        student_enrollments: ['completed_homework_count', 'completion_percentage', 'needed_to_complete_count'],
+      })
+      .all()
   )
 
-  if (loadingPerson) {
+  if (loadingCohorts) {
     return <LoadingIndicator />
   }
 
-  const { assignments, cohorts } = person
   return (
     <section className="section">
       <div className="container">
         {showTitle && <h1 className="title">Grades for: {profile.fullName}</h1>}
         {cohorts.map(cohort => {
-          const cohortAssignments = cohort.assignmentsForThisCohort(assignments).sort((a, b) => b.id - a.id)
-          const { homeworks } = cohort
+          const studentEnrollment = cohort.studentEnrollments[0]
 
-          const completedCount = completedAssignmentsCount({ assignments: cohortAssignments })
-          const neededCount = countOfHomeworksNeededToExceedPercentage({ homeworks, assignments: cohortAssignments })
-          const percentage = homeworkCompletedPercentage({ homeworks, assignments: cohortAssignments })
+          const cohortAssignments = studentEnrollment.person.assignments.sort((a, b) => b.id - a.id)
 
           return cohortAssignments.length >= 0 ? (
             <React.Fragment key={cohort.id}>
               <h1 className="title">{cohort.name}</h1>
 
               <div className="notification is-primary">
-                You have completed <strong>{completedCount}</strong> assignments for a completion rate of{' '}
-                <strong>{percentage ? percentage.toFixed(1) : 'N/A'}%</strong>. You need{' '}
-                <strong>{neededCount ? neededCount : 'N/A'}</strong> more assignments to reach <strong>80%</strong>
+                You have completed <strong>{studentEnrollment.completedHomeworkCount}</strong> assignments for a
+                completion rate of <strong>{studentEnrollment.completionPercentage.toFixed(1)}%</strong>. You need{' '}
+                <strong>{studentEnrollment.neededToCompleteCount}</strong> more assignments to reach{' '}
+                <strong>80%</strong>
               </div>
 
               <table className="table is-fullwidth is-hoverable">

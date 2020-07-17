@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import LoadingButton from '@/components/utils/LoadingButton'
 import { Assignment } from '@/components/models'
+import LoadingButton from '@/components/utils/LoadingButton'
 
 export const GradeAssignment = ({ assignment, createAssignmentEvent }) => {
   const placeholder = 'https://bulma.io/images/placeholders/128x128.png'
@@ -20,7 +20,6 @@ export const GradeAssignment = ({ assignment, createAssignmentEvent }) => {
   }
 
   const assignScore = (score, stopLoading) => {
-    console.log(score)
     fetch(`https://gifs.suncoast.io/gifs/${score}?content_type=image/gif&max_byte_size=5000000#`)
       .then(response => response.json())
       .then(gifApi => {
@@ -28,13 +27,13 @@ export const GradeAssignment = ({ assignment, createAssignmentEvent }) => {
           ...assignmentEventDetails,
           payload: { ...assignmentEventDetails.payload, score, gif_url: gifApi.image, gif_caption: gifApi.caption },
         })
+        stopLoading()
       })
 
     setAssignmentEventDetails({
       ...assignmentEventDetails,
       payload: { ...assignmentEventDetails.payload, gif_url: placeholder, score },
     })
-    stopLoading()
   }
 
   return (
@@ -82,7 +81,7 @@ export const GradeAssignment = ({ assignment, createAssignmentEvent }) => {
             <div className="level-left">
               <div className="level-item">
                 <span className="button is-info" onClick={onSubmit}>
-                  Turn In Assignment
+                  Grade
                 </span>
               </div>
             </div>

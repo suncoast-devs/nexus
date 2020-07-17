@@ -25,6 +25,7 @@ const Person = ApplicationRecord.extend({
     slackUser: attr(),
     slackInviteCode: attr(),
     cohorts: hasMany(),
+    studentEnrollments: hasMany(),
     attendanceRecords: hasMany(),
     assignments: hasMany(),
   },

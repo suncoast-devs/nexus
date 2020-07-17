@@ -1,108 +1,84 @@
 import React, { useState } from 'react'
-import useModelData from '@/hooks/useModelData'
+import { Link } from 'react-router-dom'
 
-import LoadingButton from '@/components/utils/LoadingButton'
+import useModelData from '@/hooks/useModelData'
 import PersonComponent from '@/components/Person'
 import LoadingIndicator from '@/components/utils/LoadingIndicator'
 import { Cohort, Assignment } from '@/components/models'
 
 const GradeQueue = ({ cohort_id }) => {
-  const { loading: loadingCohort, data: cohort } = useModelData(
-    () =>
-      Cohort.includes([{ student_enrollments: 'person' }, { homeworks: { assignments: 'person' } }])
-        .selectExtra({ people: 'issues' })
-        .find(cohort_id),
-    { people: [] }
+  const { loading, data: cohort } = useModelData(() =>
+    Cohort.includes(['student_enrollments', { homeworks: { assignments: ['homework', 'person'] } }]).find(cohort_id)
   )
-  const [refresh, setRefresh] = useState(false)
 
-  if (loadingCohort) {
+  const [sortOrder, setSortOrder] = useState('student')
+
+  if (loading) {
     return <LoadingIndicator />
   }
 
   const enrolledPeopleIds = cohort.studentEnrollments
     .filter(enrollment => enrollment.showGrade)
-    .map(enrollment => enrollment.person.id)
+    .map(enrollment => enrollment.personId)
     .flat()
 
-  const enrolled = person => enrolledPeopleIds.includes(person.id)
-
-  const assignmentClosed = assignment => {
-    const person = assignment.person
-    const issue = person.issues.find(issue => issue.number === assignment.issue) || {}
-
-    return issue.state === 'closed'
-  }
-
-  const homeworksNeededForCompletion = cohort.homeworks.filter(homework => homework.countsTowardsCompletion)
-
-  const ungradedAssignments = homeworksNeededForCompletion
+  const ungradedAssignments = cohort.homeworks
+    .filter(homework => homework.countsTowardsCompletion)
     .map(homework => homework.assignments.filter(assignment => Assignment.needsGrade(assignment.score)))
     .flat()
-    .filter(assignment => enrolled(assignment.person))
-    .filter(assignment => assignmentClosed(assignment))
+    .filter(assignment => enrolledPeopleIds.includes(assignment.personId))
+    .filter(assignment => assignment.turnedIn)
 
-  const assignScore = (assignment, score, stopLoading) => {
-    assignment.score = score
-
-    assignment.save().then(() => {
-      stopLoading()
-      setRefresh(!refresh)
-    })
+  if (ungradedAssignments.length === 0) {
+    return <div className="notification is-success">No assignments to grade for {cohort.name} -- Good job!</div>
   }
 
+  const sortFunction = (a, b) => {
+    switch (sortOrder) {
+      case 'student':
+        return a.person.id - b.person.id
+
+      case 'assignment':
+        return a.id - b.id
+
+      default:
+        return a.id - b.id
+    }
+  }
+
+  const sortedAssignments = ungradedAssignments.sort((a, b) => sortFunction(a, b))
+
   return (
-    <section className="section">
-      <h1 className="title">Grading Queue - {ungradedAssignments.length} to grade</h1>
+    <>
+      <h1 className="title">
+        {sortedAssignments.length} assignments to grade for {cohort.name}
+      </h1>
 
       <table className="table is-hoverable">
         <thead>
           <tr>
-            <th>Student</th>
-            <th>Assignment</th>
-            <th>Grade</th>
+            <th className="has-cursor-pointer" onClick={() => setSortOrder('student')}>
+              Student
+            </th>
+            <th className="has-cursor-pointer" onClick={() => setSortOrder('assignment')}>
+              Assignment
+            </th>
           </tr>
         </thead>
         <tbody>
-          {ungradedAssignments.map(assignment => {
-            const person = assignment.person
-            const issue = person.issues.find(issue => issue.number === assignment.issue) || {}
-
-            return (
-              <tr>
-                <td>
-                  <PersonComponent person={person} />
-                </td>
-                <td>
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={`https://github.com/${person.github}/${person.assignmentsRepo}/issues/${issue.number}`}
-                  >
-                    {assignment.homework.title}
-                  </a>
-                </td>
-                <td>
-                  <div className="buttons">
-                    {Assignment.scoreInfos.map((info, score) => {
-                      return (
-                        <LoadingButton
-                          key={score}
-                          style={{ backgroundColor: info.style.buttonColor, color: info.style.textColor }}
-                          onClick={stopLoading => assignScore(assignment, score, stopLoading)}
-                        >
-                          {info.title}
-                        </LoadingButton>
-                      )
-                    })}
-                  </div>
-                </td>
-              </tr>
-            )
-          })}
+          {sortedAssignments.map(assignment => (
+            <tr>
+              <td>
+                <PersonComponent person={assignment.person} />
+              </td>
+              <td>
+                <Link to={`/assignment/${assignment.id}`}>{assignment.homework.title}</Link>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
-    </section>
+    </>
   )
 }
 

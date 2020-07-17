@@ -1,173 +1,104 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
 
-import { Cohort, Assignment } from '@/components/models'
+import { Cohort } from '@/components/models'
 import useModelData from '@/hooks/useModelData'
 import PersonComponent from '@/components/Person'
 import InactivePerson from '@/components/InactivePerson'
 import LoadingIndicator from '@/components/utils/LoadingIndicator'
-import LoadingButton from '@/components/utils/LoadingButton'
-import {
-  assignedHomeworksForCompletionCount,
-  homeworkCompletedPercentage,
-  completedAssignmentsCount,
-  countOfHomeworksNeededToExceedPercentage,
-} from './gradebookUtils'
 
-const AssignmentModal = ({ person, assignment, homework, issue, reloadCohort, onClose }) => {
-  const assignScore = (score, stopLoading) => {
-    assignment.score = score
-
-    assignment.save().then(() => {
-      reloadCohort()
-      stopLoading()
-      onClose()
-    })
-  }
-
-  return (
-    <div className="modal is-active">
-      <div className="modal-background" />
-      <div className="modal-card" style={{ minWidth: '60vw' }}>
-        <header className="modal-card-head">
-          <p className="modal-card-title">
-            {homework.title} - {person.fullName}
-          </p>
-          <button className="delete" aria-label="close" onClick={onClose} />
-        </header>
-        <section className="modal-card-body">
-          <table className="table">
-            <thead />
-            <tbody>
-              <tr>
-                <th>State</th>
-                <th>{issue.state}</th>
-              </tr>
-              <tr>
-                <td>
-                  <i className="fas fa-code-branch" />
-                </td>
-                <td>
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={`https://github.com/${person.github}/${person.assignmentsRepo}/issues/${issue.number}`}
-                  >
-                    #{issue.number}
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div className="buttons">
-            {Assignment.scoreInfos.map((info, index) => {
-              return (
-                <LoadingButton
-                  key={index}
-                  className={cx({
-                    'is-active': index === assignment.score,
-                  })}
-                  style={{ backgroundColor: info.style.buttonColor, color: info.style.textColor }}
-                  onClick={stopLoading => assignScore(index, stopLoading)}
-                >
-                  {info.title}
-                </LoadingButton>
-              )
-            })}
-          </div>
-        </section>
-      </div>
-    </div>
-  )
-}
-
-const HomeworkTableData = ({
-  person,
-  personCanBeAssignedHomework,
-  assignment,
-  homework,
-  reloadCohort,
-  selectedAssignment,
-  setSelectedAssignment,
-}) => {
-  const createAssignment = (homework, person) => {
-    const shouldAssign = window.confirm(`Assign this homework?`)
-
-    if (!shouldAssign) {
-      return
-    }
-
-    const assignment = new Assignment()
-    assignment.personId = person.id
-    assignment.homeworkId = homework.id
-
-    return assignment.save().then(response => {
-      reloadCohort()
-    })
-  }
-
-  const notAssigned = (homework, person) => (
-    <td
-      className="tooltip"
-      style={{ color: '#CCC' }}
-      data-tooltip={`${homework.title} - Not Yet Assigned`}
-      onClick={() => personCanBeAssignedHomework && createAssignment(homework, person)}
-    >
-      <i className="far fa-circle" />
-    </td>
-  )
-
+const HomeworkTableData = ({ assignment, homework }) => {
   if (!assignment) {
-    return notAssigned(homework, person)
-  }
-
-  const issue = person.issues.find(issue => issue.number === assignment.issue)
-
-  if (!issue) {
-    return notAssigned(homework, person)
+    return (
+      <td className="tooltip" style={{ color: '#CCC' }} data-tooltip={`${homework.title} - Not Yet Assigned`}>
+        <i className="far fa-circle" />
+      </td>
+    )
   }
 
   const scoreInfo = assignment.scoreInfo()
   const style = { color: scoreInfo.style.iconColor }
   const tooltip = `${homework.title} - ${scoreInfo.title}`
-  const icon = issue.state === 'closed' ? <i className="fas fa-circle" /> : <i className="far fa-circle" />
-  const modal = selectedAssignment === assignment.id && (
-    <td>
-      <AssignmentModal
-        person={person}
-        assignment={assignment}
-        homework={homework}
-        issue={issue}
-        setSelectedAssignment={setSelectedAssignment}
-        reloadCohort={reloadCohort}
-        onClose={() => setSelectedAssignment(0)}
-      />
-    </td>
-  )
+  const icon = assignment.turnedIn ? <i className="fas fa-circle" /> : <i className="far fa-circle" />
 
   return (
-    <>
-      <td className="tooltip" data-tooltip={tooltip} onClick={() => setSelectedAssignment(assignment.id)}>
+    <td className="tooltip" data-tooltip={tooltip}>
+      <Link to={`/assignment/${assignment.id}`}>
         <span className="icon is-medium" style={style}>
           {icon}
         </span>
-      </td>
-      {modal}
-    </>
+      </Link>
+    </td>
   )
 }
+
+const EnrollmentRows = ({ enrollments, cohort, countedHomeworks }) =>
+  enrollments.map(enrollment => {
+    const person = enrollment.person
+
+    const completedPercentageForPerson = enrollment.completionPercentage
+    const completedAssignmentCountForPerson = enrollment.completedHomeworkCount
+    const countedHomeworksForPerson = countedHomeworks
+    const neededHomeworks = enrollment.neededToCompleteCount
+
+    const { active, showGrade } = enrollment
+    const isPassing = completedPercentageForPerson && completedPercentageForPerson >= 80.0
+    const passFailStyling = cx({
+      'has-text-danger': showGrade && !isPassing,
+      'has-text-success': showGrade && isPassing,
+    })
+
+    return (
+      <tr key={person.id}>
+        <td className={passFailStyling}>
+          {active ? (
+            <Link to={`/people/${person.id}/gradebook`}>
+              <PersonComponent person={person} />
+            </Link>
+          ) : (
+            <InactivePerson person={person} />
+          )}
+        </td>
+        <td className={passFailStyling}>
+          <a target="_blank" rel="noopener noreferrer" href={`https://github.com/${person.github}`}>
+            @{person.github}
+          </a>
+        </td>
+        {countedHomeworks > 0 && showGrade ? (
+          <>
+            <td className={passFailStyling}>
+              {completedPercentageForPerson ? completedPercentageForPerson.toFixed(1) : 'N/A'} %
+            </td>
+            <td className={passFailStyling}>
+              ({completedAssignmentCountForPerson} / {countedHomeworksForPerson})
+              {isPassing ? '' : ` - Needs: ${neededHomeworks}`}
+            </td>
+          </>
+        ) : (
+          <>
+            <td />
+            <td />
+          </>
+        )}
+        {cohort.homeworks.map(homework => {
+          const assignment = homework.assignments.find(assignment => assignment.person.id === person.id)
+          return <HomeworkTableData key={homework.id} assignment={assignment} homework={homework} />
+        })}
+      </tr>
+    )
+  })
 
 const Gradebook = ({ cohort_id }) => {
   const { loading: loadingCohort, data: cohort, reload: reloadCohort } = useModelData(
     () =>
       Cohort.includes([{ student_enrollments: { person: 'assignments' }, homeworks: { assignments: 'person' } }])
-        .selectExtra({ people: 'issues' })
+        .selectExtra({
+          student_enrollments: ['completed_homework_count', 'completion_percentage', 'needed_to_complete_count'],
+        })
         .find(cohort_id),
     { people: [] }
   )
-
-  const [selectedAssignment, setSelectedAssignment] = useState(0)
 
   if (loadingCohort) {
     return <LoadingIndicator />
@@ -183,117 +114,8 @@ const Gradebook = ({ cohort_id }) => {
 
   const sortedHomework = cohort.homeworks.sort((a, b) => b.id - a.id)
 
-  const createAssignments = (homework, stopLoading) => {
-    const shouldAssign = window.confirm(`Assign this homework?`)
-
-    if (!shouldAssign) {
-      stopLoading()
-      return
-    }
-
-    const promises = cohort.studentEnrollments
-      .filter(enrollment => enrollment.assignHomework)
-      .map(enrollment => {
-        const assignment = new Assignment()
-        assignment.personId = enrollment.person.id
-        assignment.homeworkId = homework.id
-
-        return assignment.save()
-      })
-
-    const finish = () => {
-      reloadCohort()
-      stopLoading()
-    }
-
-    Promise.all(promises)
-      .then(finish)
-      .catch(finish)
-  }
-
   const homeworksNeededForCompletion = cohort.homeworks.filter(homework => homework.countsTowardsCompletion)
   const countedHomeworks = homeworksNeededForCompletion.length
-
-  const enrollmentRows = enrollments =>
-    enrollments.map(enrollment => {
-      const person = enrollment.person
-
-      const completedPercentageForPerson = homeworkCompletedPercentage({
-        homeworks: cohort.homeworks,
-        assignments: person.assignments,
-      })
-
-      const countedHomeworksForPerson = assignedHomeworksForCompletionCount({
-        homeworks: cohort.homeworks,
-        assignments: person.assignments,
-      })
-
-      const completedAssignmentCountForPerson = completedAssignmentsCount({
-        assignments: person.assignments,
-      })
-
-      const neededHomeworks = countOfHomeworksNeededToExceedPercentage({
-        homeworks: cohort.homeworks,
-        assignments: person.assignments,
-      })
-
-      const { active, showGrade } = enrollment
-      const isPassing = completedPercentageForPerson && completedPercentageForPerson >= 80.0
-      const passFailStyling = cx({
-        'has-text-danger': showGrade && !isPassing,
-        'has-text-success': showGrade && isPassing,
-      })
-
-      return (
-        <tr key={person.id}>
-          <td className={passFailStyling}>
-            {active ? (
-              <Link to={`/people/${person.id}/gradebook`}>
-                <PersonComponent person={person} />
-              </Link>
-            ) : (
-              <InactivePerson person={person} />
-            )}
-          </td>
-          <td className={passFailStyling}>
-            <a target="_blank" rel="noopener noreferrer" href={`https://github.com/${person.github}`}>
-              @{person.github}
-            </a>
-          </td>
-          {countedHomeworks > 0 && showGrade ? (
-            <>
-              <td className={passFailStyling}>
-                {completedPercentageForPerson ? completedPercentageForPerson.toFixed(1) : 'N/A'} %
-              </td>
-              <td className={passFailStyling}>
-                ({completedAssignmentCountForPerson} / {countedHomeworksForPerson})
-                {isPassing ? '' : ` - Needs: ${neededHomeworks}`}
-              </td>
-            </>
-          ) : (
-            <>
-              <td />
-              <td />
-            </>
-          )}
-          {cohort.homeworks.map(homework => {
-            const assignment = homework.assignments.find(assignment => assignment.person.id === person.id)
-            return (
-              <HomeworkTableData
-                key={homework.id}
-                person={person}
-                personCanBeAssignedHomework={enrollment.assignHomework}
-                assignment={assignment}
-                homework={homework}
-                reloadCohort={reloadCohort}
-                selectedAssignment={selectedAssignment}
-                setSelectedAssignment={setSelectedAssignment}
-              />
-            )
-          })}
-        </tr>
-      )
-    })
 
   return (
     <section className="gradebook section">
@@ -309,34 +131,16 @@ const Gradebook = ({ cohort_id }) => {
             <th>Counts</th>
             {sortedHomework.map(homework => (
               <th key={homework.id} className="tooltip" data-tooltip={homework.title}>
-                <LoadingButton onClick={stopLoading => createAssignments(homework, stopLoading)}>
-                  <span className="icon is-medium">
-                    <i className="fas fa-share" />
-                  </span>
-                </LoadingButton>
+                <span className={cx('icon is-medium', { 'has-text-success': homework.countsTowardsCompletion })}>
+                  <i className="fas fa-book" />
+                </span>
               </th>
             ))}
           </tr>
-          <tr>
-            <th colSpan={4} />
-            <th colSpan={sortedHomework.length}>Homeworks (most recent first)</th>
-          </tr>
-          <tr>
-            <th colSpan={4}>{countedHomeworks} Homeworks Count Towards Completion</th>
-            {sortedHomework.map(homework =>
-              homework.countsTowardsCompletion ? (
-                <th key={homework.id}>
-                  <i className="fa fa-check has-text-success" />
-                </th>
-              ) : (
-                <th />
-              )
-            )}
-          </tr>
         </thead>
         <tbody>
-          {enrollmentRows(activeEnrollments)}
-          {enrollmentRows(inactiveEnrollments)}
+          <EnrollmentRows enrollments={activeEnrollments} cohort={cohort} countedHomeworks={countedHomeworks} />
+          <EnrollmentRows enrollments={inactiveEnrollments} cohort={cohort} countedHomeworks={countedHomeworks} />
         </tbody>
       </table>
     </section>

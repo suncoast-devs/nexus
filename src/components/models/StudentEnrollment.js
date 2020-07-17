@@ -11,6 +11,9 @@ const StudentEnrollment = ApplicationRecord.extend({
     assignHomework: attr(),
     showGrade: attr(),
     generateProgressReport: attr(),
+    completionPercentage: attr(),
+    completedHomeworkCount: attr(),
+    neededToCompleteCount: attr(),
 
     cohort_id: attr(),
     cohort: belongsTo(),
@@ -18,7 +21,7 @@ const StudentEnrollment = ApplicationRecord.extend({
     units: attr(),
     invitationCode: attr(),
 
-    person_id: attr(),
+    personId: attr(),
     person: belongsTo(),
   },
 })
