@@ -16,7 +16,6 @@ const EditEnrollment = ({ cohort }) => {
     reload: reloadStudentEnrollments,
   } = useModelData(() =>
     StudentEnrollment.includes('person')
-      .selectExtra({ people: 'assignments_repo_exists' })
       .where({ cohort_id: cohort.id })
       .all()
   )
@@ -68,7 +67,6 @@ const EditEnrollment = ({ cohort }) => {
       <thead>
         <tr>
           <th>Name</th>
-          <th>Github Repo</th>
           <th>Slack Integration</th>
           <th>Invitation Code</th>
           <th>Active</th>
@@ -84,18 +82,6 @@ const EditEnrollment = ({ cohort }) => {
               <tr key={studentEnrollment.id}>
                 <td>
                   <Person person={studentEnrollment.person} />
-                </td>
-                <td style={{ textAlign: 'center' }}>
-                  <span className="icon">
-                    <i
-                      className={cx(
-                        'fas',
-                        studentEnrollment.person.assignmentsRepoExists
-                          ? ['fa-check', 'has-text-success']
-                          : ['fa-ban', 'has-text-danger']
-                      )}
-                    />
-                  </span>
                 </td>
                 <td style={{ textAlign: 'center' }}>
                   <span className="icon">

@@ -34,7 +34,6 @@ const EditProfile = props => {
             <SlackInviteMessage profile={profile} />
             <InputField defaultObject={profile} name="fullName" />
             <InputField defaultObject={profile} name="github" />
-            <InputField defaultObject={profile} name="assignmentsRepo" />
             <SelectField
               defaultObject={profile}
               name="shirtSize"
@@ -42,7 +41,7 @@ const EditProfile = props => {
                 { value: 'S', text: 'Small' },
                 { value: 'M', text: 'Medium' },
                 { value: 'L', text: 'Large' },
-                { value: 'XL', text: 'Xtra Large' }
+                { value: 'XL', text: 'Xtra Large' },
               ]}
             />
             <TextAreaField defaultObject={profile} name="dietaryNote" rows={4} />

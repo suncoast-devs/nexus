@@ -1,6 +1,5 @@
 import React from 'react'
 import SlackInviteMessage from './SlackInviteMessage'
-import GithubSetupMessage from './GithubSetupMessage'
 import banner from '@/images/banner.svg'
 
 const Home = ({ profile, isAuthenticated }) => {
@@ -27,7 +26,6 @@ const Home = ({ profile, isAuthenticated }) => {
           <h4>You are not logged in!</h4>
         </div>
       )}
-      <GithubSetupMessage profile={profile} />
       <SlackInviteMessage profile={profile} />
     </>
   )
