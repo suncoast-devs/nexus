@@ -8,7 +8,11 @@ const AdminShowGradeQueues = props => {
 
   return cohorts
     .sort(cohort => cohort.name.localeCompare(cohort.name))
-    .map(cohort => <GradeQueue key={cohort.id} cohort_id={cohort.id} {...props} />)
+    .map(cohort => (
+      <section className="section" key={cohort.id}>
+        <GradeQueue cohort_id={cohort.id} {...props} />
+      </section>
+    ))
 }
 
 export default AdminShowGradeQueues

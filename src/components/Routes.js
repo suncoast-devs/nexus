@@ -20,6 +20,7 @@ import ProgressReportIndex from './progress/generate/ProgressReportIndex'
 import ProgressReports from './progress/ProgressReports'
 import StudentAttendance from './attendance/StudentAttendance'
 import StudentGradebook from './gradebook/StudentGradebook'
+import { StudentAssignment } from './gradebook/assignments/StudentAssignment'
 import StudentProgressReports from './progress/StudentProgressReports'
 import AdminShowGradeQueues from './gradebook/AdminShowGradeQueues'
 
@@ -153,6 +154,11 @@ const AdminRoutes = ({ profile, auth }) => (
     <PeopleRoutes profile={profile} auth={auth} />
     <CohortAdminRoutes profile={profile} auth={auth} />
     <AdminProgressReportsRoutes profile={profile} auth={auth} />
+    <Route
+      exact
+      path="/assignment/:id"
+      render={props => <StudentAssignment profile={profile} auth={auth} id={props.match.params.id} />}
+    />
     <Route exact path="/attendance" render={props => <AdminShowAttendances profile={profile} {...props} />} />
     <Route exact path="/gradebook" render={props => <AdminShowGradebooks profile={profile} auth={auth} {...props} />} />
     <Route
@@ -181,6 +187,12 @@ const UserRoutes = ({ profile, auth }) => (
       path="/gradebook"
       render={props => <StudentGradebook profile={profile} auth={auth} {...props} />}
       showTitle={true}
+    />
+
+    <Route
+      exact
+      path="/assignment/:assignment_id"
+      render={props => <StudentAssignment profile={profile} auth={auth} id={props.match.params.assignment_id} />}
     />
 
     <Route
