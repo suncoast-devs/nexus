@@ -26,8 +26,8 @@ const EditEnrollment = ({ cohort }) => {
 
   const addPerson = person => {
     const studentEnrollment = new StudentEnrollment()
-    studentEnrollment.cohort_id = cohort.id
-    studentEnrollment.person_id = person.id
+    studentEnrollment.cohortId = cohort.id
+    studentEnrollment.personId = person.id
     studentEnrollment.save().then(() => {
       reloadStudentEnrollments()
     })
