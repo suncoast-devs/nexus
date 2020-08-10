@@ -11,6 +11,7 @@ const Homework = ApplicationRecord.extend({
     summary: attr(),
     title: attr(),
     turnInType: attr(),
+    assigned: attr(),
     assignmentsCount: attr(),
     countsTowardsCompletion: attr(),
     dueAt: attr(),
