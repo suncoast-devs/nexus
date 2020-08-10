@@ -153,6 +153,7 @@ const EditHomeworks = ({ cohort_id }) => {
               <th>Name</th>
               <th>Summary</th>
               <th>Counts</th>
+              <th>Assigned</th>
             </tr>
           </thead>
           <tbody>
@@ -163,6 +164,7 @@ const EditHomeworks = ({ cohort_id }) => {
                   <td>{homework.name}</td>
                   <td>{homework.summary}</td>
                   <td>{homework.countsTowardsCompletion ? <i className="fas fa-check" /> : ''}</td>
+                  <td>{homework.assigned ? 'Yes' : 'No'}</td>
                 </tr>
               ))}
           </tbody>
