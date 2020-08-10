@@ -25,7 +25,9 @@ const StudentGradebook = ({ profile, showTitle }) => {
       <div className="container">
         {showTitle && <h1 className="title">Grades for: {profile.fullName}</h1>}
         {cohorts.map(cohort => {
-          const studentEnrollment = cohort.studentEnrollments.find(enrollment => enrollment.personId === profile.id)
+          const studentEnrollment = cohort.studentEnrollments.find(
+            enrollment => parseInt(enrollment.personId) === parseInt(profile.id)
+          )
 
           const cohortAssignments = studentEnrollment.person.assignments.sort((a, b) => b.id - a.id)
 
