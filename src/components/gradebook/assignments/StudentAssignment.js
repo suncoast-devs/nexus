@@ -155,7 +155,7 @@ export const StudentAssignment = ({ profile, id }) => {
             <button className="button is-info" onClick={() => setNewAssignmentEventName('comment')}>
               Comment
             </button>
-            {(profile.isAdmin || true) && (
+            {profile.isAdmin && (
               <button className="button is-primary" onClick={() => setNewAssignmentEventName('grade')}>
                 Grade
               </button>
