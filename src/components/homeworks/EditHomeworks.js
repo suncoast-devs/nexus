@@ -77,7 +77,7 @@ const EditHomework = ({ cohort, reloadCohort, homework, setHomework }) => {
               <label className="label">Turn In Type</label>
               <div className="select">
                 <select name="turnInType" defaultValue={homework.turnInType}>
-                  <option value="github repo">GitHub Repo</option>
+                  <option value="github">GitHub Repo</option>
                   <option value="gist">Gist</option>
                   <option value="comment">Comment</option>
                   <option value="url">URL</option>
