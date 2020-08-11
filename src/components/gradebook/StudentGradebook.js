@@ -8,7 +8,7 @@ import LoadingIndicator from '@/components/utils/LoadingIndicator'
 
 const StudentGradebook = ({ profile, showTitle }) => {
   const { loading: loadingCohorts, data: cohorts } = useModelData(() =>
-    Cohort.includes([{ student_enrollments: { person: { assignments: 'homework' } } }])
+    Cohort.includes(['homeworks', { student_enrollments: { person: { assignments: 'homework' } } }])
       .where({ student_enrollments: { person_id: profile.id } })
       .selectExtra({
         student_enrollments: ['completed_homework_count', 'completion_percentage', 'needed_to_complete_count'],
@@ -29,18 +29,21 @@ const StudentGradebook = ({ profile, showTitle }) => {
             enrollment => parseInt(enrollment.personId) === parseInt(profile.id)
           )
 
+          const homeworksNeededForCompletion = cohort.homeworks.filter(homework => homework.countsTowardsCompletion)
           const cohortAssignments = studentEnrollment.person.assignments.sort((a, b) => b.id - a.id)
 
           return cohortAssignments.length >= 0 ? (
             <React.Fragment key={cohort.id}>
               <h1 className="title">{cohort.name}</h1>
 
-              <div className="notification is-primary">
-                You have completed <strong>{studentEnrollment.completedHomeworkCount}</strong> assignments for a
-                completion rate of <strong>{studentEnrollment.completionPercentage.toFixed(1)}%</strong>. You need{' '}
-                <strong>{studentEnrollment.neededToCompleteCount}</strong> more assignments to reach{' '}
-                <strong>80%</strong>
-              </div>
+              {homeworksNeededForCompletion > 16 && (
+                <div className="notification is-primary">
+                  You have completed <strong>{studentEnrollment.completedHomeworkCount}</strong> assignments for a
+                  completion rate of <strong>{studentEnrollment.completionPercentage.toFixed(1)}%</strong>. You need{' '}
+                  <strong>{studentEnrollment.neededToCompleteCount}</strong> more assignments to reach{' '}
+                  <strong>80%</strong>
+                </div>
+              )}
 
               <table className="table is-fullwidth is-hoverable">
                 <thead>
