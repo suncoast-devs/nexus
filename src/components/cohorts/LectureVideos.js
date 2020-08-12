@@ -8,13 +8,13 @@ const compareLectureVideoDates = (a, b) => {
     return 0
   }
 
-  const aPresentedOn = new Date(a.presentedOn).getTime()
-  const bPresentedOn = new Date(b.presentedOn).getTime()
+  const aPresentedOn = Date.parse(a.presentedOn)
+  const bPresentedOn = Date.parse(b.presentedOn)
 
   // If the times are equal, use the createdAt time to order the videos
   if (aPresentedOn - bPresentedOn === 0) {
-    const aCreatedAt = new Date(a.createdAt).getTime()
-    const bCreatedAt = new Date(b.createdAt).getTime()
+    const aCreatedAt = Date.parse(a.createdAt)
+    const bCreatedAt = Date.parse(b.createdAt)
 
     return bCreatedAt - aCreatedAt
   } else {
