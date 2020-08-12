@@ -38,7 +38,7 @@ const LectureVideos = ({ profile, cohortId }) => {
                 {cohort.lectureVideos.map(lectureVideo => (
                   <tr key={lectureVideo.id}>
                     <td>
-                      <a href={lectureVideo.url}>{lectureVideo.url}</a>
+                      <a href={lectureVideo.videoUrl}>{lectureVideo.videoUrl}</a>
                     </td>
                     <td>{lectureVideo.title}</td>
                   </tr>
