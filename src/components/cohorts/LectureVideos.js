@@ -27,20 +27,17 @@ const LectureVideos = ({ profile, cohortId }) => {
         {cohorts.map(cohort => (
           <React.Fragment key={cohort.id}>
             <h1 className="title">Lecture Videos for {cohort.name}</h1>
-            <table className="table is-fullwidth is-hoverable">
-              <thead>
-                <tr>
-                  <th>Video</th>
-                  <th>Title</th>
-                </tr>
-              </thead>
+            <table className="table is-fullwidth is-bordered is-hoverable">
               <tbody>
                 {cohort.lectureVideos.map(lectureVideo => (
                   <tr key={lectureVideo.id}>
                     <td>
-                      <a href={lectureVideo.videoUrl}>{lectureVideo.videoUrl}</a>
+                      <h1 className="title">{lectureVideo.title}</h1>
+                      <video width="640" height="480" controls>
+                        <source src={lectureVideo.videoUrl} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
                     </td>
-                    <td>{lectureVideo.title}</td>
                   </tr>
                 ))}
               </tbody>
