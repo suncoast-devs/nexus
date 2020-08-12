@@ -3,6 +3,25 @@ import useModelData from '@/hooks/useModelData'
 import LectureVideo from '@/components/models/LectureVideo'
 import Cohort from '@/components/models/Cohort'
 
+const compareLectureVideoDates = (a, b) => {
+  if (!a.presentedOn || !b.presentedOn) {
+    return 0
+  }
+
+  const aPresentedOn = new Date(a.presentedOn).getTime()
+  const bPresentedOn = new Date(b.presentedOn).getTime()
+
+  // If the times are equal, use the createdAt time to order the videos
+  if (aPresentedOn - bPresentedOn === 0) {
+    const aCreatedAt = new Date(a.createdAt).getTime()
+    const bCreatedAt = new Date(b.createdAt).getTime()
+
+    return bCreatedAt - aCreatedAt
+  } else {
+    return bPresentedOn - aPresentedOn
+  }
+}
+
 const LectureVideos = ({ profile, cohortId }) => {
   const { loading, data: cohorts } = useModelData(() => {
     let query = Cohort.includes('lecture_videos')
@@ -29,7 +48,7 @@ const LectureVideos = ({ profile, cohortId }) => {
             <h1 className="title">Lecture Videos for {cohort.name}</h1>
             <table className="table is-fullwidth is-bordered is-hoverable">
               <tbody>
-                {cohort.lectureVideos.map(lectureVideo => (
+                {cohort.lectureVideos.sort(compareLectureVideoDates).map(lectureVideo => (
                   <tr key={lectureVideo.id}>
                     <td>
                       <h1 className="title">{lectureVideo.title}</h1>
