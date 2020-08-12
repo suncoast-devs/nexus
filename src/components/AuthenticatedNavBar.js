@@ -88,6 +88,9 @@ const AuthenticatedNavBar = props => {
           <NavLink className="navbar-item" activeClassName="is-active" to="/gradebook">
             Gradebook
           </NavLink>
+          <NavLink className="navbar-item" activeClassName="is-active" to="/lecture_videos">
+            Lecture Videos
+          </NavLink>
           <NavLink className="navbar-item" activeClassName="is-active" to="/attendance">
             Attendance
           </NavLink>

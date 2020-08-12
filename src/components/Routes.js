@@ -23,6 +23,7 @@ import StudentGradebook from './gradebook/StudentGradebook'
 import { StudentAssignment } from './gradebook/assignments/StudentAssignment'
 import StudentProgressReports from './progress/StudentProgressReports'
 import AdminShowGradeQueues from './gradebook/AdminShowGradeQueues'
+import LectureVideos from './cohorts/LectureVideos'
 
 const PeopleRoutes = ({ profile, auth }) => (
   <Switch>
@@ -160,6 +161,7 @@ const AdminRoutes = ({ profile, auth }) => (
       render={props => <StudentAssignment profile={profile} auth={auth} id={props.match.params.id} />}
     />
     <Route exact path="/attendance" render={props => <AdminShowAttendances profile={profile} {...props} />} />
+    <Route exact path="/lecture_videos" render={props => <LectureVideos profile={profile} auth={auth} {...props} />} />
     <Route exact path="/gradebook" render={props => <AdminShowGradebooks profile={profile} auth={auth} {...props} />} />
     <Route
       exact
@@ -181,6 +183,8 @@ const AdminRoutes = ({ profile, auth }) => (
 const UserRoutes = ({ profile, auth }) => (
   <Switch>
     <Route exact path="/attendance" render={props => <StudentAttendance profile={profile} auth={auth} {...props} />} />
+
+    {/* <Route exact path="/lecture_videos" render={props => <LectureVideos profile={profile} auth={auth} {...props} />} /> */}
 
     <Route
       exact
