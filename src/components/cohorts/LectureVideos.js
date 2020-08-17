@@ -1,6 +1,5 @@
 import React from 'react'
 import useModelData from '@/hooks/useModelData'
-import LectureVideo from '@/components/models/LectureVideo'
 import Cohort from '@/components/models/Cohort'
 
 const compareLectureVideoDates = (a, b) => {
@@ -23,7 +22,7 @@ const compareLectureVideoDates = (a, b) => {
 }
 
 const LectureVideos = ({ profile, cohortId }) => {
-  const { loading, data: cohorts } = useModelData(() => {
+  const { data: cohorts } = useModelData(() => {
     let query = Cohort.includes('lecture_videos')
 
     // If a specific cohort was specified

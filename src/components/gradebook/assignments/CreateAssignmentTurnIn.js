@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import LoadingIndicator from '@/components/utils/LoadingIndicator'
 import { PersonImage } from '@/components/PersonImage'
 import { GithubTurnIn } from './GithubTurnIn'
 import { GistTurnIn } from './GistTurnIn'

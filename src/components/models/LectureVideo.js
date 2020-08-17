@@ -1,5 +1,5 @@
 import ApplicationRecord from './ApplicationRecord'
-import { attr, hasMany, belongsTo } from 'spraypaint'
+import { attr, belongsTo } from 'spraypaint'
 
 const LectureVideo = ApplicationRecord.extend({
   static: {

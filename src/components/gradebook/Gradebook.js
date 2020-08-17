@@ -90,7 +90,7 @@ const EnrollmentRows = ({ enrollments, cohort, countedHomeworks }) =>
   })
 
 const Gradebook = ({ cohort_id }) => {
-  const { loading: loadingCohort, data: cohort, reload: reloadCohort } = useModelData(
+  const { loading: loadingCohort, data: cohort } = useModelData(
     () =>
       Cohort.includes([{ student_enrollments: { person: 'assignments' }, homeworks: { assignments: 'person' } }])
         .selectExtra({
