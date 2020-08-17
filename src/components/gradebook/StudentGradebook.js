@@ -30,9 +30,13 @@ const StudentGradebook = ({ profile, showTitle }) => {
           )
 
           const homeworksNeededForCompletion = cohort.homeworks.filter(homework => homework.countsTowardsCompletion)
-          const cohortAssignments = studentEnrollment.person.assignments.sort((a, b) => b.id - a.id)
+          const cohortAssignments =
+            (studentEnrollment &&
+              studentEnrollment.person &&
+              studentEnrollment.person.assignments.sort((a, b) => b.id - a.id)) ||
+            []
 
-          return cohortAssignments.length >= 0 ? (
+          return cohortAssignments.length > 0 ? (
             <React.Fragment key={cohort.id}>
               <h1 className="title">{cohort.name}</h1>
 
