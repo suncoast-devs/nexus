@@ -1,6 +1,7 @@
 import React from 'react'
 import useModelData from '@/hooks/useModelData'
 import Cohort from '@/components/models/Cohort'
+import LectureVideo from '@/components/models/LectureVideo' // This is required to make the query below work. Do not remove.
 
 const compareLectureVideoDates = (a, b) => {
   if (!a.presentedOn || !b.presentedOn) {
