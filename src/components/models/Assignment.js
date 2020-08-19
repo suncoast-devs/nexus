@@ -24,6 +24,8 @@ Assignment.prototype.scoreInfo = function() {
   return Assignment.scoreInfo(this.score)
 }
 
+Assignment.minimumAcceptableScore = 2;
+
 Assignment.graded = function(score) {
   return score > 0
 }

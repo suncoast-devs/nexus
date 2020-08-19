@@ -24,7 +24,7 @@ const GradeQueue = ({ cohort_id }) => {
 
   const ungradedAssignments = cohort.homeworks
     .filter(homework => homework.countsTowardsCompletion)
-    .map(homework => homework.assignments.filter(assignment => Assignment.needsGrade(assignment.score)))
+    .map(homework => homework.assignments.filter(assignment => assignment.score < Assignment.minimumAcceptableScore ))
     .flat()
     .filter(assignment => enrolledPeopleIds.includes(assignment.personId))
     .filter(assignment => assignment.turnedIn)
