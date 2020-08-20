@@ -43,7 +43,7 @@ const EditHomework = ({ cohort, reloadCohort, homework, setHomework }) => {
               <div className="control">
                 <input
                   className="date"
-                  defaultValue={moment(homework.dueAt).format('YYYY-MM-DD')}
+                  defaultValue={moment.utc(homework.dueAt).format('YYYY-MM-DD')}
                   name="dueAt"
                   type="date"
                 />
