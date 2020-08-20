@@ -10,6 +10,7 @@ export const CreateAssignmentTurnIn = ({ profile, assignment, homework, createAs
     payload: { comment: '' },
     assignmentId: assignment.id,
   })
+  const [turnInValid, setTurnInValid] = useState(true)
 
   const onSubmit = async () => {
     await createAssignmentEvent(assignmentEventDetails)
@@ -29,7 +30,7 @@ export const CreateAssignmentTurnIn = ({ profile, assignment, homework, createAs
       </figure>
       <div className="media-content">
         {homework.turnInType === 'github' && (
-          <GithubTurnIn {...{ assignmentEventDetails, setAssignmentEventDetails }} />
+          <GithubTurnIn {...{ assignmentEventDetails, setAssignmentEventDetails, setTurnInValid }} />
         )}
         {homework.turnInType === 'gist' && <GistTurnIn {...{ assignmentEventDetails, setAssignmentEventDetails }} />}
         {homework.turnInType === 'url' && <URLTurnIn {...{ assignmentEventDetails, setAssignmentEventDetails }} />}
@@ -44,12 +45,13 @@ export const CreateAssignmentTurnIn = ({ profile, assignment, homework, createAs
             />
           </p>
         </div>
+
         <nav className="level">
           <div className="level-left">
             <div className="level-item">
-              <span className="button is-info" onClick={onSubmit}>
+              <button className="button is-info" disabled={!turnInValid} onClick={onSubmit}>
                 Turn In Assignment
-              </span>
+              </button>
             </div>
           </div>
         </nav>
