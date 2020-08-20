@@ -20,7 +20,8 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "^3.0.1",
     "react-select": "^2.4.3",
-    "spraypaint": "^0.10.0"
+    "spraypaint": "^0.10.0",
+    "video-react": "^0.14.1"
   },
   "devDependencies": {
     "prettier": "^1.14.3"

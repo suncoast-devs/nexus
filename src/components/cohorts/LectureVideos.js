@@ -1,8 +1,18 @@
 import React from 'react'
+import {
+  Player,
+  ControlBar,
+  ReplayControl,
+  ForwardControl,
+  CurrentTimeDisplay,
+  TimeDivider,
+  PlaybackRateMenuButton,
+  VolumeMenuButton,
+} from 'video-react'
+
 import useModelData from '@/hooks/useModelData'
 import Cohort from '@/components/models/Cohort'
 import LectureVideo from '@/components/models/LectureVideo' // This is required to make the query below work. Do not remove.
-
 const compareLectureVideoDates = (a, b) => {
   if (!a.presentedOn || !b.presentedOn) {
     return 0
@@ -51,19 +61,44 @@ const LectureVideos = ({ profile, cohortId }) => {
                 {cohort.lectureVideos.sort(compareLectureVideoDates).map(lectureVideo => (
                   <tr key={lectureVideo.id}>
                     <td>
-                      <h1 className="title">{lectureVideo.title}</h1>
-                      <video width="640" height="480" controls>
-                        <source src={lectureVideo.videoUrl} type="video/mp4" />
-                        Your browser does not support the video tag.
-                      </video>
-                      <p>
-                        <a className="button" href={lectureVideo.videoUrl} download={lectureVideo.videoFileName}>
-                          <span className="icon">
-                            <i className="fas fa-download" />
-                          </span>
-                          Download {lectureVideo.title}
-                        </a>
-                      </p>
+                      <div className="level">
+                        <div className="level-left">
+                          <div className="level-item">
+                            <h1 className="title">{lectureVideo.title}</h1>
+                          </div>
+                        </div>
+
+                        <div className="level-right">
+                          <div className="level-item">
+                            <a
+                              className="button is-link is-light is-small"
+                              href={lectureVideo.videoUrl}
+                              download={lectureVideo.videoFileName}
+                            >
+                              <span className="icon">
+                                <i className="fas fa-download" />
+                              </span>
+                              <span>Download {lectureVideo.title}</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="level">
+                        <Player>
+                          <source src={lectureVideo.videoUrl} />
+
+                          <ControlBar>
+                            <ReplayControl seconds={10} order={1.1} />
+                            <ForwardControl seconds={30} order={1.2} />
+                            <CurrentTimeDisplay order={4.1} />
+                            <TimeDivider order={4.2} />
+                            <PlaybackRateMenuButton rates={[4, 2, 1, 0.5, 0.25]} order={7.1} />
+                            <VolumeMenuButton />
+                          </ControlBar>
+                        </Player>
+                      </div>
+
+                      <p />
                     </td>
                   </tr>
                 ))}
