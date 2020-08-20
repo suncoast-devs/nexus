@@ -84,7 +84,7 @@ const LectureVideos = ({ profile, cohortId }) => {
                         </div>
                       </div>
                       <div className="level">
-                        <Player>
+                        <Player preload="none">
                           <source src={lectureVideo.videoUrl} />
 
                           <ControlBar>
