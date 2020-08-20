@@ -56,6 +56,14 @@ const LectureVideos = ({ profile, cohortId }) => {
                         <source src={lectureVideo.videoUrl} type="video/mp4" />
                         Your browser does not support the video tag.
                       </video>
+                      <p>
+                        <a className="button" href={lectureVideo.videoUrl} download={lectureVideo.videoFileName}>
+                          <span className="icon">
+                            <i className="fas fa-download" />
+                          </span>
+                          Download {lectureVideo.title}
+                        </a>
+                      </p>
                     </td>
                   </tr>
                 ))}
