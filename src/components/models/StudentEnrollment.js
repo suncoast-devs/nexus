@@ -13,6 +13,7 @@ const StudentEnrollment = ApplicationRecord.extend({
     generateProgressReport: attr(),
     completionPercentage: attr(),
     completedHomeworkCount: attr(),
+    incompleteHomeworkCount: attr(),
     neededToCompleteCount: attr(),
 
     cohortId: attr(),

@@ -42,10 +42,12 @@ const StudentGradebook = ({ profile, showTitle }) => {
 
               {homeworksNeededForCompletion > 16 && (
                 <div className="notification is-primary">
-                  You have completed <strong>{studentEnrollment.completedHomeworkCount}</strong> assignments for a
-                  completion rate of <strong>{studentEnrollment.completionPercentage.toFixed(1)}%</strong>. You need{' '}
-                  <strong>{studentEnrollment.neededToCompleteCount}</strong> more assignments to reach{' '}
-                  <strong>80%</strong>
+                  You have completed <strong>{studentEnrollment.completedHomeworkCount}</strong> assignments.
+                  {studentEnrollment.incompleteHomeworkCount > 0 && (
+                    <span>
+                      You have <strong>{studentEnrollment.incompleteHomeworkCount}</strong> incomplete assignments
+                    </span>
+                  )}
                 </div>
               )}
 
