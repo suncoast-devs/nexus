@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import cx from 'classnames'
 import moment from 'moment'
 
@@ -12,35 +12,37 @@ const NewProgressReport = ({ cohort_id }) => {
   const { data: cohort } = useModelData(
     () => Cohort.includes(['people', 'student_enrollments', 'homeworks', 'progress_reports']).find(cohort_id),
     new Cohort(),
-    cohort => {
-      setSelectedPeopleIDs(
-        cohort.people
-          // Only include people who should get progress reports generated
-          .filter(person =>
-            cohort.studentEnrollments.some(
-              enrollment => enrollment.person.id === person.id && enrollment.generateProgressReport
-            )
-          )
-          .map(person => person.id)
-      )
-
-      const alreadyReportedHomeworkIDs = new Set(
-        cohort.progressReports.filter(report => report.completed).flatMap(report => report.idsOfHomeworks)
-      )
-      const allAssignedHomeworkIDs = cohort.homeworks
-        .filter(homework => homework.assignmentsCount > 0)
-        .map(homework => homework.id)
-
-      const sortedReports = cohort.progressReports.sort((a, b) => a.endDate.localeCompare(b.endDate))
-
-      const endOfMostRecentReport =
-        sortedReports.length > 0 ? sortedReports[sortedReports.length - 1].endDate : cohort.startDate
-
-      setSelectedHomeworkIDs(allAssignedHomeworkIDs.filter(id => !alreadyReportedHomeworkIDs.has(parseInt(id))))
-      setStartDate(endOfMostRecentReport)
-      setEndDate(moment().format('YYYY-MM-DD'))
-    }
   )
+
+  useEffect(() => {
+    setSelectedPeopleIDs(
+      cohort.people
+        // Only include people who should get progress reports generated
+        .filter(person =>
+          cohort.studentEnrollments.some(
+            enrollment => enrollment.person.id === person.id && enrollment.generateProgressReport
+          )
+        )
+        .map(person => person.id)
+    )
+
+    const alreadyReportedHomeworkIDs = new Set(
+      cohort.progressReports.filter(report => report.completed).flatMap(report => report.idsOfHomeworks)
+    )
+
+    const allAssignedHomeworkIDs = cohort.homeworks
+      .filter(homework => homework.assigned && homework.countsTowardsCompletion)
+      .map(homework => homework.id)
+
+    const sortedReports = cohort.progressReports.sort((a, b) => a.endDate.localeCompare(b.endDate))
+
+    const endOfMostRecentReport =
+      sortedReports.length > 0 ? sortedReports[sortedReports.length - 1].endDate : cohort.startDate
+
+    setSelectedHomeworkIDs(allAssignedHomeworkIDs.filter(id => !alreadyReportedHomeworkIDs.has(parseInt(id))))
+    setStartDate(endOfMostRecentReport)
+    setEndDate(moment().format('YYYY-MM-DD'))
+  }, [cohort.id])
 
   const [selectedPeopleIDs, setSelectedPeopleIDs] = useState([])
   const [selectedHomeworkIDs, setSelectedHomeworkIDs] = useState([])
