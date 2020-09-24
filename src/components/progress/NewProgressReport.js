@@ -20,14 +20,10 @@ const NewProgressReport = ({ cohort_id }) => {
         // Only include people who should get progress reports generated
         .filter(person =>
           cohort.studentEnrollments.some(
-            enrollment => enrollment.personId === person.id && enrollment.generateProgressReport
+            enrollment => Number(enrollment.personId) === Number(person.id) && enrollment.generateProgressReport
           )
         )
         .map(person => person.id)
-    )
-
-    const alreadyReportedHomeworkIDs = new Set(
-      cohort.progressReports.filter(report => report.completed).flatMap(report => report.idsOfHomeworks)
     )
 
     const allAssignedHomeworkIDs = cohort.homeworks
@@ -39,7 +35,7 @@ const NewProgressReport = ({ cohort_id }) => {
     const endOfMostRecentReport =
       sortedReports.length > 0 ? sortedReports[sortedReports.length - 1].endDate : cohort.startDate
 
-    setSelectedHomeworkIDs(allAssignedHomeworkIDs.filter(id => !alreadyReportedHomeworkIDs.has(parseInt(id))))
+    setSelectedHomeworkIDs(allAssignedHomeworkIDs)
     setStartDate(endOfMostRecentReport)
     setEndDate(moment().format('YYYY-MM-DD'))
   }, [cohort.id])
