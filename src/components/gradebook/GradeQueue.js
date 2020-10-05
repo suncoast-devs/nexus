@@ -7,7 +7,7 @@ import LoadingIndicator from '@/components/utils/LoadingIndicator'
 import { Cohort, Assignment } from '@/components/models'
 
 const GradeQueue = ({ cohort_id }) => {
-  const { loading, data: cohort } = useModelData(() =>
+  const { loading, data: cohort, reload } = useModelData(() =>
     Cohort.includes(['student_enrollments', { homeworks: { assignments: ['homework', 'person'] } }]).find(cohort_id)
   )
 
@@ -24,7 +24,7 @@ const GradeQueue = ({ cohort_id }) => {
 
   const ungradedAssignments = cohort.homeworks
     .filter(homework => homework.countsTowardsCompletion)
-    .map(homework => homework.assignments.filter(assignment => assignment.score < Assignment.minimumAcceptableScore ))
+    .map(homework => homework.assignments.filter(assignment => assignment.score < Assignment.minimumAcceptableScore))
     .flat()
     .filter(assignment => enrolledPeopleIds.includes(assignment.personId))
     .filter(assignment => assignment.turnedIn)
@@ -53,6 +53,10 @@ const GradeQueue = ({ cohort_id }) => {
       <h1 className="title">
         {sortedAssignments.length} assignments to grade for {cohort.name}
       </h1>
+
+      <button className="button is-primary" onClick={reload}>
+        Reload
+      </button>
 
       <table className="table is-hoverable">
         <thead>
