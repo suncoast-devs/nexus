@@ -4,6 +4,7 @@ import moment from 'moment'
 import { Homework, Cohort } from '@/components/models'
 import formToObject from '@/utils/formToObject'
 import useModelData from '@/hooks/useModelData'
+import { Link } from 'react-router-dom'
 
 const EditHomework = ({ cohort, reloadCohort, homework, setHomework }) => {
   const submit = event => {
@@ -161,7 +162,9 @@ const EditHomeworks = ({ cohort_id }) => {
               .sort((a, b) => b.id - a.id)
               .map(homework => (
                 <tr key={homework.id} onClick={() => setHomework(homework)}>
-                  <td>{homework.name}</td>
+                  <td>
+                    <Link to={`/cohorts/${cohort.id}/homeworks/${homework.id}`}>{homework.name}</Link>
+                  </td>
                   <td>{homework.summary}</td>
                   <td>{homework.countsTowardsCompletion ? <i className="fas fa-check" /> : ''}</td>
                   <td>{homework.assigned ? 'Yes' : 'No'}</td>

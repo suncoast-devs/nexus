@@ -24,6 +24,7 @@ import { StudentAssignment } from './gradebook/assignments/StudentAssignment'
 import StudentProgressReports from './progress/StudentProgressReports'
 import AdminShowGradeQueues from './gradebook/AdminShowGradeQueues'
 import LectureVideos from './cohorts/LectureVideos'
+import { ShowHomework } from './homeworks/ShowHomework'
 
 const PeopleRoutes = ({ profile, auth }) => (
   <Switch>
@@ -86,6 +87,13 @@ const CohortAdminRoutes = ({ profile, auth }) => (
       render={props => <NewProgressReport cohort_id={props.match.params.id} auth={auth} {...props} />}
     />
 
+    <Route
+      exact
+      path="/cohorts/:cohortId/homeworks/:homeworkId"
+      render={props => (
+        <ShowHomework cohortId={props.match.params.cohortId} homeworkId={props.match.params.homeworkId} {...props} />
+      )}
+    />
     <Route
       exact
       path="/cohorts/:id/homeworks"
