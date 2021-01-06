@@ -132,7 +132,7 @@ export const StudentAssignment = ({ profile, id }) => {
 
               <hr />
               <div className="content">
-                <MarkDownDiv markdown={assignment.homework.body_with_resolved_urls} />
+                <MarkDownDiv markdown={assignment.homework.body} />
               </div>
             </div>
           </div>
