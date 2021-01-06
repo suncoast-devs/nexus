@@ -15,7 +15,7 @@ export const ShowHomework = ({ cohortId, homeworkId }) => {
       <div className="container">
         <div className="content">
           <h1>{homework.title}</h1>
-          <MarkDownDiv markdown={homework.body} />
+          <MarkDownDiv markdown={homework.bodyWithResolvedUrls} />
         </div>
       </div>
     </section>

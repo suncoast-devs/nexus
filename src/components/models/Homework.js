@@ -8,6 +8,7 @@ const Homework = ApplicationRecord.extend({
   attrs: {
     name: attr(),
     body: attr(),
+    bodyWithResolvedUrls: attr(),
     summary: attr(),
     title: attr(),
     turnInType: attr(),
