@@ -10,6 +10,7 @@ const StudentGradebook = ({ profile, showTitle }) => {
   const { loading: loadingCohorts, data: cohorts } = useModelData(() =>
     Cohort.includes(['homeworks', { student_enrollments: { person: { assignments: 'homework' } } }])
       .where({ student_enrollments: { person_id: profile.id } })
+      .order({ start_date: 'desc' })
       .selectExtra({
         student_enrollments: ['completed_homework_count', 'completion_percentage', 'needed_to_complete_count'],
       })
@@ -33,7 +34,9 @@ const StudentGradebook = ({ profile, showTitle }) => {
           const cohortAssignments =
             (studentEnrollment &&
               studentEnrollment.person &&
-              studentEnrollment.person.assignments.sort((a, b) => b.id - a.id)) ||
+              studentEnrollment.person.assignments
+                .sort((a, b) => b.id - a.id)
+                .filter(assignment => parseInt(assignment.homework.cohortId) === parseInt(cohort.id))) ||
             []
 
           return cohortAssignments.length > 0 ? (

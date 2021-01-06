@@ -18,6 +18,7 @@ const Homework = ApplicationRecord.extend({
     createdAt: attr(),
 
     cohort_id: attr(),
+    cohortId: attr(),
     cohort: belongsTo(),
     assignments: hasMany(),
   },
