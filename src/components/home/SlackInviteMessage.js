@@ -25,7 +25,7 @@ const SlackInviteMessage = ({ profile }) =>
               </li>
               <li>
                 <p>
-                  Select the <code>Nexus (app)</code> option to begin a <em>direct message</em> and type the following
+                  Select the <code>Nexus</code> option that has an avatar image to begin a <em>direct message</em> and type the following
                   as your message:
                 </p>
                 {/* This is a hack to make sure that the register code when copied is (A) a single element with no unbreakable spaces and (B) is copied without any formatting */}
