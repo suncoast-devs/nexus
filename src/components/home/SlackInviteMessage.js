@@ -28,7 +28,23 @@ const SlackInviteMessage = ({ profile }) =>
                   Select the <code>Nexus (app)</code> option to begin a <em>direct message</em> and type the following
                   as your message:
                 </p>
-                <plaintext className="section">register {profile.slackInviteCode}</plaintext>
+                {/* This is a hack to make sure that the register code when copied is (A) a single element with no unbreakable spaces and (B) is copied without any formatting */}
+                <textarea
+                  readonly
+                  className="textarea is-large"
+                  style={{
+                    border: 'none',
+                    overflow: 'auto',
+                    outline: 'none',
+                    '-webkit-box-shadow': 'none',
+                    '-moz-box-shadow': 'none',
+                    'box-shadow': 'none',
+                    resize: 'none',
+                    backgroundColor: 'transparent',
+                  }}
+                >
+                  {`register ${profile.slackInviteCode}`}
+                </textarea>
               </li>
               <li>If you have trouble with the above, try typing the message instead of copy and paste.</li>
             </ul>
