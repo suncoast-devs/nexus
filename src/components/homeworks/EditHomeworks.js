@@ -148,9 +148,10 @@ const EditHomeworks = ({ cohort_id }) => {
           New Homework
         </button>
 
-        <table className="table is-fullwidth is-hoverable">
+        <table className="table is-fullwidth is-hoverable is-vcentered">
           <thead>
             <tr>
+              <th></th>
               <th>Name</th>
               <th>Summary</th>
               <th>Counts</th>
@@ -161,13 +162,26 @@ const EditHomeworks = ({ cohort_id }) => {
             {homeworks
               .sort((a, b) => b.id - a.id)
               .map(homework => (
-                <tr key={homework.id} onClick={() => setHomework(homework)}>
+                <tr key={homework.id}>
                   <td>
-                    <Link to={`/cohorts/${cohort.id}/homeworks/${homework.id}`}>{homework.name}</Link>
+                    <div className="buttons are-normal">
+                      <Link
+                        to={`/cohorts/${cohort.id}/homeworks/${homework.id}`}
+                        className="button is-link is-inverted"
+                      >
+                        Show
+                      </Link>
+                      <button className="button is-link is-inverted" onClick={() => setHomework(homework)}>
+                        Edit
+                      </button>
+                    </div>
                   </td>
-                  <td>{homework.summary}</td>
-                  <td>{homework.countsTowardsCompletion ? <i className="fas fa-check" /> : ''}</td>
-                  <td>{homework.assigned ? 'Yes' : 'No'}</td>
+                  <td className="is-vcentered">{homework.name}</td>
+                  <td className="is-vcentered">{homework.summary}</td>
+                  <td className="is-vcentered">
+                    {homework.countsTowardsCompletion ? <i className="fas fa-check" /> : ''}
+                  </td>
+                  <td className="is-vcentered">{homework.assigned ? 'Yes' : 'No'}</td>
                 </tr>
               ))}
           </tbody>
