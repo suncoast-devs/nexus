@@ -24,10 +24,13 @@ const SlackInviteMessage = ({ profile }) =>
                 Enter <code>nexus</code> in the search bar at the top of the Slack window
               </li>
               <li>
-                Select the <code>Nexus (app)</code> option to begin a <em>direct message</em> and type the following as
-                your message:
+                <p>
+                  Select the <code>Nexus (app)</code> option to begin a <em>direct message</em> and type the following
+                  as your message:
+                </p>
+                <p className="section">register {profile.slackInviteCode}</p>
               </li>
-              <li>register {profile.slackInviteCode}</li>
+              <li>If you have trouble with the above, try typing the message instead of copy and paste.</li>
             </ul>
           </div>
         </article>
