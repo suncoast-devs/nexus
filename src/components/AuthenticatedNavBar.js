@@ -86,7 +86,7 @@ const AuthenticatedNavBar = props => {
       <div className={cx('navbar-menu', { 'is-active': active })}>
         <div className="navbar-start">
           <NavLink className="navbar-item" activeClassName="is-active" to="/gradebook">
-            Gradebook
+            {profile.isAdmin ? 'Gradebook' : 'Homework'}
           </NavLink>
           <NavLink className="navbar-item" activeClassName="is-active" to="/lecture_videos">
             Lecture Videos

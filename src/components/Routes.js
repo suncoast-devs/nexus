@@ -229,7 +229,7 @@ const PublicRoutes = ({ profile, auth }) => (
   <Switch>
     <Route
       exact
-      path="/"
+      path={['/', '/home']}
       render={props =>
         profile.loading ? <></> : <Home profile={profile} isAuthenticated={auth.isAuthenticated} {...props} />
       }
@@ -244,9 +244,7 @@ const PublicRoutes = ({ profile, auth }) => (
           // This might be a user re-attempting to use the same invite code.
           window.location = `/`
         } else {
-          window.location = `${process.env.REACT_APP_INVITATION_REDEEM_URL}&invitation_code=${
-            props.match.params.invitation_code
-          }`
+          window.location = `${process.env.REACT_APP_INVITATION_REDEEM_URL}&invitation_code=${props.match.params.invitation_code}`
         }
 
         return <Callback {...props} />

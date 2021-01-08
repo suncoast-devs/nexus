@@ -52,11 +52,10 @@ const GradeQueue = ({ cohort_id }) => {
     <>
       <h1 className="title">
         {sortedAssignments.length} assignments to grade for {cohort.name}
+        <button className="button is-link is-normal is-inverted" onClick={reload}>
+          Reload
+        </button>
       </h1>
-
-      <button className="button is-link" onClick={reload}>
-        Reload
-      </button>
 
       <table className="table is-hoverable">
         <thead>
