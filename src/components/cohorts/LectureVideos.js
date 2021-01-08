@@ -34,7 +34,7 @@ const compareLectureVideoDates = (a, b) => {
 
 const LectureVideos = ({ profile, cohortId }) => {
   const { data: cohorts } = useModelData(() => {
-    let query = Cohort.includes('lecture_videos')
+    let query = Cohort.includes('lecture_videos').order({ start_date: 'desc' })
 
     // If a specific cohort was specified
     if (cohortId) {
