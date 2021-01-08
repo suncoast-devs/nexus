@@ -1,12 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import moment from 'moment'
 
 import { Homework, Cohort } from '@/components/models'
 import formToObject from '@/utils/formToObject'
 import useModelData from '@/hooks/useModelData'
 import { Link } from 'react-router-dom'
+import HandbookAssignment from '../models/HandbookAssignment'
 
 const EditHomework = ({ cohort, reloadCohort, homework, setHomework }) => {
+  const [body, setBody] = useState(homework.body)
+  const [summary, setSummary] = useState(homework.summary)
+  const [selectedHandbookAssignment, setSelectedHandbookAssignment] = useState(null)
+
   const submit = event => {
     event.preventDefault()
 
@@ -28,6 +33,21 @@ const EditHomework = ({ cohort, reloadCohort, homework, setHomework }) => {
       reloadCohort()
     })
   }
+
+  const { data: handbookAssignments } = useModelData(() => HandbookAssignment.all())
+
+  useEffect(() => {
+    if (!selectedHandbookAssignment) {
+      return
+    }
+    HandbookAssignment.selectExtra(['body'])
+      .find(selectedHandbookAssignment)
+      .then(response => {
+        const handbookAssignment = response.data
+        setBody(handbookAssignment.body.content)
+        setSummary(handbookAssignment.body.front_matter.title)
+      })
+  }, [selectedHandbookAssignment])
 
   return (
     <form onSubmit={event => submit(event)}>
@@ -51,6 +71,21 @@ const EditHomework = ({ cohort, reloadCohort, homework, setHomework }) => {
               </div>
             </div>
             <div className="field">
+              <label className="label">Handbook</label>
+              <div className="control">
+                <div className="select">
+                  <select onChange={event => setSelectedHandbookAssignment(event.target.value)}>
+                    <option></option>
+                    {handbookAssignments.map(handbookAssignment => (
+                      <option key={handbookAssignment.id} value={handbookAssignment.id}>
+                        {handbookAssignment.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div className="field">
               <label className="label">Name</label>
               <div className="control">
                 <input className="input" defaultValue={homework.name} name="name" type="text" placeholder="Name" />
@@ -61,7 +96,8 @@ const EditHomework = ({ cohort, reloadCohort, homework, setHomework }) => {
               <div className="control">
                 <input
                   className="input"
-                  defaultValue={homework.summary}
+                  value={summary}
+                  onChange={event => setSummary(event.target.value)}
                   name="summary"
                   type="text"
                   placeholder="Summary"
@@ -71,7 +107,14 @@ const EditHomework = ({ cohort, reloadCohort, homework, setHomework }) => {
             <div className="field">
               <label className="label">Body</label>
               <div className="control">
-                <textarea className="textarea" defaultValue={homework.body} name="body" rows="8" placeholder="Body" />
+                <textarea
+                  className="textarea"
+                  value={body}
+                  onChange={event => setBody(event.target.value)}
+                  name="body"
+                  rows="8"
+                  placeholder="Body"
+                />
               </div>
             </div>
             <div className="field">
