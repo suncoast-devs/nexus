@@ -25,20 +25,20 @@ const CohortTable = ({ cohorts, title }) => {
                     </div>
                     <div className="level-right">
                       <div className="level-item">
-                        <div className="buttons">
-                          <Link className="button is-primary is-small" to={`/cohorts/${cohort.id}`}>
+                        <div className="buttons are-small">
+                          <Link className="button is-link is-inverted" to={`/cohorts/${cohort.id}`}>
                             Edit
                           </Link>
-                          <Link className="button is-primary is-small" to={`/cohorts/${cohort.id}/attendance`}>
+                          <Link className="button is-link is-inverted" to={`/cohorts/${cohort.id}/attendance`}>
                             Attendance
                           </Link>
-                          <Link className="button is-primary is-small" to={`/cohorts/${cohort.id}/homeworks`}>
+                          <Link className="button is-link is-inverted" to={`/cohorts/${cohort.id}/homeworks`}>
                             Homeworks
                           </Link>
-                          <Link className="button is-primary is-small" to={`/cohorts/${cohort.id}/gradebook`}>
+                          <Link className="button is-link is-inverted" to={`/cohorts/${cohort.id}/gradebook`}>
                             Gradebook
                           </Link>
-                          <Link className="button is-primary is-small" to={`/cohorts/${cohort.id}/progress-reports`}>
+                          <Link className="button is-link is-inverted" to={`/cohorts/${cohort.id}/progress-reports`}>
                             Progress Reports
                           </Link>
                         </div>
@@ -68,7 +68,7 @@ const Cohorts = () => {
         <h1 className="title">
           Cohorts
           <span className="is-pulled-right">
-            <Link className="button is-primary" to="/cohorts/new">
+            <Link className="button is-link" to="/cohorts/new">
               New
             </Link>
           </span>

@@ -21,7 +21,7 @@ const ProgressReports = ({ cohort_id, allowNew }) => {
           left={<h1 className="title">Progress Reports for {cohort.name}</h1>}
           right={
             allowNew && (
-              <Link to={`/cohorts/${cohort_id}/progress-reports/new`} className="button is-primary">
+              <Link to={`/cohorts/${cohort_id}/progress-reports/new`} className="button is-link">
                 New
               </Link>
             )

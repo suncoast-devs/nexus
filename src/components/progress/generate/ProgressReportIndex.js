@@ -128,7 +128,7 @@ const Main = ({ progressReport, index, isOnCompletePage, markProgressReportCompl
           <div className="level-right">
             <div className="level-item">
               {studentProgressReport.reportImageUrl ? (
-                <a download href={studentProgressReport.reportImageUrl} className="button is-primary">
+                <a download href={studentProgressReport.reportImageUrl} className="button is-link">
                   Download
                 </a>
               ) : (
@@ -144,7 +144,7 @@ const Main = ({ progressReport, index, isOnCompletePage, markProgressReportCompl
 
   if (isOnCompletePage) {
     return (
-      <button className="button is-primary" onClick={markProgressReportComplete}>
+      <button className="button is-link" onClick={markProgressReportComplete}>
         Complete
       </button>
     )

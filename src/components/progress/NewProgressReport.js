@@ -156,7 +156,7 @@ const NewProgressReport = ({ cohort_id }) => {
         <LeftRight
           left={<h1 className="title">New Progress Report for {cohort.name}</h1>}
           right={
-            <button className="button is-primary" onClick={() => create()}>
+            <button className="button is-link" onClick={() => create()}>
               Create
             </button>
           }

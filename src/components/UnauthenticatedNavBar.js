@@ -50,7 +50,7 @@ class UnauthenticatedNavBar extends Component {
             <div className="navbar-item">
               <div className="field is-grouped">
                 <p className="control">
-                  <button className="button is-primary" onClick={() => this.props.auth.login()}>
+                  <button className="button is-link" onClick={() => this.props.auth.login()}>
                     Sign In
                   </button>
                 </p>

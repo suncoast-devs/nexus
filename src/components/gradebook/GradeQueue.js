@@ -54,7 +54,7 @@ const GradeQueue = ({ cohort_id }) => {
         {sortedAssignments.length} assignments to grade for {cohort.name}
       </h1>
 
-      <button className="button is-primary" onClick={reload}>
+      <button className="button is-link" onClick={reload}>
         Reload
       </button>
 

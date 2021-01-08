@@ -142,7 +142,7 @@ const EditHomeworks = ({ cohort_id }) => {
         )}
 
         <button
-          className="button is-primary"
+          className="button is-link"
           onClick={() => setHomework(new Homework({ dueAt: moment().add(1, 'days'), countsTowardsCompletion: true }))}
         >
           New Homework

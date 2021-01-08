@@ -8,7 +8,7 @@ import LoadingButton from '@/components/utils/LoadingButton'
 const EditorButtons = ({ onDone, onSkip }) => {
   return (
     <div className="buttons">
-      <LoadingButton className="is-primary" onClick={onDone}>
+      <LoadingButton className="is-link" onClick={onDone}>
         Done
       </LoadingButton>
       <button className="button is-warning" onClick={onSkip}>
@@ -159,10 +159,10 @@ const GenerateStudentProgressReport = ({
     return (
       <>
         <div className="buttons">
-          <button className="button is-primary" onClick={() => dispatch({ type: 'step', value: 'editing' })}>
+          <button className="button is-link" onClick={() => dispatch({ type: 'step', value: 'editing' })}>
             Edit
           </button>
-          <button className="button is-warning" onClick={onSkip}>
+          <button className="button is-link" onClick={onSkip}>
             Next
           </button>
         </div>
