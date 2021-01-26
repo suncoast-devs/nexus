@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Player,
   ControlBar,
@@ -33,6 +33,8 @@ const compareLectureVideoDates = (a, b) => {
 }
 
 const LectureVideos = ({ profile, cohortId }) => {
+  const [currentVideo, setCurrentVideo] = useState(0)
+
   const { data: cohorts } = useModelData(() => {
     let query = Cohort.includes('lecture_videos').order({ start_date: 'desc' })
 
@@ -61,7 +63,7 @@ const LectureVideos = ({ profile, cohortId }) => {
                 {cohort.lectureVideos.sort(compareLectureVideoDates).map(lectureVideo => (
                   <tr key={lectureVideo.id}>
                     <td>
-                      <div className="level">
+                      <div className="level mb-2">
                         <div className="level-left">
                           <div className="level-item">
                             <h1 className="title">{lectureVideo.title}</h1>
@@ -70,33 +72,54 @@ const LectureVideos = ({ profile, cohortId }) => {
 
                         <div className="level-right">
                           <div className="level-item">
-                            <a
-                              className="button is-link is-light is-small"
-                              href={lectureVideo.videoUrl}
-                              download={lectureVideo.videoFileName}
-                            >
-                              <span className="icon">
-                                <i className="fas fa-download" />
-                              </span>
-                              <span>Download {lectureVideo.title}</span>
-                            </a>
+                            <div className="is-size-7 pr-3">{lectureVideo.presentedAgo}</div>
+                            <div className="field is-grouped">
+                              <p className="control">
+                                <span
+                                  className="button is-link is-light is-small"
+                                  onClick={() =>
+                                    setCurrentVideo(currentVideo === lectureVideo.id ? 0 : lectureVideo.id)
+                                  }
+                                >
+                                  <span className="icon">
+                                    <i className="fas fa-play-circle" />
+                                  </span>
+                                  <span>Play</span>
+                                </span>
+                              </p>
+
+                              <p className="control">
+                                <a
+                                  className="button is-link is-light is-small"
+                                  href={lectureVideo.videoUrl}
+                                  download={lectureVideo.videoFileName}
+                                >
+                                  <span className="icon">
+                                    <i className="fas fa-download" />
+                                  </span>
+                                  <span>Download</span>
+                                </a>
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
-                      <div className="level">
-                        <Player preload="none">
-                          <source src={lectureVideo.videoUrl} />
+                      {currentVideo == lectureVideo.id && (
+                        <div className="level">
+                          <Player preload="none">
+                            <source src={lectureVideo.videoUrl} />
 
-                          <ControlBar>
-                            <ReplayControl seconds={10} order={1.1} />
-                            <ForwardControl seconds={30} order={1.2} />
-                            <CurrentTimeDisplay order={4.1} />
-                            <TimeDivider order={4.2} />
-                            <PlaybackRateMenuButton rates={[4, 2, 1, 0.5, 0.25]} order={7.1} />
-                            <VolumeMenuButton />
-                          </ControlBar>
-                        </Player>
-                      </div>
+                            <ControlBar>
+                              <ReplayControl seconds={10} order={1.1} />
+                              <ForwardControl seconds={30} order={1.2} />
+                              <CurrentTimeDisplay order={4.1} />
+                              <TimeDivider order={4.2} />
+                              <PlaybackRateMenuButton rates={[4, 2, 1, 0.5, 0.25]} order={7.1} />
+                              <VolumeMenuButton />
+                            </ControlBar>
+                          </Player>
+                        </div>
+                      )}
 
                       <p />
                     </td>

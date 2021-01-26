@@ -10,6 +10,7 @@ const LectureVideo = ApplicationRecord.extend({
     videoUrl: attr(),
     videoFileName: attr(),
     presentedOn: attr(),
+    presentedAgo: attr(),
     createdAt: attr(),
 
     cohortId: attr(),
