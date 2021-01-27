@@ -109,7 +109,7 @@ const LectureVideos = ({ profile, cohortId }) => {
                       <div className="level mb-2">
                         <div className="level-left">
                           <div className="level-item">
-                            <h1 className="title">{lectureVideo.title}</h1>
+                            <p className="is-size-4">{lectureVideo.title}</p>
                           </div>
                         </div>
 
