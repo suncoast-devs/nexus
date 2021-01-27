@@ -9,6 +9,7 @@ import {
   PlaybackRateMenuButton,
   VolumeMenuButton,
 } from 'video-react'
+import moment from 'moment'
 
 import useModelData from '@/hooks/useModelData'
 import Cohort from '@/components/models/Cohort'
@@ -72,7 +73,9 @@ const LectureVideos = ({ profile, cohortId }) => {
 
                         <div className="level-right">
                           <div className="level-item">
-                            <div className="is-size-7 pr-3">{lectureVideo.presentedAgo}</div>
+                            <div className="is-size-7 pr-3">
+                              {lectureVideo.presentedAgo} ({moment(lectureVideo.presentedOn).format('dddd')})
+                            </div>
                             <div className="field is-grouped">
                               <p className="control">
                                 <span
