@@ -13,7 +13,9 @@ import moment from 'moment'
 
 import useModelData from '@/hooks/useModelData'
 import Cohort from '@/components/models/Cohort'
-import LectureVideo from '@/components/models/LectureVideo' // This is required to make the query below work. Do not remove.
+import LectureVideoPlayback from '@/components/models/LectureVideoPlayback'
+import LectureVideo from '@/components/models/LectureVideo'
+
 const compareLectureVideoDates = (a, b) => {
   if (!a.presentedOn || !b.presentedOn) {
     return 0
@@ -33,10 +35,50 @@ const compareLectureVideoDates = (a, b) => {
   }
 }
 
+const recordLectureVideoPlayback = lectureVideoId => {
+  const lectureVideoPlayback = new LectureVideoPlayback({ lectureVideoId })
+  console.log({ lectureVideoId })
+  lectureVideoPlayback.save().then(() => {
+    // Nothing to do
+  })
+}
+
+const LectureVideoPlayer = ({ lectureVideo }) => {
+  // If we are transitioning from never started to started
+  // then record a playback event.
+  const handleStateChange = (state, prevState) => {
+    if (state.hasStarted && !prevState.hasStarted) {
+      recordLectureVideoPlayback(lectureVideo.id)
+    }
+  }
+
+  return (
+    <Player
+      preload="none"
+      ref={player => {
+        player && player.subscribeToStateChange(handleStateChange)
+      }}
+    >
+      <source src={lectureVideo.videoUrl} />
+      <ControlBar>
+        <ReplayControl seconds={10} order={1.1} />
+        <ForwardControl seconds={30} order={1.2} />
+        <CurrentTimeDisplay order={4.1} />
+        <TimeDivider order={4.2} />
+        <PlaybackRateMenuButton rates={[4, 2, 1, 0.5, 0.25]} order={7.1} />
+        <VolumeMenuButton />
+      </ControlBar>
+    </Player>
+  )
+}
+
 const LectureVideos = ({ profile, cohortId }) => {
   const [currentVideo, setCurrentVideo] = useState(0)
 
   const { data: cohorts } = useModelData(() => {
+    // This is required otherwise the query below fails
+    new LectureVideo()
+
     let query = Cohort.includes('lecture_videos').order({ start_date: 'desc' })
 
     // If a specific cohort was specified
@@ -96,6 +138,11 @@ const LectureVideos = ({ profile, cohortId }) => {
                                   className="button is-link is-light is-small"
                                   href={lectureVideo.videoUrl}
                                   download={lectureVideo.videoFileName}
+                                  onClick={event => {
+                                    setTimeout(() => {
+                                      recordLectureVideoPlayback(lectureVideo.id)
+                                    }, 1000)
+                                  }}
                                 >
                                   <span className="icon">
                                     <i className="fas fa-download" />
@@ -109,21 +156,9 @@ const LectureVideos = ({ profile, cohortId }) => {
                       </div>
                       {currentVideo == lectureVideo.id && (
                         <div className="level">
-                          <Player preload="none">
-                            <source src={lectureVideo.videoUrl} />
-
-                            <ControlBar>
-                              <ReplayControl seconds={10} order={1.1} />
-                              <ForwardControl seconds={30} order={1.2} />
-                              <CurrentTimeDisplay order={4.1} />
-                              <TimeDivider order={4.2} />
-                              <PlaybackRateMenuButton rates={[4, 2, 1, 0.5, 0.25]} order={7.1} />
-                              <VolumeMenuButton />
-                            </ControlBar>
-                          </Player>
+                          <LectureVideoPlayer lectureVideo={lectureVideo} />
                         </div>
                       )}
-
                       <p />
                     </td>
                   </tr>
