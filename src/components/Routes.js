@@ -82,7 +82,7 @@ const CohortAdminRoutes = ({ profile, auth }) => (
     />
     <Route
       exact
-      path="cohorts/:id/lecture_videos"
+      path="/cohorts/:id/lecture-videos"
       render={props => <LectureVideos profile={profile} auth={auth} cohortId={props.match.params.id} {...props} />}
     />
     <Route
