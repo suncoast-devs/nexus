@@ -33,13 +33,12 @@ const HomeworkTableData = ({ assignment, homework }) => {
   )
 }
 
-const EnrollmentRows = ({ enrollments, cohort, countedHomeworks }) =>
+const EnrollmentRows = ({ enrollments, cohort, countOfHomeworksNeededForCompletion }) =>
   enrollments.map(enrollment => {
     const person = enrollment.person
 
     const completedPercentageForPerson = enrollment.completionPercentage
     const completedAssignmentCountForPerson = enrollment.completedHomeworkCount
-    const countedHomeworksForPerson = countedHomeworks
     const neededHomeworks = enrollment.neededToCompleteCount
 
     const { active, showGrade } = enrollment
@@ -65,13 +64,13 @@ const EnrollmentRows = ({ enrollments, cohort, countedHomeworks }) =>
             @{person.github}
           </a>
         </td>
-        {countedHomeworks > 0 && showGrade ? (
+        {countOfHomeworksNeededForCompletion > 0 && showGrade ? (
           <>
             <td className={passFailStyling}>
               {completedPercentageForPerson ? completedPercentageForPerson.toFixed(1) : 'N/A'} %
             </td>
             <td className={passFailStyling}>
-              ({completedAssignmentCountForPerson} / {countedHomeworksForPerson})
+              ({completedAssignmentCountForPerson} / {countOfHomeworksNeededForCompletion})
               {isPassing ? '' : ` - Needs: ${neededHomeworks}`}
             </td>
           </>
@@ -114,8 +113,11 @@ const Gradebook = ({ cohort_id }) => {
 
   const sortedHomework = cohort.homeworks.sort((a, b) => b.id - a.id)
 
-  const homeworksNeededForCompletion = cohort.homeworks.filter(homework => homework.countsTowardsCompletion)
-  const countedHomeworks = homeworksNeededForCompletion.length
+  // Homework needed for completion are those that are assigned and marked as counted
+  const homeworksNeededForCompletion = cohort.homeworks.filter(
+    homework => homework.countsTowardsCompletion && homework.assigned
+  )
+  const countOfHomeworksNeededForCompletion = homeworksNeededForCompletion.length
 
   return (
     <section className="gradebook section">
@@ -139,8 +141,16 @@ const Gradebook = ({ cohort_id }) => {
           </tr>
         </thead>
         <tbody>
-          <EnrollmentRows enrollments={activeEnrollments} cohort={cohort} countedHomeworks={countedHomeworks} />
-          <EnrollmentRows enrollments={inactiveEnrollments} cohort={cohort} countedHomeworks={countedHomeworks} />
+          <EnrollmentRows
+            enrollments={activeEnrollments}
+            cohort={cohort}
+            countOfHomeworksNeededForCompletion={countOfHomeworksNeededForCompletion}
+          />
+          <EnrollmentRows
+            enrollments={inactiveEnrollments}
+            cohort={cohort}
+            countOfHomeworksNeededForCompletion={countOfHomeworksNeededForCompletion}
+          />
         </tbody>
       </table>
     </section>
