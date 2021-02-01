@@ -41,6 +41,9 @@ const CohortTable = ({ cohorts, title }) => {
                           <Link className="button is-link is-inverted" to={`/cohorts/${cohort.id}/progress-reports`}>
                             Progress Reports
                           </Link>
+                          <Link className="button is-link is-inverted" to={`/cohorts/${cohort.id}/lecture-videos`}>
+                            Lecture Videos
+                          </Link>
                         </div>
                       </div>
                     </div>

@@ -80,7 +80,11 @@ const CohortAdminRoutes = ({ profile, auth }) => (
       path="/cohorts/:id/progress-reports"
       render={props => <ProgressReports cohort_id={props.match.params.id} allowNew auth={auth} {...props} />}
     />
-
+    <Route
+      exact
+      path="cohorts/:id/lecture_videos"
+      render={props => <LectureVideos profile={profile} auth={auth} cohortId={props.match.params.id} {...props} />}
+    />
     <Route
       exact
       path="/cohorts/:id/progress-reports/new"
