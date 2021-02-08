@@ -174,7 +174,7 @@ const EditHomeworks = ({ cohort_id }) => {
     homework.assigned = true
     homework.save.then(() => {
       reloadCohort()
-    }
+    })
   }
 
   return (
