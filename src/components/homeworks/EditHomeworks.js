@@ -170,6 +170,13 @@ const EditHomeworks = ({ cohort_id }) => {
   // Homework in ID order (order that they were inserted)
   const homeworks = (cohort.homeworks || []).sort((a, b) => a.id - b.id)
 
+  const assignHomework = homework => {
+    homework.assigned = true
+    homework.save.then(() => {
+      reloadCohort()
+    }
+  }
+
   return (
     <section className="section">
       <div
@@ -224,7 +231,15 @@ const EditHomeworks = ({ cohort_id }) => {
                   <td className="is-vcentered">
                     {homework.countsTowardsCompletion ? <i className="fas fa-check" /> : ''}
                   </td>
-                  <td className="is-vcentered">{homework.assigned ? 'Yes' : 'No'}</td>
+                  <td className="is-vcentered">
+                    {homework.assigned ? (
+                      'Yes'
+                    ) : (
+                      <span className="button is-primary is-small" onClick={() => assignHomework(homework)}>
+                        Assign
+                      </span>
+                    )}
+                  </td>
                 </tr>
               ))}
           </tbody>
