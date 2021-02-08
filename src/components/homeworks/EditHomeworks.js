@@ -53,7 +53,7 @@ const EditHomework = ({ cohort, reloadCohort, homework, setHomework }) => {
     <form onSubmit={event => submit(event)}>
       <div className="modal is-active">
         <div className="modal-background" />
-        <div className="modal-card">
+        <div className="modal-card" style={{ width: '70vw' }}>
           <header className="modal-card-head">
             <p className="modal-card-title">Homework</p>
             <span className="delete" aria-label="close" onClick={() => setHomework()} />
