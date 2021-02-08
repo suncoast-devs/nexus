@@ -43,7 +43,7 @@ const StudentGradebook = ({ profile, showTitle }) => {
             <React.Fragment key={cohort.id}>
               <h1 className="title">{cohort.name}</h1>
 
-              {homeworksNeededForCompletion > 16 && (
+              {homeworksNeededForCompletion.length > 16 && (
                 <div className="notification is-primary">
                   You have completed <strong>{studentEnrollment.completedHomeworkCount}</strong> assignments.
                   {studentEnrollment.incompleteHomeworkCount > 0 && (
