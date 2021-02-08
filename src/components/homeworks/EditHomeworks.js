@@ -233,11 +233,19 @@ const EditHomeworks = ({ cohort_id }) => {
                   </td>
                   <td className="is-vcentered">
                     {homework.assigned ? (
-                      'Yes'
+                      <>
+                        <i className="fas fa-check has-text-primary" />
+                        <span className="button is-primary is-small" onClick={() => assignHomework(homework)}>
+                          Re-assign
+                        </span>
+                      </>
                     ) : (
-                      <span className="button is-primary is-small" onClick={() => assignHomework(homework)}>
-                        Assign
-                      </span>
+                      <>
+                        <i class="fas fa-times has-text-danger"></i>
+                        <span className="button is-primary is-small" onClick={() => assignHomework(homework)}>
+                          Assign
+                        </span>
+                      </>
                     )}
                   </td>
                 </tr>
