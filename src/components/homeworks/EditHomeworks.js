@@ -171,8 +171,8 @@ const EditHomeworks = ({ cohort_id }) => {
   const homeworks = (cohort.homeworks || []).sort((a, b) => a.id - b.id)
 
   const assignHomework = homework => {
-    homework.assigned = true
-    homework.save.then(() => {
+    homework.reassigned = true
+    homework.save().then(() => {
       reloadCohort()
     })
   }
