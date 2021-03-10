@@ -73,9 +73,9 @@ const LectureVideoPlayer = ({ lectureVideo }) => {
   )
 }
 
-export const LectureVideoPage = ({ lectureVideoId }) => {
+export const LectureVideoPage = ({ id }) => {
   const { loading, data: lectureVideo } = useModelData(() => {
-    return LectureVideo.find(lectureVideoId)
+    return LectureVideo.find(id)
   })
 
   return (
@@ -160,7 +160,7 @@ const LectureVideos = ({ profile, cohortId }) => {
             <ul>
               {cohort.lectureVideos.sort(compareLectureVideoDates).map(lectureVideo => (
                 <li className="my-3 mx-3">
-                  <Link to={`/lecture-videos/${lectureVideo.id}`} className="is-size-4">
+                  <Link to={`/lecture_videos/${lectureVideo.id}`} className="is-size-4">
                     <div className="level">
                       <div className="level-left">
                         <div className="level-item">{lectureVideo.title}</div>

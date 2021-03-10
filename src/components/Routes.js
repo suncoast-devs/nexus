@@ -174,11 +174,7 @@ const AdminRoutes = ({ profile, auth }) => (
     />
     <Route exact path="/attendance" render={props => <AdminShowAttendances profile={profile} {...props} />} />
     <Route exact path="/lecture_videos" render={props => <LectureVideos profile={profile} auth={auth} {...props} />} />
-    <Route
-      exact
-      path="/lecture_videos/:id"
-      render={props => <LectureVideoPage profile={profile} auth={auth} {...props} />}
-    />
+    <Route exact path="/lecture_videos/:id" render={props => <LectureVideoPage id={props.match.params.id} />} />
     <Route exact path="/gradebook" render={props => <AdminShowGradebooks profile={profile} auth={auth} {...props} />} />
     <Route
       exact
