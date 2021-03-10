@@ -78,53 +78,51 @@ export const LectureVideoPage = ({ id }) => {
     return LectureVideo.find(id)
   })
 
-  return (
-    <table className="table is-fullwidth is-bordered is-hoverable">
-      <tbody>
-        <tr key={lectureVideo.id}>
-          <td>
-            <div className="level mb-2">
-              <div className="level-left">
-                <div className="level-item">
-                  <p className="is-size-4">{lectureVideo.title}</p>
-                </div>
-              </div>
+  if (loading) {
+    return <></>
+  }
 
-              <div className="level-right">
-                <div className="level-item">
-                  <div className="is-size-7 pr-3">
-                    {lectureVideo.presentedAgo} ({moment(lectureVideo.presentedOn).format('dddd')})
-                  </div>
-                  <div className="field is-grouped">
-                    <p className="control">
-                      <a
-                        className="button is-link is-light is-small"
-                        href={lectureVideo.videoUrl}
-                        download={lectureVideo.videoFileName}
-                        onClick={event => {
-                          setTimeout(() => {
-                            recordLectureVideoPlayback(lectureVideo.id)
-                          }, 1000)
-                        }}
-                      >
-                        <span className="icon">
-                          <i className="fas fa-download" />
-                        </span>
-                        <span>Download</span>
-                      </a>
-                    </p>
-                  </div>
-                </div>
-              </div>
+  return (
+    <div className="section">
+      <div className="level mb-5">
+        <div className="level-left">
+          <div className="level-item">
+            <h1 className="title">{lectureVideo.title}</h1>
+          </div>
+        </div>
+
+        <div className="level-right">
+          <div className="level-item">
+            <div className="pr-3">
+              {lectureVideo.presentedAgo} ({moment(lectureVideo.presentedOn).format('dddd')})
             </div>
-            <div className="level">
-              <LectureVideoPlayer lectureVideo={lectureVideo} />
+            <div className="control">
+              <a
+                className="button is-link is-light is-small"
+                href={lectureVideo.videoUrl}
+                download={lectureVideo.videoFileName}
+                onClick={event => {
+                  setTimeout(() => {
+                    recordLectureVideoPlayback(lectureVideo.id)
+                  }, 1000)
+                }}
+              >
+                <span className="icon">
+                  <i className="fas fa-download" />
+                </span>
+                <span>Download</span>
+              </a>
             </div>
-            <p />
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </div>
+        </div>
+      </div>
+
+      <div className="columns">
+        <div className="column is-10 is-offset-1">
+          <LectureVideoPlayer lectureVideo={lectureVideo} />
+        </div>
+      </div>
+    </div>
   )
 }
 
