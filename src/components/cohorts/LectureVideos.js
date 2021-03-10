@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
   Player,
   ControlBar,
@@ -72,6 +73,61 @@ const LectureVideoPlayer = ({ lectureVideo }) => {
   )
 }
 
+export const LectureVideoPage = ({ lectureVideoId }) => {
+  const { loading, data: lectureVideo } = useModelData(() => {
+    return LectureVideo.find(lectureVideoId)
+  })
+
+  return (
+    <table className="table is-fullwidth is-bordered is-hoverable">
+      <tbody>
+        <tr key={lectureVideo.id}>
+          <td>
+            <div className="level mb-2">
+              <div className="level-left">
+                <div className="level-item">
+                  <p className="is-size-4">{lectureVideo.title}</p>
+                </div>
+              </div>
+
+              <div className="level-right">
+                <div className="level-item">
+                  <div className="is-size-7 pr-3">
+                    {lectureVideo.presentedAgo} ({moment(lectureVideo.presentedOn).format('dddd')})
+                  </div>
+                  <div className="field is-grouped">
+                    <p className="control">
+                      <a
+                        className="button is-link is-light is-small"
+                        href={lectureVideo.videoUrl}
+                        download={lectureVideo.videoFileName}
+                        onClick={event => {
+                          setTimeout(() => {
+                            recordLectureVideoPlayback(lectureVideo.id)
+                          }, 1000)
+                        }}
+                      >
+                        <span className="icon">
+                          <i className="fas fa-download" />
+                        </span>
+                        <span>Download</span>
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="level">
+              <LectureVideoPlayer lectureVideo={lectureVideo} />
+            </div>
+            <p />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  )
+}
+
 const LectureVideos = ({ profile, cohortId }) => {
   const [currentVideo, setCurrentVideo] = useState(0)
 
@@ -101,70 +157,24 @@ const LectureVideos = ({ profile, cohortId }) => {
         {cohorts.map(cohort => (
           <React.Fragment key={cohort.id}>
             <h1 className="title">Lecture Videos for {cohort.name}</h1>
-            <table className="table is-fullwidth is-bordered is-hoverable">
-              <tbody>
-                {cohort.lectureVideos.sort(compareLectureVideoDates).map(lectureVideo => (
-                  <tr key={lectureVideo.id}>
-                    <td>
-                      <div className="level mb-2">
-                        <div className="level-left">
-                          <div className="level-item">
-                            <p className="is-size-4">{lectureVideo.title}</p>
-                          </div>
-                        </div>
-
-                        <div className="level-right">
-                          <div className="level-item">
-                            <div className="is-size-7 pr-3">
-                              {lectureVideo.presentedAgo} ({moment(lectureVideo.presentedOn).format('dddd')})
-                            </div>
-                            <div className="field is-grouped">
-                              <p className="control">
-                                <span
-                                  className="button is-link is-light is-small"
-                                  onClick={() =>
-                                    setCurrentVideo(currentVideo === lectureVideo.id ? 0 : lectureVideo.id)
-                                  }
-                                >
-                                  <span className="icon">
-                                    <i className="fas fa-play-circle" />
-                                  </span>
-                                  <span>Play</span>
-                                </span>
-                              </p>
-
-                              <p className="control">
-                                <a
-                                  className="button is-link is-light is-small"
-                                  href={lectureVideo.videoUrl}
-                                  download={lectureVideo.videoFileName}
-                                  onClick={event => {
-                                    setTimeout(() => {
-                                      recordLectureVideoPlayback(lectureVideo.id)
-                                    }, 1000)
-                                  }}
-                                >
-                                  <span className="icon">
-                                    <i className="fas fa-download" />
-                                  </span>
-                                  <span>Download</span>
-                                </a>
-                              </p>
-                            </div>
-                          </div>
+            <ul>
+              {cohort.lectureVideos.sort(compareLectureVideoDates).map(lectureVideo => (
+                <li className="my-3 mx-3">
+                  <Link to={`/lecture-videos/${lectureVideo.id}`} className="is-size-4">
+                    <div className="level">
+                      <div className="level-left">
+                        <div className="level-item">{lectureVideo.title}</div>
+                      </div>
+                      <div className="level-right is-size-7 pr-3">
+                        <div className="level-item">
+                          {lectureVideo.presentedAgo} ({moment(lectureVideo.presentedOn).format('dddd')})
                         </div>
                       </div>
-                      {currentVideo == lectureVideo.id && (
-                        <div className="level">
-                          <LectureVideoPlayer lectureVideo={lectureVideo} />
-                        </div>
-                      )}
-                      <p />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </React.Fragment>
         ))}
       </div>

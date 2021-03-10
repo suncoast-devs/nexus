@@ -23,7 +23,7 @@ import StudentGradebook from './gradebook/StudentGradebook'
 import { StudentAssignment } from './gradebook/assignments/StudentAssignment'
 import StudentProgressReports from './progress/StudentProgressReports'
 import AdminShowGradeQueues from './gradebook/AdminShowGradeQueues'
-import LectureVideos from './cohorts/LectureVideos'
+import LectureVideos, { LectureVideoPage } from './cohorts/LectureVideos'
 import { ShowHomework } from './homeworks/ShowHomework'
 
 const PeopleRoutes = ({ profile, auth }) => (
@@ -174,6 +174,11 @@ const AdminRoutes = ({ profile, auth }) => (
     />
     <Route exact path="/attendance" render={props => <AdminShowAttendances profile={profile} {...props} />} />
     <Route exact path="/lecture_videos" render={props => <LectureVideos profile={profile} auth={auth} {...props} />} />
+    <Route
+      exact
+      path="/lecture_videos/:id"
+      render={props => <LectureVideoPage profile={profile} auth={auth} {...props} />}
+    />
     <Route exact path="/gradebook" render={props => <AdminShowGradebooks profile={profile} auth={auth} {...props} />} />
     <Route
       exact
