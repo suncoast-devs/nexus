@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import statuses from './statuses'
-import cx from 'classnames'
 import { ModalForm } from '@/components/utils/ModalForm'
+import { StatusButtons } from './StatusButtons'
 
-const AttendanceModal = ({ selectedAttendanceRecord, onClose }) => {
+export function AttendanceModal({ selectedAttendanceRecord, onClose }) {
   const [statusKey, setStatusKey] = useState(selectedAttendanceRecord.status)
   const [note, setNote] = useState(selectedAttendanceRecord.note || '')
 
@@ -20,31 +20,6 @@ const AttendanceModal = ({ selectedAttendanceRecord, onClose }) => {
   const nonEmptyStatuses = statuses.filter(status => status.key !== ' ')
   const statusesLeft = nonEmptyStatuses.filter((status, index) => index % 2 === 0)
   const statusesRight = nonEmptyStatuses.filter((status, index) => index % 2 === 1)
-
-  const StatusButton = ({ statusKey, status }) => (
-    <button
-      className={cx('button', {
-        [status.className]: statusKey === status.key,
-        'has-text-black': statusKey === status.key,
-        'has-text-grey-light': statusKey !== status.key,
-      })}
-      style={{ minWidth: '100%' }}
-      onClick={() => setStatusKey(status.key)}
-    >
-      <span className="icon">{status.icon}</span>
-      <span>{status.text}</span>
-    </button>
-  )
-
-  const StatusButtons = ({ statuses }) => (
-    <div className="column is-half">
-      <div className="buttons">
-        {statuses.map(status => (
-          <StatusButton key={status.key} statusKey={statusKey} status={status} />
-        ))}
-      </div>
-    </div>
-  )
 
   return (
     <ModalForm
@@ -74,8 +49,8 @@ const AttendanceModal = ({ selectedAttendanceRecord, onClose }) => {
               </div>
             </div>
             <div className="columns">
-              <StatusButtons statuses={statusesLeft} />
-              <StatusButtons statuses={statusesRight} />
+              <StatusButtons statuses={statusesLeft} statusKey={statusKey} setStatusKey={setStatusKey} />
+              <StatusButtons statuses={statusesRight} statusKey={statusKey} setStatusKey={setStatusKey} />
             </div>
           </div>
         </div>
@@ -83,5 +58,3 @@ const AttendanceModal = ({ selectedAttendanceRecord, onClose }) => {
     </ModalForm>
   )
 }
-
-export default AttendanceModal

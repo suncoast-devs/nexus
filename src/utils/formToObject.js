@@ -1,4 +1,4 @@
-const formToObject = (form, oldObject = {}) => {
+export function formToObject(form, oldObject = {}) {
   const fields = [...form.elements].map(element => element.name).filter(Boolean)
 
   const newObject = fields.reduce((object, field) => {
@@ -12,5 +12,3 @@ const formToObject = (form, oldObject = {}) => {
 
   return Object.assign(oldObject, newObject)
 }
-
-export default formToObject

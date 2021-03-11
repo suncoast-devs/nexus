@@ -2,7 +2,7 @@ import React from 'react'
 import useModelData from '@/hooks/useModelData'
 import { Person } from '@/components/models'
 
-const ProfileLoader = ({ id, children }) => {
+export function ProfileLoader({ id, children }) {
   const { loading, data: person } = useModelData(() => Person.find(id))
 
   if (loading) {
@@ -11,5 +11,3 @@ const ProfileLoader = ({ id, children }) => {
     return React.cloneElement(children, { profile: person })
   }
 }
-
-export default ProfileLoader

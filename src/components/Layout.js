@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
-import AuthenticatedNavBar from './AuthenticatedNavBar'
-import UnauthenticatedNavBar from './UnauthenticatedNavBar'
+import { AuthenticatedNavBar } from './AuthenticatedNavBar'
+import { UnauthenticatedNavBar } from './UnauthenticatedNavBar'
 
 import { ErrorsContext, removeError } from './Errors'
 
 import { AdminRoutes, UserRoutes, PublicRoutes, ProfileRoutes } from './Routes'
 
-const ErrorMessages = () => {
+function ErrorMessages() {
   const [errors, setErrors] = useContext(ErrorsContext)
 
   if (errors.length === 0) {
@@ -27,7 +27,7 @@ const ErrorMessages = () => {
   )
 }
 
-const UserOrAdminRoutes = ({ profile, forceUpdateProfile, auth }) => {
+function UserOrAdminRoutes({ profile, forceUpdateProfile, auth }) {
   if (profile.loading) {
     return <></>
   }
@@ -39,7 +39,7 @@ const UserOrAdminRoutes = ({ profile, forceUpdateProfile, auth }) => {
   )
 }
 
-const Layout = ({ profile, forceUpdateProfile, auth }) => {
+export function Layout({ profile, forceUpdateProfile, auth }) {
   return (
     <>
       {auth.isAuthenticated ? (
@@ -56,5 +56,3 @@ const Layout = ({ profile, forceUpdateProfile, auth }) => {
     </>
   )
 }
-
-export default Layout

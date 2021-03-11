@@ -1,15 +1,17 @@
 import React from 'react'
 
-const DeleteButton = ({ onClick }) => (
-  <span className="icon has-text-danger" onClick={onClick}>
-    <i className="fas fa-minus-square" />
-  </span>
-)
+export function DeleteButton({ onClick }) {
+  return (
+    <span className="icon has-text-danger" onClick={onClick}>
+      <i className="fas fa-minus-square" />
+    </span>
+  )
+}
 
-const AddButton = ({ onClick }) => (
-  <span className="icon has-text-success" onClick={onClick}>
-    <i className="fas fa-plus-square" />
-  </span>
-)
-
-export { AddButton, DeleteButton }
+export function AddButton({ onClick }) {
+  return (
+    <span className="icon has-text-success" onClick={onClick}>
+      <i className="fas fa-plus-square" />
+    </span>
+  )
+}

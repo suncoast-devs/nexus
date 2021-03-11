@@ -5,7 +5,7 @@ import moment from 'moment'
 import { Cohort, CohortDate } from '@/components/models'
 import useModelData from '@/hooks/useModelData'
 
-const EditCohortCalendar = ({ cohort_id }) => {
+export function EditCohortCalendar({ cohort_id }) {
   const { loading, data: cohort, reload: reloadCohort } = useModelData(() =>
     Cohort.includes('cohort_dates').find(cohort_id)
   )
@@ -63,5 +63,3 @@ const EditCohortCalendar = ({ cohort_id }) => {
     </div>
   )
 }
-
-export default EditCohortCalendar

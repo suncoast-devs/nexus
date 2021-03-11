@@ -1,15 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import cx from 'classnames'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 import { StudentEnrollment } from '@/components/models'
 import useModelData from '@/hooks/useModelData'
 import { DeleteButton } from '@/components//utils/Buttons'
-import PersonDropDown from '@/components//PersonDropDown'
-import Person from '@/components/Person'
-import LoadingIndicator from '@/components/utils/LoadingIndicator'
+import { PersonDropDown } from '@/components/person/PersonDropDown'
+import { PersonComponent } from '@/components/person/PersonComponent'
+import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
+import { InvitationCode } from './InvitationCode'
 
-const EditEnrollment = ({ cohort }) => {
+export function EditEnrollment({ cohort }) {
   const {
     loading: loadingStudentEnrollments,
     data: studentEnrollments,
@@ -43,21 +43,6 @@ const EditEnrollment = ({ cohort }) => {
     studentEnrollment.save().then(reloadStudentEnrollments)
   }
 
-  const InvitationCode = ({ invitationCode }) => {
-    const [toolTipText, setToolTipText] = useState('Click to Copy URL')
-
-    return (
-      <CopyToClipboard
-        text={`${window.location.origin}/redeem/${invitationCode}`}
-        onCopy={() => setToolTipText('Copied')}
-      >
-        <span className="tooltip" style={{ cursor: 'pointer' }} data-tooltip={toolTipText}>
-          <code>{invitationCode}</code>
-        </span>
-      </CopyToClipboard>
-    )
-  }
-
   const table = () => (
     <table className="table">
       <thead>
@@ -77,7 +62,7 @@ const EditEnrollment = ({ cohort }) => {
             return (
               <tr key={studentEnrollment.id}>
                 <td>
-                  <Person person={studentEnrollment.person} />
+                  <PersonComponent person={studentEnrollment.person} />
                 </td>
                 <td style={{ textAlign: 'center' }}>
                   <span className="icon">
@@ -138,5 +123,3 @@ const EditEnrollment = ({ cohort }) => {
     </>
   )
 }
-
-export default EditEnrollment

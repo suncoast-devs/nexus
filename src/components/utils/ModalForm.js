@@ -1,7 +1,7 @@
 import React from 'react'
 import cx from 'classnames'
 
-export const ModalForm = ({
+export function ModalForm({
   active,
   children,
   title,
@@ -11,7 +11,7 @@ export const ModalForm = ({
   deleteLabel = 'Delete',
   cancelLabel = 'Cancel',
   confirmLabel = 'Submit',
-}) => {
+}) {
   return (
     <div className={cx('modal', { 'is-active': active })}>
       <div className="modal-background" />

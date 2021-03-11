@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import cx from 'classnames'
 
-const LoadingButton = props => {
+export function LoadingButton(props) {
   const [isClicked, setIsClicked] = useState(false)
 
   const stopLoading = () => setIsClicked(false)
@@ -19,5 +19,3 @@ const LoadingButton = props => {
     </button>
   )
 }
-
-export default LoadingButton

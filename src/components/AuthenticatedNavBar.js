@@ -2,13 +2,10 @@ import React, { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import icon from '@/images/icon.svg'
 import cx from 'classnames'
-import { PersonImage } from './PersonImage'
+import { PersonImage } from './person/PersonImage'
 
-const AuthenticatedNavBar = props => {
-  const [active, setActive] = useState(false)
-  const { profile } = props
-
-  const Admin = () => (
+function Admin() {
+  return (
     <>
       <div className="navbar-link">Admin</div>
       <div className="navbar-dropdown is-boxed">
@@ -24,8 +21,10 @@ const AuthenticatedNavBar = props => {
       </div>
     </>
   )
+}
 
-  const ProfileDropDown = ({ profile }) => (
+function ProfileDropDown({ profile }) {
+  return (
     <div className="media">
       <div className="media-left">
         <figure className="image is-32x32">
@@ -39,8 +38,10 @@ const AuthenticatedNavBar = props => {
       </div>
     </div>
   )
+}
 
-  const Burger = () => (
+function Burger({ active }) {
+  return (
     <div
       className={cx('navbar-burger', 'burger', {
         'is-active': active,
@@ -54,8 +55,10 @@ const AuthenticatedNavBar = props => {
       <span aria-hidden="true" />
     </div>
   )
+}
 
-  const ProfileMenu = () => (
+function ProfileMenu() {
+  return (
     <>
       <NavLink className="navbar-item" activeClassName="is-active" to="/profile">
         Profile
@@ -69,6 +72,10 @@ const AuthenticatedNavBar = props => {
       </a>
     </>
   )
+}
+
+export function AuthenticatedNavBar({ profile }) {
+  const [active, setActive] = useState(false)
 
   return (
     <nav
@@ -81,7 +88,7 @@ const AuthenticatedNavBar = props => {
         <Link to="/" className="navbar-item">
           <img src={icon} alt="Suncoast Developers Guild" height="28" width="28" />
         </Link>
-        <Burger />
+        <Burger active={active} />
       </div>
       <div className={cx('navbar-menu', { 'is-active': active })}>
         <div className="navbar-start">
@@ -113,5 +120,3 @@ const AuthenticatedNavBar = props => {
     </nav>
   )
 }
-
-export default AuthenticatedNavBar

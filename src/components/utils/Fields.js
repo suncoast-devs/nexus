@@ -1,13 +1,18 @@
 import React from 'react'
 
-const camel2title = camelCase =>
-  camelCase.replace(/([A-Z])/g, match => ` ${match}`).replace(/^./, match => match.toUpperCase())
+function camel2title(camelCase) {
+  return camelCase.replace(/([A-Z])/g, match => ` ${match}`).replace(/^./, match => match.toUpperCase())
+}
 
-const labelFromProps = props => props.label || camel2title(props.name)
+function labelFromProps({ label, name }) {
+  return label || camel2title(name)
+}
 
-const valueFromProps = props => props.defaultValue || (props.defaultObject && props.defaultObject[props.name]) || null
+function valueFromProps({ defaultValue, defaultObject, name }) {
+  return defaultValue || (defaultObject && defaultObject[name]) || null
+}
 
-const InputField = props => {
+export function InputField(props) {
   const label = labelFromProps(props)
   const defaultValue = valueFromProps(props)
   const type = props.type || 'text'
@@ -22,7 +27,7 @@ const InputField = props => {
   )
 }
 
-const TextAreaField = props => {
+export function TextAreaField(props) {
   const label = labelFromProps(props)
   const defaultValue = valueFromProps(props)
 
@@ -43,7 +48,7 @@ const TextAreaField = props => {
   )
 }
 
-const SelectField = props => {
+export function SelectField(props) {
   const label = labelFromProps(props)
   const defaultValue = valueFromProps(props)
 
@@ -64,5 +69,3 @@ const SelectField = props => {
     </div>
   )
 }
-
-export { InputField, SelectField, TextAreaField }

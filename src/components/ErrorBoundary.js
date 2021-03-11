@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/browser'
 
-class ErrorBoundary extends Component {
+export class ErrorBoundary extends Component {
   constructor(props) {
     super(props)
     this.state = { error: null, eventId: null }
@@ -24,5 +24,3 @@ class ErrorBoundary extends Component {
     }
   }
 }
-
-export default ErrorBoundary

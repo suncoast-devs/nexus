@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ErrorNotification = ({ errors, onClear }) => {
+export function ErrorNotification({ errors, onClear }) {
   if (Object.keys(errors).length === 0) {
     return <></>
   }
@@ -14,5 +14,3 @@ const ErrorNotification = ({ errors, onClear }) => {
     </div>
   )
 }
-
-export default ErrorNotification

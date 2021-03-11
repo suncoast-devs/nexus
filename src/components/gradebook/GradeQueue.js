@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import useModelData from '@/hooks/useModelData'
-import PersonComponent from '@/components/Person'
-import LoadingIndicator from '@/components/utils/LoadingIndicator'
+import { PersonComponent } from '@/components/person/PersonComponent'
+import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 import { Cohort, Assignment } from '@/components/models'
 
-const GradeQueue = ({ cohort_id }) => {
+export function GradeQueue({ cohort_id }) {
   const { loading, data: cohort, reload } = useModelData(() =>
     Cohort.includes(['student_enrollments', { homeworks: { assignments: ['homework', 'person'] } }]).find(cohort_id)
   )
@@ -84,5 +84,3 @@ const GradeQueue = ({ cohort_id }) => {
     </>
   )
 }
-
-export default GradeQueue

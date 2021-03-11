@@ -2,7 +2,7 @@ import React from 'react'
 import statuses from './statuses'
 import cx from 'classnames'
 
-const AttendanceCell = ({ onClick, statusKey, note, active }) => {
+export function AttendanceCell({ onClick, statusKey, note, active }) {
   const status = statuses.find(status => status.key === statusKey)
 
   return (
@@ -15,5 +15,3 @@ const AttendanceCell = ({ onClick, statusKey, note, active }) => {
     </td>
   )
 }
-
-export default AttendanceCell

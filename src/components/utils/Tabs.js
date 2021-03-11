@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import cx from 'classnames'
 
-const Tabs = props => {
-  const headers = props.children.filter((child, index) => index % 2 === 0)
-  const tabs = props.children.filter((child, index) => index % 2 === 1)
+export function Tabs({ children }) {
+  const headers = children.filter((child, index) => index % 2 === 0)
+  const tabs = children.filter((child, index) => index % 2 === 1)
   const [activeTab, setActiveTab] = useState(0)
 
   return (
@@ -30,7 +30,10 @@ const Tabs = props => {
   )
 }
 
-const TabHeader = ({ children }) => children
-const Tab = ({ children }) => children
+export function TabHeader({ children }) {
+  return children
+}
 
-export { Tabs, TabHeader, Tab }
+export function Tab({ children }) {
+  return children
+}

@@ -4,7 +4,7 @@ import icon from '@/images/icon.svg'
 import cx from 'classnames'
 import history from '@/history'
 
-class UnauthenticatedNavBar extends Component {
+export class UnauthenticatedNavBar extends Component {
   state = {
     active: false,
   }
@@ -62,5 +62,3 @@ class UnauthenticatedNavBar extends Component {
     )
   }
 }
-
-export default UnauthenticatedNavBar

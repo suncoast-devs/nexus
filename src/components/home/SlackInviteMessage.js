@@ -1,7 +1,7 @@
 import React from 'react'
 
-const SlackInviteMessage = ({ profile }) =>
-  profile.slackInviteCode ? (
+export function SlackInviteMessage({ profile }) {
+  return profile.slackInviteCode ? (
     <section className="section">
       <div className="container">
         <article className="message is-warning is-medium">
@@ -55,5 +55,4 @@ const SlackInviteMessage = ({ profile }) =>
   ) : (
     <></>
   )
-
-export default SlackInviteMessage
+}

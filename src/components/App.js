@@ -3,11 +3,11 @@ import { Router } from 'react-router-dom'
 
 import auth from '@/Auth'
 import history from '@/history'
-import Layout from '@/components/Layout'
+import { Layout } from '@/components/Layout'
 import useProfile from '@/hooks/useProfile'
 import { ErrorsContext } from '@/components/Errors'
 
-const App = props => {
+export function App() {
   const { profile, forceUpdateProfile } = useProfile()
 
   const [errors, setErrors] = useState([])
@@ -28,5 +28,3 @@ const App = props => {
     </ErrorsContext.Provider>
   )
 }
-
-export default App

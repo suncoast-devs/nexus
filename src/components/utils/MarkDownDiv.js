@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import renderContent from '@github-docs/render-content'
-export const MarkDownDiv = ({ markdown }) => {
+
+export function MarkDownDiv({ markdown }) {
   const [renderedContent, setRenderedContent] = useState('')
 
   useEffect(() => {
