@@ -11,7 +11,7 @@ import { LeftRight } from '@/components/utils/LeftRight'
 const NewProgressReport = ({ cohort_id }) => {
   const { data: cohort } = useModelData(
     () => Cohort.includes(['people', 'student_enrollments', 'homeworks', 'progress_reports']).find(cohort_id),
-    new Cohort(),
+    new Cohort()
   )
 
   useEffect(() => {

@@ -26,7 +26,7 @@ const AttendanceModal = ({ selectedAttendanceRecord, onClose }) => {
       className={cx('button', {
         [status.className]: statusKey === status.key,
         'has-text-black': statusKey === status.key,
-        'has-text-grey-light': statusKey !== status.key
+        'has-text-grey-light': statusKey !== status.key,
       })}
       style={{ minWidth: '100%' }}
       onClick={() => setStatusKey(status.key)}

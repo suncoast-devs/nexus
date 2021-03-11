@@ -23,7 +23,7 @@ const Cohort = ApplicationRecord.extend({
   },
 
   methods: {
-    assignmentsForThisCohort: function(assignments) {
+    assignmentsForThisCohort: function (assignments) {
       return assignments.filter(assignment => {
         return assignment.homework && assignment.homework.cohort.id === this.id
       })

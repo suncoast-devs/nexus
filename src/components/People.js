@@ -70,10 +70,7 @@ const People = () => {
   const [showNewPerson, setShowNewPerson] = useState(false)
   const [search, setSearch] = useState('')
   const { loading, reload: reloadPeople, data: people } = useModelData(() =>
-    Person.selectExtra(['token'])
-      .per(999)
-      .order('full_name')
-      .all()
+    Person.selectExtra(['token']).per(999).order('full_name').all()
   )
 
   if (loading) {

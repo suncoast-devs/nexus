@@ -46,9 +46,13 @@
       "prettier/prettier": [
         "warn",
         {
-          "printWidth": 120,
+          "useTabs": false,
+          "trailingComma": "es5",
+          "tabWidth": 2,
           "singleQuote": true,
-          "semi": false
+          "semi": false,
+          "printWidth": 120,
+          "arrowParens": "avoid"
         }
       ]
     }

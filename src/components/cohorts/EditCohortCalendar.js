@@ -26,7 +26,7 @@ const EditCohortCalendar = ({ cohort_id }) => {
           title: cohortDate.description || 'Cohort Day',
           allDay: true,
           start: stringToDate(cohortDate.day),
-          end: stringToDate(cohortDate.day)
+          end: stringToDate(cohortDate.day),
         }))
         .sort()
 

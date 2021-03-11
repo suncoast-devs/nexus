@@ -19,7 +19,7 @@ const ProgressReport = ApplicationRecord.extend({
     homeworks: hasMany(),
   },
   methods: {
-    sortedIdsOfPeople: function() {
+    sortedIdsOfPeople: function () {
       return this.idsOfPeople.sort((a, b) => a - b)
     },
   },

@@ -6,7 +6,7 @@ import history from '@/history'
 
 class UnauthenticatedNavBar extends Component {
   state = {
-    active: false
+    active: false,
   }
 
   toggle = () => {
@@ -32,7 +32,7 @@ class UnauthenticatedNavBar extends Component {
           </Link>
           <div
             className={cx('navbar-burger', 'burger', {
-              'is-active': this.state.active
+              'is-active': this.state.active,
             })}
             aria-label="menu"
             aria-expanded={this.state.active}

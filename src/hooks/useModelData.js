@@ -8,7 +8,7 @@ const useModelData = (queryFunction, defaultData = [], callback) => {
 
   useEffect(
     () => {
-      queryFunction().then(function(response) {
+      queryFunction().then(function (response) {
         setData(response.data)
 
         setLoading(false)
@@ -27,7 +27,7 @@ const useModelData = (queryFunction, defaultData = [], callback) => {
   return {
     loading,
     data,
-    reload: () => setForceUpdate(!forceUpdate)
+    reload: () => setForceUpdate(!forceUpdate),
   }
 }
 

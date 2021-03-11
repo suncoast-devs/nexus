@@ -20,21 +20,21 @@ const Assignment = ApplicationRecord.extend({
   },
 })
 
-Assignment.prototype.scoreInfo = function() {
+Assignment.prototype.scoreInfo = function () {
   return Assignment.scoreInfo(this.score)
 }
 
-Assignment.minimumAcceptableScore = 2;
+Assignment.minimumAcceptableScore = 2
 
-Assignment.graded = function(score) {
+Assignment.graded = function (score) {
   return score > 0
 }
 
-Assignment.needsGrade = function(score) {
+Assignment.needsGrade = function (score) {
   return !Assignment.graded(score)
 }
 
-Assignment.scoreInfo = function(score) {
+Assignment.scoreInfo = function (score) {
   return Assignment.graded(score) ? Assignment.scoreInfos[parseInt(score)] : Assignment.noScore
 }
 

@@ -3,7 +3,7 @@ import { attr, belongsTo, hasMany } from 'spraypaint'
 
 const Unit = ApplicationRecord.extend({
   static: {
-    jsonapiType: 'units'
+    jsonapiType: 'units',
   },
   attrs: {
     cohort: belongsTo(),
@@ -14,8 +14,8 @@ const Unit = ApplicationRecord.extend({
     title: attr(),
 
     studentEnrollments: hasMany(),
-    people: hasMany()
-  }
+    people: hasMany(),
+  },
 })
 
 export default Unit

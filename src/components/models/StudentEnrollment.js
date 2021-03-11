@@ -27,17 +27,17 @@ const StudentEnrollment = ApplicationRecord.extend({
   },
 })
 
-StudentEnrollment.prototype.isInUnit = function(unit) {
+StudentEnrollment.prototype.isInUnit = function (unit) {
   return this.units.includes(parseInt(unit.id))
 }
 
-StudentEnrollment.prototype.ensureUnit = function(unit) {
+StudentEnrollment.prototype.ensureUnit = function (unit) {
   if (!this.isInUnit(unit)) {
     this.units = this.units.concat(parseInt(unit.id))
   }
 }
 
-StudentEnrollment.prototype.toggleUnit = function(unit) {
+StudentEnrollment.prototype.toggleUnit = function (unit) {
   if (this.isInUnit(unit)) {
     this.units = this.units.filter(unit_id => unit_id !== parseInt(unit.id))
   } else {

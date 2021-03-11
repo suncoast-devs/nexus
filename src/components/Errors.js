@@ -11,7 +11,11 @@ export const addErrors = (errors, setErrors, newErrors) => {
 }
 
 export const addErrorsFromObject = (errors, setErrors, object) => {
-  addErrors(errors, setErrors, Object.values(object.errors).map(error => error.fullMessage))
+  addErrors(
+    errors,
+    setErrors,
+    Object.values(object.errors).map(error => error.fullMessage)
+  )
 }
 
 export const removeError = (errors, setErrors, errorToRemove) => {

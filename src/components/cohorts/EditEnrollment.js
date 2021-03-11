@@ -14,11 +14,7 @@ const EditEnrollment = ({ cohort }) => {
     loading: loadingStudentEnrollments,
     data: studentEnrollments,
     reload: reloadStudentEnrollments,
-  } = useModelData(() =>
-    StudentEnrollment.includes('person')
-      .where({ cohort_id: cohort.id })
-      .all()
-  )
+  } = useModelData(() => StudentEnrollment.includes('person').where({ cohort_id: cohort.id }).all())
 
   if (loadingStudentEnrollments) {
     return <LoadingIndicator />

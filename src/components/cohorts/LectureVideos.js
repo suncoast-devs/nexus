@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import {
   Player,
@@ -127,8 +127,6 @@ export const LectureVideoPage = ({ id }) => {
 }
 
 const LectureVideos = ({ profile, cohortId }) => {
-  const [currentVideo, setCurrentVideo] = useState(0)
-
   const { data: cohorts } = useModelData(() => {
     // This is required otherwise the query below fails
     new LectureVideo()

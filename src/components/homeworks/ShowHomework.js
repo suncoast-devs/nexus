@@ -4,7 +4,7 @@ import { Homework } from '@/components/models'
 import { MarkDownDiv } from '@/components/utils/MarkDownDiv'
 
 export const ShowHomework = ({ cohortId, homeworkId }) => {
-  const { loading, data: homework, reload } = useModelData(() => Homework.find(homeworkId))
+  const { loading, data: homework } = useModelData(() => Homework.find(homeworkId))
 
   if (loading) {
     return <></>

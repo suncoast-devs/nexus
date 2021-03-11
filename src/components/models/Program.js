@@ -3,13 +3,13 @@ import { attr, hasMany } from 'spraypaint'
 
 const Program = ApplicationRecord.extend({
   static: {
-    jsonapiType: 'programs'
+    jsonapiType: 'programs',
   },
   attrs: {
     title: attr(),
     identifier: attr(),
-    units: hasMany()
-  }
+    units: hasMany(),
+  },
 })
 
 export default Program

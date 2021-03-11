@@ -4,18 +4,18 @@ import moment from 'moment'
 
 const CohortDate = ApplicationRecord.extend({
   static: {
-    jsonapiType: 'cohort_dates'
+    jsonapiType: 'cohort_dates',
   },
   attrs: {
     cohort_id: attr(),
     cohort: belongsTo(),
     day: attr(),
     description: attr(),
-    attendanceRecords: hasMany()
-  }
+    attendanceRecords: hasMany(),
+  },
 })
 
-CohortDate.prototype.formattedDate = function() {
+CohortDate.prototype.formattedDate = function () {
   return moment(this.day).format('ddd MM/DD')
 }
 

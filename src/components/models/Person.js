@@ -29,7 +29,7 @@ const Person = ApplicationRecord.extend({
   },
 })
 
-Person.prototype.isMatch = function(text) {
+Person.prototype.isMatch = function (text) {
   const lowerText = text.toLowerCase()
 
   return [

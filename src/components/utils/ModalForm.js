@@ -10,7 +10,7 @@ export const ModalForm = ({
   onDelete,
   deleteLabel = 'Delete',
   cancelLabel = 'Cancel',
-  confirmLabel = 'Submit'
+  confirmLabel = 'Submit',
 }) => {
   return (
     <div className={cx('modal', { 'is-active': active })}>
