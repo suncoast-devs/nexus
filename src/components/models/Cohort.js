@@ -14,6 +14,7 @@ const Cohort = ApplicationRecord.extend({
     active: attr(),
     program: belongsTo(),
     programId: attr(),
+    assignedHomeworkMarkedForCompletionCount: attr(),
     studentEnrollments: hasMany(),
     people: hasMany(),
     cohortDates: hasMany(),

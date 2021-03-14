@@ -1,41 +1,42 @@
 import React from 'react'
 import cx from 'classnames'
 
-import { Cohort } from '@/components/models'
 import useModelData from '@/hooks/useModelData'
 import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 import { EnrollmentRows } from '@/components/gradebook/EnrollmentRows'
+import { Gradebook } from '../../components/models/Gradebook'
 
 export function GradebookPage({ cohort_id }) {
-  const { loading: loadingCohort, data: cohort } = useModelData(
+  const { loading: loadingGradebook, data: gradebooks } = useModelData(
     () =>
-      Cohort.includes([{ student_enrollments: { person: 'assignments' }, homeworks: { assignments: 'person' } }])
-        .selectExtra({
-          student_enrollments: ['completed_homework_count', 'completion_percentage', 'needed_to_complete_count'],
-        })
-        .find(cohort_id),
-    { people: [] }
+      Gradebook.includes(['cohort', 'homeworks', { student_enrollments: 'person' }, 'assignments'])
+        .where({ cohort_id })
+        .all(),
+    {}
   )
 
-  if (loadingCohort) {
+  const gradebook = gradebooks[0]
+
+  if (loadingGradebook || !gradebook) {
     return <LoadingIndicator />
   }
 
-  const activeEnrollments = cohort.studentEnrollments
+  const { cohort, studentEnrollments, homeworks, assignments } = gradebook
+
+  const activeEnrollments = studentEnrollments
     .filter(enrollment => enrollment.showGrade)
     .sort((a, b) => a.person.fullName.localeCompare(b.person.fullName))
 
-  const inactiveEnrollments = cohort.studentEnrollments
+  const inactiveEnrollments = studentEnrollments
     .filter(enrollment => !enrollment.showGrade)
     .sort((a, b) => a.person.fullName.localeCompare(b.person.fullName))
 
-  const sortedHomework = cohort.homeworks.sort((a, b) => b.id - a.id)
+  const sortedHomework = homeworks.sort((a, b) => b.id - a.id)
 
-  // Homework needed for completion are those that are assigned and marked as counted
-  const homeworksNeededForCompletion = cohort.homeworks.filter(
-    homework => homework.countsTowardsCompletion && homework.assigned
-  )
-  const countOfHomeworksNeededForCompletion = homeworksNeededForCompletion.length
+  const assignmentLookup = assignments.reduce((assignmentLookup, assignment) => {
+    assignmentLookup[`${assignment.studentEnrollmentId}-${assignment.homeworkId}`] = assignment
+    return assignmentLookup
+  }, {})
 
   return (
     <section className="gradebook section">
@@ -60,14 +61,16 @@ export function GradebookPage({ cohort_id }) {
         </thead>
         <tbody>
           <EnrollmentRows
+            assignmentLookup={assignmentLookup}
             enrollments={activeEnrollments}
-            cohort={cohort}
-            countOfHomeworksNeededForCompletion={countOfHomeworksNeededForCompletion}
+            homeworks={sortedHomework}
+            countOfHomeworksNeededForCompletion={cohort.assignedHomeworkMarkedForCompletionCount}
           />
           <EnrollmentRows
+            assignmentLookup={assignmentLookup}
             enrollments={inactiveEnrollments}
-            cohort={cohort}
-            countOfHomeworksNeededForCompletion={countOfHomeworksNeededForCompletion}
+            homeworks={sortedHomework}
+            countOfHomeworksNeededForCompletion={cohort.assignedHomeworkMarkedForCompletionCount}
           />
         </tbody>
       </table>

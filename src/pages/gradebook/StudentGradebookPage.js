@@ -2,40 +2,29 @@ import React from 'react'
 import cx from 'classnames'
 import { Link } from 'react-router-dom'
 
-import { Cohort, Assignment } from '@/components/models'
+import { Assignment } from '@/components/models'
 import useModelData from '@/hooks/useModelData'
 import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
+import { Gradebook } from '../../components/models/Gradebook'
+import { StudentEnrollment } from '../../components/models'
 
-function StudentGradebookCohort({ cohort, profile }) {
-  const studentEnrollment = cohort.studentEnrollments.find(
-    enrollment => parseInt(enrollment.personId) === parseInt(profile.id)
-  )
+function StudentGradebook({ studentEnrollment }) {
+  const assignments = studentEnrollment.assignments.sort((a, b) => b.id - a.id)
 
-  const homeworksNeededForCompletion = cohort.homeworks.filter(homework => homework.countsTowardsCompletion)
-  const cohortAssignments =
-    (studentEnrollment &&
-      studentEnrollment.person &&
-      studentEnrollment.person.assignments
-        .sort((a, b) => b.id - a.id)
-        .filter(assignment => parseInt(assignment.homework.cohortId) === parseInt(cohort.id))) ||
-    []
+  const homeworksNeededForCompletion = assignments.filter(assignment => assignment.homework.countsTowardsCompletion)
 
-  if (cohortAssignments.length === 0) {
+  if (assignments.length === 0) {
     return <></>
   }
 
   return (
     <React.Fragment>
-      <h1 className="title">{cohort.name}</h1>
+      <h1 className="title">{studentEnrollment.cohort.name}</h1>
 
       {homeworksNeededForCompletion.length > 16 && (
         <div className="notification is-primary">
-          You have completed <strong>{studentEnrollment.completedHomeworkCount}</strong> assignments.
-          {studentEnrollment.incompleteHomeworkCount > 0 && (
-            <span>
-              You have <strong>{studentEnrollment.incompleteHomeworkCount}</strong> incomplete assignments
-            </span>
-          )}
+          You have completed <strong>{studentEnrollment.completedAssignmentsCount}</strong> assignments out of{' '}
+          <strong>{homeworksNeededForCompletion.length}</strong>
         </div>
       )}
 
@@ -48,7 +37,7 @@ function StudentGradebookCohort({ cohort, profile }) {
           </tr>
         </thead>
         <tbody>
-          {cohortAssignments.map(assignment => {
+          {assignments.map(assignment => {
             return (
               <tr key={assignment.id}>
                 <td>
@@ -68,17 +57,13 @@ function StudentGradebookCohort({ cohort, profile }) {
 }
 
 export function StudentGradebookPage({ profile, showTitle }) {
-  const { loading: loadingCohorts, data: cohorts } = useModelData(() =>
-    Cohort.includes(['homeworks', { student_enrollments: { person: { assignments: 'homework' } } }])
-      .where({ student_enrollments: { person_id: profile.id } })
-      .order({ start_date: 'desc' })
-      .selectExtra({
-        student_enrollments: ['completed_homework_count', 'completion_percentage', 'needed_to_complete_count'],
-      })
+  const { loading: loadingStudentEnrollments, data: studentEnrollments } = useModelData(() =>
+    StudentEnrollment.includes(['cohort', { assignments: 'homework' }])
+      .where({ person_id: profile.id })
       .all()
   )
 
-  if (loadingCohorts) {
+  if (loadingStudentEnrollments) {
     return <LoadingIndicator />
   }
 
@@ -86,8 +71,8 @@ export function StudentGradebookPage({ profile, showTitle }) {
     <section className="section">
       <div className="container">
         {showTitle && <h1 className="title">Grades for: {profile.fullName}</h1>}
-        {cohorts.map(cohort => (
-          <StudentGradebookCohort key={cohort.id} cohort={cohort} profile={profile} />
+        {studentEnrollments.map(studentEnrollment => (
+          <StudentGradebook key={studentEnrollment.id} studentEnrollment={studentEnrollment} />
         ))}
       </div>
     </section>
