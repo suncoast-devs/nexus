@@ -59,6 +59,7 @@ function StudentGradebook({ studentEnrollment }) {
 export function StudentGradebookPage({ profile, showTitle }) {
   const { loading: loadingStudentEnrollments, data: studentEnrollments } = useModelData(() =>
     StudentEnrollment.includes(['cohort', { assignments: 'homework' }])
+      .order({ cohort_id: 'desc' })
       .where({ person_id: profile.id })
       .all()
   )
