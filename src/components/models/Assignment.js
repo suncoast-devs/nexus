@@ -14,6 +14,7 @@ const Assignment = ApplicationRecord.extend({
     turnedIn: attr(),
     createdAt: attr(),
     overdue: attr(),
+    completed: attr(),
 
     person: belongsTo(),
     studentEnrollment: belongsTo(),
