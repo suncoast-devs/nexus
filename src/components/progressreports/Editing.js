@@ -62,6 +62,20 @@ export function Editing({ showInput, shortName, fullName, assignments, state, di
           <div className="columns">
             <div className="column is-three-fifths is-offset-one-fifth">
               <div className="list">
+                <div className="notification is-secondary has-text-centered">
+                  Completed{' '}
+                  <strong>
+                    {
+                      assignments.filter(
+                        assignment => assignment.homework.countsTowardsCompletion && assignment.completed
+                      ).length
+                    }
+                  </strong>{' '}
+                  assignments out of{' '}
+                  <strong>
+                    {assignments.filter(assignment => assignment.homework.countsTowardsCompletion).length}
+                  </strong>
+                </div>
                 <div className="list-item has-text-centered is-size-3">Assignments</div>
                 {assignments
                   .sort((a, b) => a.homework.id - b.homework.id)
