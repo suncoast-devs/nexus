@@ -34,6 +34,8 @@ export function EditHomeworksPage({ cohort_id }) {
           <EditHomework cohort={cohort} reloadCohort={reloadCohort} homework={homework} setHomework={setHomework} />
         )}
 
+        <h1 className="title">{cohort.name}</h1>
+
         <button
           className="button is-link"
           onClick={() => setHomework(new Homework({ dueAt: moment().add(1, 'days'), countsTowardsCompletion: true }))}
