@@ -33,7 +33,7 @@ export function LectureVideoPlayer({ lectureVideo }) {
         <ForwardControl seconds={30} order={1.2} />
         <CurrentTimeDisplay order={4.1} />
         <TimeDivider order={4.2} />
-        <PlaybackRateMenuButton rates={[4, 3, 2.5, 2.25, 2, 1, 0.5, 0.25]} order={7.1} />
+        <PlaybackRateMenuButton rates={[4, 3, 2.5, 2.25, 2, 1.5, 1.25, 1, 0.5, 0.25]} order={7.1} />
         <VolumeMenuButton />
       </ControlBar>
     </Player>
