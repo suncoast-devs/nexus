@@ -236,6 +236,14 @@ export function UserRoutes({ profile, auth }) {
 
       <Route
         exact
+        path="/cohorts/:id/lecture-videos"
+        render={props => (
+          <LectureVideosPage profile={profile} auth={auth} cohortId={props.match.params.id} {...props} />
+        )}
+      />
+
+      <Route
+        exact
         path="/gradebook"
         render={props => <StudentGradebookPage profile={profile} auth={auth} {...props} />}
         showTitle={true}
