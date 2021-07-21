@@ -1,8 +1,9 @@
 import { SpraypaintBase } from 'spraypaint'
 
+console.log(import.meta.env.VITE_PYLON_URL)
 const ApplicationRecord = SpraypaintBase.extend({
   static: {
-    baseUrl: process.env.REACT_APP_PYLON_URL,
+    baseUrl: import.meta.env.VITE_PYLON_URL,
     apiNamespace: '/api/v1',
   },
 })

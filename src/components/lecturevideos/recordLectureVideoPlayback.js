@@ -1,4 +1,4 @@
-import LectureVideoPlayback from '@/components/models/LectureVideoPlayback'
+import LectureVideoPlayback from '/src//components/models/LectureVideoPlayback'
 
 export function recordLectureVideoPlayback(lectureVideoId) {
   const lectureVideoPlayback = new LectureVideoPlayback({ lectureVideoId })

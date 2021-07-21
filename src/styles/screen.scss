@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-@import '~video-react/styles/scss/video-react';
+@import 'video-react/styles/scss/video-react';
 
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700');
 
@@ -22,7 +22,7 @@ $primary-invert: #fff;
 $link: $sea;
 $text: $asphalt;
 
-@import '~bulma/bulma';
+@import 'bulma/bulma';
 
 .has-cursor-pointer {
   cursor: pointer;
