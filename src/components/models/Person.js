@@ -22,6 +22,7 @@ const Person = ApplicationRecord.extend({
     smallProfileImageUrl: attr(),
     slackUser: attr(),
     slackInviteCode: attr(),
+    dashboardCohortIds: attr(),
     cohorts: hasMany(),
     studentEnrollments: hasMany(),
     attendanceRecords: hasMany(),

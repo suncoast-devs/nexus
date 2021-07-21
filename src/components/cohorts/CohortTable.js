@@ -1,7 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export function CohortTable({ cohorts, title }) {
+export function CohortTable({ cohorts, title, profile, forceUpdateProfile }) {
+  const { dashboardCohortIds } = profile
+
+  function toggleCohort(event, id) {
+    const newCohortIds = event.target.checked
+      ? [...dashboardCohortIds, id]
+      : dashboardCohortIds.filter(cohortId => cohortId !== id)
+
+    profile.dashboardCohortIds = newCohortIds
+    profile.save().then(() => {
+      forceUpdateProfile()
+    })
+  }
+
   return (
     <div className="section">
       <div className="container">
@@ -22,6 +35,11 @@ export function CohortTable({ cohorts, title }) {
                     </div>
                     <div className="level-right">
                       <div className="level-item">
+                        <input
+                          type="checkbox"
+                          checked={dashboardCohortIds.includes(parseInt(cohort.id))}
+                          onChange={event => toggleCohort(event, parseInt(cohort.id))}
+                        />
                         <div className="buttons are-small">
                           <Link className="button is-link is-inverted" to={`/cohorts/${cohort.id}`}>
                             Edit
@@ -32,7 +50,7 @@ export function CohortTable({ cohorts, title }) {
                           <Link className="button is-link is-inverted" to={`/cohorts/${cohort.id}/homeworks`}>
                             Homeworks
                           </Link>
-                          <Link className="button is-link is-inverted" to={`/cohorts/${cohort.id}/gradebook`}>
+                          <Link className="button is-link is-inverted" to={`/cohorts/${cohort.id}/graggook`}>
                             Gradebook
                           </Link>
                           <Link className="button is-link is-inverted" to={`/cohorts/${cohort.id}/progress-reports`}>

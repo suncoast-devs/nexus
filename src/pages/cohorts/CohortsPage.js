@@ -4,9 +4,11 @@ import { Cohort } from '@/components/models'
 import useModelData from '@/hooks/useModelData'
 import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 import { CohortTable } from '../../components/cohorts/CohortTable'
+import useProfile from '../../hooks/useProfile'
 
 export function CohortsPage() {
   const { loading, data: cohorts } = useModelData(() => Cohort.order({ start_date: 'desc' }).all())
+  const { profile, forceUpdateProfile } = useProfile()
 
   if (loading) {
     return <LoadingIndicator />
@@ -24,8 +26,18 @@ export function CohortsPage() {
           </span>
         </h1>
       </div>
-      <CohortTable cohorts={cohorts.filter(cohort => cohort.active)} title="Active" />
-      <CohortTable cohorts={cohorts.filter(cohort => !cohort.active)} title="Inactive" />
+      <CohortTable
+        profile={profile}
+        forceUpdateProfile={forceUpdateProfile}
+        cohorts={cohorts.filter(cohort => cohort.active)}
+        title="Active"
+      />
+      <CohortTable
+        profile={profile}
+        forceUpdateProfile={forceUpdateProfile}
+        cohorts={cohorts.filter(cohort => !cohort.active)}
+        title="Inactive"
+      />
     </section>
   )
 }

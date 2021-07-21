@@ -17,21 +17,22 @@ export function LectureVideosPage({ profile, cohortId }) {
     // If a specific cohort was specified
     if (cohortId) {
       query = query.where({ id: cohortId })
-    } else {
-      // Only show the active cohorts for admins, otherwise it would
-      // be too much information
-      if (profile.isAdmin) {
-        query = query.where({ active: true })
-      }
     }
 
     return query.all()
   })
 
+  console.log(profile.isAdmin)
+
+  // Only show the cohorts the admin wants, otherwise it would
+  const cohortsToShow = profile.isAdmin
+    ? cohorts.filter(cohort => profile.dashboardCohortIds.includes(parseInt(cohort.id)))
+    : cohorts
+
   return (
     <section className="section">
       <div className="container">
-        {cohorts.map(cohort => (
+        {cohortsToShow.map(cohort => (
           <React.Fragment key={cohort.id}>
             <h1 className="title">Lecture Videos for {cohort.name}</h1>
             <ul>

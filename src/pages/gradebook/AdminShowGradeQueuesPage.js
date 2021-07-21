@@ -2,11 +2,15 @@ import React from 'react'
 import useModelData from '@/hooks/useModelData'
 import { Cohort } from '@/components/models'
 import { GradeQueue } from '@/components/gradebook/GradeQueue'
+import useProfile from '../../hooks/useProfile'
 
 export function AdminShowGradeQueuesPage(props) {
-  const { data: cohorts } = useModelData(() => Cohort.where({ active: true }).all())
+  const { profile } = useProfile()
+  const { data: cohorts } = useModelData(() => Cohort.all())
 
-  return cohorts
+  const cohortsToShow = cohorts.filter(cohort => profile.dashboardCohortIds.includes(parseInt(cohort.id)))
+
+  return cohortsToShow
     .sort(cohort => cohort.name.localeCompare(cohort.name))
     .map(cohort => (
       <section className="section" key={cohort.id}>

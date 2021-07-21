@@ -9,6 +9,7 @@ const NULL_PROFILE = {
   isAdmin: false,
   fullName: '',
   smallProfileImageUrl: icon,
+  dashboardCohortIds: [],
 }
 
 const useProfile = () => {
@@ -21,7 +22,7 @@ const useProfile = () => {
   )
 
   const profile = (loading ? NULL_PROFILE : fetchedProfile) || NULL_PROFILE
-  const forceUpdateProfile = loading ? reloadProfile : () => {}
+  const forceUpdateProfile = loading ? () => {} : reloadProfile
 
   return { profile, forceUpdateProfile }
 }
