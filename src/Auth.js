@@ -2,7 +2,7 @@ class Auth {
   userProfile
 
   login = () => {
-    window.location = process.env.REACT_APP_LOGIN_URL
+    window.location = import.meta.env.VITE_LOGIN_URL
   }
 
   get token() {
