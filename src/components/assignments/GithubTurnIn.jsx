@@ -52,7 +52,7 @@ export function GithubTurnIn({ assignmentEventDetails, setAssignmentEventDetails
 
   useEffect(() => {
     async function fetchRepos() {
-      const response = await fetch(`${process.env.VITE_PYLON_URL}/api/v1/repositories`, {
+      const response = await fetch(`${import.meta.env.VITE_PYLON_URL}/api/v1/repositories`, {
         headers: { Authorization: `Token token="${auth.token}"` },
       })
 

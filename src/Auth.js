@@ -2,7 +2,7 @@ class Auth {
   userProfile
 
   login = () => {
-    window.location = process.env.VITE_LOGIN_URL
+    window.location = import.meta.env.VITE_LOGIN_URL
   }
 
   get token() {

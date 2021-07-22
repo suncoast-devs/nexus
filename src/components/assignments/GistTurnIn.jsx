@@ -7,7 +7,7 @@ export function GistTurnIn({ assignmentEventDetails, setAssignmentEventDetails }
 
   useEffect(() => {
     async function fetchGists() {
-      const response = await fetch(`${process.env.VITE_PYLON_URL}/api/v1/gists`, {
+      const response = await fetch(`${import.meta.env.VITE_PYLON_URL}/api/v1/gists`, {
         headers: { Authorization: `Token token="${auth.token}"` },
       })
 

@@ -296,7 +296,9 @@ export function PublicRoutes({ profile, auth }) {
             // This might be a user re-attempting to use the same invite code.
             window.location = `/`
           } else {
-            window.location = `${process.env.VITE_INVITATION_REDEEM_URL}&invitation_code=${props.match.params.invitation_code}`
+            window.location = `${import.meta.env.VITE_INVITATION_REDEEM_URL}&invitation_code=${
+              props.match.params.invitation_code
+            }`
           }
 
           return <Callback {...props} />
