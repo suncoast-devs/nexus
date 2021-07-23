@@ -15,7 +15,8 @@
     "react-big-calendar": "^0.20.4",
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^17.0.1",
-    "react-router-dom": "^4.3.1",
+    "react-query": "^3.19.0",
+    "react-router-dom": "^5.2.0",
     "react-select": "^2.4.3",
     "sass": "^1.32.0",
     "spraypaint": "^0.10.0",
@@ -25,7 +26,8 @@
   "devDependencies": {
     "eslint-config-prettier": "^7.1.0",
     "eslint-plugin-prettier": "^3.3.1",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "vite-plugin-rewrite-all": "^0.1.2"
   },
   "scripts": {
     "start": "vite",
