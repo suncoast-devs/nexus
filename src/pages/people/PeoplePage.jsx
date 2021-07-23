@@ -5,16 +5,22 @@ import { PersonComponent } from '/src//components/person/PersonComponent'
 import { LoadingIndicator } from '/src//components/utils/LoadingIndicator'
 import { LeftRight } from '/src//components/utils/LeftRight'
 import { NewPersonModal } from '../../components/person/NewPersonModal'
-import { PersonButtons } from './PersonButtons'
+import { PersonButtons } from '../../components/person/PersonButtons'
+import { useQuery } from 'react-query'
 
 export function PeoplePage() {
   const [showNewPerson, setShowNewPerson] = useState(false)
   const [search, setSearch] = useState('')
-  const { loading, reload: reloadPeople, data: people } = useModelData(() =>
-    Person.selectExtra(['token']).per(999).order('full_name').all()
-  )
 
-  if (loading) {
+  const {
+    isLoading,
+    refetch: reloadPeople,
+    data: { data: people },
+  } = useQuery(['people'], () => Person.selectExtra(['token']).order('full_name').all(), {
+    placeholderData: { data: [] },
+  })
+
+  if (isLoading) {
     return (
       <section className="section">
         <div className="container">

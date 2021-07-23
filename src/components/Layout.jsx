@@ -47,9 +47,7 @@ export function Layout({ profile, forceUpdateProfile, auth }) {
       ) : (
         <UnauthenticatedNavBar auth={auth} />
       )}
-
       <ErrorMessages />
-
       <PublicRoutes profile={profile} auth={auth} />
       <UserOrAdminRoutes {...{ profile, forceUpdateProfile, auth }} />
       <ProfileRoutes profile={profile} auth={auth} forceUpdateProfile={forceUpdateProfile} />

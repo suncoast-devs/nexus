@@ -6,9 +6,12 @@ import history from '/src/history'
 import { Layout } from '/src/components/Layout'
 import useProfile from '/src//hooks/useProfile'
 import { ErrorsContext } from '/src/components/Errors'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 export function App() {
   const { profile, forceUpdateProfile } = useProfile()
+
+  const queryClient = new QueryClient()
 
   const [errors, setErrors] = useState([])
 
@@ -22,9 +25,11 @@ export function App() {
 
   return (
     <ErrorsContext.Provider value={[errors, setErrors]}>
-      <Router history={history}>
-        <Layout profile={profile} forceUpdateProfile={forceUpdateProfile} auth={auth} />
-      </Router>
+      <QueryClientProvider client={queryClient}>
+        <Router history={history}>
+          <Layout profile={profile} forceUpdateProfile={forceUpdateProfile} auth={auth} />
+        </Router>
+      </QueryClientProvider>
     </ErrorsContext.Provider>
   )
 }
