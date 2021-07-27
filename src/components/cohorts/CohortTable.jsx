@@ -50,7 +50,7 @@ export function CohortTable({ cohorts, title, profile, forceUpdateProfile }) {
                           <Link className="button is-link is-inverted" to={`/cohorts/${cohort.id}/homeworks`}>
                             Homeworks
                           </Link>
-                          <Link className="button is-link is-inverted" to={`/cohorts/${cohort.id}/graggook`}>
+                          <Link className="button is-link is-inverted" to={`/cohorts/${cohort.id}/gradebook`}>
                             Gradebook
                           </Link>
                           <Link className="button is-link is-inverted" to={`/cohorts/${cohort.id}/progress-reports`}>
