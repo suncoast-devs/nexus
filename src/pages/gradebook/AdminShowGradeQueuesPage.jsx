@@ -1,8 +1,8 @@
 import React from 'react'
-import useModelData from '/src//hooks/useModelData'
-import { Cohort } from '/src//components/models'
-import { GradeQueue } from '/src//components/gradebook/GradeQueue'
-import useProfile from '../../hooks/useProfile'
+import useModelData from '/src/hooks/useModelData'
+import { Cohort } from '/src/components/models'
+import { GradeQueue } from '/src/components/gradebook/GradeQueue'
+import useProfile from '/src/hooks/useProfile'
 
 export function AdminShowGradeQueuesPage(props) {
   const { profile } = useProfile()

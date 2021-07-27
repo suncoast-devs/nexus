@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
-import { StudentProgressReport } from '/src//components/models'
-import { PersonComponent } from '/src//components/person/PersonComponent'
+import { StudentProgressReport } from '/src/components/models'
+import { PersonComponent } from '/src/components/person/PersonComponent'
 
 export function SidebarLink({ progressReport, progressReportBaseURL, index, person, sidebarIndex }) {
   const studentProgressReport =

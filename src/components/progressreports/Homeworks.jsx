@@ -1,5 +1,5 @@
 import React from 'react'
-import { LeftRight } from '/src//components/utils/LeftRight'
+import { LeftRight } from '/src/components/utils/LeftRight'
 import { panelClass } from './panelClass'
 
 export function Homeworks({ sortedHomeworks, selectedHomeworkIDs, toggleHomework }) {

@@ -1,10 +1,10 @@
 import React from 'react'
 import cx from 'classnames'
 
-import useModelData from '/src//hooks/useModelData'
-import { LoadingIndicator } from '/src//components/utils/LoadingIndicator'
-import { EnrollmentRows } from '/src//components/gradebook/EnrollmentRows'
-import { Gradebook } from '../../components/models/Gradebook'
+import useModelData from '/src/hooks/useModelData'
+import { LoadingIndicator } from '/src/components/utils/LoadingIndicator'
+import { EnrollmentRows } from '/src/components/gradebook/EnrollmentRows'
+import { Gradebook } from '/src/components/models/Gradebook'
 
 export function GradebookPage({ cohort_id }) {
   const { loading: loadingGradebook, data: gradebooks } = useModelData(

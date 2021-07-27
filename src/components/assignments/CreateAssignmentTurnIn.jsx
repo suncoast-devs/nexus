@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { PersonImage } from '/src//components/person/PersonImage'
+import { PersonImage } from '/src/components/person/PersonImage'
 import { GithubTurnIn } from './GithubTurnIn'
 import { GistTurnIn } from './GistTurnIn'
 import { URLTurnIn } from './URLTurnIn'

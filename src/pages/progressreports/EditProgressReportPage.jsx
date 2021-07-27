@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import history from '/src//history'
-import useModelData from '/src//hooks/useModelData'
-import { ProgressReport } from '/src//components/models'
-import { LoadingIndicator } from '/src//components/utils/LoadingIndicator'
-import { Main } from '../../components/progressreports/Main'
-import { Sidebar } from '../../components/progressreports/Sidebar'
+import history from '/src/history'
+import useModelData from '/src/hooks/useModelData'
+import { ProgressReport } from '/src/components/models'
+import { LoadingIndicator } from '/src/components/utils/LoadingIndicator'
+import { Main } from '/src/components/progressreports/Main'
+import { Sidebar } from '/src/components/progressreports/Sidebar'
 
 export function EditProgressReportPage({ id, progressReportBaseURL, index }) {
   const { loading: loadingProgressReport, data: progressReport, reload: reloadProgressReport } = useModelData(

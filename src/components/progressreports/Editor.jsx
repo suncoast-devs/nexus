@@ -1,5 +1,5 @@
 import React from 'react'
-import { StudentProgressReport, Assignment } from '/src//components/models'
+import { StudentProgressReport, Assignment } from '/src/components/models'
 import { GenerateStudentProgressReport } from './GenerateStudentProgressReport'
 
 export function Editor({ progressReport, onSaveStudentReport, index, onSkip }) {

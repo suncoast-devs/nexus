@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import icon from '/src//images/icon.svg'
+import icon from '/src/images/icon.svg'
 import cx from 'classnames'
-import history from '/src//history'
+import history from '/src/history'
 
 export class UnauthenticatedNavBar extends Component {
   state = {

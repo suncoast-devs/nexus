@@ -1,17 +1,17 @@
 import React, { useContext } from 'react'
 
-import { Cohort } from '/src//components/models'
-import useModelData from '/src//hooks/useModelData'
+import { Cohort } from '/src/components/models'
+import useModelData from '/src/hooks/useModelData'
 
-import { ErrorsContext, addErrorsFromObject } from '/src//components/Errors'
+import { ErrorsContext, addErrorsFromObject } from '/src/components/Errors'
 
-import history from '/src//history'
-import { formToObject } from '/src//utils/formToObject'
-import { Tabs, TabHeader, Tab } from '/src//components/utils/Tabs'
-import { LoadingIndicator } from '/src//components/utils/LoadingIndicator'
-import { EditCohortForm } from '../../components/cohorts/EditCohortForm'
-import { EditEnrollment } from '../../components/cohorts/EditEnrollment'
-import { EditCohortCalendar } from '../../components/cohorts/EditCohortCalendar'
+import history from '/src/history'
+import { formToObject } from '/src/utils/formToObject'
+import { Tabs, TabHeader, Tab } from '/src/components/utils/Tabs'
+import { LoadingIndicator } from '/src/components/utils/LoadingIndicator'
+import { EditCohortForm } from '/src/components/cohorts/EditCohortForm'
+import { EditEnrollment } from '/src/components/cohorts/EditEnrollment'
+import { EditCohortCalendar } from '/src/components/cohorts/EditCohortCalendar'
 
 export function EditCohortPage({ id }) {
   const { loading, data: cohort } = useModelData(() => Cohort.selectExtra(['units']).find(id))

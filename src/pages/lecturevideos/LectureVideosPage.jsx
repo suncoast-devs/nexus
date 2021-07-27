@@ -2,10 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 
-import useModelData from '/src//hooks/useModelData'
-import Cohort from '/src//components/models/Cohort'
-import LectureVideo from '/src//components/models/LectureVideo'
-import { compareLectureVideoDates } from '../../components/lecturevideos/compareLectureVideoDates'
+import useModelData from '/src/hooks/useModelData'
+import Cohort from '/src/components/models/Cohort'
+import LectureVideo from '/src/components/models/LectureVideo'
+import { compareLectureVideoDates } from '/src/components/lecturevideos/compareLectureVideoDates'
 
 export function LectureVideosPage({ profile, cohortId }) {
   const { data: cohorts } = useModelData(() => {

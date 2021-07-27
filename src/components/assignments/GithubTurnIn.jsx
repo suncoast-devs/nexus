@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { LoadingIndicator } from '/src//components/utils/LoadingIndicator'
-import auth from '/src//Auth'
+import { LoadingIndicator } from '/src/components/utils/LoadingIndicator'
+import auth from '/src/Auth'
 import moment from 'moment'
 
 export function GithubTurnIn({ assignmentEventDetails, setAssignmentEventDetails, setTurnInValid }) {

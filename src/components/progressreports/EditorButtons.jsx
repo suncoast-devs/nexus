@@ -1,5 +1,5 @@
 import React from 'react'
-import { LoadingButton } from '/src//components/utils/LoadingButton'
+import { LoadingButton } from '/src/components/utils/LoadingButton'
 
 export function EditorButtons({ onDone, onSkip }) {
   return (

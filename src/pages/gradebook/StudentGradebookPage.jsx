@@ -2,11 +2,11 @@ import React from 'react'
 import cx from 'classnames'
 import { Link } from 'react-router-dom'
 
-import { Assignment } from '/src//components/models'
-import useModelData from '/src//hooks/useModelData'
-import { LoadingIndicator } from '/src//components/utils/LoadingIndicator'
-import { Gradebook } from '../../components/models/Gradebook'
-import { StudentEnrollment } from '../../components/models'
+import { Assignment } from '/src/components/models'
+import useModelData from '/src/hooks/useModelData'
+import { LoadingIndicator } from '/src/components/utils/LoadingIndicator'
+import { Gradebook } from '/src/components/models/Gradebook'
+import { StudentEnrollment } from '/src/components/models'
 
 function StudentGradebook({ studentEnrollment }) {
   const assignments = studentEnrollment.assignments.sort((a, b) => b.id - a.id)

@@ -1,9 +1,9 @@
 import React from 'react'
 import moment from 'moment'
-import useModelData from '/src//hooks/useModelData'
-import LectureVideo from '/src//components/models/LectureVideo'
-import { LectureVideoPlayer } from '../../components/lecturevideos/LectureVideoPlayer'
-import { recordLectureVideoPlayback } from '../../components/lecturevideos/recordLectureVideoPlayback'
+import useModelData from '/src/hooks/useModelData'
+import LectureVideo from '/src/components/models/LectureVideo'
+import { LectureVideoPlayer } from '/src/components/lecturevideos/LectureVideoPlayer'
+import { recordLectureVideoPlayback } from '/src/components/lecturevideos/recordLectureVideoPlayback'
 
 export function LectureVideoPage({ id }) {
   const { loading, data: lectureVideo } = useModelData(() => {

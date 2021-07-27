@@ -1,6 +1,6 @@
 import React from 'react'
-import useModelData from '/src//hooks/useModelData'
-import { Person } from '/src//components/models'
+import useModelData from '/src/hooks/useModelData'
+import { Person } from '/src/components/models'
 
 export function ProfileLoader({ id, children }) {
   const { loading, data: person } = useModelData(() => Person.find(id))

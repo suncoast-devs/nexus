@@ -4,7 +4,7 @@ import { Router } from 'react-router-dom'
 import auth from '/src/Auth'
 import history from '/src/history'
 import { Layout } from '/src/components/Layout'
-import useProfile from '/src//hooks/useProfile'
+import useProfile from '/src/hooks/useProfile'
 import { ErrorsContext } from '/src/components/Errors'
 import { QueryClient, QueryClientProvider } from 'react-query'
 

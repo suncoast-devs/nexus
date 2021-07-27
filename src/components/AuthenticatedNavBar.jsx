@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import icon from '/src//images/icon.svg'
+import icon from '/src/images/icon.svg'
 import cx from 'classnames'
 import { PersonImage } from './person/PersonImage'
 

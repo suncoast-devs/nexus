@@ -1,7 +1,7 @@
 import React from 'react'
-import useModelData from '/src//hooks/useModelData'
-import { Homework } from '/src//components/models'
-import { MarkDownDiv } from '/src//components/utils/MarkDownDiv'
+import useModelData from '/src/hooks/useModelData'
+import { Homework } from '/src/components/models'
+import { MarkDownDiv } from '/src/components/utils/MarkDownDiv'
 
 export function ShowHomeworkPage({ cohortId, homeworkId }) {
   const { loading, data: homework } = useModelData(() => Homework.find(homeworkId))

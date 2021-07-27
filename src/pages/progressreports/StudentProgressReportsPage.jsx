@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { StudentProgressReport } from '/src//components/models'
-import useModelData from '/src//hooks/useModelData'
-import { LoadingIndicator } from '/src//components/utils/LoadingIndicator'
+import { StudentProgressReport } from '/src/components/models'
+import useModelData from '/src/hooks/useModelData'
+import { LoadingIndicator } from '/src/components/utils/LoadingIndicator'
 
 export function StudentProgressReportsPage({ profile, showTitle }) {
   const { loading: loadingStudentProgressReports, data: reports } = useModelData(() => StudentProgressReport.all())

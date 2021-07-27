@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import moment from 'moment'
 
-import { formToObject } from '/src//utils/formToObject'
-import useModelData from '/src//hooks/useModelData'
-import HandbookAssignment from '../models/HandbookAssignment'
+import { formToObject } from '/src/utils/formToObject'
+import useModelData from '/src/hooks/useModelData'
+import HandbookAssignment from '/src/components/models/HandbookAssignment'
 
 export function EditHomework({ cohort, reloadCohort, homework, setHomework }) {
   const [body, setBody] = useState(homework.body)
