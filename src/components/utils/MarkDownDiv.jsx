@@ -6,7 +6,7 @@ export function MarkDownDiv({ markdown }) {
 
   useEffect(() => {
     async function renderMarkDown() {
-      const response = await fetch('https://api.github.com/markdown', {
+      const response = await fetch(`${import.meta.env.VITE_PYLON_URL}/markdown`, {
         method: 'POST',
         headers: {
           Accept: 'application/vnd.github.v3+jso',
