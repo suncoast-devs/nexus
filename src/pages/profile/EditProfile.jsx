@@ -1,9 +1,9 @@
 import React from 'react'
 
-import history from '/src/history'
-import { formToObject } from '/src/utils/formToObject'
-import { InputField, SelectField, TextAreaField } from '/src/components//utils/Fields'
-import { SlackInviteMessage } from '/src/components/home/SlackInviteMessage'
+import history from '@/history'
+import { formToObject } from '@/utils/formToObject'
+import { InputField, SelectField, TextAreaField } from '@/components//utils/Fields'
+import { SlackInviteMessage } from '@/components/home/SlackInviteMessage'
 
 export function EditProfilePage(props) {
   const { profile, forceUpdateProfile } = props

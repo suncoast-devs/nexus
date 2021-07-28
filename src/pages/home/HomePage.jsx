@@ -1,8 +1,8 @@
 import React from 'react'
-import { SlackInviteMessage } from '/src/components/home/SlackInviteMessage'
-import { AdminShowGradeQueuesPage } from '/src/pages/gradebook/AdminShowGradeQueuesPage'
-import { StudentGradebookPage } from '/src/pages/gradebook/StudentGradebookPage'
-import banner from '/src/images/banner.svg'
+import { SlackInviteMessage } from '@/components/home/SlackInviteMessage'
+import { AdminShowGradeQueuesPage } from '@/pages/gradebook/AdminShowGradeQueuesPage'
+import { StudentGradebookPage } from '@/pages/gradebook/StudentGradebookPage'
+import banner from '@/images/banner.svg'
 
 export function HomePage({ profile, isAuthenticated }) {
   if (!isAuthenticated) {

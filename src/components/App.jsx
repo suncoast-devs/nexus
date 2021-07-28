@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Router } from 'react-router-dom'
 
-import auth from '/src/Auth'
-import history from '/src/history'
-import { Layout } from '/src/components/Layout'
-import useProfile from '/src/hooks/useProfile'
-import { ErrorsContext } from '/src/components/Errors'
+import auth from '@/Auth'
+import history from '@/history'
+import { Layout } from '@/components/Layout'
+import useProfile from '@/hooks/useProfile'
+import { ErrorsContext } from '@/components/Errors'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
 export function App() {

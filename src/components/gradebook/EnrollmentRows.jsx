@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
-import { PersonComponent } from '/src/components/person/PersonComponent'
-import { InactivePerson } from '/src/components/person/InactivePerson'
+import { PersonComponent } from '@/components/person/PersonComponent'
+import { InactivePerson } from '@/components/person/InactivePerson'
 import { HomeworkTableData } from './HomeworkTableData'
 
 function EnrollmentRow({ enrollment, assignmentLookup, homeworks, countOfHomeworksNeededForCompletion }) {

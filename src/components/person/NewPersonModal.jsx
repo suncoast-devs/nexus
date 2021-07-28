@@ -1,9 +1,9 @@
 import React from 'react'
 import cx from 'classnames'
 
-import { Person } from '/src/components/models'
-import { InputField } from '/src/components//utils/Fields'
-import { formToObject } from '/src/utils/formToObject'
+import { Person } from '@/components/models'
+import { InputField } from '@/components//utils/Fields'
+import { formToObject } from '@/utils/formToObject'
 
 export function NewPersonModal({ isActive, onSave, onClose }) {
   const person = new Person()

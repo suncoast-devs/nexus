@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Assignment } from '/src/components/models'
-import { LoadingButton } from '/src/components/utils/LoadingButton'
+import { Assignment } from '@/components/models'
+import { LoadingButton } from '@/components/utils/LoadingButton'
 
 export function GradeAssignment({ assignment, createAssignmentEvent }) {
   const placeholder = 'https://bulma.io/images/placeholders/128x128.png'

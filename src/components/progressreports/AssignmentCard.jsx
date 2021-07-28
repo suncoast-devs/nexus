@@ -1,5 +1,5 @@
 import React from 'react'
-import { Assignment } from '/src/components/models'
+import { Assignment } from '@/components/models'
 
 export function AssignmentCard({ assignment }) {
   const scoreInfo = Assignment.scoreInfo(assignment.score)

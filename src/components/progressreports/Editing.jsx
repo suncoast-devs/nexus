@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '/src/images/logo.png'
+import logo from '@/images/logo.png'
 import { AssignmentCard } from './AssignmentCard'
 
 export function Editing({ showInput, shortName, fullName, assignments, state, dispatch, title }) {

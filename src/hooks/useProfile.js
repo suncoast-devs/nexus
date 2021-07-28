@@ -1,6 +1,6 @@
-import auth from '/src/Auth'
-import icon from '/src/images/icon.svg'
-import Profile from '/src/components/models/Profile'
+import auth from '@/Auth'
+import icon from '@/images/icon.svg'
+import Profile from '@/components/models/Profile'
 import useModelData from './useModelData'
 
 const NULL_PROFILE = {

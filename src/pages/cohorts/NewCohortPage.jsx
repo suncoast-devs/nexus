@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 
-import { Cohort } from '/src/components/models'
-import { ErrorNotification } from '/src/components/utils/ErrorNotification'
-import history from '/src/history'
-import { formToObject } from '/src/utils/formToObject'
-import { EditCohortForm } from '/src/components/cohorts/EditCohortForm'
+import { Cohort } from '@/components/models'
+import { ErrorNotification } from '@/components/utils/ErrorNotification'
+import history from '@/history'
+import { formToObject } from '@/utils/formToObject'
+import { EditCohortForm } from '@/components/cohorts/EditCohortForm'
 
 export function NewCohortPage() {
   const [errors, setErrors] = useState({})

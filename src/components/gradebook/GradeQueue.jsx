@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import useModelData from '/src/hooks/useModelData'
-import { PersonComponent } from '/src/components/person/PersonComponent'
-import { LoadingIndicator } from '/src/components/utils/LoadingIndicator'
-import { Cohort, Assignment } from '/src/components/models'
+import useModelData from '@/hooks/useModelData'
+import { PersonComponent } from '@/components/person/PersonComponent'
+import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
+import { Cohort, Assignment } from '@/components/models'
 
 export function GradeQueue({ cohort_id }) {
   const { loading, data: cohort, reload } = useModelData(() =>

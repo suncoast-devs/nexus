@@ -1,5 +1,5 @@
 import React from 'react'
-import { MarkDownDiv } from '/src/components/utils/MarkDownDiv'
+import { MarkDownDiv } from '@/components/utils/MarkDownDiv'
 import { GithubTurnedInAssignmentDetails } from './GithubTurnedInAssignmentDetails'
 import { GistTurnedInAssignmentDetails } from './GistTurnedInAssignmentDetails'
 import { URLTurnedInAssignmentDetails } from './URLTurnedInAssignmentDetails'

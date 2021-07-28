@@ -1,12 +1,12 @@
 import React from 'react'
 import cx from 'classnames'
 
-import { StudentEnrollment } from '/src/components/models'
-import useModelData from '/src/hooks/useModelData'
-import { DeleteButton } from '/src/components//utils/Buttons'
-import { PersonDropDown } from '/src/components/person/PersonDropDown'
-import { PersonComponent } from '/src/components/person/PersonComponent'
-import { LoadingIndicator } from '/src/components/utils/LoadingIndicator'
+import { StudentEnrollment } from '@/components/models'
+import useModelData from '@/hooks/useModelData'
+import { DeleteButton } from '@/components//utils/Buttons'
+import { PersonDropDown } from '@/components/person/PersonDropDown'
+import { PersonComponent } from '@/components/person/PersonComponent'
+import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 import { InvitationCode } from './InvitationCode'
 
 export function EditEnrollment({ cohort }) {

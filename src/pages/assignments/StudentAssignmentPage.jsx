@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { Assignment, AssignmentEvent } from '/src/components/models'
-import useModelData from '/src/hooks/useModelData'
+import { Assignment, AssignmentEvent } from '@/components/models'
+import useModelData from '@/hooks/useModelData'
 import moment from 'moment'
-import { CreateAssignmentComment } from '/src/components/assignments/CreateAssignmentComment'
-import { MarkDownDiv } from '/src/components/utils/MarkDownDiv'
-import { ShowAssignmentEvent } from '/src/components/assignments/ShowAssignmentEvent'
-import { CreateAssignmentTurnIn } from '/src/components/assignments/CreateAssignmentTurnIn'
-import { GradeAssignment } from '/src/components/assignments/GradeAssignment'
+import { CreateAssignmentComment } from '@/components/assignments/CreateAssignmentComment'
+import { MarkDownDiv } from '@/components/utils/MarkDownDiv'
+import { ShowAssignmentEvent } from '@/components/assignments/ShowAssignmentEvent'
+import { CreateAssignmentTurnIn } from '@/components/assignments/CreateAssignmentTurnIn'
+import { GradeAssignment } from '@/components/assignments/GradeAssignment'
 
 export function StudentAssignmentPage({ profile, id }) {
   const { loading, data: assignment, reload } = useModelData(() =>

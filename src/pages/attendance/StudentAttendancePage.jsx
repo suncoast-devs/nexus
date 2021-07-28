@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { PersonComponent } from '/src/components/person/PersonComponent'
-import useModelData from '/src/hooks/useModelData'
-import { AttendanceRecord } from '/src/components/models'
-import { AttendanceCell } from '/src/components/attendance/AttendanceCell'
+import { PersonComponent } from '@/components/person/PersonComponent'
+import useModelData from '@/hooks/useModelData'
+import { AttendanceRecord } from '@/components/models'
+import { AttendanceCell } from '@/components/attendance/AttendanceCell'
 
 export function StudentAttendancePage({ profile, showTitle }) {
   const { loading, data } = useModelData(() => AttendanceRecord.includes('cohort_date').all())

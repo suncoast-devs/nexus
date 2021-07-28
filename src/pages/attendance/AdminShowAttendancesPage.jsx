@@ -1,9 +1,9 @@
 import React from 'react'
 
-import useModelData from '/src/hooks/useModelData'
-import { Cohort } from '/src/components/models'
+import useModelData from '@/hooks/useModelData'
+import { Cohort } from '@/components/models'
 import { EditAttendancePage } from './EditAttendancePage'
-import useProfile from '/src/hooks/useProfile'
+import useProfile from '@/hooks/useProfile'
 
 export function AdminShowAttendancesPage(props) {
   const { profile } = useProfile()

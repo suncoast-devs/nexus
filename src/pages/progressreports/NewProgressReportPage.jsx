@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import moment from 'moment'
 
-import history from '/src/history'
-import useModelData from '/src/hooks/useModelData'
-import { Cohort, ProgressReport } from '/src/components/models'
-import { LeftRight } from '/src/components/utils/LeftRight'
-import { DateRange } from '/src/components/progressreports/DateRange'
-import { Homeworks } from '/src/components/progressreports/Homeworks'
-import { SelectPeople } from '/src/components/progressreports/SelectPeople'
+import history from '@/history'
+import useModelData from '@/hooks/useModelData'
+import { Cohort, ProgressReport } from '@/components/models'
+import { LeftRight } from '@/components/utils/LeftRight'
+import { DateRange } from '@/components/progressreports/DateRange'
+import { Homeworks } from '@/components/progressreports/Homeworks'
+import { SelectPeople } from '@/components/progressreports/SelectPeople'
 
 export function NewProgressReportPage({ cohort_id }) {
   const { data: cohort } = useModelData(

@@ -1,4 +1,4 @@
-import * as Sentry from '/src/sentry/browser'
+import * as Sentry from '@/sentry/browser'
 
 export class ErrorBoundary extends Component {
   constructor(props) {

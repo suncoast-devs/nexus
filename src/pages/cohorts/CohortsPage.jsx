@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Cohort } from '/src/components/models'
-import useModelData from '/src/hooks/useModelData'
-import { LoadingIndicator } from '/src/components/utils/LoadingIndicator'
-import { CohortTable } from '/src/components/cohorts/CohortTable'
-import useProfile from '/src/hooks/useProfile'
+import { Cohort } from '@/components/models'
+import useModelData from '@/hooks/useModelData'
+import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
+import { CohortTable } from '@/components/cohorts/CohortTable'
+import useProfile from '@/hooks/useProfile'
 
 export function CohortsPage() {
   const { loading, data: cohorts } = useModelData(() => Cohort.order({ start_date: 'desc' }).all())

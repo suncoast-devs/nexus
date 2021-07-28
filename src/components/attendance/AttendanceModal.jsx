@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import statuses from './statuses'
-import { ModalForm } from '/src/components/utils/ModalForm'
+import { ModalForm } from '@/components/utils/ModalForm'
 import { StatusButtons } from './StatusButtons'
 
 export function AttendanceModal({ selectedAttendanceRecord, onClose }) {

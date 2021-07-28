@@ -1,6 +1,6 @@
 import React from 'react'
-import { PersonComponent } from '/src/components/person/PersonComponent'
-import { LeftRight } from '/src/components/utils/LeftRight'
+import { PersonComponent } from '@/components/person/PersonComponent'
+import { LeftRight } from '@/components/utils/LeftRight'
 import { panelClass } from './panelClass'
 
 export function SelectPeople({ sortedPeople, selectedPeopleIDs, togglePerson }) {

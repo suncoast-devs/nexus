@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { PersonImage } from '/src/components/person/PersonImage'
+import { PersonImage } from '@/components/person/PersonImage'
 
 export function CreateAssignmentComment({
   name = 'comment',

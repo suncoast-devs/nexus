@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Cohort } from '/src/components/models'
-import useModelData from '/src/hooks/useModelData'
-import { LeftRight } from '/src/components/utils/LeftRight'
-import { LoadingIndicator } from '/src/components/utils/LoadingIndicator'
+import { Cohort } from '@/components/models'
+import useModelData from '@/hooks/useModelData'
+import { LeftRight } from '@/components/utils/LeftRight'
+import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 
 export function CohortProgressReportsPage({ cohort_id, allowNew }) {
   const { loading, data: cohort } = useModelData(() =>

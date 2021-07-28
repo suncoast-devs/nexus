@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import moment from 'moment'
-import { Homework, Cohort } from '/src/components/models'
-import useModelData from '/src/hooks/useModelData'
+import { Homework, Cohort } from '@/components/models'
+import useModelData from '@/hooks/useModelData'
 import { Link } from 'react-router-dom'
-import { EditHomework } from '/src/components/homeworks/EditHomework'
+import { EditHomework } from '@/components/homeworks/EditHomework'
 
 export function EditHomeworksPage({ cohort_id }) {
   const [homework, setHomework] = useState()

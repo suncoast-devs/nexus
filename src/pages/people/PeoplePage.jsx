@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import useModelData from '/src/hooks/useModelData'
-import { Person } from '/src/components/models'
-import { PersonComponent } from '/src/components/person/PersonComponent'
-import { LoadingIndicator } from '/src/components/utils/LoadingIndicator'
-import { LeftRight } from '/src/components/utils/LeftRight'
-import { NewPersonModal } from '/src/components/person/NewPersonModal'
-import { PersonButtons } from '/src/components/person/PersonButtons'
+import useModelData from '@/hooks/useModelData'
+import { Person } from '@/components/models'
+import { PersonComponent } from '@/components/person/PersonComponent'
+import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
+import { LeftRight } from '@/components/utils/LeftRight'
+import { NewPersonModal } from '@/components/person/NewPersonModal'
+import { PersonButtons } from '@/components/person/PersonButtons'
 import { useQuery } from 'react-query'
 
 export function PeoplePage() {
