@@ -15,6 +15,7 @@ export function StudentProgressReportsPage({ profile, showTitle }) {
     <section className="section">
       <div className="container">
         {showTitle && <h1 className="title">Progress Reports for: {profile.fullName}</h1>}
+        {reports.length === 0 ? <h1 className="title">No progress reports yet...</h1> : <></>}
         {reports.map(report => (
           <div key={report.id} className="container">
             <img alt="progress-report" src={report.reportImageUrl} />

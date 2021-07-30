@@ -21,7 +21,7 @@ export function EditHomeworksPage({ cohort_id }) {
   }
 
   return (
-    <section className="section">
+    <>
       <div
         className="container"
         onKeyDown={event => {
@@ -34,14 +34,24 @@ export function EditHomeworksPage({ cohort_id }) {
           <EditHomework cohort={cohort} reloadCohort={reloadCohort} homework={homework} setHomework={setHomework} />
         )}
 
-        <h1 className="title">{cohort.name}</h1>
-
-        <button
-          className="button is-link"
-          onClick={() => setHomework(new Homework({ dueAt: moment().add(1, 'days'), countsTowardsCompletion: true }))}
-        >
-          New Homework
-        </button>
+        <nav className="level">
+          <div className="level-left"></div>
+          <div className="level-right">
+            <div className="level-item">
+              <button
+                className="button is-primary is-inverted"
+                onClick={() =>
+                  setHomework(new Homework({ dueAt: moment().add(1, 'days'), countsTowardsCompletion: true }))
+                }
+              >
+                <span className="icon">
+                  <i className="fas fa-plus" />
+                </span>
+                <span>New</span>
+              </button>
+            </div>
+          </div>
+        </nav>
 
         <table className="table is-fullwidth is-hoverable is-vcentered">
           <thead>
@@ -62,11 +72,11 @@ export function EditHomeworksPage({ cohort_id }) {
                     <div className="buttons are-normal">
                       <Link
                         to={`/cohorts/${cohort.id}/homeworks/${homework.id}`}
-                        className="button is-link is-inverted"
+                        className="button is-primary is-inverted"
                       >
                         Show
                       </Link>
-                      <button className="button is-link is-inverted" onClick={() => setHomework(homework)}>
+                      <button className="button is-primary is-inverted" onClick={() => setHomework(homework)}>
                         Edit
                       </button>
                     </div>
@@ -98,6 +108,6 @@ export function EditHomeworksPage({ cohort_id }) {
           </tbody>
         </table>
       </div>
-    </section>
+    </>
   )
 }

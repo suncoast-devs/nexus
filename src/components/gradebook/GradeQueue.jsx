@@ -49,10 +49,10 @@ export function GradeQueue({ cohort_id }) {
   const sortedAssignments = ungradedAssignments.sort((a, b) => sortFunction(a, b))
 
   return (
-    <>
+    <section className="section">
       <h1 className="title">
         {sortedAssignments.length} assignments to grade for {cohort.name}
-        <button className="button is-link is-normal is-inverted" onClick={reload}>
+        <button className="button is-primary is-normal is-inverted" onClick={reload}>
           Reload
         </button>
       </h1>
@@ -81,6 +81,6 @@ export function GradeQueue({ cohort_id }) {
           ))}
         </tbody>
       </table>
-    </>
+    </section>
   )
 }

@@ -25,7 +25,7 @@ export class UnauthenticatedNavBar extends Component {
 
   render() {
     return (
-      <nav className="navbar has-shadow is-primary" role="navigation" aria-label="main navigation">
+      <nav className="navbar has-shadow" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
           <Link to="/" className="navbar-item">
             <img src={icon} alt="Suncoast Developers Guild" height="28" width="28" />
@@ -50,7 +50,7 @@ export class UnauthenticatedNavBar extends Component {
             <div className="navbar-item">
               <div className="field is-grouped">
                 <p className="control">
-                  <button className="button is-link" onClick={() => this.props.auth.login()}>
+                  <button className="button is-primary" onClick={() => this.props.auth.login()}>
                     Sign In
                   </button>
                 </p>

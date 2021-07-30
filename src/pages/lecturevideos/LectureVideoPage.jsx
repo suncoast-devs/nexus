@@ -30,7 +30,7 @@ export function LectureVideoPage({ id }) {
             </div>
             <div className="control">
               <a
-                className="button is-link is-light is-small"
+                className="button is-primary is-light is-small"
                 href={lectureVideo.videoUrl}
                 download={lectureVideo.videoFileName}
                 onClick={event => {

@@ -70,31 +70,6 @@ function CohortAdminRoutes({ profile, auth }) {
     <Switch>
       <Route
         exact
-        path="/cohorts/:id/attendance"
-        render={props => <EditAttendancePage cohort_id={props.match.params.id} auth={auth} {...props} />}
-      />
-      <Route
-        exact
-        path="/cohorts/:id/gradebook"
-        render={props => <GradebookPage cohort_id={props.match.params.id} auth={auth} profile={profile} {...props} />}
-      />
-
-      <Route
-        exact
-        path="/cohorts/:id/progress-reports"
-        render={props => (
-          <CohortProgressReportsPage cohort_id={props.match.params.id} allowNew auth={auth} {...props} />
-        )}
-      />
-      <Route
-        exact
-        path="/cohorts/:id/lecture-videos"
-        render={props => (
-          <LectureVideosPage profile={profile} auth={auth} cohortId={props.match.params.id} {...props} />
-        )}
-      />
-      <Route
-        exact
         path="/cohorts/:id/progress-reports/new"
         render={props => <NewProgressReportPage cohort_id={props.match.params.id} auth={auth} {...props} />}
       />
@@ -110,11 +85,7 @@ function CohortAdminRoutes({ profile, auth }) {
           />
         )}
       />
-      <Route
-        exact
-        path="/cohorts/:id/homeworks"
-        render={props => <EditHomeworksPage cohort_id={props.match.params.id} auth={auth} {...props} />}
-      />
+
       <Route
         exact
         path="/cohorts/new"

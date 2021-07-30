@@ -41,9 +41,9 @@ export function PeoplePage() {
           onClose={() => setShowNewPerson(false)}
         />
         <nav className="panel">
-          <p className="panel-heading has-background-info has-text-white">
+          <p className="panel-heading">
             People
-            <button className="button is-small is-primary is-pulled-right" onClick={() => setShowNewPerson(true)}>
+            <button className="button is-small is-pulled-right" onClick={() => setShowNewPerson(true)}>
               Add Person
             </button>
           </p>

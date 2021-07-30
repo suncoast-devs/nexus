@@ -101,60 +101,57 @@ export function EditAttendancePage({ cohort_id }) {
     .sort((a, b) => a.person.fullName.localeCompare(b.person.fullName))
 
   return (
-    <div className="section">
-      <div className="container">
-        <h1 className="title">{cohort.name}</h1>
-        {showModal && (
-          <AttendanceModal
-            selectedAttendanceRecord={selectedAttendanceRecord}
-            onClose={() => {
-              reload()
-              setShowModal(false)
-            }}
-          />
-        )}
-        <div className="field">
-          <div className="control">
-            <label>
-              <input onChange={() => setOnlyToday(!onlyToday)} value={onlyToday} checked={onlyToday} type="checkbox" />{' '}
-              Today Only
-            </label>
-          </div>
+    <div className="container">
+      {showModal && (
+        <AttendanceModal
+          selectedAttendanceRecord={selectedAttendanceRecord}
+          onClose={() => {
+            reload()
+            setShowModal(false)
+          }}
+        />
+      )}
+      <div className="field">
+        <div className="control">
+          <label>
+            <input onChange={() => setOnlyToday(!onlyToday)} value={onlyToday} checked={onlyToday} type="checkbox" />{' '}
+            Today Only
+          </label>
         </div>
-        <div className="attendance-table">
-          <table className="table is-fullwidth">
-            <thead>
-              <tr>
-                <th>Name</th>
-                {sortedCohortDates.map(cohortDate => (
-                  <AttendanceHeaderCell key={cohortDate.id} cohort={cohort} reload={reload} cohortDate={cohortDate} />
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {activeEnrollments.map(enrollment => (
-                <AttendanceRow
-                  key={enrollment.person.id}
-                  sortedCohortDates={sortedCohortDates}
-                  setSelectedAttendanceRecord={setSelectedAttendanceRecord}
-                  setShowModal={setShowModal}
-                  person={enrollment.person}
-                  active={enrollment.active}
-                />
+      </div>
+      <div className="attendance-table">
+        <table className="table is-fullwidth">
+          <thead>
+            <tr>
+              <th>Name</th>
+              {sortedCohortDates.map(cohortDate => (
+                <AttendanceHeaderCell key={cohortDate.id} cohort={cohort} reload={reload} cohortDate={cohortDate} />
               ))}
-              {inactiveEnrollments.map(enrollment => (
-                <AttendanceRow
-                  key={enrollment.person.id}
-                  sortedCohortDates={sortedCohortDates}
-                  setSelectedAttendanceRecord={setSelectedAttendanceRecord}
-                  setShowModal={setShowModal}
-                  person={enrollment.person}
-                  active={enrollment.active}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
+            </tr>
+          </thead>
+          <tbody>
+            {activeEnrollments.map(enrollment => (
+              <AttendanceRow
+                key={enrollment.person.id}
+                sortedCohortDates={sortedCohortDates}
+                setSelectedAttendanceRecord={setSelectedAttendanceRecord}
+                setShowModal={setShowModal}
+                person={enrollment.person}
+                active={enrollment.active}
+              />
+            ))}
+            {inactiveEnrollments.map(enrollment => (
+              <AttendanceRow
+                key={enrollment.person.id}
+                sortedCohortDates={sortedCohortDates}
+                setSelectedAttendanceRecord={setSelectedAttendanceRecord}
+                setShowModal={setShowModal}
+                person={enrollment.person}
+                active={enrollment.active}
+              />
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   )

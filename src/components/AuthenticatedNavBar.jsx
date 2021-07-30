@@ -7,18 +7,15 @@ import { PersonImage } from './person/PersonImage'
 function Admin() {
   return (
     <>
-      <div className="navbar-link">Admin</div>
-      <div className="navbar-dropdown is-boxed">
-        <NavLink className="navbar-item" activeClassName="is-active" to="/cohorts">
-          Cohorts
-        </NavLink>
-        <NavLink className="navbar-item" activeClassName="is-active" to="/people">
-          People
-        </NavLink>
-        <NavLink className="navbar-item" activeClassName="is-active" to="/gradequeue">
-          Grade Queue
-        </NavLink>
-      </div>
+      <NavLink className="navbar-item" activeClassName="is-active" to="/gradequeue">
+        Grade Queue
+      </NavLink>
+      <NavLink className="navbar-item" activeClassName="is-active" to="/cohorts">
+        Cohorts
+      </NavLink>
+      <NavLink className="navbar-item" activeClassName="is-active" to="/people">
+        People
+      </NavLink>
     </>
   )
 }
@@ -79,7 +76,7 @@ export function AuthenticatedNavBar({ profile }) {
 
   return (
     <nav
-      className="navbar has-shadow is-primary"
+      className="navbar has-shadow"
       role="navigation"
       aria-label="main navigation"
       onClick={() => setActive(!active)}
@@ -92,19 +89,26 @@ export function AuthenticatedNavBar({ profile }) {
       </div>
       <div className={cx('navbar-menu', { 'is-active': active })}>
         <div className="navbar-start">
-          <NavLink className="navbar-item" activeClassName="is-active" to="/gradebook">
-            {profile.isAdmin ? 'Gradebook' : 'Homework'}
-          </NavLink>
-          <NavLink className="navbar-item" activeClassName="is-active" to="/lecture_videos">
-            Lecture Videos
-          </NavLink>
-          <NavLink className="navbar-item" activeClassName="is-active" to="/attendance">
-            Attendance
-          </NavLink>
-          <NavLink className="navbar-item" activeClassName="is-active" to="/progress-reports">
-            Progress Reports
-          </NavLink>
-          <div className="navbar-item has-dropdown is-hoverable">{profile.isAdmin && <Admin />}</div>
+          {profile.isAdmin ? (
+            <div className="navbar-item has-dropdown is-hoverable">
+              <Admin />
+            </div>
+          ) : (
+            <>
+              <NavLink className="navbar-item" activeClassName="is-active" to="/gradebook">
+                {profile.isAdmin ? 'Gradebook' : 'Homework'}
+              </NavLink>
+              <NavLink className="navbar-item" activeClassName="is-active" to="/lecture_videos">
+                Lecture Videos
+              </NavLink>
+              <NavLink className="navbar-item" activeClassName="is-active" to="/attendance">
+                Attendance
+              </NavLink>
+              <NavLink className="navbar-item" activeClassName="is-active" to="/progress-reports">
+                Progress Reports
+              </NavLink>
+            </>
+          )}
         </div>
         <div className="navbar-end">
           <div className="navbar-item has-dropdown is-hoverable">

@@ -156,7 +156,7 @@ export function StudentAssignmentPage({ profile, id }) {
               Comment
             </button>
             {profile.isAdmin && (
-              <button className="button is-link" onClick={() => setNewAssignmentEventName('grade')}>
+              <button className="button is-primary" onClick={() => setNewAssignmentEventName('grade')}>
                 Grade
               </button>
             )}

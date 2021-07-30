@@ -32,7 +32,7 @@ export function Main({
           <div className="level-right">
             <div className="level-item">
               {studentProgressReport.reportImageUrl ? (
-                <a download href={studentProgressReport.reportImageUrl} className="button is-link">
+                <a download href={studentProgressReport.reportImageUrl} className="button is-primary">
                   Download
                 </a>
               ) : (
@@ -48,7 +48,7 @@ export function Main({
 
   if (isOnCompletePage) {
     return (
-      <button className="button is-link" onClick={markProgressReportComplete}>
+      <button className="button is-primary" onClick={markProgressReportComplete}>
         Complete
       </button>
     )

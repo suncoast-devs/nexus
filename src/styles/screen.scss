@@ -1,28 +1,23 @@
 @charset "utf-8";
 
-@import 'video-react/styles/scss/video-react';
+@import url('https://use.typekit.net/rmp3tzf.css');
+@import './colors';
 
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700');
+$family-sans-serif: 'source-sans-pro', sans-serif;
+$family-serif: 'source-serif-pro', serif;
 
-$bright-sky: #80ced2;
-$night-sky: #85577e;
-$lime: #b1d133;
-$tangerine: #f99d1b;
-$sea: #5a9090;
-$sun: #d5562b;
-$sand: #f7f0da;
-$asphalt: #2f3737;
-
-$family-sans-serif: 'Source Sans Pro', sans-serif;
-$family-serif: 'Source Serif Pro', serif;
 $family-secondary: $family-serif;
 
-$primary: $bright-sky;
-$primary-invert: #fff;
+$primary: $night-sky;
+$info: $bright-sky;
 $link: $sea;
 $text: $asphalt;
 
 @import 'bulma/bulma';
+
+@import 'video-react/styles/scss/video-react';
+
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700');
 
 .has-cursor-pointer {
   cursor: pointer;

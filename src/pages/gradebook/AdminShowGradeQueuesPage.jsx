@@ -12,9 +12,5 @@ export function AdminShowGradeQueuesPage(props) {
 
   return cohortsToShow
     .sort(cohort => cohort.name.localeCompare(cohort.name))
-    .map(cohort => (
-      <section className="section" key={cohort.id}>
-        <GradeQueue cohort_id={cohort.id} {...props} />
-      </section>
-    ))
+    .map(cohort => <GradeQueue cohort_id={cohort.id} {...props} />)
 }

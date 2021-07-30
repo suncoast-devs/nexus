@@ -22,40 +22,33 @@ export function LectureVideosPage({ profile, cohortId }) {
     return query.all()
   })
 
-  console.log(profile.isAdmin)
-
   // Only show the cohorts the admin wants, otherwise it would
   const cohortsToShow = profile.isAdmin
     ? cohorts.filter(cohort => profile.dashboardCohortIds.includes(parseInt(cohort.id)))
     : cohorts
 
   return (
-    <section className="section">
-      <div className="container">
-        {cohortsToShow.map(cohort => (
-          <React.Fragment key={cohort.id}>
-            <h1 className="title">Lecture Videos for {cohort.name}</h1>
-            <ul>
+    <div className="container">
+      {cohortsToShow.map(cohort => (
+        <React.Fragment key={cohort.id}>
+          <nav className="level" />
+          {cohort.lectureVideos.length !== 0 ? <h1 className="title">No videos yet...</h1> : <></>}
+          <table className="table is-bordered is-hoverable is-striped is-fullwidth">
+            <tbody>
               {cohort.lectureVideos.sort(compareLectureVideoDates).map(lectureVideo => (
-                <li className="my-3 mx-3">
-                  <Link to={`/lecture_videos/${lectureVideo.id}`} className="is-size-4">
-                    <div className="level">
-                      <div className="level-left">
-                        <div className="level-item">{lectureVideo.title}</div>
-                      </div>
-                      <div className="level-right is-size-7 pr-3">
-                        <div className="level-item">
-                          {lectureVideo.presentedAgo} ({moment(lectureVideo.presentedOn).format('dddd')})
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                </li>
+                <tr>
+                  <td>
+                    <Link to={`/lecture_videos/${lectureVideo.id}`}>{lectureVideo.title}</Link>
+                  </td>
+                  <td>
+                    {lectureVideo.presentedAgo} ({moment(lectureVideo.presentedOn).format('dddd')})
+                  </td>
+                </tr>
               ))}
-            </ul>
-          </React.Fragment>
-        ))}
-      </div>
-    </section>
+            </tbody>
+          </table>
+        </React.Fragment>
+      ))}
+    </div>
   )
 }

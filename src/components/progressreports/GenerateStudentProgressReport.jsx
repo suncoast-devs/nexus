@@ -46,10 +46,10 @@ export function GenerateStudentProgressReport({
     return (
       <>
         <div className="buttons">
-          <button className="button is-link" onClick={() => dispatch({ type: 'step', value: 'editing' })}>
+          <button className="button is-primary" onClick={() => dispatch({ type: 'step', value: 'editing' })}>
             Edit
           </button>
-          <button className="button is-link" onClick={onSkip}>
+          <button className="button is-primary" onClick={onSkip}>
             Next
           </button>
         </div>

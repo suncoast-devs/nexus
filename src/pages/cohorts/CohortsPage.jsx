@@ -20,7 +20,7 @@ export function CohortsPage() {
         <h1 className="title">
           Cohorts
           <span className="is-pulled-right">
-            <Link className="button is-link" to="/cohorts/new">
+            <Link className="button is-primary" to="/cohorts/new">
               New
             </Link>
           </span>

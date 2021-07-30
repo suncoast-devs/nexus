@@ -12,8 +12,14 @@ import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 import { EditCohortForm } from '@/components/cohorts/EditCohortForm'
 import { EditEnrollment } from '@/components/cohorts/EditEnrollment'
 import { EditCohortCalendar } from '@/components/cohorts/EditCohortCalendar'
+import { EditAttendancePage } from '../attendance/EditAttendancePage'
+import { EditHomeworksPage } from '../homeworks/EditHomeworksPage'
+import { CohortProgressReportsPage } from '../progressreports/CohortProgressReportsPage'
+import { LectureVideosPage } from '../lecturevideos/LectureVideosPage'
+import useProfile from '@/hooks/useProfile'
 
 export function EditCohortPage({ id }) {
+  const { profile } = useProfile()
   const { loading, data: cohort } = useModelData(() => Cohort.selectExtra(['units']).find(id))
   const [errors, setErrors] = useContext(ErrorsContext)
 
@@ -60,6 +66,26 @@ export function EditCohortPage({ id }) {
           <TabHeader>Enrollment</TabHeader>
           <Tab>
             <EditEnrollment cohort={cohort} />
+          </Tab>
+
+          <TabHeader>Homeworks</TabHeader>
+          <Tab>
+            <EditHomeworksPage cohort_id={cohort.id} />
+          </Tab>
+
+          <TabHeader>Attendance</TabHeader>
+          <Tab>
+            <EditAttendancePage cohort_id={cohort.id} />
+          </Tab>
+
+          <TabHeader>Progress Reports</TabHeader>
+          <Tab>
+            <CohortProgressReportsPage cohort_id={cohort.id} allowNew />
+          </Tab>
+
+          <TabHeader>Lecture Videos</TabHeader>
+          <Tab>
+            <LectureVideosPage cohortId={cohort.id} profile={profile} />
           </Tab>
 
           <TabHeader>Calendar</TabHeader>
