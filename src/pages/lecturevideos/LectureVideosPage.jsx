@@ -32,7 +32,7 @@ export function LectureVideosPage({ profile, cohortId }) {
       {cohortsToShow.map(cohort => (
         <React.Fragment key={cohort.id}>
           <nav className="level" />
-          {cohort.lectureVideos.length !== 0 ? <h1 className="title">No videos yet...</h1> : <></>}
+          {cohort.lectureVideos.length === 0 ? <h1 className="title">No videos yet...</h1> : <></>}
           <table className="table is-bordered is-hoverable is-striped is-fullwidth">
             <tbody>
               {cohort.lectureVideos.sort(compareLectureVideoDates).map(lectureVideo => (
