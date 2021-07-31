@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Assignment, AssignmentEvent } from '@/components/models'
 import useModelData from '@/hooks/useModelData'
 import moment from 'moment'
+import cx from 'classnames'
+
 import { CreateAssignmentComment } from '@/components/assignments/CreateAssignmentComment'
 import { MarkDownDiv } from '@/components/utils/MarkDownDiv'
 import { ShowAssignmentEvent } from '@/components/assignments/ShowAssignmentEvent'
@@ -24,9 +26,6 @@ export function StudentAssignmentPage({ profile, id }) {
   }
 
   const scoreInfo = assignment.scoreInfo()
-
-  const dateAgoHuman = moment(assignment.createdAt).fromNow()
-  const longDate = moment(assignment.createdAt).format('dddd MMMM Do, YYYY')
 
   const createAssignmentEvent = async assignmentEventDetails => {
     const assignmentEvent = new AssignmentEvent()
@@ -99,55 +98,40 @@ export function StudentAssignmentPage({ profile, id }) {
 
   return (
     <div className="columns">
-      <div className="column is-half">
+      <div className={cx('column', assignment.assignmentEvents.length === 0 ? 'is-9' : 'is-half')}>
         <section className="section">
-          <div className="container">
-            <div className="box">
-              <div className="notification">
-                <div className="level">
-                  <div className="level-left">
-                    <div className="level-item">
-                      <div className="title is-4">
-                        {assignment.person.fullName}
-                        <br />
-                        {assignment.homework.title}
-                      </div>
-                    </div>
+          <div className="box">
+            <div className="notification">
+              <div className="level">
+                <div className="level-left">
+                  <div className="level-item">
+                    <div className="title is-4">{assignment.homework.title}</div>
                   </div>
-                  <div className="level-right">
-                    <div className="level-item">
-                      <div>
-                        <p className="is-6 tooltip" data-tooltip={longDate}>
-                          {dateAgoHuman}
-                        </p>
-                        <p className="is-6">
-                          {assignment.turnedIn ? (
-                            <span className="tag is-success">Turned In</span>
-                          ) : (
-                            <span className="tag is-danger">Due</span>
-                          )}
-                        </p>
-                      </div>
-                    </div>
+                </div>
+                <div className="level-right">
+                  <div className="level-item">
+                    <div className="title is-4">{assignment.person.fullName}</div>
                   </div>
                 </div>
               </div>
+            </div>
+            {assignment.turnedIn ? (
               <div
                 className="notification"
                 style={{ backgroundColor: scoreInfo.style.buttonColor, color: scoreInfo.style.textColor }}
               >
                 <span className="subtitle is-4">{scoreInfo.title}</span>
               </div>
+            ) : null}
 
-              <div className="content">
-                <MarkDownDiv markdown={assignment.homework.bodyWithResolvedUrls} />
-              </div>
+            <div className="content">
+              <MarkDownDiv markdown={assignment.homework.bodyWithResolvedUrls} />
             </div>
           </div>
         </section>
       </div>
 
-      <div className="column is-half">
+      <div className={cx('column', assignment.assignmentEvents.length === 0 ? 'is-3' : 'is-half')}>
         <div className="section">
           <div className="container">
             {newAssignmentEventComponent ? (
