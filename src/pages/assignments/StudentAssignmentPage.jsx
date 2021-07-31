@@ -9,6 +9,7 @@ import { MarkDownDiv } from '@/components/utils/MarkDownDiv'
 import { ShowAssignmentEvent } from '@/components/assignments/ShowAssignmentEvent'
 import { CreateAssignmentTurnIn } from '@/components/assignments/CreateAssignmentTurnIn'
 import { GradeAssignment } from '@/components/assignments/GradeAssignment'
+import useProfile from '@/hooks/useProfile'
 
 export function StudentAssignmentPage({ profile, id }) {
   const { loading, data: assignment, reload } = useModelData(() =>
@@ -96,6 +97,34 @@ export function StudentAssignmentPage({ profile, id }) {
       break
   }
 
+  const whatDoYouWantToDoComponent = (
+    <article className="message is-primary">
+      <div className="message-header">
+        <p>Actions</p>
+      </div>
+      <div className="message-body">
+        <p className="menu-label">What do you want to do?</p>
+        <ul className="menu-list">
+          <li>
+            <ul>
+              <li onClick={() => setNewAssignmentEventName('turnin')}>
+                <a className="is-small">{assignment.turnedIn ? 'Re-turn In My Assignment' : 'Turn In My Assignment'}</a>
+              </li>
+              <li onClick={() => setNewAssignmentEventName('comment')}>
+                <a className="">Leave a Comment</a>
+              </li>
+              {profile.isAdmin ? (
+                <li onClick={() => setNewAssignmentEventName('grade')}>
+                  <a>Grade</a>
+                </li>
+              ) : null}
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </article>
+  )
+
   return (
     <div className="columns">
       <div className={cx('column', assignment.assignmentEvents.length === 0 ? 'is-9' : 'is-half')}>
@@ -110,7 +139,9 @@ export function StudentAssignmentPage({ profile, id }) {
                 </div>
                 <div className="level-right">
                   <div className="level-item">
-                    <div className="title is-4">{assignment.person.fullName}</div>
+                    {assignment.person.id !== profile.id ? (
+                      <div className="title is-4">{assignment.person.fullName}</div>
+                    ) : null}
                   </div>
                 </div>
               </div>
@@ -134,37 +165,7 @@ export function StudentAssignmentPage({ profile, id }) {
       <div className={cx('column', assignment.assignmentEvents.length === 0 ? 'is-3' : 'is-half')}>
         <div className="section">
           <div className="container">
-            {newAssignmentEventComponent ? (
-              newAssignmentEventComponent
-            ) : (
-              <article className="message is-primary">
-                <div className="message-header">
-                  <p>Actions</p>
-                </div>
-                <div className="message-body">
-                  <p className="menu-label">What do you want to do?</p>
-                  <ul className="menu-list">
-                    <li>
-                      <ul>
-                        <li onClick={() => setNewAssignmentEventName('turnin')}>
-                          <a className="is-small">
-                            {assignment.turnedIn ? 'Re-turn In My Assignment' : 'Turn In My Assignment'}
-                          </a>
-                        </li>
-                        <li onClick={() => setNewAssignmentEventName('comment')}>
-                          <a className="">Leave a Comment</a>
-                        </li>
-                        {profile.isAdmin ? (
-                          <li onClick={() => setNewAssignmentEventName('grade')}>
-                            <a>Grade</a>
-                          </li>
-                        ) : null}
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
-              </article>
-            )}
+            {newAssignmentEventComponent ? newAssignmentEventComponent : whatDoYouWantToDoComponent}
           </div>
 
           <div className="mt-6">
