@@ -17,7 +17,7 @@ export function GradedAssignment({ assignmentEvent }) {
           </div>
         </div>
       </div>
-      <div className="mb-4">
+      <div className="content mb-4">
         <MarkDownDiv markdown={assignmentEvent.payload.comment} />
       </div>
       {showGif && (
