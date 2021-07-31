@@ -99,7 +99,7 @@ export function StudentAssignmentPage({ profile, id }) {
 
   return (
     <div className="columns">
-      <div className="column is-8">
+      <div className="column is-half">
         <section className="section">
           <div className="container">
             <div className="box">
@@ -146,7 +146,7 @@ export function StudentAssignmentPage({ profile, id }) {
         </section>
       </div>
 
-      <div className="column">
+      <div className="column is-half">
         <div className="section">
           <div className="box">
             <div className="container">
