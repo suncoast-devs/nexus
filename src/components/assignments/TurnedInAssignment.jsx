@@ -40,14 +40,8 @@ export function TurnedInAssignment({ homework, assignmentEvent }) {
           <tbody>
             <tr>
               <td>{wordCase(assignmentEvent.payload.level)}</td>
-            </tr>
-            <tr>
               <td>{wordCase(assignmentEvent.payload.difficulty)}</td>
-            </tr>
-            <tr>
               <td>{wordCase(assignmentEvent.payload.lecturePreparedMe)}</td>
-            </tr>
-            <tr>
               <td>{wordCase(assignmentEvent.payload.totalHours)}</td>
             </tr>
           </tbody>
