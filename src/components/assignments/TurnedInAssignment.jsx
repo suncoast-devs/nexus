@@ -28,24 +28,27 @@ export function TurnedInAssignment({ homework, assignmentEvent }) {
         </div>
       </div>
       {assignmentEvent.payload.level ? (
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Level</th>
-              <th>Difficulty</th>
-              <th>Lecture Prepared</th>
-              <th>Total Hours</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{wordCase(assignmentEvent.payload.level)}</td>
-              <td>{wordCase(assignmentEvent.payload.difficulty)}</td>
-              <td>{wordCase(assignmentEvent.payload.lecturePreparedMe)}</td>
-              <td>{wordCase(assignmentEvent.payload.totalHours)}</td>
-            </tr>
-          </tbody>
-        </table>
+        <>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Level</th>
+                <th>Assignment Was Challenging</th>
+                <th>Lecture Prepared</th>
+                <th>Total Hours</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{wordCase(assignmentEvent.payload.level)}</td>
+                <td>{wordCase(assignmentEvent.payload.difficulty)}</td>
+                <td>{wordCase(assignmentEvent.payload.lecturePreparedMe)}</td>
+                <td>{wordCase(assignmentEvent.payload.totalHours)}</td>
+              </tr>
+            </tbody>
+          </table>
+          <hr />
+        </>
       ) : null}
       {assignmentEvent.payload.comment && <MarkDownDiv markdown={assignmentEvent.payload.comment} />}
     </>
