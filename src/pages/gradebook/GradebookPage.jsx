@@ -39,7 +39,7 @@ export function GradebookPage({ cohort_id }) {
   }, {})
 
   return (
-    <section className="gradebook">
+    <section className="gradebook" style={{ overflowX: 'auto' }}>
       <table className="table assignment-table is-fullwidth is-hoverable">
         <thead>
           <tr>
