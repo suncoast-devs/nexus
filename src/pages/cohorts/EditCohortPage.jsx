@@ -17,6 +17,7 @@ import { EditHomeworksPage } from '../homeworks/EditHomeworksPage'
 import { CohortProgressReportsPage } from '../progressreports/CohortProgressReportsPage'
 import { LectureVideosPage } from '../lecturevideos/LectureVideosPage'
 import useProfile from '@/hooks/useProfile'
+import { GradebookPage } from '../gradebook/GradebookPage'
 
 export function EditCohortPage({ id }) {
   const { profile } = useProfile()
@@ -71,6 +72,11 @@ export function EditCohortPage({ id }) {
           <TabHeader>Homeworks</TabHeader>
           <Tab>
             <EditHomeworksPage cohort_id={cohort.id} />
+          </Tab>
+
+          <TabHeader>GradeBook</TabHeader>
+          <Tab>
+            <GradebookPage cohort_id={cohort.id} />
           </Tab>
 
           <TabHeader>Attendance</TabHeader>

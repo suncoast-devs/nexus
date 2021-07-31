@@ -39,8 +39,7 @@ export function GradebookPage({ cohort_id }) {
   }, {})
 
   return (
-    <section className="gradebook section">
-      <h1 className="title">Gradebook for {cohort.name}</h1>
+    <section className="gradebook">
       <table className="table assignment-table is-fullwidth is-hoverable">
         <thead>
           <tr>
