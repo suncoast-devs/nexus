@@ -7,6 +7,7 @@ export function CreateAssignmentComment({
   profile,
   assignment,
   createAssignmentEvent,
+  cancelNewAssignmentEvent,
 }) {
   const [assignmentEventDetails, setAssignmentEventDetails] = useState({
     name,
@@ -23,33 +24,48 @@ export function CreateAssignmentComment({
   const updateComment = comment => setAssignmentEventDetails({ ...assignmentEventDetails, payload: { comment } })
 
   return (
-    <article className="media">
-      <figure className="media-left">
-        <p className="image is-64x64">
-          <PersonImage url={profile.smallProfileImageUrl} imgClassName="is-rounded" />
-        </p>
-      </figure>
-      <div className="media-content">
-        <div className="field">
-          <p className="control">
-            <textarea
-              className="textarea"
-              placeholder="Add a comment..."
-              value={assignmentEventDetails.payload.comment}
-              onChange={event => updateComment(event.target.value)}
-            />
-          </p>
+    <>
+      <article className="message is-link">
+        <div className="message-header">
+          <p>Leave a Message For Your Instructor</p>
+          <button className="delete" aria-label="delete" onClick={cancelNewAssignmentEvent}></button>
         </div>
-        <nav className="level">
-          <div className="level-left">
-            <div className="level-item">
-              <span className="button is-info" onClick={onSubmit}>
-                {buttonText}
-              </span>
+        <div className="message-body">
+          <article className="media">
+            <figure className="media-left">
+              <p className="image is-64x64">
+                <PersonImage url={profile.smallProfileImageUrl} imgClassName="is-rounded" />
+              </p>
+            </figure>
+            <div className="media-content">
+              <div className="field">
+                <p className="control">
+                  <textarea
+                    className="textarea"
+                    placeholder="Dear Instructor..."
+                    value={assignmentEventDetails.payload.comment}
+                    onChange={event => updateComment(event.target.value)}
+                  />
+                </p>
+              </div>
+              <nav className="level">
+                <div className="level-left">
+                  <div className="level-item">
+                    <div className="buttons">
+                      <button className="button is-info" onClick={onSubmit}>
+                        {buttonText}
+                      </button>
+                      <button className="button" onClick={cancelNewAssignmentEvent}>
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </nav>
             </div>
-          </div>
-        </nav>
-      </div>
-    </article>
+          </article>
+        </div>
+      </article>
+    </>
   )
 }

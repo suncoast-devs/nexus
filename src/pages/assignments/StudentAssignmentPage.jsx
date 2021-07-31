@@ -15,6 +15,10 @@ export function StudentAssignmentPage({ profile, id }) {
 
   const [newAssignmentEventName, setNewAssignmentEventName] = useState('')
 
+  function cancelNewAssignmentEvent() {
+    setNewAssignmentEventName('')
+  }
+
   if (loading) {
     return <></>
   }
@@ -39,12 +43,13 @@ export function StudentAssignmentPage({ profile, id }) {
     return Promise.resolve(assignmentEvent)
   }
 
-  let newAssignmentEventComponent = <></>
+  let newAssignmentEventComponent = null
 
   switch (newAssignmentEventName) {
     case 'comment':
       newAssignmentEventComponent = (
         <CreateAssignmentComment
+          cancelNewAssignmentEvent={cancelNewAssignmentEvent}
           profile={profile}
           assignment={assignment}
           createAssignmentEvent={createAssignmentEvent}
@@ -55,6 +60,7 @@ export function StudentAssignmentPage({ profile, id }) {
     case 'reopen':
       newAssignmentEventComponent = (
         <CreateAssignmentComment
+          cancelNewAssignmentEvent={cancelNewAssignmentEvent}
           name="reopen"
           buttonText="Reopen Assignment"
           profile={profile}
@@ -67,6 +73,7 @@ export function StudentAssignmentPage({ profile, id }) {
     case 'turnin':
       newAssignmentEventComponent = (
         <CreateAssignmentTurnIn
+          cancelNewAssignmentEvent={cancelNewAssignmentEvent}
           profile={profile}
           assignment={assignment}
           homework={assignment.homework}
@@ -78,6 +85,7 @@ export function StudentAssignmentPage({ profile, id }) {
     case 'grade':
       newAssignmentEventComponent = (
         <GradeAssignment
+          cancelNewAssignmentEvent={cancelNewAssignmentEvent}
           assignment={assignment}
           homework={assignment.homework}
           createAssignmentEvent={createAssignmentEvent}
@@ -90,11 +98,11 @@ export function StudentAssignmentPage({ profile, id }) {
   }
 
   return (
-    <>
-      <section className="section">
-        <div className="container">
-          <div className="card">
-            <div className="card-content">
+    <div class="columns">
+      <div class="column is-8">
+        <section className="section">
+          <div className="container">
+            <div className="box">
               <div className="media">
                 <div className="media-content">
                   <div className="level">
@@ -127,57 +135,70 @@ export function StudentAssignmentPage({ profile, id }) {
                 className="notification"
                 style={{ backgroundColor: scoreInfo.style.buttonColor, color: scoreInfo.style.textColor }}
               >
-                {scoreInfo.title}
+                <span className="subtitle is-4">{scoreInfo.title}</span>
               </div>
 
-              <hr />
               <div className="content">
                 <MarkDownDiv markdown={assignment.homework.bodyWithResolvedUrls} />
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
-      <section className="section">
-        <div className="container">
-          <div className="buttons">
-            {assignment.turnedIn || (
-              <button className="button is-success" onClick={() => setNewAssignmentEventName('turnin')}>
-                Turn In
-              </button>
-            )}
-            {assignment.turnedIn && (
-              <button className="button is-danger" onClick={() => setNewAssignmentEventName('reopen')}>
-                Re-open
-              </button>
-            )}
-            <button className="button is-info" onClick={() => setNewAssignmentEventName('comment')}>
-              Comment
-            </button>
-            {profile.isAdmin && (
-              <button className="button is-primary" onClick={() => setNewAssignmentEventName('grade')}>
-                Grade
-              </button>
-            )}
+      <div className="column">
+        <div className="section">
+          <div className="box">
+            <div className="container">
+              {newAssignmentEventComponent ? (
+                newAssignmentEventComponent
+              ) : (
+                <article className="message is-primary">
+                  <div className="message-header">
+                    <p>Actions</p>
+                  </div>
+                  <div className="message-body">
+                    <p className="menu-label">What do you want to do?</p>
+                    <ul className="menu-list">
+                      <li>
+                        <ul>
+                          <li onClick={() => setNewAssignmentEventName('turnin')}>
+                            <a className="is-small">
+                              {assignment.turnedIn ? 'Re-turn In My Assignment' : 'Turn In My Assignment'}
+                            </a>
+                          </li>
+                          <li onClick={() => setNewAssignmentEventName('comment')}>
+                            <a className="">Leave a Comment</a>
+                          </li>
+                          {profile.isAdmin ? (
+                            <li onClick={() => setNewAssignmentEventName('grade')}>
+                              <a>Grade</a>
+                            </li>
+                          ) : null}
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                </article>
+              )}
+            </div>
+
+            <section className="section">
+              <div className="container">
+                {assignment.assignmentEvents
+                  .sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())
+                  .map(assignmentEvent => (
+                    <ShowAssignmentEvent
+                      key={assignmentEvent.id}
+                      homework={assignment.homework}
+                      assignmentEvent={assignmentEvent}
+                    />
+                  ))}
+              </div>
+            </section>
           </div>
         </div>
-      </section>
-
-      <section className="section">
-        <div className="container">
-          {newAssignmentEventComponent}
-          {assignment.assignmentEvents
-            .sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())
-            .map(assignmentEvent => (
-              <ShowAssignmentEvent
-                key={assignmentEvent.id}
-                homework={assignment.homework}
-                assignmentEvent={assignmentEvent}
-              />
-            ))}
-        </div>
-      </section>
-    </>
+      </div>
+    </div>
   )
 }

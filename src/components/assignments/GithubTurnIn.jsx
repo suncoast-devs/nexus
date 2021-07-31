@@ -56,16 +56,22 @@ export function GithubTurnIn({ assignmentEventDetails, setAssignmentEventDetails
         headers: { Authorization: `Token token="${auth.token}"` },
       })
 
-      const reposFromApi = await response.json()
+      if (response.ok) {
+        const reposFromApi = await response.json()
 
-      setRepositories(reposFromApi)
+        setRepositories(reposFromApi)
+      }
     }
 
     fetchRepos()
   }, [])
 
   if (repositories.length === 0) {
-    return <LoadingIndicator />
+    return (
+      <div>
+        <LoadingIndicator message="Loading GitHub Repositories" />
+      </div>
+    )
   }
 
   let pushAgeMinutes = (new Date() - repoPushedAt) / 1000 / 60 || 0
