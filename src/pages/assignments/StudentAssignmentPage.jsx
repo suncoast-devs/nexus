@@ -98,8 +98,8 @@ export function StudentAssignmentPage({ profile, id }) {
   }
 
   return (
-    <div class="columns">
-      <div class="column is-8">
+    <div className="columns">
+      <div className="column is-8">
         <section className="section">
           <div className="container">
             <div className="box">
