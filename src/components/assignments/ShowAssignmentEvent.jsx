@@ -35,7 +35,7 @@ export function ShowAssignmentEvent({ homework, assignmentEvent }) {
 
   return (
     <nav className="box pb-6 mb-6">
-      <div className="">
+      <div className="mb-4">
         <article className="media">
           <figure className="media-left">
             <p className="image is-64x64">
