@@ -107,8 +107,11 @@ export function StudentAssignmentPage({ profile, id }) {
                 <div className="level">
                   <div className="level-left">
                     <div className="level-item">
-                      <p className="title is-4">{assignment.person.fullName}</p>
-                      <p className="title is-4">{assignment.homework.title}</p>
+                      <div className="title is-4">
+                        {assignment.person.fullName}
+                        <br />
+                        {assignment.homework.title}
+                      </div>
                     </div>
                   </div>
                   <div className="level-right">
