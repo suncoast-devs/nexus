@@ -103,29 +103,27 @@ export function StudentAssignmentPage({ profile, id }) {
         <section className="section">
           <div className="container">
             <div className="box">
-              <div className="media">
-                <div className="media-content">
-                  <div className="level">
-                    <div className="level-left">
-                      <div className="level-item">
-                        <p className="title is-4">{assignment.homework.title}</p>
-                      </div>
+              <div className="notification">
+                <div className="level">
+                  <div className="level-left">
+                    <div className="level-item">
+                      <p className="title is-4">{assignment.person.fullName}</p>
+                      <p className="title is-4">{assignment.homework.title}</p>
                     </div>
-                    <div className="level-right">
-                      <div className="level-item">
-                        <div>
-                          <p className="is-6">{assignment.person.fullName}</p>
-                          <p className="is-6 tooltip" data-tooltip={longDate}>
-                            {dateAgoHuman}
-                          </p>
-                          <p className="is-6">
-                            {assignment.turnedIn ? (
-                              <span className="tag is-success">Turned In</span>
-                            ) : (
-                              <span className="tag is-danger">Due</span>
-                            )}
-                          </p>
-                        </div>
+                  </div>
+                  <div className="level-right">
+                    <div className="level-item">
+                      <div>
+                        <p className="is-6 tooltip" data-tooltip={longDate}>
+                          {dateAgoHuman}
+                        </p>
+                        <p className="is-6">
+                          {assignment.turnedIn ? (
+                            <span className="tag is-success">Turned In</span>
+                          ) : (
+                            <span className="tag is-danger">Due</span>
+                          )}
+                        </p>
                       </div>
                     </div>
                   </div>
