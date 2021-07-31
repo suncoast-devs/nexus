@@ -149,54 +149,52 @@ export function StudentAssignmentPage({ profile, id }) {
 
       <div className="column is-half">
         <div className="section">
-          <div className="box">
-            <div className="container">
-              {newAssignmentEventComponent ? (
-                newAssignmentEventComponent
-              ) : (
-                <article className="message is-primary">
-                  <div className="message-header">
-                    <p>Actions</p>
-                  </div>
-                  <div className="message-body">
-                    <p className="menu-label">What do you want to do?</p>
-                    <ul className="menu-list">
-                      <li>
-                        <ul>
-                          <li onClick={() => setNewAssignmentEventName('turnin')}>
-                            <a className="is-small">
-                              {assignment.turnedIn ? 'Re-turn In My Assignment' : 'Turn In My Assignment'}
-                            </a>
+          <div className="container">
+            {newAssignmentEventComponent ? (
+              newAssignmentEventComponent
+            ) : (
+              <article className="message is-primary">
+                <div className="message-header">
+                  <p>Actions</p>
+                </div>
+                <div className="message-body">
+                  <p className="menu-label">What do you want to do?</p>
+                  <ul className="menu-list">
+                    <li>
+                      <ul>
+                        <li onClick={() => setNewAssignmentEventName('turnin')}>
+                          <a className="is-small">
+                            {assignment.turnedIn ? 'Re-turn In My Assignment' : 'Turn In My Assignment'}
+                          </a>
+                        </li>
+                        <li onClick={() => setNewAssignmentEventName('comment')}>
+                          <a className="">Leave a Comment</a>
+                        </li>
+                        {profile.isAdmin ? (
+                          <li onClick={() => setNewAssignmentEventName('grade')}>
+                            <a>Grade</a>
                           </li>
-                          <li onClick={() => setNewAssignmentEventName('comment')}>
-                            <a className="">Leave a Comment</a>
-                          </li>
-                          {profile.isAdmin ? (
-                            <li onClick={() => setNewAssignmentEventName('grade')}>
-                              <a>Grade</a>
-                            </li>
-                          ) : null}
-                        </ul>
-                      </li>
-                    </ul>
-                  </div>
-                </article>
-              )}
-            </div>
+                        ) : null}
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </article>
+            )}
+          </div>
 
-            <section className="section">
-              <div className="container">
-                {assignment.assignmentEvents
-                  .sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())
-                  .map(assignmentEvent => (
-                    <ShowAssignmentEvent
-                      key={assignmentEvent.id}
-                      homework={assignment.homework}
-                      assignmentEvent={assignmentEvent}
-                    />
-                  ))}
-              </div>
-            </section>
+          <div className="mt-6">
+            <div className="container">
+              {assignment.assignmentEvents
+                .sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())
+                .map(assignmentEvent => (
+                  <ShowAssignmentEvent
+                    key={assignmentEvent.id}
+                    homework={assignment.homework}
+                    assignmentEvent={assignmentEvent}
+                  />
+                ))}
+            </div>
           </div>
         </div>
       </div>

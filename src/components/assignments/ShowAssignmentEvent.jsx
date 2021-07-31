@@ -34,20 +34,25 @@ export function ShowAssignmentEvent({ homework, assignmentEvent }) {
   }
 
   return (
-    <article className="media mb-6">
-      <figure className="media-left">
-        <p className="image is-64x64">
-          <PersonImage alt={person.fullName} url={person.smallProfileImageUrl} />
-        </p>
-      </figure>
-      <div className="media-content">
-        <div className="mb-4">
-          <p>
-            <strong>{person.fullName}</strong> <small>{dateAgoHuman}</small>
-          </p>
-        </div>
-        {body}
+    <nav className="box pb-6 mb-6">
+      <div className="">
+        <article className="media">
+          <figure className="media-left">
+            <p className="image is-64x64">
+              <PersonImage alt={person.fullName} url={person.smallProfileImageUrl} />
+            </p>
+          </figure>
+          <div className="media-content">
+            <div className="content">
+              <p>
+                <strong>{person.fullName}</strong> <small className="is-pulled-right">{dateAgoHuman}</small>
+              </p>
+            </div>
+          </div>
+        </article>
       </div>
-    </article>
+
+      <div>{body}</div>
+    </nav>
   )
 }
