@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Assignment } from '@/components/models'
 import cx from 'classnames'
+import { MarkDownTextArea } from './MarkDownTextArea'
 
 export function GradeAssignment({ assignment, createAssignmentEvent, cancelNewAssignmentEvent }) {
   const placeholder = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
@@ -81,11 +82,9 @@ export function GradeAssignment({ assignment, createAssignmentEvent, cancelNewAs
         <div className="my-4">
           <div className="field">
             <p className="control">
-              <textarea
-                className="textarea"
-                placeholder="Add a comment..."
+              <MarkDownTextArea
                 value={assignmentEventDetails.payload.comment}
-                onChange={event => updateComment(event.target.value)}
+                updateValue={value => updateComment(event.target.value)}
               />
             </p>
           </div>

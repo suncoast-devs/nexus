@@ -3,6 +3,7 @@ import { PersonImage } from '@/components/person/PersonImage'
 import { GithubTurnIn } from './GithubTurnIn'
 import { GistTurnIn } from './GistTurnIn'
 import { URLTurnIn } from './URLTurnIn'
+import { MarkDownTextArea } from './MarkDownTextArea'
 
 export function CreateAssignmentTurnIn({
   profile,
@@ -138,11 +139,9 @@ export function CreateAssignmentTurnIn({
             <div className="field">
               <label className="label">Homework Feedback</label>
               <p className="control">
-                <textarea
-                  className="textarea"
-                  placeholder="Write any comment you have here for your instructor..."
+                <MarkDownTextArea
                   value={assignmentEventDetails.payload.comment}
-                  onChange={event => updateComment(event.target.value)}
+                  updateValue={value => updateComment(value)}
                 />
               </p>
             </div>

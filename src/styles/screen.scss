@@ -65,3 +65,24 @@ $text: $asphalt;
 .gradebook.section {
   overflow-x: scroll;
 }
+
+// Add a class for forcing text-decoration: none
+.text-decoration-none {
+  text-decoration: none !important;
+}
+
+// Fix an overlap between the EasyMDE markdown editor and bulma
+.EasyMDEContainer {
+  .editor-toolbar {
+    .table {
+      margin-bottom: 0 !important;
+    }
+  }
+}
+
+.markdown-edit {
+  textarea,
+  .CodeMirror-scroll {
+    font-family: monospace;
+  }
+}

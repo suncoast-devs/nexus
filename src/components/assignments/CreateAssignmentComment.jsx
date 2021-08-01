@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { PersonImage } from '@/components/person/PersonImage'
+import { MarkDownTextArea } from './MarkDownTextArea'
 
 export function CreateAssignmentComment({
   name = 'comment',
@@ -38,15 +39,11 @@ export function CreateAssignmentComment({
               </p>
             </figure>
             <div className="media-content">
-              <div className="field">
-                <p className="control">
-                  <textarea
-                    className="textarea"
-                    placeholder="Dear Instructor..."
-                    value={assignmentEventDetails.payload.comment}
-                    onChange={event => updateComment(event.target.value)}
-                  />
-                </p>
+              <div className="mb-2">
+                <MarkDownTextArea
+                  value={assignmentEventDetails.payload.comment}
+                  updateValue={value => updateComment(value)}
+                />
               </div>
               <nav className="level">
                 <div className="level-left">

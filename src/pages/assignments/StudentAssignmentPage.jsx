@@ -125,9 +125,13 @@ export function StudentAssignmentPage({ profile, id }) {
     </article>
   )
 
+  const shouldAssignmentBeWide = assignment.assignmentEvents.length === 0 && !newAssignmentEventComponent
+  const assignmentClassName = shouldAssignmentBeWide ? 'is-9' : 'is-half'
+  const sidebarClassName = shouldAssignmentBeWide ? 'is-3' : 'is-half'
+
   return (
     <div className="columns">
-      <div className={cx('column', assignment.assignmentEvents.length === 0 ? 'is-9' : 'is-half')}>
+      <div className={cx('column', assignmentClassName)}>
         <section className="section">
           <div className="box">
             <div className="notification">
@@ -162,7 +166,7 @@ export function StudentAssignmentPage({ profile, id }) {
         </section>
       </div>
 
-      <div className={cx('column', assignment.assignmentEvents.length === 0 ? 'is-3' : 'is-half')}>
+      <div className={cx('column', sidebarClassName)}>
         <div className="section">
           <div className="container">
             {newAssignmentEventComponent ? newAssignmentEventComponent : whatDoYouWantToDoComponent}
