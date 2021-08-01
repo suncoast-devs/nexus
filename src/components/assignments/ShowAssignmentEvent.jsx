@@ -5,6 +5,7 @@ import { MarkDownDiv } from '@/components/utils/MarkDownDiv'
 import { ReopenedAssignment } from './ReopenedAssignment'
 import { TurnedInAssignment } from './TurnedInAssignment'
 import { GradedAssignment } from './GradedAssignment'
+import { AssignmentEventAttachments } from './AssignmentEventAttachments'
 
 export function ShowAssignmentEvent({ homework, assignmentEvent }) {
   const dateAgoHuman = moment(assignmentEvent.createdAt).fromNow()
@@ -51,8 +52,10 @@ export function ShowAssignmentEvent({ homework, assignmentEvent }) {
           </div>
         </article>
       </div>
-
-      <div>{body}</div>
+      <div className="mb-5">{body}</div>
+      <div>
+        <AssignmentEventAttachments assignmentEvent={assignmentEvent} />
+      </div>
     </nav>
   )
 }

@@ -32,6 +32,7 @@ export function StudentAssignmentPage({ profile, id }) {
     const assignmentEvent = new AssignmentEvent()
     assignmentEvent.name = assignmentEventDetails.name
     assignmentEvent.payload = assignmentEventDetails.payload
+    assignmentEvent.uploadsSignedIds = assignmentEventDetails.uploadsSignedIds
     assignmentEvent.assignmentId = assignment.id
 
     await assignmentEvent.save()

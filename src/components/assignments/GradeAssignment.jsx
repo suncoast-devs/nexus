@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Assignment } from '@/components/models'
 import cx from 'classnames'
 import { MarkDownTextArea } from './MarkDownTextArea'
+import { AssignmentEventUploads } from './AssignmentEventUploads'
 
 export function GradeAssignment({ assignment, createAssignmentEvent, cancelNewAssignmentEvent }) {
   const placeholder = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
@@ -81,12 +82,16 @@ export function GradeAssignment({ assignment, createAssignmentEvent, cancelNewAs
 
         <div className="my-4">
           <div className="field">
-            <p className="control">
+            <div className="control">
               <MarkDownTextArea
                 value={assignmentEventDetails.payload.comment}
                 updateValue={value => updateComment(event.target.value)}
               />
-            </p>
+              <AssignmentEventUploads
+                assignmentEventDetails={assignmentEventDetails}
+                setAssignmentEventDetails={setAssignmentEventDetails}
+              />{' '}
+            </div>
           </div>
         </div>
 

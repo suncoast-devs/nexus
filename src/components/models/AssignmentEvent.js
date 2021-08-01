@@ -11,6 +11,7 @@ const AssignmentEvent = ApplicationRecord.extend({
     createdAt: attr(),
     assignmentId: attr(),
     personId: attr(),
+    uploadsSignedIds: attr(),
     assignment: belongsTo(),
     person: belongsTo(),
   },

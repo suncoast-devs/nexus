@@ -4,6 +4,7 @@ import { GithubTurnIn } from './GithubTurnIn'
 import { GistTurnIn } from './GistTurnIn'
 import { URLTurnIn } from './URLTurnIn'
 import { MarkDownTextArea } from './MarkDownTextArea'
+import { AssignmentEventUploads } from './AssignmentEventUploads'
 
 export function CreateAssignmentTurnIn({
   profile,
@@ -56,7 +57,7 @@ export function CreateAssignmentTurnIn({
         <article className="media">
           <figure className="media-left">
             <p className="image is-64x64">
-              <PersonImage url={profile.smallProfileImageUrl} imgClassName="is-rounded" />
+              <PersonImage alt={profile.fullName} url={profile.smallProfileImageUrl} imgClassName="is-rounded" />
             </p>
           </figure>
           <div className="media-content">
@@ -138,12 +139,16 @@ export function CreateAssignmentTurnIn({
 
             <div className="field">
               <label className="label">Homework Feedback</label>
-              <p className="control">
+              <div className="control">
                 <MarkDownTextArea
                   value={assignmentEventDetails.payload.comment}
                   updateValue={value => updateComment(value)}
                 />
-              </p>
+                <AssignmentEventUploads
+                  assignmentEventDetails={assignmentEventDetails}
+                  setAssignmentEventDetails={setAssignmentEventDetails}
+                />
+              </div>
             </div>
 
             <nav className="level">
