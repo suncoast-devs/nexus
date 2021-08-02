@@ -13,7 +13,7 @@ export function ShowHomeworkPage({ cohortId, homeworkId }) {
   return (
     <section className="section">
       <div className="container">
-        <div className="content">
+        <div className="content mb-4">
           <h1>{homework.title}</h1>
           <MarkDownDiv markdown={homework.bodyWithResolvedUrls} />
         </div>
