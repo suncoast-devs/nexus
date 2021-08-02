@@ -41,10 +41,7 @@ export function CreateAssignmentComment({
             </figure>
             <div className="media-content">
               <div className="pb-2">
-                <MarkDownTextArea
-                  value={assignmentEventDetails.payload.comment}
-                  updateValue={value => updateComment(value)}
-                />
+                <MarkDownTextArea value={assignmentEventDetails.payload.comment} updateValue={updateComment} />
               </div>
               <AssignmentEventUploads
                 assignmentEventDetails={assignmentEventDetails}

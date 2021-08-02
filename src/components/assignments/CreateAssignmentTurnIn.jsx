@@ -140,10 +140,7 @@ export function CreateAssignmentTurnIn({
             <div className="field">
               <label className="label">Homework Feedback</label>
               <div className="control">
-                <MarkDownTextArea
-                  value={assignmentEventDetails.payload.comment}
-                  updateValue={value => updateComment(value)}
-                />
+                <MarkDownTextArea value={assignmentEventDetails.payload.comment} updateValue={updateComment} />
                 <AssignmentEventUploads
                   assignmentEventDetails={assignmentEventDetails}
                   setAssignmentEventDetails={setAssignmentEventDetails}
