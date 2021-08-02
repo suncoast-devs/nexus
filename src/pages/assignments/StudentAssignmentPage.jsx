@@ -10,8 +10,10 @@ import { ShowAssignmentEvent } from '@/components/assignments/ShowAssignmentEven
 import { CreateAssignmentTurnIn } from '@/components/assignments/CreateAssignmentTurnIn'
 import { GradeAssignment } from '@/components/assignments/GradeAssignment'
 import useProfile from '@/hooks/useProfile'
+import { useParams } from 'react-router'
 
-export function StudentAssignmentPage({ id }) {
+export function StudentAssignmentPage() {
+  const { id } = useParams()
   const { profile } = useProfile()
 
   const { loading, data: assignment, reload } = useModelData(() =>

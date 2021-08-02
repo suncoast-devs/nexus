@@ -5,8 +5,15 @@ import { ProgressReport } from '@/components/models'
 import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 import { Main } from '@/components/progressreports/Main'
 import { Sidebar } from '@/components/progressreports/Sidebar'
+import { useParams } from 'react-router'
 
-export function EditProgressReportPage({ id, progressReportBaseURL, index }) {
+export function EditProgressReportPage({ index = 'none' }) {
+  const { progress_report_id: id, index } = useParams()
+
+  let effectiveIndex = index
+
+  const progressReportBaseURL = `/progress-reports/${id}`
+
   const { loading: loadingProgressReport, data: progressReport, reload: reloadProgressReport } = useModelData(
     () =>
       ProgressReport.includes([
@@ -18,26 +25,26 @@ export function EditProgressReportPage({ id, progressReportBaseURL, index }) {
   )
 
   // Reload the progress report when the page changes
-  useEffect(reloadProgressReport, [index])
+  useEffect(reloadProgressReport, [effectiveIndex])
 
   if (loadingProgressReport) {
     return <LoadingIndicator />
   }
 
-  if (index === 'none') {
+  if (effectiveIndex === 'none') {
     history.push(`${progressReportBaseURL}/0`)
     return <></>
   }
 
-  const isOnCompletePage = 'complete' === index
+  const isOnCompletePage = 'complete' === effectiveIndex
 
-  // Otherwise make the index an integer (for easier comparison)
-  index = parseInt(index)
+  // Otherwise make the effectiveIndex an integer (for easier comparison)
+  effectiveIndex = parseInt(effectiveIndex)
 
   const onSkip = () => {
     // Move to the next report if it is there, or to the 'complete' page otherwise
-    if (index + 1 < progressReport.sortedIdsOfPeople().length) {
-      history.push(`${progressReportBaseURL}/${index + 1}`)
+    if (effectiveIndex + 1 < progressReport.sortedIdsOfPeople().length) {
+      history.push(`${progressReportBaseURL}/${effectiveIndex + 1}`)
     } else {
       history.push(`${progressReportBaseURL}/complete`)
     }
@@ -62,7 +69,11 @@ export function EditProgressReportPage({ id, progressReportBaseURL, index }) {
     <section className="section">
       <div className="columns">
         <div className="column is-one-fifth" style={{ position: 'fixed', height: '85vh', overflowY: 'scroll' }}>
-          <Sidebar progressReportBaseURL={progressReportBaseURL} progressReport={progressReport} index={index} />
+          <Sidebar
+            progressReportBaseURL={progressReportBaseURL}
+            progressReport={progressReport}
+            index={effectiveIndex}
+          />
         </div>
         <div
           className="column is-offset-one-fifth is-four-fifths"
@@ -70,7 +81,7 @@ export function EditProgressReportPage({ id, progressReportBaseURL, index }) {
         >
           <Main
             progressReport={progressReport}
-            index={index}
+            index={effectiveIndex}
             isOnCompletePage={isOnCompletePage}
             markProgressReportComplete={markProgressReportComplete}
             onSaveStudentReport={onSaveStudentReport}

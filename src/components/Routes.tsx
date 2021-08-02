@@ -27,10 +27,18 @@ import useProfile from '@/hooks/useProfile'
 function PeopleRoutes({}) {
   return (
     <Switch>
-      <Route exact path="/people" render={() => <PeoplePage />} />
-      <Route exact path="/people/:id/gradebook" render={() => <StudentGradebookPage showTitle />} />
-      <Route exact path="/people/:id/attendance" render={() => <StudentAttendancePage showTitle />} />
-      <Route exact path="/people/:id/progress-reports" render={() => <StudentProgressReportsPage showTitle />} />
+      <Route exact path="/people">
+        <PeoplePage />
+      </Route>
+      <Route exact path="/people/:id/gradebook">
+        <StudentGradebookPage showTitle />
+      </Route>
+      <Route exact path="/people/:id/attendance">
+        <StudentAttendancePage showTitle />
+      </Route>
+      <Route exact path="/people/:id/progress-reports">
+        <StudentProgressReportsPage showTitle />
+      </Route>
     </Switch>
   )
 }
@@ -38,27 +46,24 @@ function PeopleRoutes({}) {
 function CohortAdminRoutes() {
   return (
     <Switch>
-      <Route
-        exact
-        path="/cohorts/:id/progress-reports/new"
-        render={props => <NewProgressReportPage cohort_id={props.match.params.id} />}
-      />
+      <Route exact path="/cohorts/:id/progress-reports/new">
+        <NewProgressReportPage />
+      </Route>
 
-      <Route
-        exact
-        path="/cohorts/:cohortId/homeworks/:homeworkId"
-        render={props => (
-          <ShowHomeworkPage
-            cohortId={props.match.params.cohortId}
-            homeworkId={props.match.params.homeworkId}
-            {...props}
-          />
-        )}
-      />
+      <Route exact path="/cohorts/:cohortId/homeworks/:homeworkId">
+        <ShowHomeworkPage />
+      </Route>
 
-      <Route exact path="/cohorts/new" render={() => <NewCohortPage />} />
-      <Route exact path="/cohorts/:id" render={props => <EditCohortPage id={props.match.params.id} />} />
-      <Route exact path="/cohorts" render={() => <CohortsPage />} />
+      <Route exact path="/cohorts/new">
+        <NewCohortPage />
+      </Route>
+
+      <Route exact path="/cohorts/:id">
+        <EditCohortPage />
+      </Route>
+      <Route exact path="/cohorts">
+        <CohortsPage />
+      </Route>
     </Switch>
   )
 }
@@ -66,30 +71,16 @@ function CohortAdminRoutes() {
 function AdminProgressReportsRoutes() {
   return (
     <Switch>
-      <Route
-        exact
-        path="/progress-reports/:progress_report_id"
-        render={props => (
-          <EditProgressReportPage
-            id={props.match.params.progress_report_id}
-            progressReportBaseURL={`/progress-reports/${props.match.params.progress_report_id}`}
-            index="none"
-          />
-        )}
-      />
+      <Route exact path="/progress-reports/:progress_report_id">
+        <EditProgressReportPage />
+      </Route>
 
-      <Route
-        exact
-        path="/progress-reports/:progress_report_id/:index"
-        render={props => (
-          <EditProgressReportPage
-            id={props.match.params.progress_report_id}
-            progressReportBaseURL={`/progress-reports/${props.match.params.progress_report_id}`}
-            index={props.match.params.index}
-          />
-        )}
-      />
-      <Route exact path="/progress-reports" render={props => <AdminShowProgressReportsPage />} />
+      <Route exact path="/progress-reports/:progress_report_id/:index">
+        <EditProgressReportPage />
+      </Route>
+      <Route exact path="/progress-reports">
+        <AdminShowProgressReportsPage />
+      </Route>
     </Switch>
   )
 }
@@ -100,11 +91,21 @@ export function AdminRoutes() {
       <PeopleRoutes />
       <CohortAdminRoutes />
       <AdminProgressReportsRoutes />
-      <Route exact path="/assignment/:id" render={props => <StudentAssignmentPage id={props.match.params.id} />} />
-      <Route exact path="/attendance" render={props => <AdminShowAttendancesPage />} />
-      <Route exact path="/lecture_videos/:id" render={props => <LectureVideoPage id={props.match.params.id} />} />
-      <Route exact path="/gradebook" render={props => <AdminShowGradebooksPage />} />
-      <Route exact path="/gradequeue" render={props => <AdminShowGradeQueuesPage />} />
+      <Route exact path="/assignment/:id">
+        <StudentAssignmentPage />
+      </Route>
+      <Route exact path="/attendance">
+        <AdminShowAttendancesPage />
+      </Route>
+      <Route exact path="/lecture_videos/:id">
+        <LectureVideoPage />
+      </Route>
+      <Route exact path="/gradebook">
+        <AdminShowGradebooksPage />
+      </Route>
+      <Route exact path="/gradequeue">
+        <AdminShowGradeQueuesPage />
+      </Route>
       <Route
         exact
         path="/impersonate/:jwt"
@@ -121,29 +122,33 @@ export function AdminRoutes() {
 export function UserRoutes() {
   return (
     <Switch>
-      <Route exact path="/attendance" render={props => <StudentAttendancePage showTitle />} />
-      <Route exact path="/lecture_videos" render={props => <LectureVideosPageForUser />} />
-      <Route exact path="/lecture_videos/:id" render={props => <LectureVideoPage id={props.match.params.id} />} />
-      <Route exact path="/gradebook" render={props => <StudentGradebookPage showTitle />} />
-      <Route
-        exact
-        path="/assignment/:assignment_id"
-        render={props => <StudentAssignmentPage id={props.match.params.assignment_id} />}
-      />
-      <Route exact path="/progress-reports" render={props => <StudentProgressReportsPage showTitle />} />
+      <Route exact path="/attendance">
+        <StudentAttendancePage showTitle />
+      </Route>
+      <Route exact path="/lecture_videos">
+        <LectureVideosPageForUser />
+      </Route>
+      <Route exact path="/lecture_videos/:id">
+        <LectureVideoPage />
+      </Route>
+      <Route exact path="/gradebook">
+        <StudentGradebookPage showTitle />
+      </Route>
+      <Route exact path="/assignment/:id">
+        <StudentAssignmentPage />
+      </Route>
+      <Route exact path="/progress-reports">
+        <StudentProgressReportsPage showTitle />
+      </Route>
     </Switch>
   )
 }
 
 export function ProfileRoutes() {
   return (
-    <Route
-      exact
-      path="/profile"
-      render={props => {
-        return <EditProfilePage />
-      }}
-    />
+    <Route exact path="/profile">
+      <EditProfilePage />
+    </Route>
   )
 }
 
@@ -152,11 +157,9 @@ export function PublicRoutes() {
 
   return (
     <Switch>
-      <Route
-        exact
-        path={['/', '/home']}
-        render={() => (isLoading ? <></> : <HomePage isAuthenticated={auth.isAuthenticated} />)}
-      />
+      <Route exact path={['/', '/home']}>
+        {isLoading ? <></> : <HomePage isAuthenticated={auth.isAuthenticated} />}
+      </Route>
 
       <Route
         exact

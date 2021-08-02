@@ -2,8 +2,10 @@ import React from 'react'
 import { Homework, UnProxyRecord } from '@/components/models'
 import { MarkDownDiv } from '@/components/utils/MarkDownDiv'
 import { useQuery } from 'react-query'
+import { useParams } from 'react-router'
 
-export function ShowHomeworkPage({ cohortId, homeworkId }: { cohortId: string; homeworkId: string }) {
+export function ShowHomeworkPage() {
+  const { cohortId, homeworkId } = useParams<{ cohortId: string; homeworkId: string }>()
   const { isLoading, data: homework = new Homework() } = useQuery(['homework', cohortId, homeworkId], () =>
     Homework.find(homeworkId).then(UnProxyRecord)
   )

@@ -5,8 +5,10 @@ import { LectureVideo, UnProxyRecord } from '@/components/models'
 import { LectureVideoPlayer } from '@/components/lecturevideos/LectureVideoPlayer'
 import { recordLectureVideoPlayback } from '@/components/lecturevideos/recordLectureVideoPlayback'
 import { useQuery } from 'react-query'
+import { useParams } from 'react-router'
 
-export function LectureVideoPage({ id }: { id: string }) {
+export function LectureVideoPage() {
+  const { id } = useParams<{ id: string }>()
   const { isLoading, data: lectureVideo = new LectureVideo() } = useQuery(['lecture-video', id], () =>
     LectureVideo.find(id).then(UnProxyRecord)
   )

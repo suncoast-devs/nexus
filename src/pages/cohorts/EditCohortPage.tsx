@@ -17,8 +17,11 @@ import { CohortProgressReportsPage } from '../progressreports/CohortProgressRepo
 import { LectureVideosPage } from '../lecturevideos/LectureVideosPage'
 import { GradebookPage } from '../gradebook/GradebookPage'
 import { useQuery } from 'react-query'
+import { useParams } from 'react-router'
 
-export function EditCohortPage({ id }: { id: string }) {
+export function EditCohortPage() {
+  const { id } = useParams<{ id: string }>()
+
   const { isLoading, refetch, data: cohort = new Cohort() } = useQuery(['cohort', id], () =>
     Cohort.includes([
       'homeworks',

@@ -8,10 +8,13 @@ import { LeftRight } from '@/components/utils/LeftRight'
 import { DateRange } from '@/components/progressreports/DateRange'
 import { Homeworks } from '@/components/progressreports/Homeworks'
 import { SelectPeople } from '@/components/progressreports/SelectPeople'
+import { useParams } from 'react-router'
 
-export function NewProgressReportPage({ cohort_id }) {
+export function NewProgressReportPage() {
+  const { id: cohortId } = useParams()
+
   const { data: cohort } = useModelData(
-    () => Cohort.includes(['people', 'student_enrollments', 'homeworks', 'progress_reports']).find(cohort_id),
+    () => Cohort.includes(['people', 'student_enrollments', 'homeworks', 'progress_reports']).find(cohortId),
     new Cohort()
   )
 
@@ -61,7 +64,7 @@ export function NewProgressReportPage({ cohort_id }) {
 
   const create = () => {
     let progressReport = new ProgressReport()
-    progressReport.cohort_id = cohort_id
+    progressReport.cohort_id = cohortId
     progressReport.idsOfHomeworks = selectedHomeworkIDs
     progressReport.idsOfPeople = selectedPeopleIDs
     progressReport.startDate = startDate
