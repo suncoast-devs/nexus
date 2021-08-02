@@ -6,8 +6,17 @@ import 'easymde/dist/easymde.min.css'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import 'bulma-extensions/bulma-tooltip/dist/css/bulma-tooltip.min.css'
 import * as Sentry from '@sentry/browser'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 if (import.meta.env.SENTRY_DSN) {
   Sentry.init({ dsn: import.meta.env.SENTRY_DSN })
 }
-ReactDOM.render(<App />, document.getElementById('root'))
+
+const queryClient = new QueryClient()
+
+ReactDOM.render(
+  <QueryClientProvider client={queryClient}>
+    <App />
+  </QueryClientProvider>,
+  document.getElementById('root')
+)

@@ -70,7 +70,7 @@ export function GradeQueue({ cohort_id }) {
         </thead>
         <tbody>
           {sortedAssignments.map(assignment => (
-            <tr>
+            <tr key={assignment.id}>
               <td>
                 <PersonComponent person={assignment.person} />
               </td>

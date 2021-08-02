@@ -233,7 +233,7 @@ export function ProfileRoutes({ profile, auth, forceUpdateProfile }) {
       exact
       path="/profile"
       render={props => {
-        return <EditProfilePage profile={profile} forceUpdateProfile={forceUpdateProfile} auth={auth} {...props} />
+        return <EditProfilePage />
       }}
     />
   )

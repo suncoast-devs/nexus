@@ -3,7 +3,7 @@ import moment from 'moment'
 
 import { formToObject } from '@/utils/formToObject'
 import useModelData from '@/hooks/useModelData'
-import HandbookAssignment from '@/components/models/HandbookAssignment'
+import { HandbookAssignment } from '@/components/models'
 
 export function EditHomework({ cohort, reloadCohort, homework, setHomework }) {
   const [body, setBody] = useState(homework.body)
