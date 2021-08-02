@@ -2,9 +2,27 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 
-import { Cohort } from '@/components/models'
+import { Cohort, UnProxyCollection } from '@/components/models'
 import { compareLectureVideoDates } from '@/components/lecturevideos/compareLectureVideoDates'
 import useProfile from '@/hooks/useProfile'
+import { useQuery } from 'react-query'
+
+export function LectureVideosPageForUser() {
+  const { data: cohorts = [] } = useQuery(['lecture-videos-for-user'], () =>
+    Cohort.includes('lecture-videos').all().then(UnProxyCollection)
+  )
+
+  return (
+    <>
+      {cohorts.map(cohort => (
+        <>
+          <div className="title">{cohort.name}</div>
+          <LectureVideosPage cohort={cohort} />
+        </>
+      ))}
+    </>
+  )
+}
 
 export function LectureVideosPage({ cohort }: { cohort: Cohort }) {
   const { profile } = useProfile()

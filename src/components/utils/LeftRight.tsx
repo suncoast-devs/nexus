@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
-export function LeftRight({ left, right }) {
+export function LeftRight({ left, right }: { left: ReactNode; right: ReactNode }) {
   return (
     <nav className="level">
       <div className="level-left">

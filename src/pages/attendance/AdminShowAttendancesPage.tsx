@@ -12,7 +12,13 @@ export function AdminShowAttendancesPage() {
     Cohort.where({ active: true, id: profile.dashboardCohortIds }).all().then(UnProxyCollection)
   )
 
-  return cohorts
-    .sort(cohort => cohort.name.localeCompare(cohort.name))
-    .map(cohort => <EditAttendancePage key={cohort.id} cohort={cohort} refetch={refetch} />)
+  return (
+    <>
+      {cohorts
+        .sort(cohort => cohort.name.localeCompare(cohort.name))
+        .map(cohort => (
+          <EditAttendancePage key={cohort.id} cohort={cohort} refetch={refetch} />
+        ))}
+    </>
+  )
 }

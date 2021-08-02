@@ -1,7 +1,7 @@
 import React from 'react'
-import { LoadingButton } from '@/components/utils/LoadingButton'
+import { LoadingButton, LoadingButtonOnClick } from '@/components/utils/LoadingButton'
 
-export function EditorButtons({ onDone, onSkip }) {
+export function EditorButtons({ onDone, onSkip }: { onDone: LoadingButtonOnClick; onSkip: () => void }) {
   return (
     <div className="buttons">
       <LoadingButton className="is-link" onClick={onDone}>

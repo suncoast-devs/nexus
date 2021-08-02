@@ -3,9 +3,11 @@ import { SlackInviteMessage } from '@/components/home/SlackInviteMessage'
 import { AdminShowGradeQueuesPage } from '@/pages/gradebook/AdminShowGradeQueuesPage'
 import { StudentGradebookPage } from '@/pages/gradebook/StudentGradebookPage'
 import banner from '@/images/banner.svg'
-import { Profile } from '@/components/models'
+import useProfile from '@/hooks/useProfile'
 
-export function HomePage({ profile, isAuthenticated }: { profile: Profile; isAuthenticated: boolean }) {
+export function HomePage({ isAuthenticated }: { isAuthenticated: boolean }) {
+  const { profile } = useProfile()
+
   if (!isAuthenticated) {
     return (
       <div>

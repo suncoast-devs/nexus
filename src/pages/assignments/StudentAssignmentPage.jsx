@@ -11,7 +11,9 @@ import { CreateAssignmentTurnIn } from '@/components/assignments/CreateAssignmen
 import { GradeAssignment } from '@/components/assignments/GradeAssignment'
 import useProfile from '@/hooks/useProfile'
 
-export function StudentAssignmentPage({ profile, id }) {
+export function StudentAssignmentPage({ id }) {
+  const { profile } = useProfile()
+
   const { loading, data: assignment, reload } = useModelData(() =>
     Assignment.includes(['person', 'homework', { assignment_events: 'person' }]).find(id)
   )

@@ -1,10 +1,12 @@
 import React, { useContext } from 'react'
+import auth from '@/Auth'
 import { AuthenticatedNavBar } from './AuthenticatedNavBar'
 import { UnauthenticatedNavBar } from './UnauthenticatedNavBar'
 
 import { ErrorsContext, removeError } from './Errors'
 
 import { AdminRoutes, UserRoutes, PublicRoutes, ProfileRoutes } from './Routes'
+import useProfile from '@/hooks/useProfile'
 
 function ErrorMessages() {
   const [errors, setErrors] = useContext(ErrorsContext)
@@ -27,30 +29,24 @@ function ErrorMessages() {
   )
 }
 
-function UserOrAdminRoutes({ profile, forceUpdateProfile, auth }) {
-  if (profile.loading) {
+function UserOrAdminRoutes() {
+  const { isLoading, profile } = useProfile()
+
+  if (isLoading) {
     return <></>
   }
 
-  return profile.isAdmin ? (
-    <AdminRoutes {...{ profile, forceUpdateProfile, auth }} />
-  ) : (
-    <UserRoutes {...{ profile, forceUpdateProfile, auth }} />
-  )
+  return profile.isAdmin ? <AdminRoutes /> : <UserRoutes />
 }
 
-export function Layout({ profile, forceUpdateProfile, auth }) {
+export function Layout() {
   return (
     <>
-      {auth.isAuthenticated ? (
-        <AuthenticatedNavBar profile={profile} auth={auth} />
-      ) : (
-        <UnauthenticatedNavBar auth={auth} />
-      )}
+      {auth.isAuthenticated ? <AuthenticatedNavBar /> : <UnauthenticatedNavBar />}
       <ErrorMessages />
-      <PublicRoutes profile={profile} auth={auth} />
-      <UserOrAdminRoutes {...{ profile, forceUpdateProfile, auth }} />
-      <ProfileRoutes profile={profile} auth={auth} forceUpdateProfile={forceUpdateProfile} />
+      <PublicRoutes />
+      <UserOrAdminRoutes />
+      <ProfileRoutes />
     </>
   )
 }

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Router } from 'react-router-dom'
 
-import auth from '@/Auth'
 import history from '@/history'
 import { Layout } from '@/components/Layout'
 import useProfile from '@/hooks/useProfile'
@@ -27,7 +26,7 @@ export function App() {
     <ErrorsContext.Provider value={[errors, setErrors]}>
       <QueryClientProvider client={queryClient}>
         <Router history={history}>
-          <Layout profile={profile} forceUpdateProfile={forceUpdateProfile} auth={auth} />
+          <Layout />
         </Router>
       </QueryClientProvider>
     </ErrorsContext.Provider>
