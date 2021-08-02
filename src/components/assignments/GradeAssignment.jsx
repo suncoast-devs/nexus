@@ -83,10 +83,7 @@ export function GradeAssignment({ assignment, createAssignmentEvent, cancelNewAs
         <div className="my-4">
           <div className="field">
             <div className="control">
-              <MarkDownTextArea
-                value={assignmentEventDetails.payload.comment}
-                updateValue={value => updateComment(event.target.value)}
-              />
+              <MarkDownTextArea value={assignmentEventDetails.payload.comment} updateValue={updateComment} />
               <AssignmentEventUploads
                 assignmentEventDetails={assignmentEventDetails}
                 setAssignmentEventDetails={setAssignmentEventDetails}

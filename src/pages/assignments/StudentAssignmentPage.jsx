@@ -162,7 +162,7 @@ export function StudentAssignmentPage({ id }) {
               </div>
             ) : null}
 
-            <div className="content">
+            <div className="content mb-4">
               <MarkDownDiv markdown={assignment.homework.bodyWithResolvedUrls} />
             </div>
           </div>

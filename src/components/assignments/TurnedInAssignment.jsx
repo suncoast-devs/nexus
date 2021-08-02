@@ -50,7 +50,11 @@ export function TurnedInAssignment({ homework, assignmentEvent }) {
           <hr />
         </>
       ) : null}
-      {assignmentEvent.payload.comment && <MarkDownDiv markdown={assignmentEvent.payload.comment} />}
+      {assignmentEvent.payload.comment && (
+        <div className="content mb-4">
+          <MarkDownDiv markdown={assignmentEvent.payload.comment} />
+        </div>
+      )}
     </>
   )
 }

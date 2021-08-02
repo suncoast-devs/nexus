@@ -15,7 +15,11 @@ export function ShowAssignmentEvent({ homework, assignmentEvent }) {
 
   switch (assignmentEvent.name) {
     case 'comment':
-      body = <MarkDownDiv markdown={assignmentEvent.payload.comment} />
+      body = (
+        <div className="content mb-4">
+          <MarkDownDiv markdown={assignmentEvent.payload.comment} />
+        </div>
+      )
       break
 
     case 'reopen':
