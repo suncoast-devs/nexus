@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { PersonComponent } from '@/components/person/PersonComponent'
-import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
-import { Cohort, Assignment, Person } from '@/components/models'
+import { Cohort, Assignment } from '@/components/models'
 
 type SortFunction = (a: Assignment, b: Assignment) => number
 
