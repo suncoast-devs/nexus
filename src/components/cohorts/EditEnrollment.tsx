@@ -1,22 +1,20 @@
 import React from 'react'
 import cx from 'classnames'
 
-import { Cohort, Person, StudentEnrollment } from '@/components/models'
-import useModelData from '@/hooks/useModelData'
+import { Cohort, Person, StudentEnrollment, UnProxyCollection } from '@/components/models'
 import { DeleteButton } from '@/components//utils/Buttons'
 import { PersonDropDown } from '@/components/person/PersonDropDown'
 import { PersonComponent } from '@/components/person/PersonComponent'
 import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 import { InvitationCode } from './InvitationCode'
+import { useQuery } from 'react-query'
 
 export function EditEnrollment({ cohort }: { cohort: Cohort }) {
-  const {
-    loading: loadingStudentEnrollments,
-    data: studentEnrollments,
-    reload: reloadStudentEnrollments,
-  } = useModelData(() => StudentEnrollment.includes('person').where({ cohort_id: cohort.id }).all())
+  const { isLoading, refetch, data: studentEnrollments = [] } = useQuery('student-enrollments-with-person', () =>
+    StudentEnrollment.includes('person').where({ cohort_id: cohort.id }).all().then(UnProxyCollection)
+  )
 
-  if (loadingStudentEnrollments) {
+  if (isLoading) {
     return <LoadingIndicator />
   }
 
@@ -25,22 +23,22 @@ export function EditEnrollment({ cohort }: { cohort: Cohort }) {
     studentEnrollment.cohortId = cohort.key()
     studentEnrollment.personId = person.key()
     studentEnrollment.save().then(() => {
-      reloadStudentEnrollments()
+      refetch()
     })
   }
 
   const deletePerson = (studentEnrollment: StudentEnrollment) => {
-    studentEnrollment.destroy().then(reloadStudentEnrollments)
+    studentEnrollment.destroy().then(() => refetch())
   }
 
   const setActive = (studentEnrollment: StudentEnrollment, active: boolean) => {
     studentEnrollment.active = active
-    studentEnrollment.save().then(reloadStudentEnrollments)
+    studentEnrollment.save().then(() => refetch())
   }
 
   const setAuditing = (studentEnrollment: StudentEnrollment, auditing: boolean) => {
     studentEnrollment.auditing = auditing
-    studentEnrollment.save().then(reloadStudentEnrollments)
+    studentEnrollment.save().then(() => refetch())
   }
 
   const table = () => (
@@ -118,7 +116,7 @@ export function EditEnrollment({ cohort }: { cohort: Cohort }) {
         onSelect={person => {
           addPerson(person)
         }}
-        excludedIDs={studentEnrollments.map(enrollment => enrollment.person.id)}
+        excludedIDs={studentEnrollments.map(enrollment => enrollment.person.key())}
       />
     </>
   )

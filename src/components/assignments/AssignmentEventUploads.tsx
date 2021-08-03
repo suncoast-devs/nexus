@@ -5,6 +5,7 @@ import auth from '@/Auth'
 import { AssignmentEventAttachments } from './AssignmentEventAttachments'
 import useProfile from '@/hooks/useProfile'
 import { AssignmentEventDetails } from '@/pages/assignments/StudentAssignmentPage'
+import { VITE_PYLON_URL } from '@/env'
 
 export function AssignmentEventUploads({
   assignmentEventDetails,
@@ -38,7 +39,7 @@ export function AssignmentEventUploads({
         headers={{
           Authorization: `Token token="${auth.token}"`,
         }}
-        directUploadsPath={`${import.meta.env.VITE_PYLON_URL}/direct_uploads`}
+        directUploadsPath={`${VITE_PYLON_URL}/direct_uploads`}
         onSuccess={handleAttachment}
         // @ts-ignore - no types
         render={({ handleUpload, uploads }) => {

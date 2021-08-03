@@ -3,7 +3,8 @@ import moment from 'moment'
 
 import { formToObject } from '@/utils/formToObject'
 import useModelData from '@/hooks/useModelData'
-import { Cohort, HandbookAssignment, Homework } from '@/components/models'
+import { Cohort, HandbookAssignment, Homework, UnProxyCollection } from '@/components/models'
+import { useQuery } from 'react-query'
 
 export function EditHomework({
   cohort,
@@ -42,7 +43,9 @@ export function EditHomework({
     })
   }
 
-  const { data: handbookAssignments } = useModelData(() => HandbookAssignment.all())
+  const { data: handbookAssignments = [] } = useQuery('handbook-assignments', () =>
+    HandbookAssignment.all().then(UnProxyCollection)
+  )
 
   useEffect(() => {
     if (!selectedHandbookAssignment) {

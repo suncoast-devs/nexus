@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import cx from 'classnames'
 import auth from '@/Auth'
 import prettyBytes from 'pretty-bytes'
+import { VITE_PYLON_URL } from '@/env'
 
 export function AssignmentEventAttachment({ id }: { id: number }) {
   const [attachmentDetails, setAttachmentDetails] = useState<{
@@ -13,7 +14,7 @@ export function AssignmentEventAttachment({ id }: { id: number }) {
 
   useEffect(() => {
     async function load() {
-      const response = await fetch(`${import.meta.env.VITE_PYLON_URL}/direct_uploads/${id}/meta`, {
+      const response = await fetch(`${VITE_PYLON_URL}/direct_uploads/${id}/meta`, {
         headers: { Authorization: `Token token="${auth.token}"` },
       })
 

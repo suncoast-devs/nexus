@@ -2,11 +2,12 @@ import React from 'react'
 import cx from 'classnames'
 import { Link } from 'react-router-dom'
 
-import { Assignment, Profile } from '@/components/models'
+import { Assignment, Profile, UnProxyCollection } from '@/components/models'
 import useModelData from '@/hooks/useModelData'
 import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 import { StudentEnrollment } from '@/components/models'
 import useProfile from '@/hooks/useProfile'
+import { useQuery } from 'react-query'
 
 function StudentGradebook({ studentEnrollment }: { studentEnrollment: StudentEnrollment }) {
   const assignments = studentEnrollment.assignments.sort((a, b) => Number(b.id) - Number(a.id))
@@ -59,14 +60,15 @@ function StudentGradebook({ studentEnrollment }: { studentEnrollment: StudentEnr
 export function StudentGradebookPage({ showTitle = false }: { showTitle?: boolean }) {
   const { profile } = useProfile()
 
-  const { loading: loadingStudentEnrollments, data: studentEnrollments } = useModelData(() =>
+  const { isLoading, data: studentEnrollments = [] } = useQuery(['student-enrollments'], () =>
     StudentEnrollment.includes(['cohort', { assignments: 'homework' }])
       .order({ cohort_id: 'desc' })
       .where({ person_id: profile.id })
       .all()
+      .then(UnProxyCollection)
   )
 
-  if (loadingStudentEnrollments) {
+  if (isLoading) {
     return <LoadingIndicator />
   }
 

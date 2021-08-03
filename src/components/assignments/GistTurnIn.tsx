@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 import auth from '@/Auth'
 import { AssignmentEventDetails } from '@/pages/assignments/StudentAssignmentPage'
+import { VITE_PYLON_URL } from '@/env'
 
 type Gist = {
   id: string
@@ -20,7 +21,7 @@ export function GistTurnIn({
 
   useEffect(() => {
     async function fetchGists() {
-      const response = await fetch(`${import.meta.env.VITE_PYLON_URL}/api/v1/gists`, {
+      const response = await fetch(`${VITE_PYLON_URL}/api/v1/gists`, {
         headers: { Authorization: `Token token="${auth.token}"` },
       })
 

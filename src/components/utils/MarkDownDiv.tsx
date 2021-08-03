@@ -1,3 +1,4 @@
+import { VITE_PYLON_URL } from '@/env'
 import React, { useEffect, useState } from 'react'
 
 export function MarkDownDiv({ markdown }: { markdown: string | undefined }) {
@@ -5,7 +6,7 @@ export function MarkDownDiv({ markdown }: { markdown: string | undefined }) {
 
   useEffect(() => {
     async function renderMarkDown() {
-      const response = await fetch(`${import.meta.env.VITE_PYLON_URL}/markdown`, {
+      const response = await fetch(`${VITE_PYLON_URL}/markdown`, {
         method: 'POST',
         headers: {
           Accept: 'application/vnd.github.v3+jso',

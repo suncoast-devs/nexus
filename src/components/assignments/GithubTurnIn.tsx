@@ -3,6 +3,7 @@ import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 import auth from '@/Auth'
 import moment from 'moment'
 import { AssignmentEventDetails } from '@/pages/assignments/StudentAssignmentPage'
+import { VITE_PYLON_URL } from '@/env'
 
 export type Repository = {
   id: number
@@ -70,7 +71,7 @@ export function GithubTurnIn({
 
   useEffect(() => {
     async function fetchRepos() {
-      const response = await fetch(`${import.meta.env.VITE_PYLON_URL}/api/v1/repositories`, {
+      const response = await fetch(`${VITE_PYLON_URL}/api/v1/repositories`, {
         headers: { Authorization: `Token token="${auth.token}"` },
       })
 

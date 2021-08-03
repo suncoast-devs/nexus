@@ -1,3 +1,16 @@
 {
-  "cSpell.words": ["fullwidth", "gradebooks", "gradequeue", "lecturevideos", "signout", "turnin", "vite"]
+  "cSpell.words": [
+    "fullwidth",
+    "gradebooks",
+    "gradequeue",
+    "lecturevideos",
+    "progressreports",
+    "repos",
+    "signout",
+    "simplemde",
+    "strikethrough",
+    "turnin",
+    "vcentered",
+    "vite"
+  ]
 }

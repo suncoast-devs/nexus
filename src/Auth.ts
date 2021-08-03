@@ -1,24 +1,26 @@
+import { VITE_LOGIN_URL } from './env'
+
 class Auth {
-  userProfile
+  // userProfile
 
   login = () => {
-    window.location = import.meta.env.VITE_LOGIN_URL
+    window.location = VITE_LOGIN_URL
   }
 
   get token() {
     return localStorage.getItem('jwt')
   }
 
-  handleAuthentication = jwt => {
+  handleAuthentication = (jwt: string) => {
     localStorage.setItem('jwt', jwt)
 
-    window.location = '/home'
+    window.location.pathname = '/home'
   }
 
   logout = () => {
     localStorage.removeItem('jwt')
 
-    window.location = '/home'
+    window.location.pathname = '/home'
   }
 
   get isAuthenticated() {

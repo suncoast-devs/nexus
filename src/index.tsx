@@ -7,9 +7,10 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import 'bulma-extensions/bulma-tooltip/dist/css/bulma-tooltip.min.css'
 import * as Sentry from '@sentry/browser'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { SENTRY_DSN } from './env'
 
-if (import.meta.env.SENTRY_DSN) {
-  Sentry.init({ dsn: import.meta.env.SENTRY_DSN })
+if (SENTRY_DSN) {
+  Sentry.init({ dsn: SENTRY_DSN })
 }
 
 const queryClient = new QueryClient()
