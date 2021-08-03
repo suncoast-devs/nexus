@@ -13,7 +13,13 @@ if (SENTRY_DSN) {
   Sentry.init({ dsn: SENTRY_DSN })
 }
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+})
 
 ReactDOM.render(
   <QueryClientProvider client={queryClient}>
