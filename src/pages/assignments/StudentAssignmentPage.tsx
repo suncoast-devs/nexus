@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Assignment, AssignmentEvent, UnProxyRecord } from '@/components/models'
-import moment from 'moment'
 import cx from 'classnames'
 
 import { CreateAssignmentComment } from '@/components/assignments/CreateAssignmentComment'

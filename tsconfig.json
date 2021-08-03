@@ -12,9 +12,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
@@ -23,6 +21,14 @@
     "sourceMap": true,
     "jsx": "react",
     // Allow for ES5 style iterations and spread operators
-    "downlevelIteration": true
+    "downlevelIteration": true,
+
+    // Make TypeScript very strict
+    "strict": true,
+    "allowUnreachableCode": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+    // "noUncheckedIndexedAccess": true
   }
 }

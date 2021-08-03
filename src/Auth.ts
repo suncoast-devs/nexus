@@ -1,10 +1,8 @@
 import { VITE_LOGIN_URL } from './env'
 
 class Auth {
-  // userProfile
-
   login = () => {
-    window.location.pathname = VITE_LOGIN_URL
+    window.location.replace(VITE_LOGIN_URL)
   }
 
   get token() {

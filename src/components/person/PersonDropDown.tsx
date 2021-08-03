@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import Select, { OptionsType } from 'react-select'
+import React from 'react'
+import Select from 'react-select'
 
 import { Person } from '@/components//models/Person'
 import { UnProxyCollection } from '../models'

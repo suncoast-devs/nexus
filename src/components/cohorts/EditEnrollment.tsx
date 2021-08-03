@@ -10,8 +10,9 @@ import { InvitationCode } from './InvitationCode'
 import { useQuery } from 'react-query'
 
 export function EditEnrollment({ cohort }: { cohort: Cohort }) {
-  const { isLoading, refetch, data: studentEnrollments = [] } = useQuery('student-enrollments-with-person', () =>
-    StudentEnrollment.includes('person').where({ cohort_id: cohort.id }).all().then(UnProxyCollection)
+  const { isLoading, refetch, data: studentEnrollments = [] } = useQuery(
+    ['student-enrollments-with-person', cohort.id],
+    () => StudentEnrollment.includes('person').where({ cohort_id: cohort.id }).all().then(UnProxyCollection)
   )
 
   if (isLoading) {

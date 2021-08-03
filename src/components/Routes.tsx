@@ -171,7 +171,9 @@ export function PublicRoutes() {
             // This might be a user re-attempting to use the same invite code.
             window.location.pathname = `/`
           } else {
-            window.location.pathname = `${VITE_INVITATION_REDEEM_URL}&invitation_code=${props.match.params.invitation_code}`
+            window.location.replace(
+              `${VITE_INVITATION_REDEEM_URL}&invitation_code=${props.match.params.invitation_code}`
+            )
           }
 
           return <Callback />

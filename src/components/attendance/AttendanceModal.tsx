@@ -25,8 +25,8 @@ export function AttendanceModal({
   }
 
   const nonEmptyStatuses = statuses.filter(status => status.key !== ' ')
-  const statusesLeft = nonEmptyStatuses.filter((status, index) => index % 2 === 0)
-  const statusesRight = nonEmptyStatuses.filter((status, index) => index % 2 === 1)
+  const statusesLeft = nonEmptyStatuses.filter((_, index) => index % 2 === 0)
+  const statusesRight = nonEmptyStatuses.filter((_, index) => index % 2 === 1)
 
   return (
     <ModalForm

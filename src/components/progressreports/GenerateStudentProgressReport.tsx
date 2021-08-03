@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useReducer, useState } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import html2canvas from 'html2canvas'
 
 import { Editing } from './Editing'

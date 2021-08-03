@@ -35,7 +35,7 @@ export function LectureVideoPage() {
                 className="button is-primary is-light is-small"
                 href={lectureVideo.videoUrl}
                 download={lectureVideo.videoFileName}
-                onClick={event => {
+                onClick={() => {
                   setTimeout(() => {
                     recordLectureVideoPlayback(lectureVideo.key())
                   }, 1000)

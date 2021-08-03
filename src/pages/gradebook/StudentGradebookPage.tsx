@@ -2,7 +2,7 @@ import React from 'react'
 import cx from 'classnames'
 import { Link } from 'react-router-dom'
 
-import { Assignment, Profile, UnProxyCollection } from '@/components/models'
+import { Assignment, UnProxyCollection } from '@/components/models'
 import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 import { StudentEnrollment } from '@/components/models'
 import useProfile from '@/hooks/useProfile'
@@ -59,7 +59,7 @@ function StudentGradebook({ studentEnrollment }: { studentEnrollment: StudentEnr
 export function StudentGradebookPage({ showTitle = false }: { showTitle?: boolean }) {
   const { profile } = useProfile()
 
-  const { isLoading, data: studentEnrollments = [] } = useQuery(['student-enrollments'], () =>
+  const { isLoading, data: studentEnrollments = [] } = useQuery(['student-enrollments', profile.id], () =>
     StudentEnrollment.includes(['cohort', { assignments: 'homework' }])
       .order({ cohort_id: 'desc' })
       .where({ person_id: profile.id })

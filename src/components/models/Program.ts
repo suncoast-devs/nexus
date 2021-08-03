@@ -1,7 +1,8 @@
 import { ApplicationRecord } from './ApplicationRecord'
-import { Model, Attr, HasMany } from 'spraypaint'
+import { Attr, HasMany, Model } from 'spraypaint'
 import { Unit } from '.'
 
+@Model()
 export class Program extends ApplicationRecord {
   static jsonapiType = 'programs'
   @Attr() title!: string

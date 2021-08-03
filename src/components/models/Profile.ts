@@ -1,5 +1,4 @@
 import { Model } from 'spraypaint'
-import { ApplicationRecord } from './ApplicationRecord'
 import { Person } from '.'
 
 @Model()

@@ -7,7 +7,7 @@ import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 
 export function AdminShowGradeQueuesPage() {
   const { profile } = useProfile()
-  const { isLoading, data: cohorts = [], refetch } = useQuery('gradebook-cohorts', () =>
+  const { isLoading, data: cohorts = [], refetch } = useQuery(['gradebook-cohorts', profile.dashboardCohortIds], () =>
     Cohort.includes(['student_enrollments', { homeworks: { assignments: ['homework', 'person'] } }])
       .where({
         id: profile.dashboardCohortIds,

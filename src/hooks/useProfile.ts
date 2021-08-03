@@ -1,4 +1,3 @@
-import auth from '@/Auth'
 import icon from '@/images/icon.svg'
 import { Profile } from '@/components/models/Profile'
 import { useQuery } from 'react-query'

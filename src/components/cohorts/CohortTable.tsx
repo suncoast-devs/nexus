@@ -37,7 +37,7 @@ export function CohortTable({ cohorts, title }: { cohorts: Cohort[]; title: stri
             {cohorts.map(cohort => (
               <tr
                 key={cohort.id}
-                onClick={event => {
+                onClick={() => {
                   history.push(`/cohorts/${cohort.id}`)
                 }}
               >

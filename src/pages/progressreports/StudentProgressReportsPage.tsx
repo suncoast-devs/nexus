@@ -12,6 +12,7 @@ export function StudentProgressReportsPage({ showTitle }: { showTitle: boolean }
     StudentProgressReport.all().then(UnProxyCollection)
   )
 
+  console.log(reports)
   if (isLoading) {
     return <LoadingIndicator />
   }

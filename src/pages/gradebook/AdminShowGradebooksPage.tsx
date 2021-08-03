@@ -6,7 +6,7 @@ import { useQuery } from 'react-query'
 
 export function AdminShowGradebooksPage() {
   const { profile } = useProfile()
-  const { refetch, data: cohorts = [] } = useQuery(['active-cohorts', profile.dashboardCohortIds], () =>
+  const { data: cohorts = [] } = useQuery(['active-cohorts', profile.dashboardCohortIds], () =>
     Cohort.where({ active: true, id: profile.dashboardCohortIds }).all().then(UnProxyCollection)
   )
 

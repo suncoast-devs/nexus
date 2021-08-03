@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import auth from '@/Auth'
 import { AuthenticatedNavBar } from './AuthenticatedNavBar'
 import { UnauthenticatedNavBar } from './UnauthenticatedNavBar'

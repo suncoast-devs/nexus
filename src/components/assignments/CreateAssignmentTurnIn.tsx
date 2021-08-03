@@ -6,7 +6,7 @@ import { URLTurnIn } from './URLTurnIn'
 import { MarkDownTextArea } from './MarkDownTextArea'
 import { AssignmentEventUploads } from './AssignmentEventUploads'
 import useProfile from '@/hooks/useProfile'
-import { Assignment, AssignmentEvent, Homework } from '../models'
+import { Assignment, Homework } from '../models'
 import { AssignmentEventDetails } from '@/pages/assignments/StudentAssignmentPage'
 
 export function CreateAssignmentTurnIn({

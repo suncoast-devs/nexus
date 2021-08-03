@@ -72,7 +72,7 @@ export function NewProgressReportPage() {
     progressReport.idsOfPeople = selectedPeopleIDs.map(Number)
     progressReport.startDate = startDate
     progressReport.endDate = endDate
-    progressReport.save().then(response => {
+    progressReport.save().then(() => {
       history.push(`/progress-reports/${progressReport.id}/0`)
     })
   }

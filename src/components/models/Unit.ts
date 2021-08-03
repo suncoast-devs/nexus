@@ -2,6 +2,7 @@ import { ApplicationRecord } from './ApplicationRecord'
 import { Model, Attr, BelongsTo, HasMany } from 'spraypaint'
 import { Cohort, Person, Program, StudentEnrollment } from '.'
 
+@Model()
 export class Unit extends ApplicationRecord {
   static jsonapiType = 'units'
 

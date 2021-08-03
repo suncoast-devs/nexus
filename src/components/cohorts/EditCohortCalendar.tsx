@@ -28,7 +28,7 @@ export function EditCohortCalendar({ cohort, refetch }: { cohort: Cohort; refetc
     }))
     .sort()
 
-  const deleteCohortDate = (calendarEvent: CalendarData, event: React.SyntheticEvent) => {
+  function deleteCohortDate(calendarEvent: CalendarData) {
     const cohortDate = new CohortDate({ id: calendarEvent.id })
 
     cohortDate.destroy().then(refetch)

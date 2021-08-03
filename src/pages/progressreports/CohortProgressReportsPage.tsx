@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Cohort } from '@/components/models'
 import { LeftRight } from '@/components/utils/LeftRight'
-import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 
 export function CohortProgressReportsPage({ cohort, allowNew }: { cohort: Cohort; allowNew: boolean }) {
   return (
