@@ -34,8 +34,6 @@ export function GradeQueue({ cohort, refetch }: { cohort: Cohort; refetch: () =>
     return <div className="notification is-success">No assignments to grade for {cohort.name} -- Good job!</div>
   }
 
-  console.log(ungradedAssignments)
-
   const sortedAssignments = ungradedAssignments.sort(sortFunction)
 
   return (
