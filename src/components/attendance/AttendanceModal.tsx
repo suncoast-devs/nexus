@@ -32,7 +32,7 @@ export function AttendanceModal({
     <ModalForm
       onConfirm={save}
       onClose={onClose}
-      onDelete={selectedAttendanceRecord.isPersisted && destroy}
+      onDelete={selectedAttendanceRecord.isPersisted ? destroy : () => {}}
       active={true}
       title={
         <span>

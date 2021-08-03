@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Cohort } from '@/components/models'
-import useModelData from '@/hooks/useModelData'
 import { LeftRight } from '@/components/utils/LeftRight'
 import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 

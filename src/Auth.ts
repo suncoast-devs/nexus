@@ -4,7 +4,7 @@ class Auth {
   // userProfile
 
   login = () => {
-    window.location = VITE_LOGIN_URL
+    window.location.pathname = VITE_LOGIN_URL
   }
 
   get token() {

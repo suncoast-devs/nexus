@@ -1,6 +1,5 @@
 import React from 'react'
 
-import useModelData from '@/hooks/useModelData'
 import { Cohort, UnProxyCollection } from '@/components/models'
 import { CohortProgressReportsPage } from '@/pages/progressreports/CohortProgressReportsPage'
 import useProfile from '@/hooks/useProfile'

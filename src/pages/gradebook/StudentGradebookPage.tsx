@@ -3,7 +3,6 @@ import cx from 'classnames'
 import { Link } from 'react-router-dom'
 
 import { Assignment, Profile, UnProxyCollection } from '@/components/models'
-import useModelData from '@/hooks/useModelData'
 import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 import { StudentEnrollment } from '@/components/models'
 import useProfile from '@/hooks/useProfile'

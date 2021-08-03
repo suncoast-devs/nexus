@@ -1,9 +1,6 @@
 import { Model, Attr, HasMany } from 'spraypaint'
+import { Assignment, AttendanceRecord, Cohort, StudentEnrollment } from '.'
 import { ApplicationRecord } from './ApplicationRecord'
-import Assignment from './Assignment'
-import AttendanceRecord from './AttendanceRecord'
-import Cohort from './Cohort'
-import StudentEnrollment from './StudentEnrollment'
 
 @Model()
 export class Person extends ApplicationRecord {

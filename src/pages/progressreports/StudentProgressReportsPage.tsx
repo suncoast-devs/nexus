@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { StudentProgressReport, UnProxyCollection } from '@/components/models'
-import useModelData from '@/hooks/useModelData'
 import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 import useProfile from '@/hooks/useProfile'
 import { useQuery } from 'react-query'

@@ -2,10 +2,8 @@ import React, { useState } from 'react'
 import moment from 'moment'
 
 import { Cohort, AttendanceRecord, CohortDate, Person } from '@/components/models'
-import useModelData from '@/hooks/useModelData'
 import { PersonComponent } from '@/components/person/PersonComponent'
 import { InactivePerson } from '@/components/person/InactivePerson'
-import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 import { AttendanceCell } from '@/components/attendance/AttendanceCell'
 import { AttendanceModal } from '@/components/attendance/AttendanceModal'
 
@@ -112,7 +110,7 @@ export function EditAttendancePage({ cohort, refetch }: { cohort: Cohort; refetc
 
   return (
     <div className="container">
-      {showModal && (
+      {showModal && selectedAttendanceRecord && (
         <AttendanceModal
           selectedAttendanceRecord={selectedAttendanceRecord}
           onClose={() => {

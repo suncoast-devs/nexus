@@ -4,7 +4,6 @@ import { Router } from 'react-router-dom'
 import history from '@/history'
 import { Layout } from '@/components/Layout'
 import useProfile from '@/hooks/useProfile'
-import { ErrorsContext } from '@/components/Errors'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
 export function App() {
@@ -23,12 +22,10 @@ export function App() {
   })
 
   return (
-    <ErrorsContext.Provider value={[errors, setErrors]}>
-      <QueryClientProvider client={queryClient}>
-        <Router history={history}>
-          <Layout />
-        </Router>
-      </QueryClientProvider>
-    </ErrorsContext.Provider>
+    <QueryClientProvider client={queryClient}>
+      <Router history={history}>
+        <Layout />
+      </Router>
+    </QueryClientProvider>
   )
 }

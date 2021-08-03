@@ -1,5 +1,4 @@
 import React from 'react'
-import useModelData from '@/hooks/useModelData'
 import { Cohort, UnProxyCollection } from '@/components/models'
 import { GradeQueue } from '@/components/gradebook/GradeQueue'
 import useProfile from '@/hooks/useProfile'

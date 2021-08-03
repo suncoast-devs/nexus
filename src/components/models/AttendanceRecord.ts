@@ -1,7 +1,6 @@
 import { ApplicationRecord } from './ApplicationRecord'
 import { Model, Attr, BelongsTo } from 'spraypaint'
-import CohortDate from './CohortDate'
-import { Person } from '.'
+import { CohortDate, Person } from '.'
 
 @Model()
 export class AttendanceRecord extends ApplicationRecord {

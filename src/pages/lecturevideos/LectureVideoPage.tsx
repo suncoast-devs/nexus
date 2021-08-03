@@ -1,6 +1,5 @@
 import React from 'react'
 import moment from 'moment'
-import useModelData from '@/hooks/useModelData'
 import { LectureVideo, UnProxyRecord } from '@/components/models'
 import { LectureVideoPlayer } from '@/components/lecturevideos/LectureVideoPlayer'
 import { recordLectureVideoPlayback } from '@/components/lecturevideos/recordLectureVideoPlayback'
@@ -38,7 +37,7 @@ export function LectureVideoPage() {
                 download={lectureVideo.videoFileName}
                 onClick={event => {
                   setTimeout(() => {
-                    recordLectureVideoPlayback(lectureVideo.id)
+                    recordLectureVideoPlayback(lectureVideo.key())
                   }, 1000)
                 }}
               >

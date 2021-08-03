@@ -14,7 +14,7 @@ export function ModalForm({
 }: {
   active: boolean
   children: ReactNode
-  title: string
+  title: ReactNode
   onClose: () => void
   onConfirm?: () => void
   onDelete: () => void

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Select, { OptionsType } from 'react-select'
 
-import useModelData from '@/hooks/useModelData'
 import { Person } from '@/components//models/Person'
 import { UnProxyCollection } from '../models'
 import { useQuery } from 'react-query'

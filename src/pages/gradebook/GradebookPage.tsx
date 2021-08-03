@@ -1,7 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
 
-import useModelData from '@/hooks/useModelData'
 import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 import { EnrollmentRows } from '@/components/gradebook/EnrollmentRows'
 import { Gradebook } from '@/components/models/Gradebook'

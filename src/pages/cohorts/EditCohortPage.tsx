@@ -1,8 +1,6 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
 import { Cohort, UnProxyRecord } from '@/components/models'
-
-import { ErrorsContext, addErrorsFromObject } from '@/components/Errors'
 
 import history from '@/history'
 import { formToObject } from '@/utils/formToObject'
@@ -33,8 +31,6 @@ export function EditCohortPage() {
       .find(id)
       .then(UnProxyRecord)
   )
-  const [errors, setErrors] = useContext(ErrorsContext)
-
   const cancel = () => {
     history.push('/cohorts')
   }
@@ -46,7 +42,7 @@ export function EditCohortPage() {
       if (response) {
         history.push('/cohorts')
       } else {
-        addErrorsFromObject(errors, setErrors, updatedCohort)
+        // Do something with errors
       }
     })
   }

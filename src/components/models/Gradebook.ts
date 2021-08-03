@@ -1,7 +1,6 @@
 import { ApplicationRecord } from './ApplicationRecord'
 import { HasMany, BelongsTo, Model } from 'spraypaint'
-import StudentEnrollment from './StudentEnrollment'
-import { Assignment, Cohort, Homework } from '.'
+import { Assignment, Cohort, Homework, StudentEnrollment } from '.'
 
 @Model()
 export class Gradebook extends ApplicationRecord {

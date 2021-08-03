@@ -28,7 +28,7 @@ export function GenerateStudentProgressReport({
   const shortName = person.givenName || person.fullName
   const initialStep = reportImageUrl ? 'complete' : 'editing'
 
-  const [state, setState] = useState({
+  const [state, setState] = useState<Content>({
     ...content,
     step: initialStep,
   })

@@ -2,7 +2,6 @@ import React from 'react'
 import Select from 'react-select'
 
 import { Cohort, Program, UnProxyCollection } from '@/components/models'
-import useModelData from '@/hooks/useModelData'
 import { InputField } from '@/components/utils/Fields'
 import { useQuery } from 'react-query'
 

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import moment from 'moment'
 
 import { formToObject } from '@/utils/formToObject'
-import useModelData from '@/hooks/useModelData'
 import { Cohort, HandbookAssignment, Homework, UnProxyCollection } from '@/components/models'
 import { useQuery } from 'react-query'
 

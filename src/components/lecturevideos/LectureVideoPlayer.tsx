@@ -18,7 +18,7 @@ export function LectureVideoPlayer({ lectureVideo }: { lectureVideo: LectureVide
   // then record a playback event.
   const handleStateChange = (state: { hasStarted: boolean }, prevState: { hasStarted: boolean }) => {
     if (state.hasStarted && !prevState.hasStarted) {
-      recordLectureVideoPlayback(lectureVideo.id)
+      recordLectureVideoPlayback(lectureVideo.key())
     }
   }
 

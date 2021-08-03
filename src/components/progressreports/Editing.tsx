@@ -2,7 +2,7 @@ import React from 'react'
 import logo from '@/images/logo.png'
 import { AssignmentCard } from './AssignmentCard'
 import { Assignment } from '../models'
-import { Content } from './GenerateStudentProgressReport'
+import { Content } from '../models/StudentProgressReport'
 
 export function Editing({
   showInput,

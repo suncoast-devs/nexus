@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react'
 import Dropzone from 'react-dropzone'
+// @ts-ignore - no types
 import { DirectUploadProvider } from 'react-activestorage-provider'
 import auth from '@/Auth'
 import { AssignmentEventAttachments } from './AssignmentEventAttachments'
