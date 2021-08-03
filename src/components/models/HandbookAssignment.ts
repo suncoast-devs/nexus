@@ -6,5 +6,5 @@ export class HandbookAssignment extends ApplicationRecord {
   static jsonapiType = 'handbook_assignments'
 
   @Attr() name!: string
-  @Attr() body!: string
+  @Attr() body!: { front_matter: { title: string; tags?: string[] }; content: string }
 }

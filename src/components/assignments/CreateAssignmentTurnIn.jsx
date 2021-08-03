@@ -5,14 +5,10 @@ import { GistTurnIn } from './GistTurnIn'
 import { URLTurnIn } from './URLTurnIn'
 import { MarkDownTextArea } from './MarkDownTextArea'
 import { AssignmentEventUploads } from './AssignmentEventUploads'
+import useProfile from '@/hooks/useProfile'
 
-export function CreateAssignmentTurnIn({
-  profile,
-  assignment,
-  homework,
-  createAssignmentEvent,
-  cancelNewAssignmentEvent,
-}) {
+export function CreateAssignmentTurnIn({ assignment, homework, createAssignmentEvent, cancelNewAssignmentEvent }) {
+  const { profile } = useProfile()
   const [assignmentEventDetails, setAssignmentEventDetails] = useState({
     name: 'turnin',
     payload: { level: 'explorer', difficulty: '', lecturePreparedMe: '', totalHours: '', comment: '' },

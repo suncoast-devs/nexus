@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import moment from 'moment'
 import { Homework, Cohort } from '@/components/models'
-import useModelData from '@/hooks/useModelData'
 import { Link } from 'react-router-dom'
 import { EditHomework } from '@/components/homeworks/EditHomework'
 

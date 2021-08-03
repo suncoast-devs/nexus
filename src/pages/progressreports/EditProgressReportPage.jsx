@@ -7,8 +7,8 @@ import { Main } from '@/components/progressreports/Main'
 import { Sidebar } from '@/components/progressreports/Sidebar'
 import { useParams } from 'react-router'
 
-export function EditProgressReportPage({ index = 'none' }) {
-  const { progress_report_id: id, index } = useParams()
+export function EditProgressReportPage() {
+  const { progress_report_id: id, index = 'none' } = useParams()
 
   let effectiveIndex = index
 

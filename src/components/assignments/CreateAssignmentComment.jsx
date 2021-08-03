@@ -2,15 +2,16 @@ import React, { useState } from 'react'
 import { PersonImage } from '@/components/person/PersonImage'
 import { MarkDownTextArea } from './MarkDownTextArea'
 import { AssignmentEventUploads } from './AssignmentEventUploads'
+import useProfile from '@/hooks/useProfile'
 
 export function CreateAssignmentComment({
   name = 'comment',
   buttonText = 'Post Comment',
-  profile,
   assignment,
   createAssignmentEvent,
   cancelNewAssignmentEvent,
 }) {
+  const { profile } = useProfile()
   const [assignmentEventDetails, setAssignmentEventDetails] = useState({
     name,
     payload: { comment: '' },

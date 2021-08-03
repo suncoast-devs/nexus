@@ -1,10 +1,18 @@
 import { Attr, Model, BelongsTo, HasMany } from 'spraypaint'
+import { AssignmentEvent, Homework, Person, StudentEnrollment } from '.'
 import { ApplicationRecord } from './ApplicationRecord'
-import AssignmentEvent from './AssignmentEvent'
-import Homework from './Homework'
-import { Person } from './Person'
-import StudentEnrollment from './StudentEnrollment'
 
+export type ScoreInfoType = {
+  title: string
+  progressReportTitle?: string
+  style: {
+    iconColor: string
+    buttonColor: string
+    textColor: string
+    progressReportTextColor?: string
+    progressReportBackgroundColor?: string
+  }
+}
 @Model()
 export class Assignment extends ApplicationRecord {
   static jsonapiType = 'assignments'
@@ -44,7 +52,7 @@ export class Assignment extends ApplicationRecord {
     return Assignment.graded(scoreAsInt) ? Assignment.scoreInfos[scoreAsInt] : Assignment.noScore
   }
 
-  static noScore = {
+  static noScore: ScoreInfoType = {
     title: 'Not Graded',
     progressReportTitle: 'Not Completed',
     style: {
@@ -56,7 +64,7 @@ export class Assignment extends ApplicationRecord {
     },
   }
 
-  static scoreInfos = [
+  static scoreInfos: ScoreInfoType[] = [
     {
       title: 'Unacceptable',
       style: {

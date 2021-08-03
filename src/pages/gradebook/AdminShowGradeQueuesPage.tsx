@@ -1,22 +1,32 @@
 import React from 'react'
 import useModelData from '@/hooks/useModelData'
-import { Cohort } from '@/components/models'
+import { Cohort, UnProxyCollection } from '@/components/models'
 import { GradeQueue } from '@/components/gradebook/GradeQueue'
 import useProfile from '@/hooks/useProfile'
+import { useQuery } from 'react-query'
+import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 
 export function AdminShowGradeQueuesPage() {
   const { profile } = useProfile()
-  const { data: cohorts } = useModelData(() => Cohort.all())
+  const { isLoading, data: cohorts = [], refetch } = useQuery('gradebook-cohorts', () =>
+    Cohort.includes(['student_enrollments', { homeworks: { assignments: ['homework', 'person'] } }])
+      .where({
+        id: profile.dashboardCohortIds,
+      })
+      .order('name')
+      .all()
+      .then(UnProxyCollection)
+  )
 
-  const cohortsToShow = cohorts.filter(cohort => profile.dashboardCohortIds.includes(Number(cohort.id)))
+  if (isLoading) {
+    return <LoadingIndicator />
+  }
 
   return (
     <>
-      {cohortsToShow
-        .sort(cohort => cohort.name.localeCompare(cohort.name))
-        .map(cohort => (
-          <GradeQueue key={cohort.id} cohort_id={cohort.id} />
-        ))}
+      {cohorts.map(cohort => (
+        <GradeQueue key={cohort.id} cohort={cohort} refetch={refetch} />
+      ))}
     </>
   )
 }
