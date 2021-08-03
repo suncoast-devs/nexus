@@ -3,9 +3,16 @@ import { MarkDownDiv } from '@/components/utils/MarkDownDiv'
 import { GithubTurnedInAssignmentDetails } from './GithubTurnedInAssignmentDetails'
 import { GistTurnedInAssignmentDetails } from './GistTurnedInAssignmentDetails'
 import { URLTurnedInAssignmentDetails } from './URLTurnedInAssignmentDetails'
+import { AssignmentEvent, Homework } from '../models'
 
-export function TurnedInAssignment({ homework, assignmentEvent }) {
-  function wordCase(string) {
+export function TurnedInAssignment({
+  homework,
+  assignmentEvent,
+}: {
+  homework: Homework
+  assignmentEvent: AssignmentEvent
+}) {
+  function wordCase(string: string | undefined) {
     return string ? string.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()) : null
   }
 

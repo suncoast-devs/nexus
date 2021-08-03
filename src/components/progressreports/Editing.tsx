@@ -1,9 +1,27 @@
 import React from 'react'
 import logo from '@/images/logo.png'
 import { AssignmentCard } from './AssignmentCard'
+import { Assignment } from '../models'
+import { Content } from './GenerateStudentProgressReport'
 
-export function Editing({ showInput, shortName, fullName, assignments, state, dispatch, title }) {
-  const prompts = [
+export function Editing({
+  showInput,
+  shortName,
+  fullName,
+  assignments,
+  state,
+  setState,
+  title,
+}: {
+  showInput: boolean
+  shortName: string
+  fullName: string
+  assignments: Assignment[]
+  state: Content
+  setState: (state: Content) => void
+  title: string
+}) {
+  const prompts: { label: string; field: 'doingWell' | 'improve' | 'attendanceIssues'; placeholder: string }[] = [
     {
       label: `What is ${shortName} doing well?`,
       field: 'doingWell',
@@ -45,7 +63,9 @@ export function Editing({ showInput, shortName, fullName, assignments, state, di
                 {showInput ? (
                   <textarea
                     value={state[prompt.field]}
-                    onChange={event => dispatch({ type: prompt.field, value: event.target.value })}
+                    onChange={event => {
+                      setState({ ...state, [prompt.field]: event.target.value })
+                    }}
                     className="textarea"
                     rows={4}
                     placeholder={prompt.placeholder}
@@ -78,7 +98,7 @@ export function Editing({ showInput, shortName, fullName, assignments, state, di
                 </div>
                 <div className="list-item has-text-centered is-size-3">Assignments</div>
                 {assignments
-                  .sort((a, b) => a.homework.id - b.homework.id)
+                  .sort((a, b) => Number(a.homework.id) - Number(b.homework.id))
                   .map(assignment => (
                     <AssignmentCard key={assignment.homework.id} assignment={assignment} />
                   ))}

@@ -14,6 +14,7 @@ import { useParams } from 'react-router'
 import { useQuery } from 'react-query'
 
 export type AssignmentEventDetails = {
+  assignmentId: string
   name: string
   payload: any
   uploadsSignedIds: number[]

@@ -1,6 +1,7 @@
 import React from 'react'
+import { AssignmentEvent } from '../models'
 
-export function GithubTurnedInAssignmentDetails({ assignmentEvent }) {
+export function GithubTurnedInAssignmentDetails({ assignmentEvent }: { assignmentEvent: AssignmentEvent }) {
   return (
     <>
       <a target="_" href={assignmentEvent.payload.repo_url}>

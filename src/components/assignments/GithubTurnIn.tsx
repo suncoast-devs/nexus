@@ -2,18 +2,36 @@ import React, { useState, useEffect } from 'react'
 import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 import auth from '@/Auth'
 import moment from 'moment'
+import { AssignmentEventDetails } from '@/pages/assignments/StudentAssignmentPage'
 
-export function GithubTurnIn({ assignmentEventDetails, setAssignmentEventDetails, setTurnInValid }) {
-  const [repositories, setRepositories] = useState([])
+export type Repository = {
+  id: number
+  pushed_at: string
+  name: string
+  html_url: string
+  default_branch: string
+  homepage: string
+}
+
+export function GithubTurnIn({
+  assignmentEventDetails,
+  setAssignmentEventDetails,
+  setTurnInValid,
+}: {
+  assignmentEventDetails: AssignmentEventDetails
+  setAssignmentEventDetails: (e: AssignmentEventDetails) => void
+  setTurnInValid: (turnInValid: boolean) => void
+}) {
+  const [repositories, setRepositories] = useState<Repository[]>([])
   const [selectedRepoId, setSelectedRepoId] = useState(0)
-  const [repoPushedAt, setRepoPushedAt] = useState()
+  const [repoPushedAt, setRepoPushedAt] = useState<number>(0)
 
   useEffect(() => {
     setTurnInValid(selectedRepoId !== 0)
   }, [selectedRepoId, setTurnInValid])
 
-  const onChangeRepo = event => {
-    const repo = repositories.find(repo => parseInt(repo.id) === parseInt(event.target.value))
+  function onChangeRepo(event: React.ChangeEvent<HTMLSelectElement>) {
+    const repo = repositories.find(repo => Number(repo.id) === Number(event.target.value))
 
     if (repo) {
       console.log(repo)
@@ -36,14 +54,14 @@ export function GithubTurnIn({ assignmentEventDetails, setAssignmentEventDetails
     }
   }
 
-  const onChangeBranch = event => {
+  function onChangeBranch(event: React.ChangeEvent<HTMLInputElement>) {
     setAssignmentEventDetails({
       ...assignmentEventDetails,
       payload: { ...assignmentEventDetails.payload, branch: event.target.value },
     })
   }
 
-  const onChangeHomepage = event => {
+  function onChangeHomepage(event: React.ChangeEvent<HTMLInputElement>) {
     setAssignmentEventDetails({
       ...assignmentEventDetails,
       payload: { ...assignmentEventDetails.payload, homepage: event.target.value },
@@ -74,7 +92,7 @@ export function GithubTurnIn({ assignmentEventDetails, setAssignmentEventDetails
     )
   }
 
-  let pushAgeMinutes = (new Date() - repoPushedAt) / 1000 / 60 || 0
+  let pushAgeMinutes = (Date.now() - repoPushedAt) / 1000 / 60 || 0
 
   return (
     <>

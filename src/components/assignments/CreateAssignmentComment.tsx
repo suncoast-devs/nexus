@@ -3,6 +3,8 @@ import { PersonImage } from '@/components/person/PersonImage'
 import { MarkDownTextArea } from './MarkDownTextArea'
 import { AssignmentEventUploads } from './AssignmentEventUploads'
 import useProfile from '@/hooks/useProfile'
+import { Assignment } from '../models'
+import { AssignmentEventDetails } from '@/pages/assignments/StudentAssignmentPage'
 
 export function CreateAssignmentComment({
   name = 'comment',
@@ -10,12 +12,19 @@ export function CreateAssignmentComment({
   assignment,
   createAssignmentEvent,
   cancelNewAssignmentEvent,
+}: {
+  name?: string
+  buttonText?: string
+  assignment: Assignment
+  createAssignmentEvent: (assignmentEventDetails: AssignmentEventDetails) => void
+  cancelNewAssignmentEvent: () => void
 }) {
   const { profile } = useProfile()
-  const [assignmentEventDetails, setAssignmentEventDetails] = useState({
+  const [assignmentEventDetails, setAssignmentEventDetails] = useState<AssignmentEventDetails>({
     name,
     payload: { comment: '' },
-    assignmentId: assignment.id,
+    assignmentId: assignment.key(),
+    uploadsSignedIds: [],
   })
 
   const onSubmit = async () => {
@@ -24,7 +33,9 @@ export function CreateAssignmentComment({
     updateComment('')
   }
 
-  const updateComment = comment => setAssignmentEventDetails({ ...assignmentEventDetails, payload: { comment } })
+  function updateComment(comment: string) {
+    setAssignmentEventDetails({ ...assignmentEventDetails, payload: { comment } })
+  }
 
   return (
     <>
@@ -37,7 +48,7 @@ export function CreateAssignmentComment({
           <article className="media">
             <figure className="media-left">
               <p className="image is-64x64">
-                <PersonImage url={profile.smallProfileImageUrl} imgClassName="is-rounded" />
+                <PersonImage alt={profile.fullName} url={profile.smallProfileImageUrl} imgClassName="is-rounded" />
               </p>
             </figure>
             <div className="media-content">

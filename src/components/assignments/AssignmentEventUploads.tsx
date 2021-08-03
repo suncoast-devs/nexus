@@ -4,15 +4,22 @@ import { DirectUploadProvider } from 'react-activestorage-provider'
 import auth from '@/Auth'
 import { AssignmentEventAttachments } from './AssignmentEventAttachments'
 import useProfile from '@/hooks/useProfile'
+import { AssignmentEventDetails } from '@/pages/assignments/StudentAssignmentPage'
 
-export function AssignmentEventUploads({ assignmentEventDetails, setAssignmentEventDetails }) {
+export function AssignmentEventUploads({
+  assignmentEventDetails,
+  setAssignmentEventDetails,
+}: {
+  assignmentEventDetails: AssignmentEventDetails
+  setAssignmentEventDetails: (e: AssignmentEventDetails) => void
+}) {
   const { profile } = useProfile()
 
   const handleDrop = useCallback(function (files, handleUpload) {
     handleUpload(files)
   }, [])
 
-  function handleAttachment(signedIds) {
+  function handleAttachment(signedIds: number[]) {
     setAssignmentEventDetails({
       ...assignmentEventDetails,
       uploadsSignedIds: [...(assignmentEventDetails.uploadsSignedIds || []), ...signedIds],
@@ -33,7 +40,8 @@ export function AssignmentEventUploads({ assignmentEventDetails, setAssignmentEv
         }}
         directUploadsPath={`${import.meta.env.VITE_PYLON_URL}/direct_uploads`}
         onSuccess={handleAttachment}
-        render={({ handleUpload, uploads, ready }) => {
+        // @ts-ignore - no types
+        render={({ handleUpload, uploads }) => {
           return (
             <div>
               <div className="mb-4">
@@ -48,6 +56,7 @@ export function AssignmentEventUploads({ assignmentEventDetails, setAssignmentEv
                         {uploads.length === 0 && !isDragActive ? (
                           <div>Drag 'n' drop some files here, or click to select files</div>
                         ) : (
+                          // @ts-ignore - no-types
                           uploads.map(upload => {
                             switch (upload.state) {
                               case 'waiting':

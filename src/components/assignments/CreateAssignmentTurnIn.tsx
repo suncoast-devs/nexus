@@ -6,13 +6,26 @@ import { URLTurnIn } from './URLTurnIn'
 import { MarkDownTextArea } from './MarkDownTextArea'
 import { AssignmentEventUploads } from './AssignmentEventUploads'
 import useProfile from '@/hooks/useProfile'
+import { Assignment, AssignmentEvent, Homework } from '../models'
+import { AssignmentEventDetails } from '@/pages/assignments/StudentAssignmentPage'
 
-export function CreateAssignmentTurnIn({ assignment, homework, createAssignmentEvent, cancelNewAssignmentEvent }) {
+export function CreateAssignmentTurnIn({
+  assignment,
+  homework,
+  createAssignmentEvent,
+  cancelNewAssignmentEvent,
+}: {
+  assignment: Assignment
+  homework: Homework
+  createAssignmentEvent: (assignmentEvent: AssignmentEventDetails) => void
+  cancelNewAssignmentEvent: () => void
+}) {
   const { profile } = useProfile()
-  const [assignmentEventDetails, setAssignmentEventDetails] = useState({
+  const [assignmentEventDetails, setAssignmentEventDetails] = useState<AssignmentEventDetails>({
     name: 'turnin',
     payload: { level: 'explorer', difficulty: '', lecturePreparedMe: '', totalHours: '', comment: '' },
-    assignmentId: assignment.id,
+    assignmentId: assignment.key(),
+    uploadsSignedIds: [],
   })
   const [turnInValid, setTurnInValid] = useState(true)
 
@@ -22,26 +35,31 @@ export function CreateAssignmentTurnIn({ assignment, homework, createAssignmentE
     updateComment('')
   }
 
-  const updateComment = comment =>
+  function updateComment(comment: string) {
     setAssignmentEventDetails({ ...assignmentEventDetails, payload: { ...assignmentEventDetails.payload, comment } })
+  }
 
-  const updateAssignmentLevel = level =>
+  function updateAssignmentLevel(level: string) {
     setAssignmentEventDetails({ ...assignmentEventDetails, payload: { ...assignmentEventDetails.payload, level } })
+  }
 
-  const updateDifficulty = difficulty =>
+  function updateDifficulty(difficulty: string) {
     setAssignmentEventDetails({ ...assignmentEventDetails, payload: { ...assignmentEventDetails.payload, difficulty } })
+  }
 
-  const updateLecturePreparedMe = lecturePreparedMe =>
+  function updateLecturePreparedMe(lecturePreparedMe: string) {
     setAssignmentEventDetails({
       ...assignmentEventDetails,
       payload: { ...assignmentEventDetails.payload, lecturePreparedMe },
     })
+  }
 
-  const updateTotalHours = totalHours =>
+  function updateTotalHours(totalHours: string) {
     setAssignmentEventDetails({
       ...assignmentEventDetails,
       payload: { ...assignmentEventDetails.payload, totalHours },
     })
+  }
 
   return (
     <article className="message is-link">

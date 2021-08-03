@@ -1,11 +1,22 @@
 import React from 'react'
-import { StudentProgressReport, Assignment } from '@/components/models'
+import { StudentProgressReport, Assignment, ProgressReport, Person } from '@/components/models'
 import { GenerateStudentProgressReport } from './GenerateStudentProgressReport'
+import { Content } from '../models/StudentProgressReport'
 
-export function Editor({ progressReport, onSaveStudentReport, index, onSkip }) {
-  const person = progressReport.people.find(
-    person => parseInt(person.id) === parseInt(progressReport.sortedIdsOfPeople()[index])
-  )
+export function Editor({
+  progressReport,
+  onSaveStudentReport,
+  index,
+  onSkip,
+}: {
+  progressReport: ProgressReport
+  onSaveStudentReport: () => void
+  index: number
+  onSkip: () => void
+}) {
+  const person =
+    progressReport.people.find(person => Number(person.id) === Number(progressReport.sortedIdsOfPeople()[index])) ||
+    new Person()
 
   const assignmentsForReport = progressReport.homeworks.map(homework => {
     const assignment = person.assignments.find(assignment => assignment.homework.id === homework.id) || new Assignment()
@@ -15,20 +26,19 @@ export function Editor({ progressReport, onSaveStudentReport, index, onSkip }) {
   })
 
   const studentProgressReport =
-    progressReport.studentProgressReports.find(report => parseInt(report.person.id) === parseInt(person.id)) ||
+    progressReport.studentProgressReports.find(report => Number(report.person.id) === Number(person.id)) ||
     new StudentProgressReport({ content: {} })
 
-  const onCreate = ({ doingWell, improve, attendanceIssues, image }) => {
-    studentProgressReport.progressReportId = progressReport.id
-    studentProgressReport.personId = person.id
+  function onCreate({ doingWell, improve, attendanceIssues, image }: Content) {
+    studentProgressReport.progressReportId = progressReport.key()
+    studentProgressReport.personId = person.key()
     studentProgressReport.content = { doingWell, improve, attendanceIssues }
-    studentProgressReport.reportImageData = image.dataURL
+    studentProgressReport.reportImageData = image?.dataURL || ''
     studentProgressReport.save().then(onSaveStudentReport)
   }
 
   return (
     <GenerateStudentProgressReport
-      completed={progressReport.completed}
       reportImageUrl={studentProgressReport.reportImageUrl}
       content={studentProgressReport.content}
       fromDate={progressReport.startDate}

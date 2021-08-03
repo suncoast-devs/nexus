@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-export function MarkDownDiv({ markdown }: { markdown: string }) {
+export function MarkDownDiv({ markdown }: { markdown: string | undefined }) {
   const [renderedContent, setRenderedContent] = useState('')
 
   useEffect(() => {
@@ -10,7 +10,7 @@ export function MarkDownDiv({ markdown }: { markdown: string }) {
         headers: {
           Accept: 'application/vnd.github.v3+jso',
         },
-        body: JSON.stringify({ text: markdown }),
+        body: JSON.stringify({ text: markdown || '' }),
       })
 
       if (response.ok) {

@@ -1,7 +1,13 @@
+import { AssignmentEventDetails } from '@/pages/assignments/StudentAssignmentPage'
 import React from 'react'
+import { AssignmentEvent } from '../models'
 import { AssignmentEventAttachment } from './AssignmentEventAttachment'
 
-export function AssignmentEventAttachments({ assignmentEvent }) {
+export function AssignmentEventAttachments({
+  assignmentEvent,
+}: {
+  assignmentEvent: AssignmentEvent | AssignmentEventDetails
+}) {
   const ids = assignmentEvent.uploadsSignedIds || []
 
   if (ids.length === 0) {

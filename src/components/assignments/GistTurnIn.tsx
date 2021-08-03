@@ -1,9 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 import auth from '@/Auth'
+import { AssignmentEventDetails } from '@/pages/assignments/StudentAssignmentPage'
 
-export function GistTurnIn({ assignmentEventDetails, setAssignmentEventDetails }) {
-  const [gists, setGists] = useState([])
+type Gist = {
+  id: string
+  description: string
+  html_url: string
+}
+
+export function GistTurnIn({
+  assignmentEventDetails,
+  setAssignmentEventDetails,
+}: {
+  assignmentEventDetails: AssignmentEventDetails
+  setAssignmentEventDetails: (assignmentDetails: AssignmentEventDetails) => void
+}) {
+  const [gists, setGists] = useState<Gist[]>([])
 
   useEffect(() => {
     async function fetchGists() {
@@ -19,7 +32,7 @@ export function GistTurnIn({ assignmentEventDetails, setAssignmentEventDetails }
     fetchGists()
   })
 
-  const onChangeGist = event => {
+  function onChangeGist(event: React.ChangeEvent<HTMLSelectElement>) {
     const gist = gists.find(gist => parseInt(gist.id) === parseInt(event.target.value))
 
     if (gist) {

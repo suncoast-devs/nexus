@@ -3,9 +3,13 @@ import cx from 'classnames'
 import auth from '@/Auth'
 import prettyBytes from 'pretty-bytes'
 
-export function AssignmentEventAttachment({ id }) {
-  const [attachmentDetails, setAttachmentDetails] = useState({})
-  const [attachmentURL, setAttachmentURL] = useState(null)
+export function AssignmentEventAttachment({ id }: { id: number }) {
+  const [attachmentDetails, setAttachmentDetails] = useState<{
+    filename?: string
+    content_type?: string
+    byte_size?: number
+  }>({})
+  const [attachmentURL, setAttachmentURL] = useState<string>('')
 
   useEffect(() => {
     async function load() {
@@ -24,8 +28,8 @@ export function AssignmentEventAttachment({ id }) {
   }, [id])
 
   const icon =
-    getFontAwesomeIconFromExtension(attachmentDetails.filename) ||
-    getFontAwesomeIconFromMIME(attachmentDetails.content_type)
+    getFontAwesomeIconFromExtension(attachmentDetails.filename || '') ||
+    getFontAwesomeIconFromMIME(attachmentDetails.content_type || '')
 
   return (
     <li>
@@ -44,7 +48,7 @@ export function AssignmentEventAttachment({ id }) {
   )
 }
 
-const mimeToFontAwesomeIconMap = {
+const mimeToFontAwesomeIconMap: Record<string, string> = {
   // Media
   image: 'far fa-file-image',
   audio: 'far fa-file-audio',
@@ -75,7 +79,7 @@ const mimeToFontAwesomeIconMap = {
   'application/zip': 'fa-file-archive',
 }
 
-function getFontAwesomeIconFromExtension(fileName) {
+function getFontAwesomeIconFromExtension(fileName: string) {
   const extension = (fileName || ')').split('.').pop()
 
   switch (extension) {
@@ -95,7 +99,7 @@ function getFontAwesomeIconFromExtension(fileName) {
   return null
 }
 
-function getFontAwesomeIconFromMIME(mimeType) {
+function getFontAwesomeIconFromMIME(mimeType: string) {
   if (mimeType) {
     for (const key in mimeToFontAwesomeIconMap) {
       if (mimeType.includes(key)) {

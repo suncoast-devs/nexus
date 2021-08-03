@@ -1,7 +1,14 @@
+import { AssignmentEventDetails } from '@/pages/assignments/StudentAssignmentPage'
 import React from 'react'
 
-export function URLTurnIn({ assignmentEventDetails, setAssignmentEventDetails }) {
-  const onChangeURL = event => {
+export function URLTurnIn({
+  assignmentEventDetails,
+  setAssignmentEventDetails,
+}: {
+  assignmentEventDetails: AssignmentEventDetails
+  setAssignmentEventDetails: (assignmentDetails: AssignmentEventDetails) => void
+}) {
+  function onChangeURL(event: React.ChangeEvent<HTMLInputElement>) {
     setAssignmentEventDetails({
       ...assignmentEventDetails,
       payload: {

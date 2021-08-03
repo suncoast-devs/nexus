@@ -1,4 +1,5 @@
 import React from 'react'
+import { ProgressReport } from '../models'
 import { Editor } from './Editor'
 
 export function Main({
@@ -8,6 +9,13 @@ export function Main({
   markProgressReportComplete,
   onSaveStudentReport,
   onSkip,
+}: {
+  progressReport: ProgressReport
+  index: number
+  isOnCompletePage: boolean
+  markProgressReportComplete: () => void
+  onSaveStudentReport: () => void
+  onSkip: () => void
 }) {
   if (progressReport.completed) {
     if (isOnCompletePage) {
@@ -17,8 +25,12 @@ export function Main({
     const idOfStudent = progressReport.sortedIdsOfPeople()[index]
 
     const studentProgressReport = progressReport.studentProgressReports.find(
-      studentProgressReport => parseInt(studentProgressReport.personId) === parseInt(idOfStudent)
+      studentProgressReport => Number(studentProgressReport.personId) === Number(idOfStudent)
     )
+
+    if (!studentProgressReport) {
+      return <></>
+    }
 
     return (
       <>

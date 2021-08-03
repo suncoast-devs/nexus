@@ -6,8 +6,15 @@ import { ReopenedAssignment } from './ReopenedAssignment'
 import { TurnedInAssignment } from './TurnedInAssignment'
 import { GradedAssignment } from './GradedAssignment'
 import { AssignmentEventAttachments } from './AssignmentEventAttachments'
+import { AssignmentEvent, Homework } from '../models'
 
-export function ShowAssignmentEvent({ homework, assignmentEvent }) {
+export function ShowAssignmentEvent({
+  homework,
+  assignmentEvent,
+}: {
+  homework: Homework
+  assignmentEvent: AssignmentEvent
+}) {
   const dateAgoHuman = moment(assignmentEvent.createdAt).fromNow()
   const { person } = assignmentEvent
 
@@ -17,7 +24,7 @@ export function ShowAssignmentEvent({ homework, assignmentEvent }) {
     case 'comment':
       body = (
         <div className="content mb-4">
-          <MarkDownDiv markdown={assignmentEvent.payload.comment} />
+          <MarkDownDiv markdown={assignmentEvent.payload.comment || ''} />
         </div>
       )
       break

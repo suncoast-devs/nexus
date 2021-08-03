@@ -6,7 +6,6 @@ import useProfile from '@/hooks/useProfile'
 export const options = {
   indentWithTabs: false,
   lineNumbers: true,
-  previewRender: null,
   uploadImage: false,
   toolbar: [
     'bold',
@@ -28,7 +27,7 @@ export const options = {
   ],
 }
 
-export function MarkDownTextArea({ value, updateValue }) {
+export function MarkDownTextArea({ value, updateValue }: { value: string; updateValue: (value: string) => void }) {
   const { profile } = useProfile()
 
   const [useMdeEditor, setUseMdeEditor] = useState(function () {
@@ -44,7 +43,7 @@ export function MarkDownTextArea({ value, updateValue }) {
     return !profile.isAdmin
   })
 
-  function enableMdeEditor(event) {
+  function enableMdeEditor(event: React.MouseEvent) {
     event.preventDefault()
 
     localStorage.setItem('use-markdown-editor', 'true')
@@ -52,7 +51,7 @@ export function MarkDownTextArea({ value, updateValue }) {
     setUseMdeEditor(true)
   }
 
-  function disableMdeEditor(event) {
+  function disableMdeEditor(event: React.MouseEvent) {
     event.preventDefault()
 
     localStorage.setItem('use-markdown-editor', 'false')
@@ -78,6 +77,7 @@ export function MarkDownTextArea({ value, updateValue }) {
       </p>
       <div className="control markdown-edit">
         {useMdeEditor ? (
+          // @ts-ignore - meh
           <SimpleMdeReact options={options} value={value} onChange={newValue => updateValue(newValue)} />
         ) : (
           <textarea className="textarea" value={value} onChange={event => updateValue(event.target.value)} />

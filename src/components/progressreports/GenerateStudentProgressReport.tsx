@@ -1,8 +1,10 @@
-import React, { useRef, useEffect, useReducer } from 'react'
+import React, { useRef, useEffect, useReducer, useState } from 'react'
 import html2canvas from 'html2canvas'
 
 import { Editing } from './Editing'
 import { EditorButtons } from './EditorButtons'
+import { Assignment, Person } from '../models'
+import { Content } from '../models/StudentProgressReport'
 
 export function GenerateStudentProgressReport({
   content,
@@ -13,31 +15,48 @@ export function GenerateStudentProgressReport({
   person,
   onCreate,
   onSkip,
+}: {
+  content: Content
+  reportImageUrl: string
+  fromDate: string
+  toDate: string
+  assignments: Assignment[]
+  person: Person
+  onCreate: (state: Content) => void
+  onSkip: () => void
 }) {
   const shortName = person.givenName || person.fullName
   const initialStep = reportImageUrl ? 'complete' : 'editing'
 
-  const [state, dispatch] = useReducer((state, action) => ({ ...state, [action.type]: action.value }), {
-    step: initialStep,
+  const [state, setState] = useState({
     ...content,
+    step: initialStep,
   })
 
   const report = useRef(null)
 
   useEffect(() => {
-    dispatch({ type: 'doingWell', value: content.doingWell || '' })
-    dispatch({ type: 'improve', value: content.improve || '' })
-    dispatch({ type: 'attendanceIssues', value: content.attendanceIssues || '' })
+    setState(state => {
+      return { ...state, doingWell: content.doingWell || '' }
+    })
+    setState(state => {
+      return { ...state, improve: content.improve || '' }
+    })
+    setState(state => {
+      return { ...state, attendanceIssues: content.attendanceIssues || '' }
+    })
   }, [person.id, content.doingWell, content.improve, content.attendanceIssues, initialStep])
 
-  const generateReportImage = () => {
-    html2canvas(report.current).then(canvas => {
+  function generateReportImage() {
+    html2canvas((report.current as unknown) as HTMLElement).then(canvas => {
       canvas.toBlob(blob => {
         const dataURL = canvas.toDataURL('image/png')
         const image = { dataURL, blob }
 
-        dispatch({ type: 'image', value: image })
-        onCreate({ ...state, image })
+        const newState = { ...state, image }
+
+        setState(newState)
+        onCreate(newState)
       })
     })
   }
@@ -46,7 +65,7 @@ export function GenerateStudentProgressReport({
     return (
       <>
         <div className="buttons">
-          <button className="button is-primary" onClick={() => dispatch({ type: 'step', value: 'editing' })}>
+          <button className="button is-primary" onClick={() => setState({ ...state, step: 'editing' })}>
             Edit
           </button>
           <button className="button is-primary" onClick={onSkip}>
@@ -66,14 +85,7 @@ export function GenerateStudentProgressReport({
 
   return (
     <>
-      <EditorButtons
-        key={person.id}
-        state={state}
-        dispatch={dispatch}
-        onDone={generateReportImage}
-        onSkip={onSkip}
-        report={report}
-      />
+      <EditorButtons key={person.id} onDone={generateReportImage} onSkip={onSkip} />
 
       <Editing
         showInput={true}
@@ -81,7 +93,7 @@ export function GenerateStudentProgressReport({
         fullName={person.fullName}
         assignments={assignments}
         state={state}
-        dispatch={dispatch}
+        setState={setState}
         title={`${fromDate} to ${toDate}`}
       />
 
@@ -93,7 +105,7 @@ export function GenerateStudentProgressReport({
           fullName={person.fullName}
           assignments={assignments}
           state={state}
-          dispatch={dispatch}
+          setState={setState}
           title={`${fromDate} to ${toDate}`}
         />
       </div>

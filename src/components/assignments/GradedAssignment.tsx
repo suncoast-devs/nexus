@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { Assignment } from '@/components/models'
+import { Assignment, AssignmentEvent } from '@/components/models'
 import { MarkDownDiv } from '@/components/utils/MarkDownDiv'
 
-export function GradedAssignment({ assignmentEvent }) {
+export function GradedAssignment({ assignmentEvent }: { assignmentEvent: AssignmentEvent }) {
   const [showGif, setShowGif] = useState(true)
 
   return (
