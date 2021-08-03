@@ -14,7 +14,7 @@ export function Main({
   index: number
   isOnCompletePage: boolean
   markProgressReportComplete: () => void
-  onSaveStudentReport: () => void
+  onSaveStudentReport: (success: boolean) => void
   onSkip: () => void
 }) {
   if (progressReport.completed) {

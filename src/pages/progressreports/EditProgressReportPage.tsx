@@ -1,45 +1,48 @@
 import React, { useEffect } from 'react'
 import history from '@/history'
-import useModelData from '@/hooks/useModelData'
-import { ProgressReport } from '@/components/models'
+import { ProgressReport, UnProxyRecord } from '@/components/models'
 import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 import { Main } from '@/components/progressreports/Main'
 import { Sidebar } from '@/components/progressreports/Sidebar'
 import { useParams } from 'react-router'
+import { useQuery } from 'react-query'
 
 export function EditProgressReportPage() {
-  const { progress_report_id: id, index = 'none' } = useParams()
-
-  let effectiveIndex = index
+  const { progress_report_id: id, index = 'none' } = useParams<{ progress_report_id: string; index: string }>()
 
   const progressReportBaseURL = `/progress-reports/${id}`
 
-  const { loading: loadingProgressReport, data: progressReport, reload: reloadProgressReport } = useModelData(
-    () =>
-      ProgressReport.includes([
-        'homeworks',
-        { student_progress_reports: 'person' },
-        { people: { assignments: 'homework' } },
-      ]).find(id),
-    null
+  const { isLoading, refetch, data: progressReport = new ProgressReport() } = useQuery(['progress-report', id], () =>
+    ProgressReport.includes([
+      'homeworks',
+      { student_progress_reports: 'person' },
+      { people: { assignments: 'homework' } },
+    ])
+      .find(id)
+      .then(UnProxyRecord)
   )
 
   // Reload the progress report when the page changes
-  useEffect(reloadProgressReport, [effectiveIndex])
+  useEffect(
+    function () {
+      refetch()
+    },
+    [index]
+  )
 
-  if (loadingProgressReport) {
+  if (isLoading) {
     return <LoadingIndicator />
   }
 
-  if (effectiveIndex === 'none') {
+  if (index === 'none') {
     history.push(`${progressReportBaseURL}/0`)
     return <></>
   }
 
-  const isOnCompletePage = 'complete' === effectiveIndex
+  const isOnCompletePage = 'complete' === index
 
   // Otherwise make the effectiveIndex an integer (for easier comparison)
-  effectiveIndex = parseInt(effectiveIndex)
+  let effectiveIndex = parseInt(index)
 
   const onSkip = () => {
     // Move to the next report if it is there, or to the 'complete' page otherwise
@@ -54,13 +57,13 @@ export function EditProgressReportPage() {
     progressReport.completed = true
     progressReport.save().then(success => {
       if (success) {
-        reloadProgressReport()
+        refetch()
       }
     })
   }
 
-  const onSaveStudentReport = response => {
-    if (response) {
+  function onSaveStudentReport(success: boolean) {
+    if (success) {
       onSkip()
     }
   }
@@ -73,6 +76,7 @@ export function EditProgressReportPage() {
             progressReportBaseURL={progressReportBaseURL}
             progressReport={progressReport}
             index={effectiveIndex}
+            isOnCompletePage={isOnCompletePage}
           />
         </div>
         <div

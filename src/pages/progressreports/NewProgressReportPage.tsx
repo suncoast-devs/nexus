@@ -2,20 +2,26 @@ import React, { useState, useEffect } from 'react'
 import moment from 'moment'
 
 import history from '@/history'
-import useModelData from '@/hooks/useModelData'
-import { Cohort, ProgressReport } from '@/components/models'
+import { Cohort, Homework, Person, ProgressReport, UnProxyRecord } from '@/components/models'
 import { LeftRight } from '@/components/utils/LeftRight'
 import { DateRange } from '@/components/progressreports/DateRange'
 import { Homeworks } from '@/components/progressreports/Homeworks'
 import { SelectPeople } from '@/components/progressreports/SelectPeople'
 import { useParams } from 'react-router'
+import { useQuery } from 'react-query'
 
 export function NewProgressReportPage() {
-  const { id: cohortId } = useParams()
+  const { id: cohortId } = useParams<{ id: string }>()
 
-  const { data: cohort } = useModelData(
-    () => Cohort.includes(['people', 'student_enrollments', 'homeworks', 'progress_reports']).find(cohortId),
-    new Cohort()
+  const [selectedPeopleIDs, setSelectedPeopleIDs] = useState<string[]>([])
+  const [selectedHomeworkIDs, setSelectedHomeworkIDs] = useState<string[]>([])
+  const [startDate, setStartDate] = useState<string>('')
+  const [endDate, setEndDate] = useState<string>('')
+
+  const { data: cohort = new Cohort() } = useQuery(['cohort', cohortId], () =>
+    Cohort.includes(['people', 'student_enrollments', 'homeworks', 'progress_reports'])
+      .find(cohortId)
+      .then(UnProxyRecord)
   )
 
   useEffect(() => {
@@ -27,12 +33,12 @@ export function NewProgressReportPage() {
             enrollment => Number(enrollment.personId) === Number(person.id) && enrollment.generateProgressReport
           )
         )
-        .map(person => person.id)
+        .map(person => person.key())
     )
 
     const allAssignedHomeworkIDs = cohort.homeworks
       .filter(homework => homework.assigned && homework.countsTowardsCompletion)
-      .map(homework => homework.id)
+      .map(homework => homework.key())
 
     const sortedReports = cohort.progressReports.sort((a, b) => a.endDate.localeCompare(b.endDate))
 
@@ -44,29 +50,26 @@ export function NewProgressReportPage() {
     setEndDate(moment().format('YYYY-MM-DD'))
   }, [cohort.id])
 
-  const [selectedPeopleIDs, setSelectedPeopleIDs] = useState([])
-  const [selectedHomeworkIDs, setSelectedHomeworkIDs] = useState([])
-  const [startDate, setStartDate] = useState()
-  const [endDate, setEndDate] = useState()
-
   const sortedPeople = cohort.people.sort((a, b) => a.fullName.localeCompare(b.fullName))
   const sortedHomeworks = cohort.homeworks.sort((a, b) => a.createdAt.localeCompare(b.createdAt))
 
-  const toggleHomework = (selected, homework) =>
+  function toggleHomework(selected: boolean, homework: Homework) {
     setSelectedHomeworkIDs(
-      selected ? selectedHomeworkIDs.filter(id => id !== homework.id) : selectedHomeworkIDs.concat(homework.id)
+      selected ? selectedHomeworkIDs.filter(id => id !== homework.id) : selectedHomeworkIDs.concat(homework.key())
     )
+  }
 
-  const togglePerson = (selected, person) =>
+  function togglePerson(selected: boolean, person: Person) {
     setSelectedPeopleIDs(
-      selected ? selectedPeopleIDs.filter(id => id !== person.id) : selectedPeopleIDs.concat(person.id)
+      selected ? selectedPeopleIDs.filter(id => id !== person.id) : selectedPeopleIDs.concat(person.key())
     )
+  }
 
-  const create = () => {
+  function create() {
     let progressReport = new ProgressReport()
     progressReport.cohort_id = cohortId
-    progressReport.idsOfHomeworks = selectedHomeworkIDs
-    progressReport.idsOfPeople = selectedPeopleIDs
+    progressReport.idsOfHomeworks = selectedHomeworkIDs.map(Number)
+    progressReport.idsOfPeople = selectedPeopleIDs.map(Number)
     progressReport.startDate = startDate
     progressReport.endDate = endDate
     progressReport.save().then(response => {

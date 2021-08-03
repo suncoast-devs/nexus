@@ -10,7 +10,7 @@ export function Editor({
   onSkip,
 }: {
   progressReport: ProgressReport
-  onSaveStudentReport: () => void
+  onSaveStudentReport: (success: boolean) => void
   index: number
   onSkip: () => void
 }) {
