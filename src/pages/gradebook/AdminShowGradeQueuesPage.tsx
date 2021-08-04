@@ -28,8 +28,8 @@ export function AdminShowGradeQueuesPage() {
   return (
     <>
       {cohorts.map(cohort => (
-        <section className="section">
-          <GradeQueue key={cohort.id} cohort={cohort} refetch={refetch} />
+        <section className="section" key={cohort.id}>
+          <GradeQueue cohort={cohort} refetch={refetch} />
         </section>
       ))}
     </>
