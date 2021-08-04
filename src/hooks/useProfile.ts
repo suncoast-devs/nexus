@@ -1,20 +1,16 @@
 import icon from '@/images/icon.svg'
 import { Profile } from '@/components/models/Profile'
 import { useQuery } from 'react-query'
-import { RecordProxy } from 'spraypaint/lib-esm/proxies'
+import { UnProxyRecord } from '@/components/models'
 
 const NULL_PROFILE = new Profile({ id: '0', smallProfileImageUrl: icon, dashboardCohortIds: [] })
 
+const query = () => Profile.includes('cohorts').find(0).then(UnProxyRecord)
+
 const useProfile = () => {
-  const { isLoading, data, refetch } = useQuery<RecordProxy<Profile>, Error>('profile', () =>
-    Profile.includes('cohorts').find(0)
-  )
+  const { isLoading, data: profile = NULL_PROFILE, refetch } = useQuery('profile', query)
 
-  if (isLoading || !data || !data.data) {
-    return { isLoading: true, profile: NULL_PROFILE, forceUpdateProfile: () => {} }
-  }
-
-  return { isLoading, profile: data.data, forceUpdateProfile: refetch }
+  return { isLoading, profile, forceUpdateProfile: refetch }
 }
 
 export default useProfile
