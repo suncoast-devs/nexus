@@ -77,8 +77,12 @@ function ProfileMenu() {
 }
 
 export function AuthenticatedNavBar() {
-  const { profile } = useProfile()
+  const { isLoading, profile } = useProfile()
   const [active, setActive] = useState(false)
+
+  if (isLoading) {
+    return null
+  }
 
   return (
     <nav
