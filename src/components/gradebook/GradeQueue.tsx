@@ -32,7 +32,7 @@ function Success({ cohort }) {
         <div className="message-header">
           <p>Awesome!</p>
         </div>
-        <div class="message-body">
+        <div className="message-body">
           <div className="title has-text-centered">No assignments to grade for {cohort.name}</div>
           <div className="title has-text-centered">Good job!</div>
           <nav className="level">
