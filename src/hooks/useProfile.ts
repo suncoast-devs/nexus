@@ -1,9 +1,8 @@
 import icon from '@/images/icon.svg'
 import { Profile } from '@/components/models/Profile'
-import { QueryCache, useQuery } from 'react-query'
+import { useQuery } from 'react-query'
 import { UnProxyRecord } from '@/components/models'
 import auth from '@/Auth'
-import { queryCache } from '@/components/App'
 
 const NULL_PROFILE = new Profile({ id: '0', smallProfileImageUrl: icon, dashboardCohortIds: [] })
 
