@@ -10,8 +10,8 @@ const useProfile = () => {
     Profile.includes('cohorts').find(0)
   )
 
-  if (isLoading || !data) {
-    return { profile: NULL_PROFILE, forceUpdateProfile: () => {} }
+  if (isLoading || !data || !data.data) {
+    return { isLoading: true, profile: NULL_PROFILE, forceUpdateProfile: () => {} }
   }
 
   return { isLoading, profile: data.data, forceUpdateProfile: refetch }
