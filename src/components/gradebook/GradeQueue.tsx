@@ -15,7 +15,7 @@ function sortByPerson(a: Assignment, b: Assignment): number {
   return Number(a.person.id) - Number(b.person.id)
 }
 
-function Success({ cohort }) {
+function Success({ cohort }: { cohort: Cohort }) {
   const {
     data: { image },
   } = useQuery(
