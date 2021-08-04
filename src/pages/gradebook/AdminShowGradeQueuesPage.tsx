@@ -7,7 +7,11 @@ import { LoadingIndicator } from '@/components/utils/LoadingIndicator'
 
 export function AdminShowGradeQueuesPage() {
   const { profile } = useProfile()
-  const { isLoading, data: cohorts = [], refetch } = useQuery(['gradebook-cohorts', profile.dashboardCohortIds], () =>
+  const {
+    isLoading,
+    data: cohorts = [],
+    refetch,
+  } = useQuery(['gradebook-cohorts', profile.dashboardCohortIds], () =>
     Cohort.includes(['student_enrollments', { homeworks: { assignments: ['homework', 'person'] } }])
       .where({
         id: profile.dashboardCohortIds,
@@ -24,7 +28,9 @@ export function AdminShowGradeQueuesPage() {
   return (
     <>
       {cohorts.map(cohort => (
-        <GradeQueue key={cohort.id} cohort={cohort} refetch={refetch} />
+        <section className="section">
+          <GradeQueue key={cohort.id} cohort={cohort} refetch={refetch} />
+        </section>
       ))}
     </>
   )

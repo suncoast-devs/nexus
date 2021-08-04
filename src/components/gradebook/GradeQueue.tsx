@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { PersonComponent } from '@/components/person/PersonComponent'
 import { Cohort, Assignment } from '@/components/models'
+import { useQuery } from 'react-query'
 
 type SortFunction = (a: Assignment, b: Assignment) => number
 
@@ -12,6 +13,37 @@ function sortByAssignment(a: Assignment, b: Assignment): number {
 
 function sortByPerson(a: Assignment, b: Assignment): number {
   return Number(a.person.id) - Number(b.person.id)
+}
+
+function Success({ cohort }) {
+  const {
+    data: { image },
+  } = useQuery(
+    ['admin-grade-queue-success-gif', cohort.id],
+    () => fetch(`https://gifs.suncoast.io/gifs/4`).then(response => response.json()),
+    {
+      placeholderData: { image: '' },
+    }
+  )
+
+  return (
+    <section className="section">
+      <article className="message is-success">
+        <div className="message-header">
+          <p>Awesome!</p>
+        </div>
+        <div class="message-body">
+          <div className="title has-text-centered">No assignments to grade for {cohort.name}</div>
+          <div className="title has-text-centered">Good job!</div>
+          <nav className="level">
+            <div className="level-item has-text-centered">
+              <img width="160" alt="Success!" src={image} />
+            </div>
+          </nav>
+        </div>
+      </article>
+    </section>
+  )
 }
 
 export function GradeQueue({ cohort, refetch }: { cohort: Cohort; refetch: () => void }) {
@@ -29,8 +61,8 @@ export function GradeQueue({ cohort, refetch }: { cohort: Cohort; refetch: () =>
     .filter(assignment => enrolledPeopleIds.includes(assignment.personId))
     .filter(assignment => assignment.turnedIn)
 
-  if (ungradedAssignments.length === 0) {
-    return <div className="notification is-success">No assignments to grade for {cohort.name} -- Good job!</div>
+  if (ungradedAssignments.length >= 0) {
+    return <Success cohort={cohort} />
   }
 
   const sortedAssignments = ungradedAssignments.sort(sortFunction)
