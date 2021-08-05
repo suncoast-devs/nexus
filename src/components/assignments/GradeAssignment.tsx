@@ -4,6 +4,7 @@ import cx from 'classnames'
 import { MarkDownTextArea } from './MarkDownTextArea'
 import { AssignmentEventUploads } from './AssignmentEventUploads'
 import { AssignmentEventDetails } from '@/pages/assignments/StudentAssignmentPage'
+import { ScoreInfoType } from '../models/Assignment'
 
 export function GradeAssignment({
   assignment,
@@ -32,15 +33,17 @@ export function GradeAssignment({
     updateComment('')
   }
 
-  function assignScore(score: number) {
-    fetch(`https://gifs.suncoast.io/gifs/${score}?content_type=image/gif&max_byte_size=5000000#`)
-      .then(response => response.json())
-      .then(gifApi => {
-        setAssignmentEventDetails({
-          ...assignmentEventDetails,
-          payload: { ...assignmentEventDetails.payload, score, gif_url: gifApi.image, gif_caption: gifApi.caption },
+  function assignScore(info: ScoreInfoType, score: number) {
+    if (info.generateGif) {
+      fetch(`https://gifs.suncoast.io/gifs/${score}?content_type=image/gif&max_byte_size=5000000#`)
+        .then(response => response.json())
+        .then(gifApi => {
+          setAssignmentEventDetails({
+            ...assignmentEventDetails,
+            payload: { ...assignmentEventDetails.payload, score, gif_url: gifApi.image, gif_caption: gifApi.caption },
+          })
         })
-      })
+    }
 
     setAssignmentEventDetails({
       ...assignmentEventDetails,
@@ -79,7 +82,7 @@ export function GradeAssignment({
                       <a
                         style={{ textDecoration: 'none' }}
                         className={cx({ 'is-active has-text-white': assignmentEventDetails.payload.score === score })}
-                        onClick={() => assignScore(score)}
+                        onClick={() => assignScore(info, score)}
                       >
                         {info.title}
                       </a>

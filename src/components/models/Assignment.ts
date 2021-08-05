@@ -3,6 +3,7 @@ import { AssignmentEvent, Homework, Person, StudentEnrollment } from '.'
 import { ApplicationRecord } from './ApplicationRecord'
 
 export type ScoreInfoType = {
+  generateGif: boolean
   title: string
   progressReportTitle?: string
   style: {
@@ -13,6 +14,7 @@ export type ScoreInfoType = {
     progressReportBackgroundColor?: string
   }
 }
+
 @Model()
 export class Assignment extends ApplicationRecord {
   static jsonapiType = 'assignments'
@@ -62,6 +64,7 @@ export class Assignment extends ApplicationRecord {
       progressReportTextColor: 'white',
       progressReportBackgroundColor: 'rgb(217, 83, 79)',
     },
+    generateGif: false,
   }
 
   static scoreInfos: ScoreInfoType[] = [
@@ -74,6 +77,7 @@ export class Assignment extends ApplicationRecord {
         progressReportTextColor: 'white',
         progressReportBackgroundColor: 'rgb(217, 83, 79)',
       },
+      generateGif: false,
     },
     {
       title: 'Needs Improvement',
@@ -82,6 +86,7 @@ export class Assignment extends ApplicationRecord {
         iconColor: 'rgb(217, 83, 79)',
         textColor: 'white',
       },
+      generateGif: false,
     },
     {
       title: 'Acceptable',
@@ -90,6 +95,7 @@ export class Assignment extends ApplicationRecord {
         iconColor: 'rgb(240, 173, 78)',
         textColor: 'white',
       },
+      generateGif: true,
     },
     {
       title: 'Meets Expectation',
@@ -98,6 +104,7 @@ export class Assignment extends ApplicationRecord {
         iconColor: 'rgb(49, 176, 213)',
         textColor: 'white',
       },
+      generateGif: true,
     },
     {
       title: 'Exceeds Expectation',
@@ -106,6 +113,7 @@ export class Assignment extends ApplicationRecord {
         iconColor: 'rgb(51, 122, 183)',
         textColor: 'white',
       },
+      generateGif: true,
     },
   ]
 }
