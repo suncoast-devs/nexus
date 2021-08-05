@@ -61,7 +61,7 @@ export function GradeQueue({ cohort, refetch }: { cohort: Cohort; refetch: () =>
     .filter(assignment => enrolledPeopleIds.includes(assignment.personId))
     .filter(assignment => assignment.turnedIn)
 
-  if (ungradedAssignments.length >= 0) {
+  if (ungradedAssignments.length === 0) {
     return <Success cohort={cohort} />
   }
 
