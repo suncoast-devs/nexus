@@ -4,7 +4,6 @@ import Dropzone from 'react-dropzone'
 import { DirectUploadProvider } from 'react-activestorage-provider'
 import auth from '@/Auth'
 import { AssignmentEventAttachments } from './AssignmentEventAttachments'
-import useProfile from '@/hooks/useProfile'
 import { AssignmentEventDetails } from '@/pages/assignments/StudentAssignmentPage'
 import { VITE_PYLON_URL } from '@/env'
 
@@ -15,8 +14,6 @@ export function AssignmentEventUploads({
   assignmentEventDetails: AssignmentEventDetails
   setAssignmentEventDetails: (e: AssignmentEventDetails) => void
 }) {
-  const { profile } = useProfile()
-
   const handleDrop = useCallback(function (files, handleUpload) {
     handleUpload(files)
   }, [])
