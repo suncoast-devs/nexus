@@ -28,11 +28,6 @@ export function AssignmentEventUploads({
     })
   }
 
-  // For now, only allow admins to use this feature
-  if (!profile.isAdmin) {
-    return null
-  }
-
   return (
     <div className="box pb-2">
       <DirectUploadProvider
