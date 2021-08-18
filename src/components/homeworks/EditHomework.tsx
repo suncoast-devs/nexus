@@ -114,19 +114,7 @@ export function EditHomework({
                 />
               </div>
             </div>
-            <div className="field">
-              <label className="label">Body</label>
-              <div className="control">
-                <textarea
-                  className="textarea"
-                  value={body}
-                  onChange={event => setBody(event.target.value)}
-                  name="body"
-                  rows={8}
-                  placeholder="Body"
-                />
-              </div>
-            </div>
+
             <div className="field">
               <label className="label">Turn In Type</label>
               <div className="select">
@@ -153,6 +141,19 @@ export function EditHomework({
                 <input type="checkbox" defaultChecked={homework.assigned} name="assigned" />
                 Assigned
               </label>
+            </div>
+            <div className="field">
+              <label className="label">Body</label>
+              <div className="control">
+                <textarea
+                  className="textarea"
+                  value={body}
+                  onChange={event => setBody(event.target.value)}
+                  name="body"
+                  rows={8}
+                  placeholder="Body"
+                />
+              </div>
             </div>
           </section>
           <footer className="modal-card-foot">
