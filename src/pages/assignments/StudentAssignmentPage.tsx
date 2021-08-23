@@ -10,6 +10,7 @@ import { GradeAssignment } from '@/components/assignments/GradeAssignment'
 import useProfile from '@/hooks/useProfile'
 import { useParams } from 'react-router'
 import { useQuery } from 'react-query'
+import { HomeworkMarkdown } from '../homeworks/HomeworkMarkdown'
 
 export type AssignmentEventDetails = {
   assignmentId: string
@@ -141,10 +142,6 @@ export function StudentAssignmentPage() {
   const shouldAssignmentBeWide = assignment.assignmentEvents.length === 0 && !newAssignmentEventComponent
   const assignmentClassName = shouldAssignmentBeWide ? 'is-9' : 'is-half'
   const sidebarClassName = shouldAssignmentBeWide ? 'is-3' : 'is-half'
-  const homeworkWithGithubUserReplaced = assignment.homework.bodyWithResolvedUrls.replaceAll(
-    '$GITHUB_USER',
-    profile.github
-  )
 
   return (
     <div className="columns">
@@ -177,7 +174,7 @@ export function StudentAssignmentPage() {
             ) : null}
 
             <div className="content mb-4">
-              <MarkDownDiv markdown={homeworkWithGithubUserReplaced} />
+              <HomeworkMarkdown homework={assignment.homework} />
             </div>
           </div>
         </section>
