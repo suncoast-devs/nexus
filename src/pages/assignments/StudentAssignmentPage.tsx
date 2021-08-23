@@ -22,7 +22,11 @@ export function StudentAssignmentPage() {
   const { id } = useParams<{ id: string }>()
   const { profile } = useProfile()
 
-  const { isLoading, refetch, data: assignment = new Assignment() } = useQuery(['student-assignment', id], () =>
+  const {
+    isLoading,
+    refetch,
+    data: assignment = new Assignment(),
+  } = useQuery(['student-assignment', id], () =>
     Assignment.includes(['person', 'homework', { assignment_events: 'person' }])
       .find(id)
       .then(UnProxyRecord)
@@ -137,6 +141,10 @@ export function StudentAssignmentPage() {
   const shouldAssignmentBeWide = assignment.assignmentEvents.length === 0 && !newAssignmentEventComponent
   const assignmentClassName = shouldAssignmentBeWide ? 'is-9' : 'is-half'
   const sidebarClassName = shouldAssignmentBeWide ? 'is-3' : 'is-half'
+  const homeworkWithGithubUserReplaced = assignment.homework.bodyWithResolvedUrls.replaceAll(
+    '$GITHUB_USER',
+    profile.github
+  )
 
   return (
     <div className="columns">
@@ -169,7 +177,7 @@ export function StudentAssignmentPage() {
             ) : null}
 
             <div className="content mb-4">
-              <MarkDownDiv markdown={assignment.homework.bodyWithResolvedUrls} />
+              <MarkDownDiv markdown={homeworkWithGithubUserReplaced} />
             </div>
           </div>
         </section>
