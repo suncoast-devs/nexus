@@ -2,20 +2,20 @@ import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import moment from 'moment'
 
-import { Cohort, UnProxyCollection, UnProxyRecord } from '@/components/models'
+import { Cohort, UnProxyCollection } from '@/components/models'
 import { compareLectureVideoDates } from '@/components/lecturevideos/compareLectureVideoDates'
 import { useQuery } from 'react-query'
 
 export function LectureVideosPageForUser() {
   const { data: cohorts = [] } = useQuery(['lecture-videos-for-user'], () =>
-    Cohort.includes('lecture_videos').all().then(UnProxyCollection)
+    Cohort.includes('lecture_videos').order('name').all().then(UnProxyCollection)
   )
 
   return (
     <>
       {cohorts.map(cohort => (
         <div className="section" key={cohort.id}>
-          <LectureVideosPage cohort={cohort} />
+          <LectureVideosPage cohort={cohort} cohorts={cohorts} />
         </div>
       ))}
     </>
@@ -25,37 +25,62 @@ export function LectureVideosPageForUser() {
 export function LectureVideoPageForCohortId() {
   const { id } = useParams<{ id: string }>()
 
-  const { data: cohort } = useQuery(['lecture-videos-for-cohort', id], () =>
-    Cohort.includes('lecture_videos').find(id).then(UnProxyRecord)
+  const { data: cohorts = [] } = useQuery(['lecture-videos-for-user'], () =>
+    Cohort.includes('lecture_videos').order('name').all().then(UnProxyCollection)
   )
+
+  const cohort = cohorts.find(cohort => cohort.id === id)
 
   if (!cohort) {
     return <></>
   }
 
-  return <LectureVideosPage cohort={cohort} />
+  return (
+    <div className="section" key={cohort.id}>
+      <LectureVideosPage cohort={cohort} cohorts={cohorts} />
+    </div>
+  )
 }
 
-export function LectureVideosPage({ cohort }: { cohort: Cohort }) {
+export function LectureVideosPage({ cohort, cohorts }: { cohort: Cohort; cohorts: Cohort[] }) {
   return (
-    <div className="container">
-      <div className="title">{cohort.name}</div>
+    <>
+      <div className="container">
+        <div className="title">{cohort.name}</div>
+        <nav className="level" />
+        {cohort.lectureVideos.length === 0 ? <h1 className="title">No videos yet...</h1> : <></>}
+        <table className="table is-bordered is-hoverable is-striped is-fullwidth">
+          <tbody>
+            {cohort.lectureVideos.sort(compareLectureVideoDates).map(lectureVideo => (
+              <tr key={lectureVideo.id}>
+                <td>
+                  <Link to={`/lecture_videos/${lectureVideo.id}`}>{lectureVideo.title}</Link>
+                </td>
+                <td>
+                  {lectureVideo.presentedAgo} ({moment(lectureVideo.presentedOn).format('dddd')})
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="title">Other Cohorts</div>
       <nav className="level" />
-      {cohort.lectureVideos.length === 0 ? <h1 className="title">No videos yet...</h1> : <></>}
-      <table className="table is-bordered is-hoverable is-striped is-fullwidth">
-        <tbody>
-          {cohort.lectureVideos.sort(compareLectureVideoDates).map(lectureVideo => (
-            <tr key={lectureVideo.id}>
-              <td>
-                <Link to={`/lecture_videos/${lectureVideo.id}`}>{lectureVideo.title}</Link>
-              </td>
-              <td>
-                {lectureVideo.presentedAgo} ({moment(lectureVideo.presentedOn).format('dddd')})
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+
+      <div className="section">
+        <table className="table is-bordered is-hoverable is-striped is-fullwidth">
+          <tbody>
+            {cohorts.map(cohort => (
+              <tr key={cohort.id}>
+                <td>
+                  <Link to={`/cohorts/${cohort.id}/lecture-videos`}>{cohort.name}</Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   )
 }
