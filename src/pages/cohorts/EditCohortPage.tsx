@@ -20,7 +20,11 @@ import { useParams } from 'react-router'
 export function EditCohortPage() {
   const { id } = useParams<{ id: string }>()
 
-  const { isLoading, refetch, data: cohort = new Cohort() } = useQuery(['cohort', id], () =>
+  const {
+    isLoading,
+    refetch,
+    data: cohort = new Cohort(),
+  } = useQuery(['cohort', id], () =>
     Cohort.includes([
       'homeworks',
       'lecture_videos',
@@ -89,7 +93,7 @@ export function EditCohortPage() {
 
           <TabHeader>Lecture Videos</TabHeader>
           <Tab>
-            <LectureVideosPage cohort={cohort} />
+            <LectureVideosPage cohort={cohort} cohorts={[]} />
           </Tab>
 
           <TabHeader>Calendar</TabHeader>
