@@ -7,7 +7,7 @@ import auth from '@/Auth'
 const NULL_PROFILE = new Profile({ id: '0', smallProfileImageUrl: icon, dashboardCohortIds: [] })
 
 const query = () => {
-  return Profile.includes('cohorts').find(0).then(UnProxyRecord)
+  return Profile.includes('cohort').find(0).then(UnProxyRecord)
 }
 const useProfile = () => {
   const {
