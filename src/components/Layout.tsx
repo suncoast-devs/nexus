@@ -3,7 +3,7 @@ import auth from '@/Auth'
 import { AuthenticatedNavBar } from './AuthenticatedNavBar'
 import { UnauthenticatedNavBar } from './UnauthenticatedNavBar'
 
-import { AdminRoutes, UserRoutes, PublicRoutes, ProfileRoutes } from './Routes'
+import { AdminRoutes, UserRoutes, PublicRoutes, ProfileRoutes, CommonRoutes } from './Routes'
 import useProfile from '@/hooks/useProfile'
 
 function UserOrAdminRoutes() {
@@ -23,6 +23,7 @@ export function Layout() {
       <PublicRoutes />
       <UserOrAdminRoutes />
       <ProfileRoutes />
+      <CommonRoutes />
     </>
   )
 }

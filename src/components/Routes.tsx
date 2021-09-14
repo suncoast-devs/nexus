@@ -148,6 +148,14 @@ export function UserRoutes() {
   )
 }
 
+export function CommonRoutes() {
+  return (
+    <Route exact path="/cohorts/:id/lecture-videos">
+      <LectureVideoPageForCohortId />
+    </Route>
+  )
+}
+
 export function ProfileRoutes() {
   return (
     <Route exact path="/profile">
