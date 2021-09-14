@@ -28,6 +28,8 @@ export function LectureVideosPageForUser() {
       ))}
 
       {otherCohorts.length === 0 ? (
+        <></>
+      ) : (
         <div className="section">
           <div className="container">
             <div className="title">Other Cohorts</div>
@@ -45,8 +47,6 @@ export function LectureVideosPageForUser() {
             </table>
           </div>
         </div>
-      ) : (
-        <></>
       )}
     </>
   )
