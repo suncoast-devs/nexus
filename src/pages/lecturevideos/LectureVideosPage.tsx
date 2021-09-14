@@ -5,15 +5,18 @@ import moment from 'moment'
 import { Cohort, UnProxyCollection } from '@/components/models'
 import { compareLectureVideoDates } from '@/components/lecturevideos/compareLectureVideoDates'
 import { useQuery } from 'react-query'
+import useProfile from '@/hooks/useProfile'
 
 export function LectureVideosPageForUser() {
+  const { profile } = useProfile()
+
   const { data: cohorts = [] } = useQuery(['lecture-videos-for-user'], () =>
     Cohort.includes('lecture_videos').order('name').all().then(UnProxyCollection)
   )
 
   return (
     <>
-      {cohorts.map(cohort => (
+      {profile.cohorts.map(cohort => (
         <div className="section" key={cohort.id}>
           <LectureVideosPage cohort={cohort} cohorts={cohorts} />
         </div>
@@ -65,11 +68,11 @@ export function LectureVideosPage({ cohort, cohorts }: { cohort: Cohort; cohorts
         </table>
       </div>
 
-      <div className="section">
+      <div className="container">
         <div className="title">Other Cohorts</div>
       </div>
 
-      <div className="section">
+      <div className="container">
         <table className="table is-bordered is-hoverable is-striped is-fullwidth">
           <tbody>
             {cohorts.map(cohort => (
