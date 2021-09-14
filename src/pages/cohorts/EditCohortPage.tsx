@@ -93,7 +93,7 @@ export function EditCohortPage() {
 
           <TabHeader>Lecture Videos</TabHeader>
           <Tab>
-            <LectureVideosPage cohort={cohort} cohorts={[]} />
+            <LectureVideosPage cohort={cohort} />
           </Tab>
 
           <TabHeader>Calendar</TabHeader>
