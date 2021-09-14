@@ -65,8 +65,9 @@ export function LectureVideosPage({ cohort, cohorts }: { cohort: Cohort; cohorts
         </table>
       </div>
 
-      <div className="title">Other Cohorts</div>
-      <nav className="level" />
+      <div className="section">
+        <div className="title">Other Cohorts</div>
+      </div>
 
       <div className="section">
         <table className="table is-bordered is-hoverable is-striped is-fullwidth">
