@@ -3,7 +3,6 @@ import { Assignment, AssignmentEvent, UnProxyRecord } from '@/components/models'
 import cx from 'classnames'
 
 import { CreateAssignmentComment } from '@/components/assignments/CreateAssignmentComment'
-import { MarkDownDiv } from '@/components/utils/MarkDownDiv'
 import { ShowAssignmentEvent } from '@/components/assignments/ShowAssignmentEvent'
 import { CreateAssignmentTurnIn } from '@/components/assignments/CreateAssignmentTurnIn'
 import { GradeAssignment } from '@/components/assignments/GradeAssignment'
