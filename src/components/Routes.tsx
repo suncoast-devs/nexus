@@ -17,7 +17,7 @@ import { PeoplePage } from '@/pages/people/PeoplePage'
 import { StudentGradebookPage } from '@/pages/gradebook/StudentGradebookPage'
 import { StudentAssignmentPage } from '@/pages/assignments/StudentAssignmentPage'
 import { AdminShowGradeQueuesPage } from '@/pages/gradebook/AdminShowGradeQueuesPage'
-import { LectureVideosPageForUser } from '@/pages/lecturevideos/LectureVideosPage'
+import { LectureVideoPageForCohortId, LectureVideosPageForUser } from '@/pages/lecturevideos/LectureVideosPage'
 import { LectureVideoPage } from '@/pages/lecturevideos/LectureVideoPage'
 import { ShowHomeworkPage } from '@/pages/homeworks/ShowHomeworkPage'
 import { StudentAttendancePage } from '@/pages/attendance/StudentAttendancePage'
@@ -128,6 +128,9 @@ export function UserRoutes() {
       </Route>
       <Route exact path="/lecture_videos">
         <LectureVideosPageForUser />
+      </Route>
+      <Route exact path="/cohorts/:id/lecture_videos">
+        <LectureVideoPageForCohortId />
       </Route>
       <Route exact path="/lecture_videos/:id">
         <LectureVideoPage />

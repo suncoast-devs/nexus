@@ -1,8 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import moment from 'moment'
 
-import { Cohort, UnProxyCollection } from '@/components/models'
+import { Cohort, UnProxyCollection, UnProxyRecord } from '@/components/models'
 import { compareLectureVideoDates } from '@/components/lecturevideos/compareLectureVideoDates'
 import { useQuery } from 'react-query'
 
@@ -20,6 +20,20 @@ export function LectureVideosPageForUser() {
       ))}
     </>
   )
+}
+
+export function LectureVideoPageForCohortId() {
+  const { id } = useParams<{ id: string }>()
+
+  const { data: cohort } = useQuery(['lecture-videos-for-cohort', id], () =>
+    Cohort.includes('lecture_videos').find(id).then(UnProxyRecord)
+  )
+
+  if (!cohort) {
+    return <></>
+  }
+
+  return <LectureVideosPage cohort={cohort} />
 }
 
 export function LectureVideosPage({ cohort }: { cohort: Cohort }) {
