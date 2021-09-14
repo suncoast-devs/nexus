@@ -27,23 +27,27 @@ export function LectureVideosPageForUser() {
         </div>
       ))}
 
-      <div className="container">
-        <div className="title">Other Cohorts</div>
-      </div>
+      {otherCohorts.length === 0 ? (
+        <div className="section">
+          <div className="container">
+            <div className="title">Other Cohorts</div>
 
-      <div className="container">
-        <table className="table is-bordered is-hoverable is-striped is-fullwidth">
-          <tbody>
-            {otherCohorts.map(cohort => (
-              <tr key={cohort.id}>
-                <td>
-                  <Link to={`/cohorts/${cohort.id}/lecture-videos`}>{cohort.name}</Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            <table className="table is-bordered is-hoverable is-striped is-fullwidth">
+              <tbody>
+                {otherCohorts.map(cohort => (
+                  <tr key={cohort.id}>
+                    <td>
+                      <Link to={`/cohorts/${cohort.id}/lecture-videos`}>{cohort.name}</Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
     </>
   )
 }
