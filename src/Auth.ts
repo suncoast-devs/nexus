@@ -2,7 +2,11 @@ import { VITE_LOGIN_URL } from './env'
 
 class Auth {
   login = () => {
-    window.location.replace(VITE_LOGIN_URL)
+    const form = document.createElement('form');
+    form.method = 'POST'
+    form.action = VITE_LOGIN_URL;
+    document.body.appendChild(form);
+    form.submit();
   }
 
   get token() {
