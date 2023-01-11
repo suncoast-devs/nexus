@@ -184,7 +184,7 @@ export function PublicRoutes() {
           } else {
               const form = document.createElement('form');
               form.method = 'POST'
-              form.action = `${VITE_PYLON_URL}/auth/github&invitation_code=${props.match.params.invitation_code}`;
+              form.action = `${VITE_PYLON_URL}/auth/github?invitation_code=${props.match.params.invitation_code}`;
               document.body.appendChild(form);
               form.submit();
           }
