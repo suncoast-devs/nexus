@@ -23,7 +23,7 @@ import { ShowHomeworkPage } from '@/pages/homeworks/ShowHomeworkPage'
 import { StudentAttendancePage } from '@/pages/attendance/StudentAttendancePage'
 import { AdminShowAttendancesPage } from '@/pages/attendance/AdminShowAttendancesPage'
 import useProfile from '@/hooks/useProfile'
-import { VITE_INVITATION_REDEEM_URL } from '@/env'
+import { VITE_PYLON_URL } from '@/env'
 
 function PeopleRoutes({}) {
   return (
@@ -182,9 +182,11 @@ export function PublicRoutes() {
             // This might be a user re-attempting to use the same invite code.
             window.location.pathname = `/`
           } else {
-            window.location.replace(
-              `${VITE_INVITATION_REDEEM_URL}&invitation_code=${props.match.params.invitation_code}`
-            )
+              const form = document.createElement('form');
+              form.method = 'POST'
+              form.action = `${VITE_PYLON_URL}/auth/github&invitation_code=${props.match.params.invitation_code}`;
+              document.body.appendChild(form);
+              form.submit();
           }
 
           return <Callback />
